@@ -153,7 +153,7 @@ sodium_memcmp(const void *const b1_, const void *const b2_, std::size_t len)
     _sodium_dummy_symbol_to_prevent_memcmp_lto(b1, b2, len);
 #endif
     for (i = 0U; i < len; i++) {
-        d = d | b1[i] ^ b2[i];
+        d = d | (b1[i] ^ b2[i]);
     }
     return (1 & ((d - 1) >> 8)) - 1;
 }

@@ -73,7 +73,7 @@ crypto_verify_n(const unsigned char *x_, const unsigned char *y_,
     int i;
 
     for (i = 0; i < n; i++) {
-        d |= x[i] ^ y[i];
+        d = d | ( x[i] ^ y[i]);
     }
     return (1 & ((d - 1) >> 8)) - 1;
 }
