@@ -752,7 +752,7 @@ sodium_unpad(std::size_t *unpadded_buflen_p, const unsigned char *buf,
         is_barrier =
             (( (acc - 1U) & (pad_len - 1U) & ((c ^ 0x80) - 1U) ) >> 8) & 1U;
         acc |= c;
-        pad_len |= i & (1U + ~is_barrier);
+        pad_len = pad_len | ( i & (1U + ~is_barrier));
         valid |= (unsigned char) is_barrier;
     }
     *unpadded_buflen_p = padded_buflen - 1U - pad_len;

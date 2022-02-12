@@ -13,9 +13,6 @@ target_sources(lithium
         src/crypto_generichash/blake2b/ref/generichash_blake2b.cpp
         src/crypto_generichash/blake2b/ref/blake2b-ref.cpp
         src/crypto_generichash/blake2b/generichash_blake2.cpp
-        src/crypto_generichash/crypto_generichash.cpp
-        src/crypto_kx/crypto_kx.cpp
-        src/crypto_sign/crypto_sign.cpp
         src/crypto_sign/ed25519/sign_ed25519.cpp
         src/crypto_sign/ed25519/ref10/sign.cpp
         src/crypto_sign/ed25519/ref10/keypair.cpp
@@ -56,7 +53,6 @@ target_sources(lithium
         src/crypto_shorthash/siphash24/ref/shorthash_siphash24_ref.cpp
         src/crypto_shorthash/siphash24/shorthash_siphash24.cpp
         src/crypto_shorthash/siphash24/shorthash_siphashx24.cpp
-        src/crypto_scalarmult/crypto_scalarmult.cpp
         src/crypto_scalarmult/ristretto255/ref10/scalarmult_ristretto255_ref10.cpp
         src/crypto_scalarmult/ed25519/ref10/scalarmult_ed25519_ref10.cpp
         src/crypto_scalarmult/curve25519/sandy2x/curve25519_sandy2x.cpp
@@ -78,7 +74,6 @@ target_sources(lithium
         src/sodium/runtime.cpp
         src/sodium/core.cpp
         src/sodium/utils.cpp
-        src/sodium/version.cpp
         src/crypto_stream/xchacha20/stream_xchacha20.cpp
         src/crypto_stream/chacha20/ref/chacha20_ref.cpp
         src/crypto_stream/chacha20/stream_chacha20.cpp
@@ -89,7 +84,6 @@ target_sources(lithium
         src/crypto_stream/salsa20/xmm6int/salsa20_xmm6int-avx2.cpp
         src/crypto_stream/salsa20/xmm6int/salsa20_xmm6int-sse2.cpp
         src/crypto_stream/salsa20/xmm6/salsa20_xmm6.cpp
-        src/crypto_stream/crypto_stream.cpp
         src/crypto_stream/salsa2012/ref/stream_salsa2012_ref.cpp
         src/crypto_stream/salsa2012/stream_salsa2012.cpp
         src/crypto_stream/salsa208/ref/stream_salsa208_ref.cpp
