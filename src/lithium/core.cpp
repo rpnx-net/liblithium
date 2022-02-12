@@ -5,8 +5,6 @@
 #include <time.h>
 #ifdef _WIN32
 # include <windows.h>
-#elif defined(HAVE_PTHREAD)
-# include <pthread.h>
 #endif
 
 #include "core.h"
