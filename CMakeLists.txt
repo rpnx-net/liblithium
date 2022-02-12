@@ -43,7 +43,7 @@ target_sources(lithium
         src/crypto_auth/hmacsha512256/auth_hmacsha512256.cpp
         src/crypto_auth/crypto_auth.cpp
         src/crypto_auth/hmacsha256/auth_hmacsha256.cpp
-        src/aead_chacha20poly1305.cpp
+        src/crypto_aead/xchacha20poly1305/sodium/aead_chacha20poly1305.cpp
         src/crypto_kdf/blake2b/kdf_blake2b.cpp
         src/crypto_kdf/hkdf/kdf_hkdf_sha256.cpp
         src/crypto_kdf/hkdf/kdf_hkdf_sha512.cpp
