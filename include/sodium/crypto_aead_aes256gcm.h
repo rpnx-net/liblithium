@@ -25,9 +25,6 @@
 #include "export.h"
 
 #ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
 extern "C" {
 #endif
 
@@ -56,7 +53,7 @@ size_t crypto_aead_aes256gcm_abytes(void);
 SODIUM_EXPORT
 size_t crypto_aead_aes256gcm_messagebytes_max(void);
 
-typedef struct CRYPTO_ALIGN(16) crypto_aead_aes256gcm_state_ {
+typedef struct alignas(16) crypto_aead_aes256gcm_state_ {
     unsigned char opaque[512];
 } crypto_aead_aes256gcm_state;
 
