@@ -2,6 +2,7 @@
 #include <limits.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <array>
 
 #include "core.h"
 #include "crypto_box.h"
@@ -76,15 +77,13 @@ crypto_box_open_detached(unsigned char *m, const unsigned char *c,
                          unsigned long long clen, const unsigned char *n,
                          const unsigned char *pk, const unsigned char *sk)
 {
-    unsigned char k[crypto_box_BEFORENMBYTES];
+    std::array<unsigned char, crypto_box_BEFORENMBYTES> k;
     int           ret;
 
-    if (crypto_box_beforenm(k, pk, sk) != 0) {
+    if (crypto_box_beforenm(k.data(), pk, sk) != 0) {
         return -1;
     }
-    ret = crypto_box_open_detached_afternm(m, c, mac, clen, n, k);
-    sodium_memzero(k, sizeof k);
-
+    ret = crypto_box_open_detached_afternm(m, c, mac, clen, n, k.data());
     return ret;
 }
 
