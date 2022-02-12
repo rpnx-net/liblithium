@@ -1,6 +1,7 @@
 #ifndef __STDC_WANT_LIB_EXT1__
 # define __STDC_WANT_LIB_EXT1__ 1
 #endif
+#include <cstdint>
 #include <assert.h>
 #include <errno.h>
 #include <limits.h>
@@ -13,9 +14,7 @@
 # include <signal.h>
 #endif
 
-#ifdef HAVE_SYS_MMAN_H
-# include <sys/mman.h>
-#endif
+
 
 #ifdef HAVE_SYS_PARAM_H
 # include <sys/param.h>
@@ -44,7 +43,7 @@
 #   ifdef  __cplusplus
 extern "C"
 #   endif
-void *alloca (size_t);
+void *alloca (std::size_t);
 #  endif
 # endif
 #endif
@@ -103,17 +102,17 @@ void *alloca (size_t);
 # endif
 #endif
 
-static size_t        page_size = DEFAULT_PAGE_SIZE;
+static std::size_t        page_size = DEFAULT_PAGE_SIZE;
 static unsigned char canary[CANARY_SIZE];
 
 /* LCOV_EXCL_START */
 #ifdef HAVE_WEAK_SYMBOLS
 __attribute__((weak)) void
 _sodium_dummy_symbol_to_prevent_memzero_lto(void *const  pnt,
-                                            const size_t len);
+                                            const std::size_t len);
 __attribute__((weak)) void
 _sodium_dummy_symbol_to_prevent_memzero_lto(void *const  pnt,
-                                            const size_t len)
+                                            const std::size_t len)
 {
     (void) pnt; /* LCOV_EXCL_LINE */
     (void) len; /* LCOV_EXCL_LINE */
@@ -122,12 +121,12 @@ _sodium_dummy_symbol_to_prevent_memzero_lto(void *const  pnt,
 /* LCOV_EXCL_STOP */
 
 void
-sodium_memzero(void * const pnt, const size_t len)
+sodium_memzero(void * const pnt, const std::size_t len)
 {
 #ifdef _WIN32
     SecureZeroMemory(pnt, len);
 #elif defined(HAVE_MEMSET_S)
-    if (len > 0U && memset_s(pnt, (rsize_t) len, 0, (rsize_t) len) != 0) {
+    if (len > 0U && memset_s(pnt, (rstd::size_t) len, 0, (rstd::size_t) len) != 0) {
         sodium_misuse(); /* LCOV_EXCL_LINE */
     }
 #elif defined(HAVE_EXPLICIT_BZERO)
@@ -145,7 +144,7 @@ sodium_memzero(void * const pnt, const size_t len)
 #else
     volatile unsigned char *volatile pnt_ =
         (volatile unsigned char *volatile) pnt;
-    size_t i = (size_t) 0U;
+    std::size_t i = (std::size_t) 0U;
 
     while (i < len) {
         pnt_[i++] = 0U;
@@ -154,7 +153,7 @@ sodium_memzero(void * const pnt, const size_t len)
 }
 
 void
-sodium_stackzero(const size_t len)
+sodium_stackzero(const std::size_t len)
 {
 #ifdef HAVE_C_VARARRAYS
     unsigned char fodder[len];
@@ -168,11 +167,11 @@ sodium_stackzero(const size_t len)
 __attribute__((weak)) void
 _sodium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
                                            const unsigned char *b2,
-                                           const size_t         len);
+                                           const std::size_t         len);
 __attribute__((weak)) void
 _sodium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
                                            const unsigned char *b2,
-                                           const size_t         len)
+                                           const std::size_t         len)
 {
     (void) b1;
     (void) b2;
@@ -181,7 +180,7 @@ _sodium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
 #endif
 
 int
-sodium_memcmp(const void *const b1_, const void *const b2_, size_t len)
+sodium_memcmp(const void *const b1_, const void *const b2_, std::size_t len)
 {
 #ifdef HAVE_WEAK_SYMBOLS
     const unsigned char *b1 = (const unsigned char *) b1_;
@@ -192,14 +191,14 @@ sodium_memcmp(const void *const b1_, const void *const b2_, size_t len)
     const volatile unsigned char *volatile b2 =
         (const volatile unsigned char *volatile) b2_;
 #endif
-    size_t                 i;
+    std::size_t                 i;
     volatile unsigned char d = 0U;
 
 #if HAVE_WEAK_SYMBOLS
     _sodium_dummy_symbol_to_prevent_memcmp_lto(b1, b2, len);
 #endif
     for (i = 0U; i < len; i++) {
-        d |= b1[i] ^ b2[i];
+        d = d | b1[i] ^ b2[i];
     }
     return (1 & ((d - 1) >> 8)) - 1;
 }
@@ -208,11 +207,11 @@ sodium_memcmp(const void *const b1_, const void *const b2_, size_t len)
 __attribute__((weak)) void
 _sodium_dummy_symbol_to_prevent_compare_lto(const unsigned char *b1,
                                             const unsigned char *b2,
-                                            const size_t         len);
+                                            const std::size_t         len);
 __attribute__((weak)) void
 _sodium_dummy_symbol_to_prevent_compare_lto(const unsigned char *b1,
                                             const unsigned char *b2,
-                                            const size_t         len)
+                                            const std::size_t         len)
 {
     (void) b1;
     (void) b2;
@@ -221,7 +220,7 @@ _sodium_dummy_symbol_to_prevent_compare_lto(const unsigned char *b1,
 #endif
 
 int
-sodium_compare(const unsigned char *b1_, const unsigned char *b2_, size_t len)
+sodium_compare(const unsigned char *b1_, const unsigned char *b2_, std::size_t len)
 {
 #ifdef HAVE_WEAK_SYMBOLS
     const unsigned char *b1 = b1_;
@@ -232,7 +231,7 @@ sodium_compare(const unsigned char *b1_, const unsigned char *b2_, size_t len)
     const volatile unsigned char *volatile b2 =
         (const volatile unsigned char *volatile) b2_;
 #endif
-    size_t                 i;
+    std::size_t                 i;
     volatile unsigned char gt = 0U;
     volatile unsigned char eq = 1U;
     uint16_t               x1, x2;
@@ -252,9 +251,9 @@ sodium_compare(const unsigned char *b1_, const unsigned char *b2_, size_t len)
 }
 
 int
-sodium_is_zero(const unsigned char *n, const size_t nlen)
+sodium_is_zero(const unsigned char *n, const std::size_t nlen)
 {
-    size_t                 i;
+    std::size_t                 i;
     volatile unsigned char d = 0U;
 
     for (i = 0U; i < nlen; i++) {
@@ -264,9 +263,9 @@ sodium_is_zero(const unsigned char *n, const size_t nlen)
 }
 
 void
-sodium_increment(unsigned char *n, const size_t nlen)
+sodium_increment(unsigned char *n, const std::size_t nlen)
 {
-    size_t        i = 0U;
+    std::size_t        i = 0U;
     uint_fast16_t c = 1U;
 
 #ifdef HAVE_AMD64_ASM
@@ -311,9 +310,9 @@ sodium_increment(unsigned char *n, const size_t nlen)
 }
 
 void
-sodium_add(unsigned char *a, const unsigned char *b, const size_t len)
+sodium_add(unsigned char *a, const unsigned char *b, const std::size_t len)
 {
-    size_t        i;
+    std::size_t        i;
     uint_fast16_t c = 0U;
 
 #ifdef HAVE_AMD64_ASM
@@ -360,10 +359,10 @@ sodium_add(unsigned char *a, const unsigned char *b, const size_t len)
 }
 
 void
-sodium_sub(unsigned char *a, const unsigned char *b, const size_t len)
+sodium_sub(unsigned char *a, const unsigned char *b, const std::size_t len)
 {
     uint_fast16_t c = 0U;
-    size_t        i;
+    std::size_t        i;
 
 #ifdef HAVE_AMD64_ASM
     uint64_t t64_1, t64_2, t64_3, t64_4;
@@ -409,16 +408,16 @@ _sodium_alloc_init(void)
 # if defined(_SC_PAGESIZE) && defined(HAVE_SYSCONF)
     long page_size_ = sysconf(_SC_PAGESIZE);
     if (page_size_ > 0L) {
-        page_size = (size_t) page_size_;
+        page_size = (std::size_t) page_size_;
     }
 # elif defined(WINAPI_DESKTOP)
     SYSTEM_INFO si;
     GetSystemInfo(&si);
-    page_size = (size_t) si.dwPageSize;
+    page_size = (std::size_t) si.dwPageSize;
 # elif !defined(PAGE_SIZE)
 #  warning Unknown page size
 # endif
-    if (page_size < CANARY_SIZE || page_size < sizeof(size_t)) {
+    if (page_size < CANARY_SIZE || page_size < sizeof(std::size_t)) {
         sodium_misuse(); /* LCOV_EXCL_LINE */
     }
 #endif
@@ -428,7 +427,7 @@ _sodium_alloc_init(void)
 }
 
 int
-sodium_mlock(void *const addr, const size_t len)
+sodium_mlock(void *const addr, const std::size_t len)
 {
 #if defined(MADV_DONTDUMP) && defined(HAVE_MADVISE)
     (void) madvise(addr, len, MADV_DONTDUMP);
@@ -444,7 +443,7 @@ sodium_mlock(void *const addr, const size_t len)
 }
 
 int
-sodium_munlock(void *const addr, const size_t len)
+sodium_munlock(void *const addr, const std::size_t len)
 {
     sodium_memzero(addr, len);
 #if defined(MADV_DODUMP) && defined(HAVE_MADVISE)
@@ -461,7 +460,7 @@ sodium_munlock(void *const addr, const size_t len)
 }
 
 static int
-_mprotect_noaccess(void *ptr, size_t size)
+_mprotect_noaccess(void *ptr, std::size_t size)
 {
 #ifdef HAVE_MPROTECT
     return mprotect(ptr, size, PROT_NONE);
@@ -475,7 +474,7 @@ _mprotect_noaccess(void *ptr, size_t size)
 }
 
 static int
-_mprotect_readonly(void *ptr, size_t size)
+_mprotect_readonly(void *ptr, std::size_t size)
 {
 #ifdef HAVE_MPROTECT
     return mprotect(ptr, size, PROT_READ);
@@ -489,7 +488,7 @@ _mprotect_readonly(void *ptr, size_t size)
 }
 
 static int
-_mprotect_readwrite(void *ptr, size_t size)
+_mprotect_readwrite(void *ptr, std::size_t size)
 {
 #ifdef HAVE_MPROTECT
     return mprotect(ptr, size, PROT_READ | PROT_WRITE);
@@ -517,16 +516,16 @@ _out_of_bounds(void)
     abort(); /* not something we want any higher-level API to catch */
 } /* LCOV_EXCL_LINE */
 
-static inline size_t
-_page_round(const size_t size)
+static inline std::size_t
+_page_round(const std::size_t size)
 {
-    const size_t page_mask = page_size - 1U;
+    const std::size_t page_mask = page_size - 1U;
 
     return (size + page_mask) & ~page_mask;
 }
 
 static __attribute__((malloc)) unsigned char *
-_alloc_aligned(const size_t size)
+_alloc_aligned(const std::size_t size)
 {
     void *ptr;
 
@@ -549,7 +548,7 @@ _alloc_aligned(const size_t size)
 }
 
 static void
-_free_aligned(unsigned char *const ptr, const size_t size)
+_free_aligned(unsigned char *const ptr, const std::size_t size)
 {
 # if defined(MAP_ANON) && defined(HAVE_MMAP)
     (void) munmap(ptr, size);
@@ -567,7 +566,7 @@ _unprotected_ptr_from_user_ptr(void *const ptr)
 {
     uintptr_t      unprotected_ptr_u;
     unsigned char *canary_ptr;
-    size_t         page_mask;
+    std::size_t         page_mask;
 
     canary_ptr = ((unsigned char *) ptr) - sizeof canary;
     page_mask = page_size - 1U;
@@ -582,23 +581,23 @@ _unprotected_ptr_from_user_ptr(void *const ptr)
 
 #ifndef HAVE_ALIGNED_MALLOC
 static __attribute__((malloc)) void *
-_sodium_malloc(const size_t size)
+_sodium_malloc(const std::size_t size)
 {
-    return malloc(size > (size_t) 0U ? size : (size_t) 1U);
+    return malloc(size > (std::size_t) 0U ? size : (std::size_t) 1U);
 }
 #else
 static __attribute__((malloc)) void *
-_sodium_malloc(const size_t size)
+_sodium_malloc(const std::size_t size)
 {
     void          *user_ptr;
     unsigned char *base_ptr;
     unsigned char *canary_ptr;
     unsigned char *unprotected_ptr;
-    size_t         size_with_canary;
-    size_t         total_size;
-    size_t         unprotected_size;
+    std::size_t         size_with_canary;
+    std::size_t         total_size;
+    std::size_t         unprotected_size;
 
-    if (size >= (size_t) SIZE_MAX - page_size * 4U) {
+    if (size >= (std::size_t) SIZE_MAX - page_size * 4U) {
         errno = ENOMEM;
         return NULL;
     }
@@ -631,7 +630,7 @@ _sodium_malloc(const size_t size)
 #endif /* !HAVE_ALIGNED_MALLOC */
 
 __attribute__((malloc)) void *
-sodium_malloc(const size_t size)
+sodium_malloc(const std::size_t size)
 {
     void *ptr;
 
@@ -644,9 +643,9 @@ sodium_malloc(const size_t size)
 }
 
 __attribute__((malloc)) void *
-sodium_allocarray(size_t count, size_t size)
+sodium_allocarray(std::size_t count, std::size_t size)
 {
-    if (count > (size_t) 0U && size >= (size_t) SIZE_MAX / count) {
+    if (count > (std::size_t) 0U && size >= (std::size_t) SIZE_MAX / count) {
         errno = ENOMEM;
         return NULL;
     }
@@ -666,8 +665,8 @@ sodium_free(void *ptr)
     unsigned char *base_ptr;
     unsigned char *canary_ptr;
     unsigned char *unprotected_ptr;
-    size_t         total_size;
-    size_t         unprotected_size;
+    std::size_t         total_size;
+    std::size_t         unprotected_size;
 
     if (ptr == NULL) {
         return;
@@ -694,7 +693,7 @@ sodium_free(void *ptr)
 
 #ifndef HAVE_PAGE_PROTECTION
 static int
-_sodium_mprotect(void *ptr, int (*cb)(void *ptr, size_t size))
+_sodium_mprotect(void *ptr, int (*cb)(void *ptr, std::size_t size))
 {
     (void) ptr;
     (void) cb;
@@ -703,11 +702,11 @@ _sodium_mprotect(void *ptr, int (*cb)(void *ptr, size_t size))
 }
 #else
 static int
-_sodium_mprotect(void *ptr, int (*cb)(void *ptr, size_t size))
+_sodium_mprotect(void *ptr, int (*cb)(void *ptr, std::size_t size))
 {
     unsigned char *base_ptr;
     unsigned char *unprotected_ptr;
-    size_t         unprotected_size;
+    std::size_t         unprotected_size;
 
     unprotected_ptr = _unprotected_ptr_from_user_ptr(ptr);
     base_ptr        = unprotected_ptr - page_size * 2U;
@@ -736,13 +735,13 @@ sodium_mprotect_readwrite(void *ptr)
 }
 
 int
-sodium_pad(size_t *padded_buflen_p, unsigned char *buf,
-           size_t unpadded_buflen, size_t blocksize, size_t max_buflen)
+sodium_pad(std::size_t *padded_buflen_p, unsigned char *buf,
+           std::size_t unpadded_buflen, std::size_t blocksize, std::size_t max_buflen)
 {
     unsigned char          *tail;
-    size_t                  i;
-    size_t                  xpadlen;
-    size_t                  xpadded_len;
+    std::size_t                  i;
+    std::size_t                  xpadlen;
+    std::size_t                  xpadded_len;
     volatile unsigned char  mask;
     unsigned char           barrier_mask;
 
@@ -755,7 +754,7 @@ sodium_pad(size_t *padded_buflen_p, unsigned char *buf,
     } else {
         xpadlen -= unpadded_buflen % blocksize;
     }
-    if ((size_t) SIZE_MAX - unpadded_buflen <= xpadlen) {
+    if ((std::size_t) SIZE_MAX - unpadded_buflen <= xpadlen) {
         sodium_misuse();
     }
     xpadded_len = unpadded_buflen + xpadlen;
@@ -769,7 +768,7 @@ sodium_pad(size_t *padded_buflen_p, unsigned char *buf,
     mask = 0U;
     for (i = 0; i < blocksize; i++) {
         barrier_mask = (unsigned char) (((i ^ xpadlen) - 1U)
-           >> ((sizeof(size_t) - 1) * CHAR_BIT));
+           >> ((sizeof(std::size_t) - 1) * CHAR_BIT));
         *(tail - i) = ((*(tail - i)) & mask) | (0x80 & barrier_mask);
         mask |= barrier_mask;
     }
@@ -777,16 +776,16 @@ sodium_pad(size_t *padded_buflen_p, unsigned char *buf,
 }
 
 int
-sodium_unpad(size_t *unpadded_buflen_p, const unsigned char *buf,
-             size_t padded_buflen, size_t blocksize)
+sodium_unpad(std::size_t *unpadded_buflen_p, const unsigned char *buf,
+             std::size_t padded_buflen, std::size_t blocksize)
 {
     const unsigned char *tail;
     unsigned char        acc = 0U;
     unsigned char        c;
     unsigned char        valid = 0U;
-    volatile size_t      pad_len = 0U;
-    size_t               i;
-    size_t               is_barrier;
+    volatile std::size_t      pad_len = 0U;
+    std::size_t               i;
+    std::size_t               is_barrier;
 
     if (padded_buflen < blocksize || blocksize <= 0U) {
         return -1;
