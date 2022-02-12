@@ -24,8 +24,8 @@ extern int stream_salsa20_xmm6_xor_ic(unsigned char *c, const unsigned char *m,
 
 struct crypto_stream_salsa20_implementation
     crypto_stream_salsa20_xmm6_implementation = {
-        SODIUM_C99(.stream =) stream_salsa20_xmm6,
-        SODIUM_C99(.stream_xor_ic =) stream_salsa20_xmm6_xor_ic,
+        LITHIUM_C99(.stream =) stream_salsa20_xmm6,
+        LITHIUM_C99(.stream_xor_ic =) stream_salsa20_xmm6_xor_ic,
     };
 
 #endif

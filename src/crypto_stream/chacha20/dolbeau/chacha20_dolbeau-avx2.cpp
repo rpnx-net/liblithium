@@ -97,7 +97,7 @@ stream_ref(unsigned char *c, unsigned long long clen, const unsigned char *n,
     chacha_ivsetup(&ctx, n, NULL);
     memset(c, 0, clen);
     chacha20_encrypt_bytes(&ctx, c, c, clen);
-    sodium_memzero(&ctx, sizeof ctx);
+    lithium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
@@ -116,7 +116,7 @@ stream_ietf_ext_ref(unsigned char *c, unsigned long long clen,
     chacha_ietf_ivsetup(&ctx, n, NULL);
     memset(c, 0, clen);
     chacha20_encrypt_bytes(&ctx, c, c, clen);
-    sodium_memzero(&ctx, sizeof ctx);
+    lithium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
@@ -141,7 +141,7 @@ stream_ref_xor_ic(unsigned char *c, const unsigned char *m,
     chacha_keysetup(&ctx, k);
     chacha_ivsetup(&ctx, n, ic_bytes);
     chacha20_encrypt_bytes(&ctx, m, c, mlen);
-    sodium_memzero(&ctx, sizeof ctx);
+    lithium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
@@ -161,17 +161,17 @@ stream_ietf_ext_ref_xor_ic(unsigned char *c, const unsigned char *m,
     chacha_keysetup(&ctx, k);
     chacha_ietf_ivsetup(&ctx, n, ic_bytes);
     chacha20_encrypt_bytes(&ctx, m, c, mlen);
-    sodium_memzero(&ctx, sizeof ctx);
+    lithium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
 
 struct crypto_stream_chacha20_implementation
     crypto_stream_chacha20_dolbeau_avx2_implementation = {
-        SODIUM_C99(.stream =) stream_ref,
-        SODIUM_C99(.stream_ietf_ext =) stream_ietf_ext_ref,
-        SODIUM_C99(.stream_xor_ic =) stream_ref_xor_ic,
-        SODIUM_C99(.stream_ietf_ext_xor_ic =) stream_ietf_ext_ref_xor_ic
+        LITHIUM_C99(.stream =) stream_ref,
+        LITHIUM_C99(.stream_ietf_ext =) stream_ietf_ext_ref,
+        LITHIUM_C99(.stream_xor_ic =) stream_ref_xor_ic,
+        LITHIUM_C99(.stream_ietf_ext_xor_ic =) stream_ietf_ext_ref_xor_ic
     };
 
 #endif

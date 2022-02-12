@@ -62,8 +62,8 @@ crypto_scalarmult_curve25519_sandy2x(unsigned char *q, const unsigned char *n,
 
 struct crypto_scalarmult_curve25519_implementation
 crypto_scalarmult_curve25519_sandy2x_implementation = {
-    SODIUM_C99(.mult = ) crypto_scalarmult_curve25519_sandy2x,
-    SODIUM_C99(.mult_base = ) NULL
+    LITHIUM_C99(.mult = ) crypto_scalarmult_curve25519_sandy2x,
+    LITHIUM_C99(.mult_base = ) NULL
 };
 
 #endif

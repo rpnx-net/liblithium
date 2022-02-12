@@ -9,22 +9,22 @@ extern "C" {
 #endif
 
 #define crypto_core_salsa2012_OUTPUTBYTES 64U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_core_salsa2012_outputbytes(void);
 
 #define crypto_core_salsa2012_INPUTBYTES 16U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_core_salsa2012_inputbytes(void);
 
 #define crypto_core_salsa2012_KEYBYTES 32U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_core_salsa2012_keybytes(void);
 
 #define crypto_core_salsa2012_CONSTBYTES 16U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_core_salsa2012_constbytes(void);
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_core_salsa2012(unsigned char *out, const unsigned char *in,
                           const unsigned char *k, const unsigned char *c)
             __attribute__ ((nonnull(1, 2, 3)));

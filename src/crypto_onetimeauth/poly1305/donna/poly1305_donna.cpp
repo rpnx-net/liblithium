@@ -114,11 +114,11 @@ crypto_onetimeauth_poly1305_donna_verify(const unsigned char *h,
 
 struct crypto_onetimeauth_poly1305_implementation
     crypto_onetimeauth_poly1305_donna_implementation = {
-        SODIUM_C99(.onetimeauth =) crypto_onetimeauth_poly1305_donna,
-        SODIUM_C99(.onetimeauth_verify =)
+        LITHIUM_C99(.onetimeauth =) crypto_onetimeauth_poly1305_donna,
+        LITHIUM_C99(.onetimeauth_verify =)
             crypto_onetimeauth_poly1305_donna_verify,
-        SODIUM_C99(.onetimeauth_init =) crypto_onetimeauth_poly1305_donna_init,
-        SODIUM_C99(.onetimeauth_update =)
+        LITHIUM_C99(.onetimeauth_init =) crypto_onetimeauth_poly1305_donna_init,
+        LITHIUM_C99(.onetimeauth_update =)
             crypto_onetimeauth_poly1305_donna_update,
-        SODIUM_C99(.onetimeauth_final =) crypto_onetimeauth_poly1305_donna_final
+        LITHIUM_C99(.onetimeauth_final =) crypto_onetimeauth_poly1305_donna_final
     };

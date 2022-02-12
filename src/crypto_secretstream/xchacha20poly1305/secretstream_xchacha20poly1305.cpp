@@ -126,11 +126,11 @@ crypto_secretstream_xchacha20poly1305_push
     COMPILER_ASSERT(crypto_secretstream_xchacha20poly1305_MESSAGEBYTES_MAX
                     <= crypto_aead_chacha20poly1305_ietf_MESSAGEBYTES_MAX);
     if (mlen > crypto_secretstream_xchacha20poly1305_MESSAGEBYTES_MAX) {
-        sodium_misuse();
+        lithium_misuse();
     }
     crypto_stream_chacha20_ietf(block, sizeof block, state->nonce, state->k);
     crypto_onetimeauth_poly1305_init(&poly1305_state, block);
-    sodium_memzero(block, sizeof block);
+    lithium_memzero(block, sizeof block);
 
     crypto_onetimeauth_poly1305_update(&poly1305_state, ad, adlen);
     crypto_onetimeauth_poly1305_update(&poly1305_state, _pad0,
@@ -157,16 +157,16 @@ crypto_secretstream_xchacha20poly1305_push
 
     mac = c + mlen;
     crypto_onetimeauth_poly1305_final(&poly1305_state, mac);
-    sodium_memzero(&poly1305_state, sizeof poly1305_state);
+    lithium_memzero(&poly1305_state, sizeof poly1305_state);
 
     COMPILER_ASSERT(crypto_onetimeauth_poly1305_BYTES >=
                     crypto_secretstream_xchacha20poly1305_INONCEBYTES);
     XOR_BUF(STATE_INONCE(state), mac,
             crypto_secretstream_xchacha20poly1305_INONCEBYTES);
-    sodium_increment(STATE_COUNTER(state),
+    lithium_increment(STATE_COUNTER(state),
                      crypto_secretstream_xchacha20poly1305_COUNTERBYTES);
     if ((tag & crypto_secretstream_xchacha20poly1305_TAG_REKEY) != 0 ||
-        sodium_is_zero(STATE_COUNTER(state),
+        lithium_is_zero(STATE_COUNTER(state),
                        crypto_secretstream_xchacha20poly1305_COUNTERBYTES)) {
         crypto_secretstream_xchacha20poly1305_rekey(state);
     }
@@ -203,11 +203,11 @@ crypto_secretstream_xchacha20poly1305_pull
     }
     mlen = inlen - crypto_secretstream_xchacha20poly1305_ABYTES;
     if (mlen > crypto_secretstream_xchacha20poly1305_MESSAGEBYTES_MAX) {
-        sodium_misuse();
+        lithium_misuse();
     }
     crypto_stream_chacha20_ietf(block, sizeof block, state->nonce, state->k);
     crypto_onetimeauth_poly1305_init(&poly1305_state, block);
-    sodium_memzero(block, sizeof block);
+    lithium_memzero(block, sizeof block);
 
     crypto_onetimeauth_poly1305_update(&poly1305_state, ad, adlen);
     crypto_onetimeauth_poly1305_update(&poly1305_state, _pad0,
@@ -233,21 +233,21 @@ crypto_secretstream_xchacha20poly1305_pull
     crypto_onetimeauth_poly1305_update(&poly1305_state, slen, sizeof slen);
 
     crypto_onetimeauth_poly1305_final(&poly1305_state, mac);
-    sodium_memzero(&poly1305_state, sizeof poly1305_state);
+    lithium_memzero(&poly1305_state, sizeof poly1305_state);
 
     stored_mac = c + mlen;
-    if (sodium_memcmp(mac, stored_mac, sizeof mac) != 0) {
-        sodium_memzero(mac, sizeof mac);
+    if (lithium_memcmp(mac, stored_mac, sizeof mac) != 0) {
+        lithium_memzero(mac, sizeof mac);
         return -1;
     }
 
     crypto_stream_chacha20_ietf_xor_ic(m, c, mlen, state->nonce, 2U, state->k);
     XOR_BUF(STATE_INONCE(state), mac,
             crypto_secretstream_xchacha20poly1305_INONCEBYTES);
-    sodium_increment(STATE_COUNTER(state),
+    lithium_increment(STATE_COUNTER(state),
                      crypto_secretstream_xchacha20poly1305_COUNTERBYTES);
     if ((tag & crypto_secretstream_xchacha20poly1305_TAG_REKEY) != 0 ||
-        sodium_is_zero(STATE_COUNTER(state),
+        lithium_is_zero(STATE_COUNTER(state),
                        crypto_secretstream_xchacha20poly1305_COUNTERBYTES)) {
         crypto_secretstream_xchacha20poly1305_rekey(state);
     }

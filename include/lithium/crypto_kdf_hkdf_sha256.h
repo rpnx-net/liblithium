@@ -17,26 +17,26 @@ extern "C" {
 #endif
 
 #define crypto_kdf_hkdf_sha256_KEYBYTES crypto_auth_hmacsha256_BYTES
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_kdf_hkdf_sha256_keybytes(void);
 
 #define crypto_kdf_hkdf_sha256_BYTES_MIN 0U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_kdf_hkdf_sha256_bytes_min(void);
 
 #define crypto_kdf_hkdf_sha256_BYTES_MAX (0xff * crypto_auth_hmacsha256_BYTES)
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_kdf_hkdf_sha256_bytes_max(void);
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_kdf_hkdf_sha256_extract(unsigned char prk[crypto_kdf_hkdf_sha256_KEYBYTES],
                                    const unsigned char *salt, size_t salt_len,
                                    const unsigned char *ikm, size_t ikm_len);
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 void crypto_kdf_hkdf_sha256_keygen(unsigned char prk[crypto_kdf_hkdf_sha256_KEYBYTES]);
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_kdf_hkdf_sha256_expand(unsigned char *out, size_t out_len,
                                   const char *ctx, size_t ctx_len,
                                   const unsigned char prk[crypto_kdf_hkdf_sha256_KEYBYTES]);

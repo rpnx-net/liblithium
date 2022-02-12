@@ -89,5 +89,5 @@ crypto_auth_hmacsha512256_verify(const unsigned char *h,
     crypto_auth_hmacsha512256(correct, in, inlen, k);
 
     return crypto_verify_32(h, correct) | (-(h == correct)) |
-           sodium_memcmp(correct, h, 32);
+           lithium_memcmp(correct, h, 32);
 }

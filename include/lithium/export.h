@@ -1,6 +1,6 @@
 
-#ifndef sodium_export_H
-#define sodium_export_H
+#ifndef lithium_export_H
+#define lithium_export_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -13,33 +13,33 @@
 # define __attribute__(a)
 #endif
 
-#ifdef SODIUM_STATIC
-# define SODIUM_EXPORT
-# define SODIUM_EXPORT_WEAK
+#ifdef LITHIUM_STATIC
+# define LITHIUM_EXPORT
+# define LITHIUM_EXPORT_WEAK
 #else
 # if defined(_MSC_VER)
-#  ifdef SODIUM_DLL_EXPORT
-#   define SODIUM_EXPORT __declspec(dllexport)
+#  ifdef LITHIUM_DLL_EXPORT
+#   define LITHIUM_EXPORT __declspec(dllexport)
 #  else
-#   define SODIUM_EXPORT __declspec(dllimport)
+#   define LITHIUM_EXPORT __declspec(dllimport)
 #  endif
 # else
 #  if defined(__SUNPRO_C)
 #   ifndef __GNU_C__
-#    define SODIUM_EXPORT __attribute__ (visibility(__global))
+#    define LITHIUM_EXPORT __attribute__ (visibility(__global))
 #   else
-#    define SODIUM_EXPORT __attribute__ __global
+#    define LITHIUM_EXPORT __attribute__ __global
 #   endif
 #  elif defined(_MSG_VER)
-#   define SODIUM_EXPORT extern __declspec(dllexport)
+#   define LITHIUM_EXPORT extern __declspec(dllexport)
 #  else
-#   define SODIUM_EXPORT __attribute__ ((visibility ("default")))
+#   define LITHIUM_EXPORT __attribute__ ((visibility ("default")))
 #  endif
 # endif
-# if defined(__ELF__) && !defined(SODIUM_DISABLE_WEAK_FUNCTIONS)
-#  define SODIUM_EXPORT_WEAK SODIUM_EXPORT __attribute__((weak))
+# if defined(__ELF__) && !defined(LITHIUM_DISABLE_WEAK_FUNCTIONS)
+#  define LITHIUM_EXPORT_WEAK LITHIUM_EXPORT __attribute__((weak))
 # else
-#  define SODIUM_EXPORT_WEAK SODIUM_EXPORT
+#  define LITHIUM_EXPORT_WEAK LITHIUM_EXPORT
 # endif
 #endif
 
@@ -51,7 +51,7 @@
 # endif
 #endif
 
-#define SODIUM_MIN(A, B) ((A) < (B) ? (A) : (B))
-#define SODIUM_SIZE_MAX SODIUM_MIN(UINT64_MAX, SIZE_MAX)
+#define LITHIUM_MIN(A, B) ((A) < (B) ? (A) : (B))
+#define LITHIUM_SIZE_MAX LITHIUM_MIN(UINT64_MAX, SIZE_MAX)
 
 #endif

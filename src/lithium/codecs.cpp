@@ -11,7 +11,7 @@
 
 /* Derived from original code by CodesInChaos */
 char *
-sodium_bin2hex(char *const hex, const size_t hex_maxlen,
+lithium_bin2hex(char *const hex, const size_t hex_maxlen,
                const unsigned char *const bin, const size_t bin_len)
 {
     size_t       i = (size_t) 0U;
@@ -20,7 +20,7 @@ sodium_bin2hex(char *const hex, const size_t hex_maxlen,
     int          c;
 
     if (bin_len >= SIZE_MAX / 2 || hex_maxlen <= bin_len * 2U) {
-        sodium_misuse(); /* LCOV_EXCL_LINE */
+        lithium_misuse(); /* LCOV_EXCL_LINE */
     }
     while (i < bin_len) {
         c = bin[i] & 0xf;
@@ -38,7 +38,7 @@ sodium_bin2hex(char *const hex, const size_t hex_maxlen,
 }
 
 int
-sodium_hex2bin(unsigned char *const bin, const size_t bin_maxlen,
+lithium_hex2bin(unsigned char *const bin, const size_t bin_maxlen,
                const char *const hex, const size_t hex_len,
                const char *const ignore, size_t *const bin_len,
                const char **const hex_end)
@@ -160,23 +160,23 @@ b64_urlsafe_char_to_byte(int c)
 #define VARIANT_URLSAFE_MASK    0x4U
 
 static void
-sodium_base64_check_variant(const int variant)
+lithium_base64_check_variant(const int variant)
 {
     if ((((unsigned int) variant) & ~ 0x6U) != 0x1U) {
-        sodium_misuse();
+        lithium_misuse();
     }
 }
 
 size_t
-sodium_base64_encoded_len(const size_t bin_len, const int variant)
+lithium_base64_encoded_len(const size_t bin_len, const int variant)
 {
-    sodium_base64_check_variant(variant);
+    lithium_base64_check_variant(variant);
 
-    return sodium_base64_ENCODED_LEN(bin_len, variant);
+    return lithium_base64_ENCODED_LEN(bin_len, variant);
 }
 
 char *
-sodium_bin2base64(char * const b64, const size_t b64_maxlen,
+lithium_bin2base64(char * const b64, const size_t b64_maxlen,
                   const unsigned char * const bin, const size_t bin_len,
                   const int variant)
 {
@@ -188,7 +188,7 @@ sodium_bin2base64(char * const b64, const size_t b64_maxlen,
     size_t       remainder;
     unsigned int acc = 0U;
 
-    sodium_base64_check_variant(variant);
+    lithium_base64_check_variant(variant);
     nibbles = bin_len / 3;
     remainder = bin_len - 3 * nibbles;
     b64_len = nibbles * 4;
@@ -200,7 +200,7 @@ sodium_bin2base64(char * const b64, const size_t b64_maxlen,
         }
     }
     if (b64_maxlen <= b64_len) {
-        sodium_misuse();
+        lithium_misuse();
     }
     if ((((unsigned int) variant) & VARIANT_URLSAFE_MASK) != 0U) {
         while (bin_pos < bin_len) {
@@ -239,7 +239,7 @@ sodium_bin2base64(char * const b64, const size_t b64_maxlen,
 }
 
 static int
-_sodium_base642bin_skip_padding(const char * const b64, const size_t b64_len,
+_lithium_base642bin_skip_padding(const char * const b64, const size_t b64_len,
                                 size_t * const b64_pos_p,
                                 const char * const ignore, size_t padding_len)
 {
@@ -263,7 +263,7 @@ _sodium_base642bin_skip_padding(const char * const b64, const size_t b64_len,
 }
 
 int
-sodium_base642bin(unsigned char * const bin, const size_t bin_maxlen,
+lithium_base642bin(unsigned char * const bin, const size_t bin_maxlen,
                   const char * const b64, const size_t b64_len,
                   const char * const ignore, size_t * const bin_len,
                   const char ** const b64_end, const int variant)
@@ -277,7 +277,7 @@ sodium_base642bin(unsigned char * const bin, const size_t bin_maxlen,
     unsigned int d;
     char         c;
 
-    sodium_base64_check_variant(variant);
+    lithium_base64_check_variant(variant);
     is_urlsafe = ((unsigned int) variant) & VARIANT_URLSAFE_MASK;
     while (b64_pos < b64_len) {
         c = b64[b64_pos];
@@ -310,7 +310,7 @@ sodium_base642bin(unsigned char * const bin, const size_t bin_maxlen,
         ret = -1;
     } else if (ret == 0 &&
                (((unsigned int) variant) & VARIANT_NO_PADDING_MASK) == 0U) {
-        ret = _sodium_base642bin_skip_padding(b64, b64_len, &b64_pos, ignore,
+        ret = _lithium_base642bin_skip_padding(b64, b64_len, &b64_pos, ignore,
                                               acc_len / 2);
     }
     if (ret != 0) {

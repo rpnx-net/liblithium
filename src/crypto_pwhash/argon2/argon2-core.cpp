@@ -186,9 +186,9 @@ argon2_finalize(const argon2_context *context, argon2_instance_t *instance)
             store_block(blockhash_bytes, &blockhash);
             blake2b_long(context->out, context->outlen, blockhash_bytes,
                          ARGON2_BLOCK_SIZE);
-            sodium_memzero(blockhash.v,
+            lithium_memzero(blockhash.v,
                            ARGON2_BLOCK_SIZE); /* clear blockhash */
-            sodium_memzero(blockhash_bytes,
+            lithium_memzero(blockhash_bytes,
                            ARGON2_BLOCK_SIZE); /* clear blockhash_bytes */
         }
 
@@ -364,7 +364,7 @@ argon2_fill_first_blocks(uint8_t *blockhash, const argon2_instance_t *instance)
         load_block(&instance->region->memory[l * instance->lane_length + 1],
                    blockhash_bytes);
     }
-    sodium_memzero(blockhash_bytes, ARGON2_BLOCK_SIZE);
+    lithium_memzero(blockhash_bytes, ARGON2_BLOCK_SIZE);
 }
 
 static void
@@ -408,7 +408,7 @@ argon2_initial_hash(uint8_t *blockhash, argon2_context *context,
 
         /* LCOV_EXCL_START */
         if (context->flags & ARGON2_FLAG_CLEAR_PASSWORD) {
-            sodium_memzero(context->pwd, context->pwdlen);
+            lithium_memzero(context->pwd, context->pwdlen);
             context->pwdlen = 0;
         }
         /* LCOV_EXCL_STOP */
@@ -431,7 +431,7 @@ argon2_initial_hash(uint8_t *blockhash, argon2_context *context,
             &BlakeHash, (const uint8_t *) context->secret, context->secretlen);
 
         if (context->flags & ARGON2_FLAG_CLEAR_SECRET) {
-            sodium_memzero(context->secret, context->secretlen);
+            lithium_memzero(context->secret, context->secretlen);
             context->secretlen = 0;
         }
     }
@@ -480,14 +480,14 @@ argon2_initialize(argon2_instance_t *instance, argon2_context *context)
     /* Hashing all inputs */
     argon2_initial_hash(blockhash, context, instance->type);
     /* Zeroing 8 extra bytes */
-    sodium_memzero(blockhash + ARGON2_PREHASH_DIGEST_LENGTH,
+    lithium_memzero(blockhash + ARGON2_PREHASH_DIGEST_LENGTH,
                    ARGON2_PREHASH_SEED_LENGTH - ARGON2_PREHASH_DIGEST_LENGTH);
 
     /* 3. Creating first blocks, we always have at least two blocks in a slice
      */
     argon2_fill_first_blocks(blockhash, instance);
     /* Clearing the hash */
-    sodium_memzero(blockhash, ARGON2_PREHASH_SEED_LENGTH);
+    lithium_memzero(blockhash, ARGON2_PREHASH_SEED_LENGTH);
 
     return ARGON2_OK;
 }
@@ -498,20 +498,20 @@ argon2_pick_best_implementation(void)
 /* LCOV_EXCL_START */
 #if defined(HAVE_AVX512FINTRIN_H) && defined(HAVE_AVX2INTRIN_H) && \
     defined(HAVE_TMMINTRIN_H) && defined(HAVE_SMMINTRIN_H)
-    if (sodium_runtime_has_avx512f()) {
+    if (lithium_runtime_has_avx512f()) {
         fill_segment = argon2_fill_segment_avx512f;
         return 0;
     }
 #endif
 #if defined(HAVE_AVX2INTRIN_H) && defined(HAVE_TMMINTRIN_H) && \
     defined(HAVE_SMMINTRIN_H)
-    if (sodium_runtime_has_avx2()) {
+    if (lithium_runtime_has_avx2()) {
         fill_segment = argon2_fill_segment_avx2;
         return 0;
     }
 #endif
 #if defined(HAVE_EMMINTRIN_H) && defined(HAVE_TMMINTRIN_H)
-    if (sodium_runtime_has_ssse3()) {
+    if (lithium_runtime_has_ssse3()) {
         fill_segment = argon2_fill_segment_ssse3;
         return 0;
     }

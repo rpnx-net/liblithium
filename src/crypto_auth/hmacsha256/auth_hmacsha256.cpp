@@ -62,8 +62,8 @@ crypto_auth_hmacsha256_init(crypto_auth_hmacsha256_state *state,
     }
     crypto_hash_sha256_update(&state->octx, pad, 64);
 
-    sodium_memzero((void *) pad, sizeof pad);
-    sodium_memzero((void *) khash, sizeof khash);
+    lithium_memzero((void *) pad, sizeof pad);
+    lithium_memzero((void *) khash, sizeof khash);
 
     return 0;
 }
@@ -87,7 +87,7 @@ crypto_auth_hmacsha256_final(crypto_auth_hmacsha256_state *state,
     crypto_hash_sha256_update(&state->octx, ihash, 32);
     crypto_hash_sha256_final(&state->octx, out);
 
-    sodium_memzero((void *) ihash, sizeof ihash);
+    lithium_memzero((void *) ihash, sizeof ihash);
 
     return 0;
 }
@@ -114,5 +114,5 @@ crypto_auth_hmacsha256_verify(const unsigned char *h, const unsigned char *in,
     crypto_auth_hmacsha256(correct, in, inlen, k);
 
     return crypto_verify_32(h, correct) | (-(h == correct)) |
-           sodium_memcmp(correct, h, 32);
+           lithium_memcmp(correct, h, 32);
 }

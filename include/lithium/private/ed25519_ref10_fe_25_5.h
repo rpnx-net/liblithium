@@ -323,7 +323,7 @@ fe25519_iszero(const fe25519 f)
 
     fe25519_tobytes(s, f);
 
-    return sodium_is_zero(s, 32);
+    return lithium_is_zero(s, 32);
 }
 
 /*

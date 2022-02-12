@@ -863,7 +863,7 @@ poly1305_finish_ext(poly1305_state_internal_t *st, const unsigned char *m,
     memcpy(&mac[0], &h0, 8);
     memcpy(&mac[8], &h1, 8);
 
-    sodium_memzero((void *) st, sizeof *st);
+    lithium_memzero((void *) st, sizeof *st);
 }
 
 static void
@@ -937,13 +937,13 @@ crypto_onetimeauth_poly1305_sse2_verify(const unsigned char *h,
 
 struct crypto_onetimeauth_poly1305_implementation
     crypto_onetimeauth_poly1305_sse2_implementation = {
-        SODIUM_C99(.onetimeauth =) crypto_onetimeauth_poly1305_sse2,
-        SODIUM_C99(.onetimeauth_verify =)
+        LITHIUM_C99(.onetimeauth =) crypto_onetimeauth_poly1305_sse2,
+        LITHIUM_C99(.onetimeauth_verify =)
             crypto_onetimeauth_poly1305_sse2_verify,
-        SODIUM_C99(.onetimeauth_init =) crypto_onetimeauth_poly1305_sse2_init,
-        SODIUM_C99(.onetimeauth_update =)
+        LITHIUM_C99(.onetimeauth_init =) crypto_onetimeauth_poly1305_sse2_init,
+        LITHIUM_C99(.onetimeauth_update =)
             crypto_onetimeauth_poly1305_sse2_update,
-        SODIUM_C99(.onetimeauth_final =) crypto_onetimeauth_poly1305_sse2_final
+        LITHIUM_C99(.onetimeauth_final =) crypto_onetimeauth_poly1305_sse2_final
     };
 
 #endif

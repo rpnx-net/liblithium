@@ -73,7 +73,7 @@ blake2b_long(void *pout, size_t outlen, const void *in, size_t inlen)
         memcpy(out, out_buffer, toproduce);
     }
 fail:
-    sodium_memzero(&blake_state, sizeof(blake_state));
+    lithium_memzero(&blake_state, sizeof(blake_state));
     return ret;
 #undef TRY
 }

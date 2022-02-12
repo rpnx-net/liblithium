@@ -24,7 +24,7 @@ crypto_scalarmult_ristretto255(unsigned char *q, const unsigned char *n,
     t[31] &= 127;
     ge25519_scalarmult(&Q, t, &P);
     ristretto255_p3_tobytes(q, &Q);
-    if (sodium_is_zero(q, 32)) {
+    if (lithium_is_zero(q, 32)) {
         return -1;
     }
     return 0;
@@ -44,7 +44,7 @@ crypto_scalarmult_ristretto255_base(unsigned char *q,
     t[31] &= 127;
     ge25519_scalarmult_base(&Q, t);
     ristretto255_p3_tobytes(q, &Q);
-    if (sodium_is_zero(q, 32)) {
+    if (lithium_is_zero(q, 32)) {
         return -1;
     }
     return 0;

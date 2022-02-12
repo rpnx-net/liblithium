@@ -139,7 +139,7 @@ crypto_core_ed25519_scalar_random(unsigned char *r)
         randombytes_buf(r, crypto_core_ed25519_SCALARBYTES);
         r[crypto_core_ed25519_SCALARBYTES - 1] &= 0x1f;
     } while (sc25519_is_canonical(r) == 0 ||
-             sodium_is_zero(r, crypto_core_ed25519_SCALARBYTES));
+             lithium_is_zero(r, crypto_core_ed25519_SCALARBYTES));
 }
 
 int
@@ -147,7 +147,7 @@ crypto_core_ed25519_scalar_invert(unsigned char *recip, const unsigned char *s)
 {
     sc25519_invert(recip, s);
 
-    return - sodium_is_zero(s, crypto_core_ed25519_SCALARBYTES);
+    return - lithium_is_zero(s, crypto_core_ed25519_SCALARBYTES);
 }
 
 /* 2^252+27742317777372353535851937790883648493 */
@@ -170,7 +170,7 @@ crypto_core_ed25519_scalar_negate(unsigned char *neg, const unsigned char *s)
     memcpy(t_ + crypto_core_ed25519_SCALARBYTES, L,
            crypto_core_ed25519_SCALARBYTES);
     memcpy(s_, s, crypto_core_ed25519_SCALARBYTES);
-    sodium_sub(t_, s_, sizeof t_);
+    lithium_sub(t_, s_, sizeof t_);
     sc25519_reduce(t_);
     memcpy(neg, t_, crypto_core_ed25519_SCALARBYTES);
 }
@@ -190,7 +190,7 @@ crypto_core_ed25519_scalar_complement(unsigned char *comp,
     memcpy(t_ + crypto_core_ed25519_SCALARBYTES, L,
            crypto_core_ed25519_SCALARBYTES);
     memcpy(s_, s, crypto_core_ed25519_SCALARBYTES);
-    sodium_sub(t_, s_, sizeof t_);
+    lithium_sub(t_, s_, sizeof t_);
     sc25519_reduce(t_);
     memcpy(comp, t_, crypto_core_ed25519_SCALARBYTES);
 }
@@ -206,7 +206,7 @@ crypto_core_ed25519_scalar_add(unsigned char *z, const unsigned char *x,
     memset(y_, 0, sizeof y_);
     memcpy(x_, x, crypto_core_ed25519_SCALARBYTES);
     memcpy(y_, y, crypto_core_ed25519_SCALARBYTES);
-    sodium_add(x_, y_, crypto_core_ed25519_SCALARBYTES);
+    lithium_add(x_, y_, crypto_core_ed25519_SCALARBYTES);
     crypto_core_ed25519_scalar_reduce(z, x_);
 }
 
@@ -236,7 +236,7 @@ crypto_core_ed25519_scalar_reduce(unsigned char *r,
     memcpy(t, s, sizeof t);
     sc25519_reduce(t);
     memcpy(r, t, crypto_core_ed25519_SCALARBYTES);
-    sodium_memzero(t, sizeof t);
+    lithium_memzero(t, sizeof t);
 }
 
 int

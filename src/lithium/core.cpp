@@ -24,20 +24,20 @@ static std::atomic<bool> initialized;
 static std::recursive_mutex lock;
 
 int
-sodium_init(void)
+lithium_init(void)
 {
-    if (sodium_crit_enter() != 0) {
+    if (lithium_crit_enter() != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
     if (initialized != 0) {
-        if (sodium_crit_leave() != 0) {
+        if (lithium_crit_leave() != 0) {
             return -1; /* LCOV_EXCL_LINE */
         }
         return 1;
     }
-    _sodium_runtime_get_cpu_features();
+    _lithium_runtime_get_cpu_features();
     randombytes_stir();
-    _sodium_alloc_init();
+    _lithium_alloc_init();
     _crypto_pwhash_argon2_pick_best_implementation();
     _crypto_generichash_blake2b_pick_best_implementation();
     _crypto_onetimeauth_poly1305_pick_best_implementation();
@@ -45,7 +45,7 @@ sodium_init(void)
     _crypto_stream_chacha20_pick_best_implementation();
     _crypto_stream_salsa20_pick_best_implementation();
     initialized = 1;
-    if (sodium_crit_leave() != 0) {
+    if (lithium_crit_leave() != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
     return 0;
@@ -53,14 +53,14 @@ sodium_init(void)
 
 
 int
-sodium_crit_enter(void)
+lithium_crit_enter(void)
 {
     lock.lock();
     return 0;
 }
 
 int
-sodium_crit_leave(void)
+lithium_crit_leave(void)
 {
     lock.unlock();
     return 0;
@@ -70,12 +70,12 @@ sodium_crit_leave(void)
 static void (*_misuse_handler)(void);
 
 void
-sodium_misuse(void)
+lithium_misuse(void)
 {
     void (*handler)(void);
 
-    (void) sodium_crit_leave();
-    if (sodium_crit_enter() == 0) {
+    (void) lithium_crit_leave();
+    if (lithium_crit_enter() == 0) {
         handler = _misuse_handler;
         if (handler != NULL) {
             handler();
@@ -87,25 +87,25 @@ sodium_misuse(void)
 /* LCOV_EXCL_STOP */
 
 int
-sodium_set_misuse_handler(void (*handler)(void))
+lithium_set_misuse_handler(void (*handler)(void))
 {
-    if (sodium_crit_enter() != 0) {
+    if (lithium_crit_enter() != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
     _misuse_handler = handler;
-    if (sodium_crit_leave() != 0) {
+    if (lithium_crit_leave() != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
     return 0;
 }
 
-#if defined(_WIN32) && !defined(SODIUM_STATIC)
+#if defined(_WIN32) && !defined(LITHIUM_STATIC)
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
     (void) hinstDLL;
     (void) lpReserved;
 
-    if (fdwReason == DLL_PROCESS_DETACH && _sodium_lock_initialized == 2) {
-        DeleteCriticalSection(&_sodium_lock);
+    if (fdwReason == DLL_PROCESS_DETACH && _lithium_lock_initialized == 2) {
+        DeleteCriticalSection(&_lithium_lock);
     }
     return TRUE;
 }

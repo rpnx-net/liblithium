@@ -53,7 +53,7 @@ pickparams(unsigned long long opslimit, const size_t memlimit,
 }
 
 static size_t
-sodium_strnlen(const char *str, size_t maxlen)
+lithium_strnlen(const char *str, size_t maxlen)
 {
     size_t i = 0U;
 
@@ -249,7 +249,7 @@ crypto_pwhash_scryptsalsa208sha256_str_verify(
     escrypt_local_t escrypt_local;
     int             ret = -1;
 
-    if (sodium_strnlen(str, crypto_pwhash_scryptsalsa208sha256_STRBYTES) !=
+    if (lithium_strnlen(str, crypto_pwhash_scryptsalsa208sha256_STRBYTES) !=
         crypto_pwhash_scryptsalsa208sha256_STRBYTES - 1U) {
         return -1;
     }
@@ -264,8 +264,8 @@ crypto_pwhash_scryptsalsa208sha256_str_verify(
         return -1;
     }
     escrypt_free_local(&escrypt_local);
-    ret = sodium_memcmp(wanted, str, sizeof wanted);
-    sodium_memzero(wanted, sizeof wanted);
+    ret = lithium_memcmp(wanted, str, sizeof wanted);
+    lithium_memzero(wanted, sizeof wanted);
 
     return ret;
 }
@@ -283,7 +283,7 @@ crypto_pwhash_scryptsalsa208sha256_str_needs_rehash(
         errno = EINVAL;
         return -1;
     }
-    if (sodium_strnlen(str, crypto_pwhash_scryptsalsa208sha256_STRBYTES) !=
+    if (lithium_strnlen(str, crypto_pwhash_scryptsalsa208sha256_STRBYTES) !=
         crypto_pwhash_scryptsalsa208sha256_STRBYTES - 1U) {
         errno = EINVAL;
         return -1;

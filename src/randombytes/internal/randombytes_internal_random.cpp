@@ -121,13 +121,13 @@ typedef struct InternalRandom_ {
 } InternalRandom;
 
 static InternalRandomGlobal global = {
-    SODIUM_C99(.initialized =) 0,
-    SODIUM_C99(.random_data_source_fd =) -1
+    LITHIUM_C99(.initialized =) 0,
+    LITHIUM_C99(.random_data_source_fd =) -1
 };
 
 static TLS InternalRandom stream = {
-    SODIUM_C99(.initialized =) 0,
-    SODIUM_C99(.rnd32_outleft =) (size_t) 0U
+    LITHIUM_C99(.initialized =) 0,
+    LITHIUM_C99(.rnd32_outleft =) (size_t) 0U
 };
 
 
@@ -137,7 +137,7 @@ static TLS InternalRandom stream = {
 
 #ifdef _WIN32
 static uint64_t
-sodium_hrtime(void)
+lithium_hrtime(void)
 {
     struct _timeb tb;
 # pragma warning(push)
@@ -150,12 +150,12 @@ sodium_hrtime(void)
 #else /* _WIN32 */
 
 static uint64_t
-sodium_hrtime(void)
+lithium_hrtime(void)
 {
     struct timeval tv;
 
     if (gettimeofday(&tv, NULL) != 0) {
-        sodium_misuse(); /* LCOV_EXCL_LINE */
+        lithium_misuse(); /* LCOV_EXCL_LINE */
     }
     return ((uint64_t) tv.tv_sec) * 1000000U + (uint64_t) tv.tv_usec;
 }
@@ -170,7 +170,7 @@ sodium_hrtime(void)
 static void
 randombytes_internal_random_init(void)
 {
-    global.rdrand_available = sodium_runtime_has_rdrand();
+    global.rdrand_available = lithium_runtime_has_rdrand();
 }
 
 #else /* _WIN32 */
@@ -350,7 +350,7 @@ randombytes_internal_random_init(void)
 {
     const int errno_save = errno;
 
-    global.rdrand_available = sodium_runtime_has_rdrand();
+    global.rdrand_available = lithium_runtime_has_rdrand();
     global.getentropy_available = 0;
     global.getrandom_available = 0;
 
@@ -380,14 +380,14 @@ randombytes_internal_random_init(void)
     assert((global.getentropy_available | global.getrandom_available) == 0);
     if ((global.random_data_source_fd =
          randombytes_internal_random_random_dev_open()) == -1) {
-        sodium_misuse(); /* LCOV_EXCL_LINE */
+        lithium_misuse(); /* LCOV_EXCL_LINE */
     }
     errno = errno_save;
     return;
 # endif
 /* LCOV_EXCL_STOP */
 # ifndef HAVE_SAFE_ARC4RANDOM
-    sodium_misuse();
+    lithium_misuse();
 # endif
 }
 
@@ -400,7 +400,7 @@ randombytes_internal_random_init(void)
 static void
 randombytes_internal_random_stir(void)
 {
-    stream.nonce = sodium_hrtime();
+    stream.nonce = lithium_hrtime();
     assert(stream.nonce != (uint64_t) 0U);
     memset(stream.rnd32, 0, sizeof stream.rnd32);
     stream.rnd32_outleft = (size_t) 0U;
@@ -417,13 +417,13 @@ randombytes_internal_random_stir(void)
 # ifdef HAVE_GETENTROPY
      if (global.getentropy_available != 0) {
          if (randombytes_getentropy(stream.key, sizeof stream.key) != 0) {
-             sodium_misuse(); /* LCOV_EXCL_LINE */
+             lithium_misuse(); /* LCOV_EXCL_LINE */
          }
      }
 # elif defined(HAVE_LINUX_COMPATIBLE_GETRANDOM)
      if (global.getrandom_available != 0) {
          if (randombytes_linux_getrandom(stream.key, sizeof stream.key) != 0) {
-             sodium_misuse(); /* LCOV_EXCL_LINE */
+             lithium_misuse(); /* LCOV_EXCL_LINE */
          }
      }
 # elif defined(NONEXISTENT_DEV_RANDOM) && defined(HAVE_SAFE_ARC4RANDOM)
@@ -432,15 +432,15 @@ randombytes_internal_random_stir(void)
     if (global.random_data_source_fd == -1 ||
         safe_read(global.random_data_source_fd, stream.key,
                   sizeof stream.key) != (ssize_t) sizeof stream.key) {
-        sodium_misuse(); /* LCOV_EXCL_LINE */
+        lithium_misuse(); /* LCOV_EXCL_LINE */
     }
 # else
-    sodium_misuse();
+    lithium_misuse();
 # endif
 
 #else /* _WIN32 */
     if (! RtlGenRandom((PVOID) stream.key, (ULONG) sizeof stream.key)) {
-        sodium_misuse(); /* LCOV_EXCL_LINE */
+        lithium_misuse(); /* LCOV_EXCL_LINE */
     }
 #endif
 
@@ -458,7 +458,7 @@ randombytes_internal_random_stir_if_needed(void)
     if (stream.initialized == 0) {
         randombytes_internal_random_stir();
     } else if (global.pid != getpid()) {
-        sodium_misuse(); /* LCOV_EXCL_LINE */
+        lithium_misuse(); /* LCOV_EXCL_LINE */
     }
 #else
     if (stream.initialized == 0) {
@@ -481,7 +481,7 @@ randombytes_internal_random_close(void)
         global.initialized = 0;
         ret = 0;
     }
-    sodium_memzero(&stream, sizeof stream);
+    lithium_memzero(&stream, sizeof stream);
 
     return ret;
 }
@@ -513,7 +513,7 @@ randombytes_internal_random_close(void)
     }
 # endif
 
-    sodium_memzero(&stream, sizeof stream);
+    lithium_memzero(&stream, sizeof stream);
 
     return ret;
 }
@@ -628,10 +628,10 @@ randombytes_internal_implementation_name(void)
 }
 
 struct randombytes_implementation randombytes_internal_implementation = {
-    SODIUM_C99(.implementation_name =) randombytes_internal_implementation_name,
-    SODIUM_C99(.random =) randombytes_internal_random,
-    SODIUM_C99(.stir =) randombytes_internal_random_stir,
-    SODIUM_C99(.uniform =) NULL,
-    SODIUM_C99(.buf =) randombytes_internal_random_buf,
-    SODIUM_C99(.close =) randombytes_internal_random_close
+    LITHIUM_C99(.implementation_name =) randombytes_internal_implementation_name,
+    LITHIUM_C99(.random =) randombytes_internal_random,
+    LITHIUM_C99(.stir =) randombytes_internal_random_stir,
+    LITHIUM_C99(.uniform =) NULL,
+    LITHIUM_C99(.buf =) randombytes_internal_random_buf,
+    LITHIUM_C99(.close =) randombytes_internal_random_close
 };

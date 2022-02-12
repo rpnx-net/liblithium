@@ -17,7 +17,7 @@ crypto_box_curve25519xsalsa20poly1305_seed_keypair(unsigned char *pk,
 
     crypto_hash_sha512(hash, seed, 32);
     memcpy(sk, hash, 32);
-    sodium_memzero(hash, sizeof hash);
+    lithium_memzero(hash, sizeof hash);
 
     return crypto_scalarmult_curve25519_base(pk, sk);
 }
@@ -79,7 +79,7 @@ crypto_box_curve25519xsalsa20poly1305(unsigned char *c, const unsigned char *m,
         return -1;
     }
     ret = crypto_box_curve25519xsalsa20poly1305_afternm(c, m, mlen, n, k);
-    sodium_memzero(k, sizeof k);
+    lithium_memzero(k, sizeof k);
 
     return ret;
 }
@@ -96,7 +96,7 @@ crypto_box_curve25519xsalsa20poly1305_open(
         return -1;
     }
     ret = crypto_box_curve25519xsalsa20poly1305_open_afternm(m, c, clen, n, k);
-    sodium_memzero(k, sizeof k);
+    lithium_memzero(k, sizeof k);
 
     return ret;
 }

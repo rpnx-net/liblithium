@@ -37,7 +37,7 @@ crypto_sign_ed25519_keypair(unsigned char *pk, unsigned char *sk)
 
     randombytes_buf(seed, sizeof seed);
     ret = crypto_sign_ed25519_seed_keypair(pk, sk, seed);
-    sodium_memzero(seed, sizeof seed);
+    lithium_memzero(seed, sizeof seed);
 
     return ret;
 }
@@ -77,7 +77,7 @@ crypto_sign_ed25519_sk_to_curve25519(unsigned char *curve25519_sk,
     h[31] &= 127;
     h[31] |= 64;
     memcpy(curve25519_sk, h, crypto_scalarmult_curve25519_BYTES);
-    sodium_memzero(h, sizeof h);
+    lithium_memzero(h, sizeof h);
 
     return 0;
 }

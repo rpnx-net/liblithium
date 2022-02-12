@@ -54,7 +54,7 @@ _crypto_sign_ed25519_verify_detached(const unsigned char *sig,
     ge25519_tobytes(rcheck, &R);
 
     return crypto_verify_32(rcheck, sig) | (-(rcheck == sig)) |
-           sodium_memcmp(sig, rcheck, 32);
+           lithium_memcmp(sig, rcheck, 32);
 }
 
 int

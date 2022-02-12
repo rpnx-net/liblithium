@@ -49,8 +49,8 @@ crypto_stream_salsa208(unsigned char *c, unsigned long long clen,
             c[i] = block[i];
         }
     }
-    sodium_memzero(block, sizeof block);
-    sodium_memzero(kcopy, sizeof kcopy);
+    lithium_memzero(block, sizeof block);
+    lithium_memzero(kcopy, sizeof kcopy);
 
     return 0;
 }
@@ -99,8 +99,8 @@ crypto_stream_salsa208_xor(unsigned char *c, const unsigned char *m,
             c[i] = m[i] ^ block[i];
         }
     }
-    sodium_memzero(block, sizeof block);
-    sodium_memzero(kcopy, sizeof kcopy);
+    lithium_memzero(block, sizeof block);
+    lithium_memzero(kcopy, sizeof kcopy);
 
     return 0;
 }

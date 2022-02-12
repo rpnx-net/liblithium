@@ -18,7 +18,7 @@ crypto_kdf_hkdf_sha256_extract(
     crypto_auth_hmacsha256_init(&st, salt, salt_len);
     crypto_auth_hmacsha256_update(&st, ikm, ikm_len);
     crypto_auth_hmacsha256_final(&st, prk);
-    sodium_memzero(&st, sizeof st);
+    lithium_memzero(&st, sizeof st);
 
     return 0;
 }
@@ -70,9 +70,9 @@ crypto_kdf_hkdf_sha256_expand(unsigned char *out, size_t out_len,
         crypto_auth_hmacsha256_update(&st, &counter, (size_t) 1U);
         crypto_auth_hmacsha256_final(&st, tmp);
         memcpy(&out[i], tmp, left);
-        sodium_memzero(tmp, sizeof tmp);
+        lithium_memzero(tmp, sizeof tmp);
     }
-    sodium_memzero(&st, sizeof st);
+    lithium_memzero(&st, sizeof st);
 
     return 0;
 }

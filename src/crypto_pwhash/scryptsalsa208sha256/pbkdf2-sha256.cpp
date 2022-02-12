@@ -61,7 +61,7 @@ escrypt_PBKDF2_SHA256(const uint8_t *passwd, size_t passwdlen,
     COMPILER_ASSERT(crypto_pwhash_scryptsalsa208sha256_BYTES_MAX
                     <= 0x1fffffffe0ULL);
     if (dkLen > 0x1fffffffe0ULL) {
-        sodium_misuse(); /* LCOV_EXCL_LINE */
+        lithium_misuse(); /* LCOV_EXCL_LINE */
     }
 #endif
     crypto_auth_hmacsha256_init(&PShctx, passwd, passwdlen);
@@ -92,5 +92,5 @@ escrypt_PBKDF2_SHA256(const uint8_t *passwd, size_t passwdlen,
         }
         memcpy(&buf[i * 32], T, clen);
     }
-    sodium_memzero((void *) &PShctx, sizeof PShctx);
+    lithium_memzero((void *) &PShctx, sizeof PShctx);
 }

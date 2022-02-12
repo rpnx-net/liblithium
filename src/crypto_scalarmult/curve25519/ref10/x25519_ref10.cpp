@@ -170,6 +170,6 @@ crypto_scalarmult_curve25519_ref10_base(unsigned char *q,
 
 struct crypto_scalarmult_curve25519_implementation
     crypto_scalarmult_curve25519_ref10_implementation = {
-        SODIUM_C99(.mult =) crypto_scalarmult_curve25519_ref10,
-        SODIUM_C99(.mult_base =) crypto_scalarmult_curve25519_ref10_base
+        LITHIUM_C99(.mult =) crypto_scalarmult_curve25519_ref10,
+        LITHIUM_C99(.mult_base =) crypto_scalarmult_curve25519_ref10_base
     };

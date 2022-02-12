@@ -54,8 +54,8 @@ stream_ref(unsigned char *c, unsigned long long clen, const unsigned char *n,
             c[i] = block[i];
         }
     }
-    sodium_memzero(block, sizeof block);
-    sodium_memzero(kcopy, sizeof kcopy);
+    lithium_memzero(block, sizeof block);
+    lithium_memzero(kcopy, sizeof kcopy);
 
     return 0;
 }
@@ -105,16 +105,16 @@ stream_ref_xor_ic(unsigned char *c, const unsigned char *m,
             c[i] = m[i] ^ block[i];
         }
     }
-    sodium_memzero(block, sizeof block);
-    sodium_memzero(kcopy, sizeof kcopy);
+    lithium_memzero(block, sizeof block);
+    lithium_memzero(kcopy, sizeof kcopy);
 
     return 0;
 }
 
 struct crypto_stream_salsa20_implementation
     crypto_stream_salsa20_ref_implementation = {
-        SODIUM_C99(.stream =) stream_ref,
-        SODIUM_C99(.stream_xor_ic =) stream_ref_xor_ic,
+        LITHIUM_C99(.stream =) stream_ref,
+        LITHIUM_C99(.stream_xor_ic =) stream_ref_xor_ic,
     };
 
 #endif

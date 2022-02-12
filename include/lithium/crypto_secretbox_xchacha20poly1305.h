@@ -13,23 +13,23 @@ extern "C" {
 #endif
 
 #define crypto_secretbox_xchacha20poly1305_KEYBYTES 32U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_secretbox_xchacha20poly1305_keybytes(void);
 
 #define crypto_secretbox_xchacha20poly1305_NONCEBYTES 24U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_secretbox_xchacha20poly1305_noncebytes(void);
 
 #define crypto_secretbox_xchacha20poly1305_MACBYTES 16U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_secretbox_xchacha20poly1305_macbytes(void);
 
 #define crypto_secretbox_xchacha20poly1305_MESSAGEBYTES_MAX \
     (crypto_stream_xchacha20_MESSAGEBYTES_MAX - crypto_secretbox_xchacha20poly1305_MACBYTES)
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_secretbox_xchacha20poly1305_messagebytes_max(void);
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_secretbox_xchacha20poly1305_easy(unsigned char *c,
                                             const unsigned char *m,
                                             unsigned long long mlen,
@@ -37,7 +37,7 @@ int crypto_secretbox_xchacha20poly1305_easy(unsigned char *c,
                                             const unsigned char *k)
             __attribute__ ((nonnull(1, 4, 5)));
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_secretbox_xchacha20poly1305_open_easy(unsigned char *m,
                                                  const unsigned char *c,
                                                  unsigned long long clen,
@@ -45,7 +45,7 @@ int crypto_secretbox_xchacha20poly1305_open_easy(unsigned char *m,
                                                  const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 4, 5)));
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_secretbox_xchacha20poly1305_detached(unsigned char *c,
                                                 unsigned char *mac,
                                                 const unsigned char *m,
@@ -54,7 +54,7 @@ int crypto_secretbox_xchacha20poly1305_detached(unsigned char *c,
                                                 const unsigned char *k)
             __attribute__ ((nonnull(1, 2, 5, 6)));
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_secretbox_xchacha20poly1305_open_detached(unsigned char *m,
                                                      const unsigned char *c,
                                                      const unsigned char *mac,

@@ -174,9 +174,9 @@ crypto_aead_aegis128l_encrypt_detached(unsigned char *c, unsigned char *mac,
     }
 
     crypto_aead_aegis128l_mac(mac, adlen, mlen, state);
-    sodium_memzero(state, sizeof state);
-    sodium_memzero(src, sizeof src);
-    sodium_memzero(dst, sizeof dst);
+    lithium_memzero(state, sizeof state);
+    lithium_memzero(src, sizeof src);
+    lithium_memzero(dst, sizeof dst);
 
     if (maclen_p != NULL) {
         *maclen_p = 16ULL;
@@ -194,7 +194,7 @@ crypto_aead_aegis128l_encrypt(unsigned char *c, unsigned long long *clen_p, cons
     int                ret;
 
     if (mlen > crypto_aead_aegis128l_MESSAGEBYTES_MAX) {
-        sodium_misuse();
+        lithium_misuse();
     }
     ret = crypto_aead_aegis128l_encrypt_detached(c, c + mlen, NULL, m, mlen,
                                                  ad, adlen, nsec, npub, k);
@@ -255,11 +255,11 @@ crypto_aead_aegis128l_decrypt_detached(unsigned char *m, unsigned char *nsec, co
     }
 
     crypto_aead_aegis128l_mac(computed_mac, adlen, mlen, state);
-    sodium_memzero(state, sizeof state);
-    sodium_memzero(src, sizeof src);
-    sodium_memzero(dst, sizeof dst);
+    lithium_memzero(state, sizeof state);
+    lithium_memzero(src, sizeof src);
+    lithium_memzero(dst, sizeof dst);
     ret = crypto_verify_16(computed_mac, mac);
-    sodium_memzero(computed_mac, sizeof computed_mac);
+    lithium_memzero(computed_mac, sizeof computed_mac);
     if (m == NULL) {
         return ret;
     }
@@ -295,7 +295,7 @@ crypto_aead_aegis128l_decrypt(unsigned char *m, unsigned long long *mlen_p, unsi
 int
 crypto_aead_aegis128l_is_available(void)
 {
-    return sodium_runtime_has_armcrypto();
+    return lithium_runtime_has_armcrypto();
 }
 
 #endif

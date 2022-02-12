@@ -1,9 +1,9 @@
 
 
 int
-sodium_library_minimal(void)
+lithium_library_minimal(void)
 {
-#ifdef SODIUM_LIBRARY_MINIMAL
+#ifdef LITHIUM_LIBRARY_MINIMAL
     return 1;
 #else
     return 0;

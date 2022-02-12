@@ -13,42 +13,42 @@ extern "C" {
 #endif
 
 #define crypto_secretbox_xsalsa20poly1305_KEYBYTES 32U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_secretbox_xsalsa20poly1305_keybytes(void);
 
 #define crypto_secretbox_xsalsa20poly1305_NONCEBYTES 24U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_secretbox_xsalsa20poly1305_noncebytes(void);
 
 #define crypto_secretbox_xsalsa20poly1305_MACBYTES 16U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_secretbox_xsalsa20poly1305_macbytes(void);
 
-/* Only for the libsodium API - The NaCl compatibility API would require BOXZEROBYTES extra bytes */
+/* Only for the liblithium API - The NaCl compatibility API would require BOXZEROBYTES extra bytes */
 #define crypto_secretbox_xsalsa20poly1305_MESSAGEBYTES_MAX \
     (crypto_stream_xsalsa20_MESSAGEBYTES_MAX - crypto_secretbox_xsalsa20poly1305_MACBYTES)
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_secretbox_xsalsa20poly1305_messagebytes_max(void);
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 void crypto_secretbox_xsalsa20poly1305_keygen(unsigned char k[crypto_secretbox_xsalsa20poly1305_KEYBYTES])
             __attribute__ ((nonnull));
 
 /* -- NaCl compatibility interface ; Requires padding -- */
 
 #define crypto_secretbox_xsalsa20poly1305_BOXZEROBYTES 16U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_secretbox_xsalsa20poly1305_boxzerobytes(void)
             __attribute__ ((deprecated));
 
 #define crypto_secretbox_xsalsa20poly1305_ZEROBYTES \
     (crypto_secretbox_xsalsa20poly1305_BOXZEROBYTES + \
      crypto_secretbox_xsalsa20poly1305_MACBYTES)
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_secretbox_xsalsa20poly1305_zerobytes(void)
             __attribute__ ((deprecated));
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_secretbox_xsalsa20poly1305(unsigned char *c,
                                       const unsigned char *m,
                                       unsigned long long mlen,
@@ -56,7 +56,7 @@ int crypto_secretbox_xsalsa20poly1305(unsigned char *c,
                                       const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((nonnull(1, 4, 5)));
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_secretbox_xsalsa20poly1305_open(unsigned char *m,
                                            const unsigned char *c,
                                            unsigned long long clen,

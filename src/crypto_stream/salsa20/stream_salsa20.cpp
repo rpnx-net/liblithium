@@ -85,13 +85,13 @@ _crypto_stream_salsa20_pick_best_implementation(void)
 
 #if defined(HAVE_AVX2INTRIN_H) && defined(HAVE_EMMINTRIN_H) && \
     defined(HAVE_TMMINTRIN_H) && defined(HAVE_SMMINTRIN_H)
-    if (sodium_runtime_has_avx2()) {
+    if (lithium_runtime_has_avx2()) {
         implementation = &crypto_stream_salsa20_xmm6int_avx2_implementation;
         return 0;
     }
 #endif
 #if !defined(HAVE_AMD64_ASM) && defined(HAVE_EMMINTRIN_H)
-    if (sodium_runtime_has_sse2()) {
+    if (lithium_runtime_has_sse2()) {
         implementation = &crypto_stream_salsa20_xmm6int_sse2_implementation;
         return 0;
     }

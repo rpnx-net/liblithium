@@ -23,7 +23,7 @@ crypto_box_curve25519xchacha20poly1305_seed_keypair(unsigned char *pk,
 
     crypto_hash_sha512(hash, seed, 32);
     memcpy(sk, hash, 32);
-    sodium_memzero(hash, sizeof hash);
+    lithium_memzero(hash, sizeof hash);
 
     return crypto_scalarmult_curve25519_base(pk, sk);
 }
@@ -75,7 +75,7 @@ crypto_box_curve25519xchacha20poly1305_detached(
     }
     ret = crypto_box_curve25519xchacha20poly1305_detached_afternm(c, mac, m,
                                                                   mlen, n, k);
-    sodium_memzero(k, sizeof k);
+    lithium_memzero(k, sizeof k);
 
     return ret;
 }
@@ -88,7 +88,7 @@ crypto_box_curve25519xchacha20poly1305_easy_afternm(unsigned char *c,
                                                     const unsigned char *k)
 {
     if (mlen > crypto_box_curve25519xchacha20poly1305_MESSAGEBYTES_MAX) {
-        sodium_misuse();
+        lithium_misuse();
     }
     return crypto_box_curve25519xchacha20poly1305_detached_afternm(
         c + crypto_box_curve25519xchacha20poly1305_MACBYTES, c, m, mlen, n, k);
@@ -100,7 +100,7 @@ crypto_box_curve25519xchacha20poly1305_easy(
     const unsigned char *n, const unsigned char *pk, const unsigned char *sk)
 {
     if (mlen > crypto_box_curve25519xchacha20poly1305_MESSAGEBYTES_MAX) {
-        sodium_misuse();
+        lithium_misuse();
     }
     return crypto_box_curve25519xchacha20poly1305_detached(
         c + crypto_box_curve25519xchacha20poly1305_MACBYTES, c, m, mlen, n, pk,
@@ -130,7 +130,7 @@ crypto_box_curve25519xchacha20poly1305_open_detached(
     }
     ret = crypto_box_curve25519xchacha20poly1305_open_detached_afternm(
         m, c, mac, clen, n, k);
-    sodium_memzero(k, sizeof k);
+    lithium_memzero(k, sizeof k);
 
     return ret;
 }

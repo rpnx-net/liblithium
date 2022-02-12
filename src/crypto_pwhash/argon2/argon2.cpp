@@ -129,7 +129,7 @@ argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
     result = argon2_ctx(&context, type);
 
     if (result != ARGON2_OK) {
-        sodium_memzero(out, hashlen);
+        lithium_memzero(out, hashlen);
         free(out);
         return result;
     }
@@ -138,8 +138,8 @@ argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
     if (encoded && encodedlen) {
         if (argon2_encode_string(encoded, encodedlen,
                                  &context, type) != ARGON2_OK) {
-            sodium_memzero(out, hashlen);
-            sodium_memzero(encoded, encodedlen);
+            lithium_memzero(out, hashlen);
+            lithium_memzero(encoded, encodedlen);
             free(out);
             return ARGON2_ENCODING_FAIL;
         }
@@ -150,7 +150,7 @@ argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
         memcpy(hash, out, hashlen);
     }
 
-    sodium_memzero(out, hashlen);
+    lithium_memzero(out, hashlen);
     free(out);
 
     return ARGON2_OK;
@@ -256,7 +256,7 @@ argon2_verify(const char *encoded, const void *pwd, const size_t pwdlen,
     free(ctx.ad);
     free(ctx.salt);
 
-    if (ret == ARGON2_OK && sodium_memcmp(out, ctx.out, ctx.outlen) != 0) {
+    if (ret == ARGON2_OK && lithium_memcmp(out, ctx.out, ctx.outlen) != 0) {
         ret = ARGON2_VERIFY_MISMATCH;
     }
     free(out);

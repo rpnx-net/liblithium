@@ -617,7 +617,7 @@ crypto_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char *
     (void) nsec;
     memcpy(H, ctx->H, sizeof H);
     if (mlen > crypto_aead_aes256gcm_MESSAGEBYTES_MAX) {
-        sodium_misuse(); /* LCOV_EXCL_LINE */
+        lithium_misuse(); /* LCOV_EXCL_LINE */
     }
     memcpy(&n2[0], npub, 3 * 4);
     n2[3] = 0x01000000;
@@ -753,7 +753,7 @@ crypto_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char *
 
     (void) nsec;
     if (clen > crypto_aead_aes256gcm_MESSAGEBYTES_MAX) {
-        sodium_misuse(); /* LCOV_EXCL_LINE */
+        lithium_misuse(); /* LCOV_EXCL_LINE */
     }
     mlen = clen;
 
@@ -912,7 +912,7 @@ crypto_aead_aes256gcm_encrypt(unsigned char *c, unsigned long long *clen_p, cons
 
     ret = crypto_aead_aes256gcm_encrypt_afternm(c, clen_p, m, mlen, ad, adlen, nsec, npub,
                                                 (const crypto_aead_aes256gcm_state *) &ctx);
-    sodium_memzero(&ctx, sizeof ctx);
+    lithium_memzero(&ctx, sizeof ctx);
 
     return ret;
 }
@@ -945,7 +945,7 @@ crypto_aead_aes256gcm_decrypt(unsigned char *m, unsigned long long *mlen_p, unsi
 
     ret = crypto_aead_aes256gcm_decrypt_afternm(m, mlen_p, nsec, c, clen, ad, adlen, npub,
                                                 (const crypto_aead_aes256gcm_state *) &ctx);
-    sodium_memzero(&ctx, sizeof ctx);
+    lithium_memzero(&ctx, sizeof ctx);
 
     return ret;
 }
@@ -953,7 +953,7 @@ crypto_aead_aes256gcm_decrypt(unsigned char *m, unsigned long long *mlen_p, unsi
 int
 crypto_aead_aes256gcm_is_available(void)
 {
-    return sodium_runtime_has_pclmul() & sodium_runtime_has_aesni();
+    return lithium_runtime_has_pclmul() & lithium_runtime_has_aesni();
 }
 
 #else

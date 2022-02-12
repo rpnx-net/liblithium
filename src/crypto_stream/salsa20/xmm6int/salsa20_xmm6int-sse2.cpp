@@ -83,7 +83,7 @@ stream_sse2(unsigned char *c, unsigned long long clen, const unsigned char *n,
     salsa_ivsetup(&ctx, n, NULL);
     memset(c, 0, clen);
     salsa20_encrypt_bytes(&ctx, c, c, clen);
-    sodium_memzero(&ctx, sizeof ctx);
+    lithium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
@@ -108,15 +108,15 @@ stream_sse2_xor_ic(unsigned char *c, const unsigned char *m,
     salsa_keysetup(&ctx, k);
     salsa_ivsetup(&ctx, n, ic_bytes);
     salsa20_encrypt_bytes(&ctx, m, c, mlen);
-    sodium_memzero(&ctx, sizeof ctx);
+    lithium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
 
 struct crypto_stream_salsa20_implementation
     crypto_stream_salsa20_xmm6int_sse2_implementation = {
-        SODIUM_C99(.stream =) stream_sse2,
-        SODIUM_C99(.stream_xor_ic =) stream_sse2_xor_ic
+        LITHIUM_C99(.stream =) stream_sse2,
+        LITHIUM_C99(.stream_xor_ic =) stream_sse2_xor_ic
     };
 
 #endif

@@ -222,7 +222,7 @@ crypto_hash_sha256_update(crypto_hash_sha256_state *state,
     for (i = 0; i < inlen; i++) {
         state->buf[i] = in[i];
     }
-    sodium_memzero((void *) tmp32, sizeof tmp32);
+    lithium_memzero((void *) tmp32, sizeof tmp32);
 
     return 0;
 }
@@ -234,8 +234,8 @@ crypto_hash_sha256_final(crypto_hash_sha256_state *state, unsigned char *out)
 
     SHA256_Pad(state, tmp32);
     be32enc_vect(out, state->state, 32);
-    sodium_memzero((void *) tmp32, sizeof tmp32);
-    sodium_memzero((void *) state, sizeof *state);
+    lithium_memzero((void *) tmp32, sizeof tmp32);
+    lithium_memzero((void *) state, sizeof *state);
 
     return 0;
 }

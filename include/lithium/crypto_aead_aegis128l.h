@@ -11,32 +11,32 @@
 extern "C" {
 #endif
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_aead_aegis128l_is_available(void);
 
 #define crypto_aead_aegis128l_KEYBYTES  16U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_aead_aegis128l_keybytes(void);
 
 #define crypto_aead_aegis128l_NSECBYTES 0U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_aead_aegis128l_nsecbytes(void);
 
 #define crypto_aead_aegis128l_NPUBBYTES 16U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_aead_aegis128l_npubbytes(void);
 
 #define crypto_aead_aegis128l_ABYTES    16U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_aead_aegis128l_abytes(void);
 
 #define crypto_aead_aegis128l_MESSAGEBYTES_MAX \
-    SODIUM_MIN(SODIUM_SIZE_MAX - crypto_aead_aegis128l_ABYTES, \
+    LITHIUM_MIN(LITHIUM_SIZE_MAX - crypto_aead_aegis128l_ABYTES, \
                (1ULL << 61) - 1)
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_aead_aegis128l_messagebytes_max(void);
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_aead_aegis128l_encrypt(unsigned char *c,
                                   unsigned long long *clen_p,
                                   const unsigned char *m,
@@ -48,7 +48,7 @@ int crypto_aead_aegis128l_encrypt(unsigned char *c,
                                   const unsigned char *k)
             __attribute__ ((nonnull(1, 8, 9)));
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_aead_aegis128l_decrypt(unsigned char *m,
                                   unsigned long long *mlen_p,
                                   unsigned char *nsec,
@@ -60,7 +60,7 @@ int crypto_aead_aegis128l_decrypt(unsigned char *m,
                                   const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(4, 8, 9)));
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_aead_aegis128l_encrypt_detached(unsigned char *c,
                                            unsigned char *mac,
                                            unsigned long long *maclen_p,
@@ -73,7 +73,7 @@ int crypto_aead_aegis128l_encrypt_detached(unsigned char *c,
                                            const unsigned char *k)
             __attribute__ ((nonnull(1, 2, 9, 10)));
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_aead_aegis128l_decrypt_detached(unsigned char *m,
                                            unsigned char *nsec,
                                            const unsigned char *c,
@@ -85,7 +85,7 @@ int crypto_aead_aegis128l_decrypt_detached(unsigned char *m,
                                            const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(3, 5, 8, 9)));
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 void crypto_aead_aegis128l_keygen(unsigned char k[crypto_aead_aegis128l_KEYBYTES])
             __attribute__ ((nonnull));
 

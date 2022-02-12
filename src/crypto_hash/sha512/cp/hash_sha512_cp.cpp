@@ -250,7 +250,7 @@ crypto_hash_sha512_update(crypto_hash_sha512_state *state,
     for (i = 0; i < inlen; i++) {
         state->buf[i] = in[i];
     }
-    sodium_memzero((void *) tmp64, sizeof tmp64);
+    lithium_memzero((void *) tmp64, sizeof tmp64);
 
     return 0;
 }
@@ -262,8 +262,8 @@ crypto_hash_sha512_final(crypto_hash_sha512_state *state, unsigned char *out)
 
     SHA512_Pad(state, tmp64);
     be64enc_vect(out, state->state, 64);
-    sodium_memzero((void *) tmp64, sizeof tmp64);
-    sodium_memzero((void *) state, sizeof *state);
+    lithium_memzero((void *) tmp64, sizeof tmp64);
+    lithium_memzero((void *) state, sizeof *state);
 
     return 0;
 }

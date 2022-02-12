@@ -11,11 +11,11 @@ extern "C" {
 #endif
 
 #define crypto_scalarmult_ristretto255_BYTES 32U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_scalarmult_ristretto255_bytes(void);
 
 #define crypto_scalarmult_ristretto255_SCALARBYTES 32U
-SODIUM_EXPORT
+LITHIUM_EXPORT
 size_t crypto_scalarmult_ristretto255_scalarbytes(void);
 
 /*
@@ -26,12 +26,12 @@ size_t crypto_scalarmult_ristretto255_scalarbytes(void);
  *
  * Or unless this is not an option, use the crypto_kx() API instead.
  */
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_scalarmult_ristretto255(unsigned char *q, const unsigned char *n,
                                    const unsigned char *p)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
-SODIUM_EXPORT
+LITHIUM_EXPORT
 int crypto_scalarmult_ristretto255_base(unsigned char *q,
                                         const unsigned char *n)
             __attribute__ ((nonnull));

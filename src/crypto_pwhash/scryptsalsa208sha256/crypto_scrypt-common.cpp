@@ -171,7 +171,7 @@ escrypt_r(escrypt_local_t *local, const uint8_t *passwd, size_t passwdlen,
     }
 #ifdef HAVE_EMMINTRIN_H
     escrypt_kdf =
-        sodium_runtime_has_sse2() ? escrypt_kdf_sse : escrypt_kdf_nosse;
+        lithium_runtime_has_sse2() ? escrypt_kdf_sse : escrypt_kdf_nosse;
 #else
     escrypt_kdf = escrypt_kdf_nosse;
 #endif
@@ -185,7 +185,7 @@ escrypt_r(escrypt_local_t *local, const uint8_t *passwd, size_t passwdlen,
     *dst++ = '$';
 
     dst = encode64(dst, buflen - (dst - buf), hash, sizeof(hash));
-    sodium_memzero(hash, sizeof hash);
+    lithium_memzero(hash, sizeof hash);
     if (!dst || dst >= buf + buflen) {
         return NULL; /* Can't happen LCOV_EXCL_LINE */
     }
@@ -250,7 +250,7 @@ crypto_pwhash_scryptsalsa208sha256_ll(const uint8_t *passwd, size_t passwdlen,
     }
 #if defined(HAVE_EMMINTRIN_H)
     escrypt_kdf =
-        sodium_runtime_has_sse2() ? escrypt_kdf_sse : escrypt_kdf_nosse;
+        lithium_runtime_has_sse2() ? escrypt_kdf_sse : escrypt_kdf_nosse;
 #else
     escrypt_kdf = escrypt_kdf_nosse;
 #endif

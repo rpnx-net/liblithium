@@ -13,7 +13,7 @@ crypto_stream_xsalsa20(unsigned char *c, unsigned long long clen,
 
     crypto_core_hsalsa20(subkey, n, k, NULL);
     ret = crypto_stream_salsa20(c, clen, n + 16, subkey);
-    sodium_memzero(subkey, sizeof subkey);
+    lithium_memzero(subkey, sizeof subkey);
 
     return ret;
 }
@@ -28,7 +28,7 @@ crypto_stream_xsalsa20_xor_ic(unsigned char *c, const unsigned char *m,
 
     crypto_core_hsalsa20(subkey, n, k, NULL);
     ret = crypto_stream_salsa20_xor_ic(c, m, mlen, n + 16, ic, subkey);
-    sodium_memzero(subkey, sizeof subkey);
+    lithium_memzero(subkey, sizeof subkey);
 
     return ret;
 }
