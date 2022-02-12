@@ -10,43 +10,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if defined(HAVE_RAISE) && !defined(__wasm__)
-# include <signal.h>
-#endif
 
 
 
-#ifdef HAVE_SYS_PARAM_H
-# include <sys/param.h>
-#endif
-
-#ifdef _WIN32
-# include <windows.h>
-# include <wincrypt.h>
-#else
-# include <unistd.h>
-#endif
-
-#ifndef HAVE_C_VARARRAYS
-# ifdef HAVE_ALLOCA_H
-#  include <alloca.h>
-# elif !defined(alloca)
-#  if defined(__clang__) || defined(__GNUC__)
-#   define alloca __builtin_alloca
-#  elif defined _AIX
-#   define alloca __alloca
-#  elif defined _MSC_VER
-#   include <malloc.h>
-#   define alloca _alloca
-#  else
-#   include <stddef.h>
-#   ifdef  __cplusplus
-extern "C"
-#   endif
-void *alloca (std::size_t);
-#  endif
-# endif
-#endif
 
 #include "core.h"
 #include "crypto_generichash.h"
@@ -149,17 +115,6 @@ sodium_memzero(void * const pnt, const std::size_t len)
     while (i < len) {
         pnt_[i++] = 0U;
     }
-#endif
-}
-
-void
-sodium_stackzero(const std::size_t len)
-{
-#ifdef HAVE_C_VARARRAYS
-    unsigned char fodder[len];
-    sodium_memzero(fodder, len);
-#elif HAVE_ALLOCA
-    sodium_memzero(alloca(len), len);
 #endif
 }
 
