@@ -3,9 +3,93 @@ cmake_minimum_required(VERSION 3.18)
 project(lithium)
 add_library(lithium)
 target_include_directories(lithium PRIVATE include/lithium)
+target_include_directories(lithium PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+        )
 
+set(LITHIUM_HEADERS
+        include/lithium/crypto_stream_salsa2012.h
+        include/lithium/crypto_auth.h
+        include/lithium/utils.h
+        include/lithium/crypto_core_hchacha20.h
+        include/lithium/crypto_aead_aegis256.h
+        include/lithium/crypto_hash_sha512.h
+        include/lithium/core.h
+        include/lithium/export.h
+        include/lithium/crypto_core_salsa20.h
+        include/lithium/crypto_shorthash_siphash24.h
+        include/lithium/randombytes.h
+        include/lithium/crypto_hash_sha256.h
+        include/lithium/crypto_stream.h
+        include/lithium/crypto_auth_hmacsha512.h
+        include/lithium/crypto_aead_xchacha20poly1305.h
+        include/lithium/crypto_stream_salsa20.h
+        include/lithium/crypto_onetimeauth_poly1305.h
+        include/lithium/crypto_scalarmult_ristretto255.h
+        include/lithium/crypto_kx.h
+        include/lithium/crypto_hash.h
+        include/lithium/crypto_sign.h
+        include/lithium/crypto_kdf.h
+        include/lithium/crypto_auth_hmacsha256.h
+        include/lithium/crypto_verify_32.h
+        include/lithium/crypto_core_ristretto255.h
+        include/lithium/crypto_stream_xchacha20.h
+        include/lithium/crypto_core_salsa208.h
+        include/lithium/crypto_auth_hmacsha512256.h
+        include/lithium/crypto_aead_aegis128l.h
+        include/lithium/crypto_aead_chacha20poly1305.h
+        include/lithium/randombytes_sysrandom.h
+        include/lithium/runtime.h
+        include/lithium/crypto_stream_salsa208.h
+        include/lithium/crypto_aead_aes256gcm.h
+        include/lithium/crypto_core_salsa2012.h
+        include/lithium/crypto_secretbox_xchacha20poly1305.h
+        include/lithium/crypto_scalarmult.h
+        include/lithium/crypto_pwhash.h
+        include/lithium/private/ed25519_ref10.h
+        include/lithium/private/quirks.h
+        include/lithium/private/ed25519_ref10_fe_25_5.h
+        include/lithium/private/ed25519_ref10_fe_51.h
+        include/lithium/private/sse2_64_32.h
+        include/lithium/private/common.h
+        include/lithium/private/mutex.h
+        include/lithium/private/chacha20_ietf_ext.h
+        include/lithium/private/implementations.h
+        include/lithium/crypto_verify_16.h
+        include/lithium/crypto_stream_chacha20.h
+        include/lithium/crypto_stream_xsalsa20.h
+        include/lithium/crypto_core_hsalsa20.h
+        include/lithium/crypto_kdf_blake2b.h
+        include/lithium/crypto_scalarmult_curve25519.h
+        include/lithium/crypto_shorthash.h
+        include/lithium/crypto_kdf_hkdf_sha256.h
+        include/lithium/crypto_pwhash_argon2id.h
+        include/lithium/crypto_secretstream_xchacha20poly1305.h
+        include/lithium/crypto_pwhash_scryptsalsa208sha256.h
+        include/lithium/crypto_sign_ed25519.h
+        include/lithium/crypto_onetimeauth.h
+        include/lithium/crypto_verify_64.h
+        include/lithium/crypto_box_curve25519xchacha20poly1305.h
+        include/lithium/crypto_core_ed25519.h
+        include/lithium/crypto_kdf_hkdf_sha512.h
+        include/lithium/crypto_pwhash_argon2i.h
+        include/lithium/randombytes_internal_random.h
+        include/lithium/crypto_generichash.h
+        include/lithium/crypto_secretbox_xsalsa20poly1305.h
+        include/lithium/crypto_secretbox.h
+        include/lithium/crypto_scalarmult_ed25519.h
+        include/lithium/crypto_box_curve25519xsalsa20poly1305.h
+        include/lithium/crypto_generichash_blake2b.h
+        #
+        )
+
+
+install(FILES ${LITHIUM_HEADERS} DESTINATION include/lithium)
+install(FILES include/lithium.h DESTINATION include)
 target_sources(lithium
         PRIVATE
+        ${LITHIUM_HEADERS}
         src/crypto_generichash/blake2b/ref/blake2b-compress-ref.cpp
         src/crypto_generichash/blake2b/ref/blake2b-compress-ssse3.cpp
         src/crypto_generichash/blake2b/ref/blake2b-compress-avx2.cpp
