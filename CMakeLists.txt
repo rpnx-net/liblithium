@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.18)
 
 project(lithium)
 add_library(lithium)
-target_include_directories(lithium PRIVATE include/sodium)
+target_include_directories(lithium PRIVATE include/lithium)
 
 target_sources(lithium
         PRIVATE
@@ -70,10 +70,10 @@ target_sources(lithium
         src/crypto_box/curve25519xsalsa20poly1305/box_curve25519xsalsa20poly1305.cpp
         src/crypto_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305.cpp
         src/crypto_box/curve25519xchacha20poly1305/box_seal_curve25519xchacha20poly1305.cpp
-        src/sodium/codecs.cpp
-        src/sodium/runtime.cpp
-        src/sodium/core.cpp
-        src/sodium/utils.cpp
+        src/lithium/codecs.cpp
+        src/lithium/runtime.cpp
+        src/lithium/core.cpp
+        src/lithium/utils.cpp
         src/crypto_stream/xchacha20/stream_xchacha20.cpp
         src/crypto_stream/chacha20/ref/chacha20_ref.cpp
         src/crypto_stream/chacha20/stream_chacha20.cpp
@@ -112,3 +112,6 @@ target_sources(lithium
         src/crypto_core/ed25519/ref10/ed25519_ref10.cpp
         src/crypto_core/ed25519/core_h2c.cpp
         )
+
+install(TARGETS lithium EXPORT lithium_exports DESTINATION lib)
+install(EXPORT lithium_exports DESTINATION cmake FILE lithium-config.cmake NAMESPACE Lithium::)
