@@ -7,9 +7,9 @@
 #include "utils.h"
 
 static int
-_crypto_box_curve25519xchacha20poly1305_seal_nonce(unsigned char *nonce,
-                                                   const unsigned char *pk1,
-                                                   const unsigned char *pk2)
+crypto_box_curve25519xchacha20poly1305_seal_nonce(unsigned char *nonce,
+                                                  const unsigned char *pk1,
+                                                  const unsigned char *pk2)
 {
     crypto_generichash_state st;
 
@@ -38,7 +38,7 @@ crypto_box_curve25519xchacha20poly1305_seal(unsigned char *c, const unsigned cha
     if (crypto_box_curve25519xchacha20poly1305_keypair(epk, esk) != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
-    _crypto_box_curve25519xchacha20poly1305_seal_nonce(nonce, epk, pk);
+    crypto_box_curve25519xchacha20poly1305_seal_nonce(nonce, epk, pk);
     ret = crypto_box_curve25519xchacha20poly1305_easy(
          c + crypto_box_curve25519xchacha20poly1305_PUBLICKEYBYTES, m, mlen,
          nonce, pk, esk);
@@ -61,7 +61,7 @@ crypto_box_curve25519xchacha20poly1305_seal_open(unsigned char *m, const unsigne
     if (clen < crypto_box_curve25519xchacha20poly1305_SEALBYTES) {
         return -1;
     }
-    _crypto_box_curve25519xchacha20poly1305_seal_nonce(nonce, c, pk);
+    crypto_box_curve25519xchacha20poly1305_seal_nonce(nonce, c, pk);
 
     COMPILER_ASSERT(crypto_box_curve25519xchacha20poly1305_PUBLICKEYBYTES <
                     crypto_box_curve25519xchacha20poly1305_SEALBYTES);
