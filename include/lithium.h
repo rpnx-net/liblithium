@@ -2,8 +2,6 @@
 #ifndef lithium_H
 #define lithium_H
 
-#include "lithium/version.h"
-
 #include "lithium/core.h"
 #include "lithium/crypto_aead_aes256gcm.h"
 #include "lithium/crypto_aead_aegis128l.h"

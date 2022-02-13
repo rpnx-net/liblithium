@@ -35,11 +35,11 @@ crypto_box_curve25519xchacha20poly1305_seal(unsigned char *c, const unsigned cha
     unsigned char esk[crypto_box_curve25519xchacha20poly1305_SECRETKEYBYTES];
     int           ret;
 
-    if (crypto_box_curve25519xchacha20poly1305_keypair(epk, esk) != 0) {
+    if (lithium::crypto_box_curve25519xchacha20poly1305_keypair(epk, esk) != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
     crypto_box_curve25519xchacha20poly1305_seal_nonce(nonce, epk, pk);
-    ret = crypto_box_curve25519xchacha20poly1305_easy(
+    ret = lithium::crypto_box_curve25519xchacha20poly1305_easy(
          c + crypto_box_curve25519xchacha20poly1305_PUBLICKEYBYTES, m, mlen,
          nonce, pk, esk);
     memcpy(c, epk, crypto_box_curve25519xchacha20poly1305_PUBLICKEYBYTES);
@@ -66,7 +66,7 @@ crypto_box_curve25519xchacha20poly1305_seal_open(unsigned char *m, const unsigne
     COMPILER_ASSERT(crypto_box_curve25519xchacha20poly1305_PUBLICKEYBYTES <
                     crypto_box_curve25519xchacha20poly1305_SEALBYTES);
 
-    return crypto_box_curve25519xchacha20poly1305_open_easy(
+    return lithium::crypto_box_curve25519xchacha20poly1305_open_easy(
          m, c + crypto_box_curve25519xchacha20poly1305_PUBLICKEYBYTES,
          clen - crypto_box_curve25519xchacha20poly1305_PUBLICKEYBYTES,
          nonce, c, sk);

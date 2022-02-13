@@ -14,18 +14,20 @@
 #include "randombytes.h"
 #include "utils.h"
 
-int
-crypto_box_curve25519xchacha20poly1305_seed_keypair(unsigned char *pk,
-                                                    unsigned char *sk,
-                                                    const unsigned char *seed)
-{
-    unsigned char hash[64];
+namespace lithium {
+    int
+    crypto_box_curve25519xchacha20poly1305_seed_keypair(unsigned char *pk,
+                                                        unsigned char *sk,
+                                                        const unsigned char *seed)
+    {
+        unsigned char hash[64];
 
-    crypto_hash_sha512(hash, seed, 32);
-    memcpy(sk, hash, 32);
-    lithium_memzero(hash, sizeof hash);
+        crypto_hash_sha512(hash, seed, 32);
+        memcpy(sk, hash, 32);
+        lithium_memzero(hash, sizeof hash);
 
-    return crypto_scalarmult_curve25519_base(pk, sk);
+        return crypto_scalarmult_curve25519_base(pk, sk);
+    }
 }
 
 int

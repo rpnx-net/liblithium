@@ -89,6 +89,7 @@ install(FILES ${LITHIUM_HEADERS} DESTINATION include/lithium)
 install(FILES include/lithium.h DESTINATION include)
 target_sources(lithium
         PRIVATE
+        include/lithium.h
         ${LITHIUM_HEADERS}
         src/crypto_generichash/blake2b/ref/blake2b-compress-ref.cpp
         src/crypto_generichash/blake2b/ref/blake2b-compress-ssse3.cpp
