@@ -74,7 +74,6 @@ set(RUBIDIUM_HEADERS
         include/rubidium/rubidium_kdf_hkdf_sha512.h
         include/rubidium/rubidium_pwhash_argon2i.h
         include/rubidium/randombytes_internal_random.h
-        include/rubidium/rubidium_generichash.h
         include/rubidium/rubidium_secretbox_xsalsa20poly1305.h
         include/rubidium/rubidium_secretbox.h
         include/rubidium/rubidium_scalarmult_ed25519.h
@@ -90,13 +89,13 @@ target_sources(rubidium
         PRIVATE
         include/rubidium.h
         ${RUBIDIUM_HEADERS}
-        src/rubidium_generichash/blake2b/ref/blake2b-compress-ref.cpp
-        src/rubidium_generichash/blake2b/ref/blake2b-compress-ssse3.cpp
-        src/rubidium_generichash/blake2b/ref/blake2b-compress-avx2.cpp
-        src/rubidium_generichash/blake2b/ref/blake2b-compress-sse41.cpp
-        src/rubidium_generichash/blake2b/ref/generichash_blake2b.cpp
-        src/rubidium_generichash/blake2b/ref/blake2b-ref.cpp
-        src/rubidium_generichash/blake2b/generichash_blake2.cpp
+        src/blake2b/ref/blake2b-compress-ref.cpp
+        src/blake2b/ref/blake2b-compress-ssse3.cpp
+        src/blake2b/ref/blake2b-compress-avx2.cpp
+        src/blake2b/ref/blake2b-compress-sse41.cpp
+        src/blake2b/ref/generichash_blake2b.cpp
+        src/blake2b/ref/blake2b-ref.cpp
+        src/blake2b/generichash_blake2.cpp
         src/rubidium_sign/ed25519/sign_ed25519.cpp
         src/rubidium_sign/ed25519/ref10/sign.cpp
         src/rubidium_sign/ed25519/ref10/keypair.cpp
