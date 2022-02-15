@@ -91,7 +91,7 @@ rubidium_scalarmult_curve25519_ref10(unsigned char *q,
     t[0] &= 248;
     t[31] &= 127;
     t[31] |= 64;
-    fe25519_frombytes(x1, p);
+    _rubidium_fe25519_frombytes(x1, p);
     fe25519_1(x2);
     fe25519_0(z2);
     fe25519_copy(x3, x1);
@@ -127,9 +127,9 @@ rubidium_scalarmult_curve25519_ref10(unsigned char *q,
     fe25519_cswap(x2, x3, swap);
     fe25519_cswap(z2, z3, swap);
 
-    fe25519_invert(z2, z2);
+    _rubidium_fe25519_invert(z2, z2);
     fe25519_mul(x2, x2, z2);
-    fe25519_tobytes(q, x2);
+    _rubidium_fe25519_tobytes(q, x2);
 
     return 0;
 }
@@ -142,7 +142,7 @@ edwards_to_montgomery(fe25519 montgomeryX, const fe25519 edwardsY, const fe25519
 
     fe25519_add(tempX, edwardsZ, edwardsY);
     fe25519_sub(tempZ, edwardsZ, edwardsY);
-    fe25519_invert(tempZ, tempZ);
+    _rubidium_fe25519_invert(tempZ, tempZ);
     fe25519_mul(montgomeryX, tempX, tempZ);
 }
 
@@ -161,9 +161,9 @@ rubidium_scalarmult_curve25519_ref10_base(unsigned char *q,
     t[0] &= 248;
     t[31] &= 127;
     t[31] |= 64;
-    ge25519_scalarmult_base(&A, t);
+    _rubidium_ge25519_scalarmult_base(&A, t);
     edwards_to_montgomery(pk, A.Y, A.Z);
-    fe25519_tobytes(q, pk);
+    _rubidium_fe25519_tobytes(q, pk);
 
     return 0;
 }

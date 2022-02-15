@@ -17,7 +17,7 @@ rubidium_core_ristretto255_is_valid_point(const unsigned char *p)
 {
     ge25519_p3 p_p3;
 
-    if (ristretto255_frombytes(&p_p3, p) != 0) {
+    if (_rubidium_ristretto255_frombytes(&p_p3, p) != 0) {
         return 0;
     }
     return 1;
@@ -31,14 +31,14 @@ rubidium_core_ristretto255_add(unsigned char *r,
     ge25519_p1p1   r_p1p1;
     ge25519_cached q_cached;
 
-    if (ristretto255_frombytes(&p_p3, p) != 0 ||
-        ristretto255_frombytes(&q_p3, q) != 0) {
+    if (_rubidium_ristretto255_frombytes(&p_p3, p) != 0 ||
+            _rubidium_ristretto255_frombytes(&q_p3, q) != 0) {
         return -1;
     }
-    ge25519_p3_to_cached(&q_cached, &q_p3);
-    ge25519_add_cached(&r_p1p1, &p_p3, &q_cached);
-    ge25519_p1p1_to_p3(&r_p3, &r_p1p1);
-    ristretto255_p3_tobytes(r, &r_p3);
+    _rubidium_ge25519_p3_to_cached(&q_cached, &q_p3);
+    _rubidium_ge25519_add_cached(&r_p1p1, &p_p3, &q_cached);
+    _rubidium_ge25519_p1p1_to_p3(&r_p3, &r_p1p1);
+    _rubidium_ristretto255_p3_tobytes(r, &r_p3);
 
     return 0;
 }
@@ -51,14 +51,14 @@ rubidium_core_ristretto255_sub(unsigned char *r,
     ge25519_p1p1   r_p1p1;
     ge25519_cached q_cached;
 
-    if (ristretto255_frombytes(&p_p3, p) != 0 ||
-        ristretto255_frombytes(&q_p3, q) != 0) {
+    if (_rubidium_ristretto255_frombytes(&p_p3, p) != 0 ||
+            _rubidium_ristretto255_frombytes(&q_p3, q) != 0) {
         return -1;
     }
-    ge25519_p3_to_cached(&q_cached, &q_p3);
-    ge25519_sub_cached(&r_p1p1, &p_p3, &q_cached);
-    ge25519_p1p1_to_p3(&r_p3, &r_p1p1);
-    ristretto255_p3_tobytes(r, &r_p3);
+    _rubidium_ge25519_p3_to_cached(&q_cached, &q_p3);
+    _rubidium_ge25519_sub_cached(&r_p1p1, &p_p3, &q_cached);
+    _rubidium_ge25519_p1p1_to_p3(&r_p3, &r_p1p1);
+    _rubidium_ristretto255_p3_tobytes(r, &r_p3);
 
     return 0;
 }
@@ -66,7 +66,7 @@ rubidium_core_ristretto255_sub(unsigned char *r,
 int
 rubidium_core_ristretto255_from_hash(unsigned char *p, const unsigned char *r)
 {
-    ristretto255_from_hash(p, r);
+    _rubidium_ristretto255_from_hash(p, r);
 
     return 0;
 }
@@ -82,7 +82,7 @@ _string_to_element(unsigned char *p,
                                 hash_alg) != 0) {
         return -1;
     }
-    ristretto255_from_hash(p, h);
+    _rubidium_ristretto255_from_hash(p, h);
 
     return 0;
 }
@@ -157,7 +157,7 @@ void
 rubidium_core_ristretto255_scalar_mul(unsigned char *z, const unsigned char *x,
                                     const unsigned char *y)
 {
-    sc25519_mul(z, x, y);
+    _rubidium_sc25519_mul(z, x, y);
 }
 
 void
@@ -170,7 +170,7 @@ rubidium_core_ristretto255_scalar_reduce(unsigned char *r,
 int
 rubidium_core_ristretto255_scalar_is_canonical(const unsigned char *s)
 {
-    return sc25519_is_canonical(s);
+    return _rubidium_sc25519_is_canonical(s);
 }
 
 #define HASH_SC_L 48U

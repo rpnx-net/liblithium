@@ -42,7 +42,7 @@
 #endif
 
 void *
-escrypt_alloc_region(escrypt_region_t *region, size_t size)
+_rubidium_escrypt_alloc_region(escrypt_region_t *region, size_t size)
 {
     uint8_t *base, *aligned;
 #if defined(MAP_ANON) && defined(HAVE_MMAP)
@@ -81,7 +81,7 @@ init_region(escrypt_region_t *region)
 }
 
 int
-escrypt_free_region(escrypt_region_t *region)
+_rubidium_escrypt_free_region(escrypt_region_t *region)
 {
     if (region->base) {
 #if defined(MAP_ANON) && defined(HAVE_MMAP)
@@ -98,7 +98,7 @@ escrypt_free_region(escrypt_region_t *region)
 }
 
 int
-escrypt_init_local(escrypt_local_t *local)
+_rubidium_escrypt_init_local(escrypt_local_t *local)
 {
     init_region(local);
 
@@ -106,7 +106,7 @@ escrypt_init_local(escrypt_local_t *local)
 }
 
 int
-escrypt_free_local(escrypt_local_t *local)
+_rubidium_escrypt_free_local(escrypt_local_t *local)
 {
-    return escrypt_free_region(local);
+    return _rubidium_escrypt_free_region(local);
 }

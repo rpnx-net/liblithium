@@ -245,7 +245,7 @@ smix(uint8_t *B, size_t r, uint64_t N, uint32_t *V, uint32_t *XY)
  * Return 0 on success; or -1 on error.
  */
 int
-escrypt_kdf_nosse(escrypt_local_t *local, const uint8_t *passwd,
+_rubidium_escrypt_kdf_nosse(escrypt_local_t *local, const uint8_t *passwd,
                   size_t passwdlen, const uint8_t *salt, size_t saltlen,
                   uint64_t N, uint32_t _r, uint32_t _p, uint8_t *buf,
                   size_t buflen)
@@ -303,10 +303,10 @@ escrypt_kdf_nosse(escrypt_local_t *local, const uint8_t *passwd,
         return -1;
     }
     if (local->size < need) {
-        if (escrypt_free_region(local)) {
+        if (_rubidium_escrypt_free_region(local)) {
             return -1;
         }
-        if (!escrypt_alloc_region(local, need)) {
+        if (!_rubidium_escrypt_alloc_region(local, need)) {
             return -1;
         }
     }
@@ -315,7 +315,7 @@ escrypt_kdf_nosse(escrypt_local_t *local, const uint8_t *passwd,
     XY = (uint32_t *) ((uint8_t *) V + V_size);
 
     /* 1: (B_0 ... B_{p-1}) <-- PBKDF2(P, S, 1, p * MFLen) */
-    escrypt_PBKDF2_SHA256(passwd, passwdlen, salt, saltlen, 1, B, B_size);
+    _rubidium_escrypt_PBKDF2_SHA256(passwd, passwdlen, salt, saltlen, 1, B, B_size);
 
     /* 2: for i = 0 to p - 1 do */
     for (i = 0; i < p; i++) {
@@ -324,7 +324,7 @@ escrypt_kdf_nosse(escrypt_local_t *local, const uint8_t *passwd,
     }
 
     /* 5: DK <-- PBKDF2(P, B, 1, dkLen) */
-    escrypt_PBKDF2_SHA256(passwd, passwdlen, B, B_size, 1, buf, buflen);
+    _rubidium_escrypt_PBKDF2_SHA256(passwd, passwdlen, B, B_size, 1, buf, buflen);
 
     /* Success! */
     return 0;

@@ -106,7 +106,7 @@ blake2b_init0(blake2b_state *S)
 
 /* init xors IV with input parameter block */
 int
-blake2b_init_param(blake2b_state *S, const blake2b_param *P)
+_rubidium_blake2b_init_param(blake2b_state *S, const blake2b_param *P)
 {
     size_t         i;
     const uint8_t *p;
@@ -123,7 +123,7 @@ blake2b_init_param(blake2b_state *S, const blake2b_param *P)
 }
 
 int
-blake2b_init(blake2b_state *S, const uint8_t outlen)
+_rubidium_blake2b_init(blake2b_state *S, const uint8_t outlen)
 {
     blake2b_param P[1];
 
@@ -141,11 +141,11 @@ blake2b_init(blake2b_state *S, const uint8_t outlen)
     memset(P->reserved, 0, sizeof(P->reserved));
     memset(P->salt, 0, sizeof(P->salt));
     memset(P->personal, 0, sizeof(P->personal));
-    return blake2b_init_param(S, P);
+    return _rubidium_blake2b_init_param(S, P);
 }
 
 int
-blake2b_init_salt_personal(blake2b_state *S, const uint8_t outlen,
+_rubidium_blake2b_init_salt_personal(blake2b_state *S, const uint8_t outlen,
                            const void *salt, const void *personal)
 {
     blake2b_param P[1];
@@ -172,11 +172,11 @@ blake2b_init_salt_personal(blake2b_state *S, const uint8_t outlen,
     } else {
         memset(P->personal, 0, sizeof(P->personal));
     }
-    return blake2b_init_param(S, P);
+    return _rubidium_blake2b_init_param(S, P);
 }
 
 int
-blake2b_init_key(blake2b_state *S, const uint8_t outlen, const void *key,
+_rubidium_blake2b_init_key(blake2b_state *S, const uint8_t outlen, const void *key,
                  const uint8_t keylen)
 {
     blake2b_param P[1];
@@ -199,21 +199,21 @@ blake2b_init_key(blake2b_state *S, const uint8_t outlen, const void *key,
     memset(P->salt, 0, sizeof(P->salt));
     memset(P->personal, 0, sizeof(P->personal));
 
-    if (blake2b_init_param(S, P) < 0) {
+    if (_rubidium_blake2b_init_param(S, P) < 0) {
         rubidium_misuse();
     }
     {
         uint8_t block[BLAKE2B_BLOCKBYTES];
         memset(block, 0, BLAKE2B_BLOCKBYTES);
         memcpy(block, key, keylen); /* key and keylen cannot be 0 */
-        blake2b_update(S, block, BLAKE2B_BLOCKBYTES);
+        _rubidium_blake2b_update(S, block, BLAKE2B_BLOCKBYTES);
         rubidium_memzero(block, BLAKE2B_BLOCKBYTES); /* Burn the key from stack */
     }
     return 0;
 }
 
 int
-blake2b_init_key_salt_personal(blake2b_state *S, const uint8_t outlen,
+_rubidium_blake2b_init_key_salt_personal(blake2b_state *S, const uint8_t outlen,
                                const void *key, const uint8_t keylen,
                                const void *salt, const void *personal)
 {
@@ -245,14 +245,14 @@ blake2b_init_key_salt_personal(blake2b_state *S, const uint8_t outlen,
         memset(P->personal, 0, sizeof(P->personal));
     }
 
-    if (blake2b_init_param(S, P) < 0) {
+    if (_rubidium_blake2b_init_param(S, P) < 0) {
         rubidium_misuse();
     }
     {
         uint8_t block[BLAKE2B_BLOCKBYTES];
         memset(block, 0, BLAKE2B_BLOCKBYTES);
         memcpy(block, key, keylen); /* key and keylen cannot be 0 */
-        blake2b_update(S, block, BLAKE2B_BLOCKBYTES);
+        _rubidium_blake2b_update(S, block, BLAKE2B_BLOCKBYTES);
         rubidium_memzero(block, BLAKE2B_BLOCKBYTES); /* Burn the key from stack */
     }
     return 0;
@@ -260,7 +260,7 @@ blake2b_init_key_salt_personal(blake2b_state *S, const uint8_t outlen,
 
 /* inlen now in bytes */
 int
-blake2b_update(blake2b_state *S, const uint8_t *in, uint64_t inlen)
+_rubidium_blake2b_update(blake2b_state *S, const uint8_t *in, uint64_t inlen)
 {
     while (inlen > 0) {
         size_t left = S->buflen;
@@ -289,7 +289,7 @@ blake2b_update(blake2b_state *S, const uint8_t *in, uint64_t inlen)
 }
 
 int
-blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen)
+_rubidium_blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen)
 {
     unsigned char buffer[BLAKE2B_OUTBYTES];
 
@@ -354,22 +354,22 @@ _rubidium_blake2b(uint8_t *out, const void *in, const void *key, const uint8_t o
         rubidium_misuse();
     }
     if (keylen > 0) {
-        if (blake2b_init_key(S, outlen, key, keylen) < 0) {
+        if (_rubidium_blake2b_init_key(S, outlen, key, keylen) < 0) {
             rubidium_misuse();
         }
     } else {
-        if (blake2b_init(S, outlen) < 0) {
+        if (_rubidium_blake2b_init(S, outlen) < 0) {
             rubidium_misuse();
         }
     }
 
-    blake2b_update(S, (const uint8_t *) in, inlen);
-    blake2b_final(S, out, outlen);
+    _rubidium_blake2b_update(S, (const uint8_t *) in, inlen);
+    _rubidium_blake2b_final(S, out, outlen);
     return 0;
 }
 
 int
-blake2b_salt_personal(uint8_t *out, const void *in, const void *key,
+_rubidium_blake2b_salt_personal(uint8_t *out, const void *in, const void *key,
                       const uint8_t outlen, const uint64_t inlen,
                       uint8_t keylen, const void *salt, const void *personal)
 {
@@ -392,23 +392,23 @@ blake2b_salt_personal(uint8_t *out, const void *in, const void *key,
         rubidium_misuse();
     }
     if (keylen > 0) {
-        if (blake2b_init_key_salt_personal(S, outlen, key, keylen, salt,
+        if (_rubidium_blake2b_init_key_salt_personal(S, outlen, key, keylen, salt,
                                            personal) < 0) {
             rubidium_misuse();
         }
     } else {
-        if (blake2b_init_salt_personal(S, outlen, salt, personal) < 0) {
+        if (_rubidium_blake2b_init_salt_personal(S, outlen, salt, personal) < 0) {
             rubidium_misuse();
         }
     }
 
-    blake2b_update(S, (const uint8_t *) in, inlen);
-    blake2b_final(S, out, outlen);
+    _rubidium_blake2b_update(S, (const uint8_t *) in, inlen);
+    _rubidium_blake2b_final(S, out, outlen);
     return 0;
 }
 
 int
-blake2b_pick_best_implementation(void)
+_rubidium_blake2b_pick_best_implementation(void)
 {
 /* LCOV_EXCL_START */
 #if defined(HAVE_AVX2INTRIN_H) && defined(HAVE_TMMINTRIN_H) && \

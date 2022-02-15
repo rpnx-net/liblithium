@@ -15,15 +15,15 @@ rubidium_scalarmult_ristretto255(unsigned char *q, const unsigned char *n,
     ge25519_p3     P;
     unsigned int   i;
 
-    if (ristretto255_frombytes(&P, p) != 0) {
+    if (_rubidium_ristretto255_frombytes(&P, p) != 0) {
         return -1;
     }
     for (i = 0; i < 32; ++i) {
         t[i] = n[i];
     }
     t[31] &= 127;
-    ge25519_scalarmult(&Q, t, &P);
-    ristretto255_p3_tobytes(q, &Q);
+    _rubidium_ge25519_scalarmult(&Q, t, &P);
+    _rubidium_ristretto255_p3_tobytes(q, &Q);
     if (rubidium_is_zero(q, 32)) {
         return -1;
     }
@@ -42,8 +42,8 @@ rubidium_scalarmult_ristretto255_base(unsigned char *q,
         t[i] = n[i];
     }
     t[31] &= 127;
-    ge25519_scalarmult_base(&Q, t);
-    ristretto255_p3_tobytes(q, &Q);
+    _rubidium_ge25519_scalarmult_base(&Q, t);
+    _rubidium_ristretto255_p3_tobytes(q, &Q);
     if (rubidium_is_zero(q, 32)) {
         return -1;
     }

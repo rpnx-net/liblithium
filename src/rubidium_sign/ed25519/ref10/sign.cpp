@@ -86,18 +86,18 @@ _rubidium_sign_ed25519_detached(unsigned char *sig, unsigned long long *siglen_p
 
     memmove(sig + 32, sk + 32, 32);
 
-    sc25519_reduce(nonce);
-    ge25519_scalarmult_base(&R, nonce);
-    ge25519_p3_tobytes(sig, &R);
+    _rubidium_sc25519_reduce(nonce);
+    _rubidium_ge25519_scalarmult_base(&R, nonce);
+    _rubidium_ge25519_p3_tobytes(sig, &R);
 
     _rubidium_sign_ed25519_ref10_hinit(&hs, prehashed);
     rubidium_hash_sha512_update(&hs, sig, 64);
     rubidium_hash_sha512_update(&hs, m, mlen);
     rubidium_hash_sha512_final(&hs, hram);
 
-    sc25519_reduce(hram);
+    _rubidium_sc25519_reduce(hram);
     _rubidium_sign_ed25519_clamp(az);
-    sc25519_muladd(sig + 32, hram, az, nonce);
+    _rubidium_sc25519_muladd(sig + 32, hram, az, nonce);
 
     rubidium_memzero(az, sizeof az);
     rubidium_memzero(nonce, sizeof nonce);

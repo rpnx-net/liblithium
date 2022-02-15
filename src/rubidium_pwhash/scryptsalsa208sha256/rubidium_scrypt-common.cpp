@@ -106,7 +106,7 @@ decode64_uint32(uint32_t *dst, uint32_t dstbits, const uint8_t *src)
 }
 
 const uint8_t *
-escrypt_parse_setting(const uint8_t *setting,
+_rubidium_escrypt_parse_setting(const uint8_t *setting,
                       uint32_t *N_log2_p, uint32_t *r_p, uint32_t *p_p)
 {
     const uint8_t *src;
@@ -134,7 +134,7 @@ escrypt_parse_setting(const uint8_t *setting,
 }
 
 uint8_t *
-escrypt_r(escrypt_local_t *local, const uint8_t *passwd, size_t passwdlen,
+_rubidium_escrypt_r(escrypt_local_t *local, const uint8_t *passwd, size_t passwdlen,
           const uint8_t *setting, uint8_t *buf, size_t buflen)
 {
     uint8_t        hash[rubidium_pwhash_scryptsalsa208sha256_STRHASHBYTES];
@@ -150,7 +150,7 @@ escrypt_r(escrypt_local_t *local, const uint8_t *passwd, size_t passwdlen,
     uint32_t       r;
     uint32_t       p;
 
-    src = escrypt_parse_setting(setting, &N_log2, &r, &p);
+    src = _rubidium_escrypt_parse_setting(setting, &N_log2, &r, &p);
     if (!src) {
         return NULL;
     }
@@ -173,7 +173,7 @@ escrypt_r(escrypt_local_t *local, const uint8_t *passwd, size_t passwdlen,
     escrypt_kdf =
         rubidium_runtime_has_sse2() ? escrypt_kdf_sse : escrypt_kdf_nosse;
 #else
-    escrypt_kdf = escrypt_kdf_nosse;
+    escrypt_kdf = _rubidium_escrypt_kdf_nosse;
 #endif
     if (escrypt_kdf(local, passwd, passwdlen, salt, saltlen, N, r, p, hash,
                     sizeof(hash))) {
@@ -195,7 +195,7 @@ escrypt_r(escrypt_local_t *local, const uint8_t *passwd, size_t passwdlen,
 }
 
 uint8_t *
-escrypt_gensalt_r(uint32_t N_log2, uint32_t r, uint32_t p, const uint8_t *src,
+_rubidium_escrypt_gensalt_r(uint32_t N_log2, uint32_t r, uint32_t p, const uint8_t *src,
                   size_t srclen, uint8_t *buf, size_t buflen)
 {
     uint8_t *dst;
@@ -245,18 +245,18 @@ rubidium_pwhash_scryptsalsa208sha256_ll(const uint8_t *passwd, size_t passwdlen,
     escrypt_local_t local;
     int             retval;
 
-    if (escrypt_init_local(&local)) {
+    if (_rubidium_escrypt_init_local(&local)) {
         return -1; /* LCOV_EXCL_LINE */
     }
 #if defined(HAVE_EMMINTRIN_H)
     escrypt_kdf =
         rubidium_runtime_has_sse2() ? escrypt_kdf_sse : escrypt_kdf_nosse;
 #else
-    escrypt_kdf = escrypt_kdf_nosse;
+    escrypt_kdf = _rubidium_escrypt_kdf_nosse;
 #endif
     retval = escrypt_kdf(&local, passwd, passwdlen, salt, saltlen, N, r, p, buf,
                          buflen);
-    if (escrypt_free_local(&local)) {
+    if (_rubidium_escrypt_free_local(&local)) {
         return -1; /* LCOV_EXCL_LINE */
     }
     return retval;

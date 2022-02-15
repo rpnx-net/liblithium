@@ -20,8 +20,8 @@ rubidium_sign_ed25519_seed_keypair(unsigned char *pk, unsigned char *sk,
     sk[31] &= 127;
     sk[31] |= 64;
 
-    ge25519_scalarmult_base(&A, sk);
-    ge25519_p3_tobytes(pk, &A);
+    _rubidium_ge25519_scalarmult_base(&A, sk);
+    _rubidium_ge25519_p3_tobytes(pk, &A);
 
     memmove(sk, seed, 32);
     memmove(sk + 32, pk, 32);
@@ -50,18 +50,18 @@ rubidium_sign_ed25519_pk_to_curve25519(unsigned char *curve25519_pk,
     fe25519    x;
     fe25519    one_minus_y;
 
-    if (ge25519_has_small_order(ed25519_pk) != 0 ||
-        ge25519_frombytes_negate_vartime(&A, ed25519_pk) != 0 ||
-        ge25519_is_on_main_subgroup(&A) == 0) {
+    if (_rubidium_ge25519_has_small_order(ed25519_pk) != 0 ||
+            _rubidium_ge25519_frombytes_negate_vartime(&A, ed25519_pk) != 0 ||
+            _rubidium_ge25519_is_on_main_subgroup(&A) == 0) {
         return -1;
     }
     fe25519_1(one_minus_y);
     fe25519_sub(one_minus_y, one_minus_y, A.Y);
     fe25519_1(x);
     fe25519_add(x, x, A.Y);
-    fe25519_invert(one_minus_y, one_minus_y);
+    _rubidium_fe25519_invert(one_minus_y, one_minus_y);
     fe25519_mul(x, x, one_minus_y);
-    fe25519_tobytes(curve25519_pk, x);
+    _rubidium_fe25519_tobytes(curve25519_pk, x);
 
     return 0;
 }

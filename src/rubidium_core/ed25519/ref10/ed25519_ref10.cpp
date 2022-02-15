@@ -65,7 +65,7 @@ fe25519_sqmul(fe25519 s, const int n, const fe25519 a)
  * Inversion - returns 0 if z=0
  */
 void
-fe25519_invert(fe25519 out, const fe25519 z)
+_rubidium_fe25519_invert(fe25519 out, const fe25519 z)
 {
     fe25519 t0, t1, t2, t3;
     int     i;
@@ -251,7 +251,7 @@ fe25519_notsquare(const fe25519 x)
     fe25519_sqmul(t, 3, _11);
     fe25519_sq(t, t);
 
-    fe25519_tobytes(s, t);
+    _rubidium_fe25519_tobytes(s, t);
 
     return s[1] & 1;
 }
@@ -261,7 +261,7 @@ fe25519_notsquare(const fe25519 x)
  */
 
 void
-ge25519_add_cached(ge25519_p1p1 *r, const ge25519_p3 *p, const ge25519_cached *q)
+_rubidium_ge25519_add_cached(ge25519_p1p1 *r, const ge25519_p3 *p, const ge25519_cached *q)
 {
     fe25519 t0;
 
@@ -322,7 +322,7 @@ slide_vartime(signed char *r, const unsigned char *a)
 }
 
 int
-ge25519_frombytes(ge25519_p3 *h, const unsigned char *s)
+_rubidium_ge25519_frombytes(ge25519_p3 *h, const unsigned char *s)
 {
     fe25519 u;
     fe25519 v;
@@ -332,7 +332,7 @@ ge25519_frombytes(ge25519_p3 *h, const unsigned char *s)
     fe25519 x_sqrtm1;
     int     has_m_root, has_p_root;
 
-    fe25519_frombytes(h->Y, s);
+    _rubidium_fe25519_frombytes(h->Y, s);
     fe25519_1(h->Z);
     fe25519_sq(u, h->Y);
     fe25519_mul(v, u, ed25519_d);
@@ -360,7 +360,7 @@ ge25519_frombytes(ge25519_p3 *h, const unsigned char *s)
 }
 
 int
-ge25519_frombytes_negate_vartime(ge25519_p3 *h, const unsigned char *s)
+_rubidium_ge25519_frombytes_negate_vartime(ge25519_p3 *h, const unsigned char *s)
 {
     fe25519 u;
     fe25519 v;
@@ -368,7 +368,7 @@ ge25519_frombytes_negate_vartime(ge25519_p3 *h, const unsigned char *s)
     fe25519 vxx;
     fe25519 m_root_check, p_root_check;
 
-    fe25519_frombytes(h->Y, s);
+    _rubidium_fe25519_frombytes(h->Y, s);
     fe25519_1(h->Z);
     fe25519_sq(u, h->Y);
     fe25519_mul(v, u, ed25519_d);
@@ -451,7 +451,7 @@ ge25519_sub_precomp(ge25519_p1p1 *r, const ge25519_p3 *p, const ge25519_precomp 
  */
 
 void
-ge25519_p1p1_to_p2(ge25519_p2 *r, const ge25519_p1p1 *p)
+_rubidium_ge25519_p1p1_to_p2(ge25519_p2 *r, const ge25519_p1p1 *p)
 {
     fe25519_mul(r->X, p->X, p->T);
     fe25519_mul(r->Y, p->Y, p->Z);
@@ -463,7 +463,7 @@ ge25519_p1p1_to_p2(ge25519_p2 *r, const ge25519_p1p1 *p)
  */
 
 void
-ge25519_p1p1_to_p3(ge25519_p3 *r, const ge25519_p1p1 *p)
+_rubidium_ge25519_p1p1_to_p3(ge25519_p3 *r, const ge25519_p1p1 *p)
 {
     fe25519_mul(r->X, p->X, p->T);
     fe25519_mul(r->Y, p->Y, p->Z);
@@ -522,7 +522,7 @@ ge25519_cached_0(ge25519_cached *h)
  */
 
 void
-ge25519_p3_to_cached(ge25519_cached *r, const ge25519_p3 *p)
+_rubidium_ge25519_p3_to_cached(ge25519_cached *r, const ge25519_p3 *p)
 {
     fe25519_add(r->YplusX, p->Y, p->X);
     fe25519_sub(r->YminusX, p->Y, p->X);
@@ -538,7 +538,7 @@ ge25519_p3_to_precomp(ge25519_precomp *pi, const ge25519_p3 *p)
     fe25519 y;
     fe25519 xy;
 
-    fe25519_invert(recip, p->Z);
+    _rubidium_fe25519_invert(recip, p->Z);
     fe25519_mul(x, p->X, recip);
     fe25519_mul(y, p->Y, recip);
     fe25519_add(pi->yplusx, y, x);
@@ -560,16 +560,16 @@ ge25519_p3_to_p2(ge25519_p2 *r, const ge25519_p3 *p)
 }
 
 void
-ge25519_p3_tobytes(unsigned char *s, const ge25519_p3 *h)
+_rubidium_ge25519_p3_tobytes(unsigned char *s, const ge25519_p3 *h)
 {
     fe25519 recip;
     fe25519 x;
     fe25519 y;
 
-    fe25519_invert(recip, h->Z);
+    _rubidium_fe25519_invert(recip, h->Z);
     fe25519_mul(x, h->X, recip);
     fe25519_mul(y, h->Y, recip);
-    fe25519_tobytes(s, y);
+    _rubidium_fe25519_tobytes(s, y);
     s[31] ^= fe25519_isnegative(x) << 7;
 }
 
@@ -698,7 +698,7 @@ ge25519_cmov8_cached(ge25519_cached *t, const ge25519_cached cached[8], const si
  */
 
 void
-ge25519_sub_cached(ge25519_p1p1 *r, const ge25519_p3 *p, const ge25519_cached *q)
+_rubidium_ge25519_sub_cached(ge25519_p1p1 *r, const ge25519_p3 *p, const ge25519_cached *q)
 {
     fe25519 t0;
 
@@ -716,16 +716,16 @@ ge25519_sub_cached(ge25519_p1p1 *r, const ge25519_p3 *p, const ge25519_cached *q
 }
 
 void
-ge25519_tobytes(unsigned char *s, const ge25519_p2 *h)
+_rubidium_ge25519_tobytes(unsigned char *s, const ge25519_p2 *h)
 {
     fe25519 recip;
     fe25519 x;
     fe25519 y;
 
-    fe25519_invert(recip, h->Z);
+    _rubidium_fe25519_invert(recip, h->Z);
     fe25519_mul(x, h->X, recip);
     fe25519_mul(y, h->Y, recip);
-    fe25519_tobytes(s, y);
+    _rubidium_fe25519_tobytes(s, y);
     s[31] ^= fe25519_isnegative(x) << 7;
 }
 
@@ -739,7 +739,7 @@ ge25519_tobytes(unsigned char *s, const ge25519_p2 *h)
  */
 
 void
-ge25519_double_scalarmult_vartime(ge25519_p2 *r, const unsigned char *a,
+_rubidium_ge25519_double_scalarmult_vartime(ge25519_p2 *r, const unsigned char *a,
                                   const ge25519_p3 *A, const unsigned char *b)
 {
     static const ge25519_precomp Bi[8] = {
@@ -760,38 +760,38 @@ ge25519_double_scalarmult_vartime(ge25519_p2 *r, const unsigned char *a,
     slide_vartime(aslide, a);
     slide_vartime(bslide, b);
 
-    ge25519_p3_to_cached(&Ai[0], A);
+    _rubidium_ge25519_p3_to_cached(&Ai[0], A);
 
     ge25519_p3_dbl(&t, A);
-    ge25519_p1p1_to_p3(&A2, &t);
+    _rubidium_ge25519_p1p1_to_p3(&A2, &t);
 
-    ge25519_add_cached(&t, &A2, &Ai[0]);
-    ge25519_p1p1_to_p3(&u, &t);
-    ge25519_p3_to_cached(&Ai[1], &u);
+    _rubidium_ge25519_add_cached(&t, &A2, &Ai[0]);
+    _rubidium_ge25519_p1p1_to_p3(&u, &t);
+    _rubidium_ge25519_p3_to_cached(&Ai[1], &u);
 
-    ge25519_add_cached(&t, &A2, &Ai[1]);
-    ge25519_p1p1_to_p3(&u, &t);
-    ge25519_p3_to_cached(&Ai[2], &u);
+    _rubidium_ge25519_add_cached(&t, &A2, &Ai[1]);
+    _rubidium_ge25519_p1p1_to_p3(&u, &t);
+    _rubidium_ge25519_p3_to_cached(&Ai[2], &u);
 
-    ge25519_add_cached(&t, &A2, &Ai[2]);
-    ge25519_p1p1_to_p3(&u, &t);
-    ge25519_p3_to_cached(&Ai[3], &u);
+    _rubidium_ge25519_add_cached(&t, &A2, &Ai[2]);
+    _rubidium_ge25519_p1p1_to_p3(&u, &t);
+    _rubidium_ge25519_p3_to_cached(&Ai[3], &u);
 
-    ge25519_add_cached(&t, &A2, &Ai[3]);
-    ge25519_p1p1_to_p3(&u, &t);
-    ge25519_p3_to_cached(&Ai[4], &u);
+    _rubidium_ge25519_add_cached(&t, &A2, &Ai[3]);
+    _rubidium_ge25519_p1p1_to_p3(&u, &t);
+    _rubidium_ge25519_p3_to_cached(&Ai[4], &u);
 
-    ge25519_add_cached(&t, &A2, &Ai[4]);
-    ge25519_p1p1_to_p3(&u, &t);
-    ge25519_p3_to_cached(&Ai[5], &u);
+    _rubidium_ge25519_add_cached(&t, &A2, &Ai[4]);
+    _rubidium_ge25519_p1p1_to_p3(&u, &t);
+    _rubidium_ge25519_p3_to_cached(&Ai[5], &u);
 
-    ge25519_add_cached(&t, &A2, &Ai[5]);
-    ge25519_p1p1_to_p3(&u, &t);
-    ge25519_p3_to_cached(&Ai[6], &u);
+    _rubidium_ge25519_add_cached(&t, &A2, &Ai[5]);
+    _rubidium_ge25519_p1p1_to_p3(&u, &t);
+    _rubidium_ge25519_p3_to_cached(&Ai[6], &u);
 
-    ge25519_add_cached(&t, &A2, &Ai[6]);
-    ge25519_p1p1_to_p3(&u, &t);
-    ge25519_p3_to_cached(&Ai[7], &u);
+    _rubidium_ge25519_add_cached(&t, &A2, &Ai[6]);
+    _rubidium_ge25519_p1p1_to_p3(&u, &t);
+    _rubidium_ge25519_p3_to_cached(&Ai[7], &u);
 
     ge25519_p2_0(r);
 
@@ -805,22 +805,22 @@ ge25519_double_scalarmult_vartime(ge25519_p2 *r, const unsigned char *a,
         ge25519_p2_dbl(&t, r);
 
         if (aslide[i] > 0) {
-            ge25519_p1p1_to_p3(&u, &t);
-            ge25519_add_cached(&t, &u, &Ai[aslide[i] / 2]);
+            _rubidium_ge25519_p1p1_to_p3(&u, &t);
+            _rubidium_ge25519_add_cached(&t, &u, &Ai[aslide[i] / 2]);
         } else if (aslide[i] < 0) {
-            ge25519_p1p1_to_p3(&u, &t);
-            ge25519_sub_cached(&t, &u, &Ai[(-aslide[i]) / 2]);
+            _rubidium_ge25519_p1p1_to_p3(&u, &t);
+            _rubidium_ge25519_sub_cached(&t, &u, &Ai[(-aslide[i]) / 2]);
         }
 
         if (bslide[i] > 0) {
-            ge25519_p1p1_to_p3(&u, &t);
+            _rubidium_ge25519_p1p1_to_p3(&u, &t);
             ge25519_add_precomp(&t, &u, &Bi[bslide[i] / 2]);
         } else if (bslide[i] < 0) {
-            ge25519_p1p1_to_p3(&u, &t);
+            _rubidium_ge25519_p1p1_to_p3(&u, &t);
             ge25519_sub_precomp(&t, &u, &Bi[(-bslide[i]) / 2]);
         }
 
-        ge25519_p1p1_to_p2(r, &t);
+        _rubidium_ge25519_p1p1_to_p2(r, &t);
     }
 }
 
@@ -835,7 +835,7 @@ ge25519_double_scalarmult_vartime(ge25519_p2 *r, const unsigned char *a,
  */
 
 void
-ge25519_scalarmult(ge25519_p3 *h, const unsigned char *a, const ge25519_p3 *p)
+_rubidium_ge25519_scalarmult(ge25519_p3 *h, const unsigned char *a, const ge25519_p3 *p)
 {
     signed char     e[64];
     signed char     carry;
@@ -847,35 +847,35 @@ ge25519_scalarmult(ge25519_p3 *h, const unsigned char *a, const ge25519_p3 *p)
     ge25519_cached  t;
     int             i;
 
-    ge25519_p3_to_cached(&pi[1 - 1], p);   /* p */
+    _rubidium_ge25519_p3_to_cached(&pi[1 - 1], p);   /* p */
 
     ge25519_p3_dbl(&t2, p);
-    ge25519_p1p1_to_p3(&p2, &t2);
-    ge25519_p3_to_cached(&pi[2 - 1], &p2); /* 2p = 2*p */
+    _rubidium_ge25519_p1p1_to_p3(&p2, &t2);
+    _rubidium_ge25519_p3_to_cached(&pi[2 - 1], &p2); /* 2p = 2*p */
 
-    ge25519_add_cached(&t3, p, &pi[2 - 1]);
-    ge25519_p1p1_to_p3(&p3, &t3);
-    ge25519_p3_to_cached(&pi[3 - 1], &p3); /* 3p = 2p+p */
+    _rubidium_ge25519_add_cached(&t3, p, &pi[2 - 1]);
+    _rubidium_ge25519_p1p1_to_p3(&p3, &t3);
+    _rubidium_ge25519_p3_to_cached(&pi[3 - 1], &p3); /* 3p = 2p+p */
 
     ge25519_p3_dbl(&t4, &p2);
-    ge25519_p1p1_to_p3(&p4, &t4);
-    ge25519_p3_to_cached(&pi[4 - 1], &p4); /* 4p = 2*2p */
+    _rubidium_ge25519_p1p1_to_p3(&p4, &t4);
+    _rubidium_ge25519_p3_to_cached(&pi[4 - 1], &p4); /* 4p = 2*2p */
 
-    ge25519_add_cached(&t5, p, &pi[4 - 1]);
-    ge25519_p1p1_to_p3(&p5, &t5);
-    ge25519_p3_to_cached(&pi[5 - 1], &p5); /* 5p = 4p+p */
+    _rubidium_ge25519_add_cached(&t5, p, &pi[4 - 1]);
+    _rubidium_ge25519_p1p1_to_p3(&p5, &t5);
+    _rubidium_ge25519_p3_to_cached(&pi[5 - 1], &p5); /* 5p = 4p+p */
 
     ge25519_p3_dbl(&t6, &p3);
-    ge25519_p1p1_to_p3(&p6, &t6);
-    ge25519_p3_to_cached(&pi[6 - 1], &p6); /* 6p = 2*3p */
+    _rubidium_ge25519_p1p1_to_p3(&p6, &t6);
+    _rubidium_ge25519_p3_to_cached(&pi[6 - 1], &p6); /* 6p = 2*3p */
 
-    ge25519_add_cached(&t7, p, &pi[6 - 1]);
-    ge25519_p1p1_to_p3(&p7, &t7);
-    ge25519_p3_to_cached(&pi[7 - 1], &p7); /* 7p = 6p+p */
+    _rubidium_ge25519_add_cached(&t7, p, &pi[6 - 1]);
+    _rubidium_ge25519_p1p1_to_p3(&p7, &t7);
+    _rubidium_ge25519_p3_to_cached(&pi[7 - 1], &p7); /* 7p = 6p+p */
 
     ge25519_p3_dbl(&t8, &p4);
-    ge25519_p1p1_to_p3(&p8, &t8);
-    ge25519_p3_to_cached(&pi[8 - 1], &p8); /* 8p = 2*4p */
+    _rubidium_ge25519_p1p1_to_p3(&p8, &t8);
+    _rubidium_ge25519_p3_to_cached(&pi[8 - 1], &p8); /* 8p = 2*4p */
 
     for (i = 0; i < 32; ++i) {
         e[2 * i + 0] = (a[i] >> 0) & 15;
@@ -898,23 +898,23 @@ ge25519_scalarmult(ge25519_p3 *h, const unsigned char *a, const ge25519_p3 *p)
 
     for (i = 63; i != 0; i--) {
         ge25519_cmov8_cached(&t, pi, e[i]);
-        ge25519_add_cached(&r, h, &t);
+        _rubidium_ge25519_add_cached(&r, h, &t);
 
-        ge25519_p1p1_to_p2(&s, &r);
+        _rubidium_ge25519_p1p1_to_p2(&s, &r);
         ge25519_p2_dbl(&r, &s);
-        ge25519_p1p1_to_p2(&s, &r);
+        _rubidium_ge25519_p1p1_to_p2(&s, &r);
         ge25519_p2_dbl(&r, &s);
-        ge25519_p1p1_to_p2(&s, &r);
+        _rubidium_ge25519_p1p1_to_p2(&s, &r);
         ge25519_p2_dbl(&r, &s);
-        ge25519_p1p1_to_p2(&s, &r);
+        _rubidium_ge25519_p1p1_to_p2(&s, &r);
         ge25519_p2_dbl(&r, &s);
 
-        ge25519_p1p1_to_p3(h, &r);  /* *16 */
+        _rubidium_ge25519_p1p1_to_p3(h, &r);  /* *16 */
     }
     ge25519_cmov8_cached(&t, pi, e[i]);
-    ge25519_add_cached(&r, h, &t);
+    _rubidium_ge25519_add_cached(&r, h, &t);
 
-    ge25519_p1p1_to_p3(h, &r);
+    _rubidium_ge25519_p1p1_to_p3(h, &r);
 }
 
 /*
@@ -928,7 +928,7 @@ ge25519_scalarmult(ge25519_p3 *h, const unsigned char *a, const ge25519_p3 *p)
  */
 
 void
-ge25519_scalarmult_base(ge25519_p3 *h, const unsigned char *a)
+_rubidium_ge25519_scalarmult_base(ge25519_p3 *h, const unsigned char *a)
 {
     signed char     e[64];
     signed char     carry;
@@ -959,22 +959,22 @@ ge25519_scalarmult_base(ge25519_p3 *h, const unsigned char *a)
     for (i = 1; i < 64; i += 2) {
         ge25519_cmov8_base(&t, i / 2, e[i]);
         ge25519_add_precomp(&r, h, &t);
-        ge25519_p1p1_to_p3(h, &r);
+        _rubidium_ge25519_p1p1_to_p3(h, &r);
     }
 
     ge25519_p3_dbl(&r, h);
-    ge25519_p1p1_to_p2(&s, &r);
+    _rubidium_ge25519_p1p1_to_p2(&s, &r);
     ge25519_p2_dbl(&r, &s);
-    ge25519_p1p1_to_p2(&s, &r);
+    _rubidium_ge25519_p1p1_to_p2(&s, &r);
     ge25519_p2_dbl(&r, &s);
-    ge25519_p1p1_to_p2(&s, &r);
+    _rubidium_ge25519_p1p1_to_p2(&s, &r);
     ge25519_p2_dbl(&r, &s);
-    ge25519_p1p1_to_p3(h, &r);
+    _rubidium_ge25519_p1p1_to_p3(h, &r);
 
     for (i = 0; i < 64; i += 2) {
         ge25519_cmov8_base(&t, i / 2, e[i]);
         ge25519_add_precomp(&r, h, &t);
-        ge25519_p1p1_to_p3(h, &r);
+        _rubidium_ge25519_p1p1_to_p3(h, &r);
     }
 }
 
@@ -985,7 +985,7 @@ ge25519_p3p3_dbl(ge25519_p3 *r, const ge25519_p3 *p)
     ge25519_p1p1 p1p1;
 
     ge25519_p3_dbl(&p1p1, p);
-    ge25519_p1p1_to_p3(r, &p1p1);
+    _rubidium_ge25519_p1p1_to_p3(r, &p1p1);
 }
 
 /* r = p+q */
@@ -995,9 +995,9 @@ ge25519_p3_add(ge25519_p3 *r, const ge25519_p3 *p, const ge25519_p3 *q)
     ge25519_cached q_cached;
     ge25519_p1p1   p1p1;
 
-    ge25519_p3_to_cached(&q_cached, q);
-    ge25519_add_cached(&p1p1, p, &q_cached);
-    ge25519_p1p1_to_p3(r, &p1p1);
+    _rubidium_ge25519_p3_to_cached(&q_cached, q);
+    _rubidium_ge25519_add_cached(&p1p1, p, &q_cached);
+    _rubidium_ge25519_p1p1_to_p3(r, &p1p1);
 }
 
 /* r = r*(2^n)+q */
@@ -1011,9 +1011,9 @@ ge25519_p3_dbladd(ge25519_p3 *r, const int n, const ge25519_p3 *q)
     ge25519_p3_to_p2(&p2, r);
     for (i = 0; i < n; i++) {
         ge25519_p2_dbl(&p1p1, &p2);
-        ge25519_p1p1_to_p2(&p2, &p1p1);
+        _rubidium_ge25519_p1p1_to_p2(&p2, &p1p1);
     }
-    ge25519_p1p1_to_p3(r, &p1p1);
+    _rubidium_ge25519_p1p1_to_p3(r, &p1p1);
     ge25519_p3_add(r, r, q);
 }
 
@@ -1067,7 +1067,7 @@ ge25519_mul_l(ge25519_p3 *r, const ge25519_p3 *p)
 }
 
 int
-ge25519_is_on_curve(const ge25519_p3 *p)
+_rubidium_ge25519_is_on_curve(const ge25519_p3 *p)
 {
     fe25519 x2;
     fe25519 y2;
@@ -1092,7 +1092,7 @@ ge25519_is_on_curve(const ge25519_p3 *p)
 }
 
 int
-ge25519_is_on_main_subgroup(const ge25519_p3 *p)
+_rubidium_ge25519_is_on_main_subgroup(const ge25519_p3 *p)
 {
     ge25519_p3 pl;
 
@@ -1102,7 +1102,7 @@ ge25519_is_on_main_subgroup(const ge25519_p3 *p)
 }
 
 int
-ge25519_is_canonical(const unsigned char *s)
+_rubidium_ge25519_is_canonical(const unsigned char *s)
 {
     unsigned char c;
     unsigned char d;
@@ -1119,7 +1119,7 @@ ge25519_is_canonical(const unsigned char *s)
 }
 
 int
-ge25519_has_small_order(const unsigned char s[32])
+_rubidium_ge25519_has_small_order(const unsigned char s[32])
 {
     RUBIDIUM_ALIGN(16)
     static const unsigned char blocklist[][32] = {
@@ -1185,7 +1185,7 @@ ge25519_has_small_order(const unsigned char s[32])
  */
 
 void
-sc25519_mul(unsigned char s[32], const unsigned char a[32], const unsigned char b[32])
+_rubidium_sc25519_mul(unsigned char s[32], const unsigned char a[32], const unsigned char b[32])
 {
     int64_t a0  = 2097151 & load_3(a);
     int64_t a1  = 2097151 & (load_4(a + 2) >> 5);
@@ -1658,7 +1658,7 @@ sc25519_mul(unsigned char s[32], const unsigned char a[32], const unsigned char 
  */
 
 void
-sc25519_muladd(unsigned char s[32], const unsigned char a[32],
+_rubidium_sc25519_muladd(unsigned char s[32], const unsigned char a[32],
                const unsigned char b[32], const unsigned char c[32])
 {
     int64_t a0  = 2097151 & load_3(a);
@@ -2146,7 +2146,7 @@ sc25519_muladd(unsigned char s[32], const unsigned char a[32],
 static inline void
 sc25519_sq(unsigned char *s, const unsigned char *a)
 {
-    sc25519_mul(s, a, a);
+    _rubidium_sc25519_mul(s, a, a);
 }
 
 /*
@@ -2168,11 +2168,11 @@ sc25519_sqmul(unsigned char s[32], const int n, const unsigned char a[32])
     for (i = 0; i < n; i++) {
         sc25519_sq(s, s);
     }
-    sc25519_mul(s, s, a);
+    _rubidium_sc25519_mul(s, s, a);
 }
 
 void
-sc25519_invert(unsigned char recip[32], const unsigned char s[32])
+_rubidium_sc25519_invert(unsigned char recip[32], const unsigned char s[32])
 {
     unsigned char _10[32], _100[32], _1000[32], _10000[32], _100000[32],
         _1000000[32], _10010011[32], _10010111[32], _100110[32], _1010[32],
@@ -2181,33 +2181,33 @@ sc25519_invert(unsigned char recip[32], const unsigned char s[32])
         _11100111[32], _11101011[32], _11110101[32];
 
     sc25519_sq(_10, s);
-    sc25519_mul(_11, s, _10);
-    sc25519_mul(_100, s, _11);
+    _rubidium_sc25519_mul(_11, s, _10);
+    _rubidium_sc25519_mul(_100, s, _11);
     sc25519_sq(_1000, _100);
-    sc25519_mul(_1010, _10, _1000);
-    sc25519_mul(_1011, s, _1010);
+    _rubidium_sc25519_mul(_1010, _10, _1000);
+    _rubidium_sc25519_mul(_1011, s, _1010);
     sc25519_sq(_10000, _1000);
     sc25519_sq(_10110, _1011);
-    sc25519_mul(_100000, _1010, _10110);
-    sc25519_mul(_100110, _10000, _10110);
+    _rubidium_sc25519_mul(_100000, _1010, _10110);
+    _rubidium_sc25519_mul(_100110, _10000, _10110);
     sc25519_sq(_1000000, _100000);
-    sc25519_mul(_1010000, _10000, _1000000);
-    sc25519_mul(_1010011, _11, _1010000);
-    sc25519_mul(_1100011, _10000, _1010011);
-    sc25519_mul(_1100111, _100, _1100011);
-    sc25519_mul(_1101011, _100, _1100111);
-    sc25519_mul(_10010011, _1000000, _1010011);
-    sc25519_mul(_10010111, _100, _10010011);
-    sc25519_mul(_10111101, _100110, _10010111);
-    sc25519_mul(_11010011, _10110, _10111101);
-    sc25519_mul(_11100111, _1010000, _10010111);
-    sc25519_mul(_11101011, _100, _11100111);
-    sc25519_mul(_11110101, _1010, _11101011);
+    _rubidium_sc25519_mul(_1010000, _10000, _1000000);
+    _rubidium_sc25519_mul(_1010011, _11, _1010000);
+    _rubidium_sc25519_mul(_1100011, _10000, _1010011);
+    _rubidium_sc25519_mul(_1100111, _100, _1100011);
+    _rubidium_sc25519_mul(_1101011, _100, _1100111);
+    _rubidium_sc25519_mul(_10010011, _1000000, _1010011);
+    _rubidium_sc25519_mul(_10010111, _100, _10010011);
+    _rubidium_sc25519_mul(_10111101, _100110, _10010111);
+    _rubidium_sc25519_mul(_11010011, _10110, _10111101);
+    _rubidium_sc25519_mul(_11100111, _1010000, _10010111);
+    _rubidium_sc25519_mul(_11101011, _100, _11100111);
+    _rubidium_sc25519_mul(_11110101, _1010, _11101011);
 
-    sc25519_mul(recip, _1011, _11110101);
+    _rubidium_sc25519_mul(recip, _1011, _11110101);
     sc25519_sqmul(recip, 126, _1010011);
     sc25519_sqmul(recip, 9, _10);
-    sc25519_mul(recip, recip, _11110101);
+    _rubidium_sc25519_mul(recip, recip, _11110101);
     sc25519_sqmul(recip, 7, _1100111);
     sc25519_sqmul(recip, 9, _11110101);
     sc25519_sqmul(recip, 11, _10111101);
@@ -2233,7 +2233,7 @@ sc25519_invert(unsigned char recip[32], const unsigned char s[32])
  */
 
 void
-sc25519_reduce(unsigned char s[64])
+_rubidium_sc25519_reduce(unsigned char s[64])
 {
     int64_t s0  = 2097151 & load_3(s);
     int64_t s1  = 2097151 & (load_4(s + 2) >> 5);
@@ -2557,7 +2557,7 @@ sc25519_reduce(unsigned char s[64])
 }
 
 int
-sc25519_is_canonical(const unsigned char s[32])
+_rubidium_sc25519_is_canonical(const unsigned char s[32])
 {
     /* 2^252+27742317777372353535851937790883648493 */
     static const unsigned char L[32] = {
@@ -2593,7 +2593,7 @@ ge25519_mont_to_ed(fe25519 xed, fe25519 yed, const fe25519 x, const fe25519 y)
 
     /* xed = sqrt(-A-2)*x/y */
     fe25519_mul(x_plus_one_y_inv, x_plus_one, y);
-    fe25519_invert(x_plus_one_y_inv, x_plus_one_y_inv); /* 1/((x+1)*y) */
+    _rubidium_fe25519_invert(x_plus_one_y_inv, x_plus_one_y_inv); /* 1/((x+1)*y) */
     fe25519_mul(xed, x, ed25519_sqrtam2);
     fe25519_mul(xed, xed, x_plus_one_y_inv);            /* sqrt(-A-2)*x/((x+1)*y) */
     fe25519_mul(xed, xed, x_plus_one);
@@ -2628,11 +2628,11 @@ ge25519_clear_cofactor(ge25519_p3 *p3)
     ge25519_p2   p2;
 
     ge25519_p3_dbl(&p1, p3);
-    ge25519_p1p1_to_p2(&p2, &p1);
+    _rubidium_ge25519_p1p1_to_p2(&p2, &p1);
     ge25519_p2_dbl(&p1, &p2);
-    ge25519_p1p1_to_p2(&p2, &p1);
+    _rubidium_ge25519_p1p1_to_p2(&p2, &p1);
     ge25519_p2_dbl(&p1, &p2);
-    ge25519_p1p1_to_p3(p3, &p1);
+    _rubidium_ge25519_p1p1_to_p3(p3, &p1);
 }
 
 static void
@@ -2645,7 +2645,7 @@ ge25519_elligator2(fe25519 x, fe25519 y, const fe25519 r, int *notsquare_p)
 
     fe25519_sq2(rr2, r);
     rr2[0]++;
-    fe25519_invert(rr2, rr2);
+    _rubidium_fe25519_invert(rr2, rr2);
     fe25519_mul32(x, rr2, ed25519_A_32);
     fe25519_neg(x, x); /* x=x1 */
 
@@ -2673,7 +2673,7 @@ ge25519_elligator2(fe25519 x, fe25519 y, const fe25519 r, int *notsquare_p)
 }
 
 void
-ge25519_from_uniform(unsigned char s[32], const unsigned char r[32])
+_rubidium_ge25519_from_uniform(unsigned char s[32], const unsigned char r[32])
 {
     ge25519_p3    p3;
     fe25519       x, y, negxed;
@@ -2684,7 +2684,7 @@ ge25519_from_uniform(unsigned char s[32], const unsigned char r[32])
     memcpy(s, r, 32);
     x_sign = s[31] >> 7;
     s[31] &= 0x7f;
-    fe25519_frombytes(r_fe, s);
+    _rubidium_fe25519_frombytes(r_fe, s);
 
     ge25519_elligator2(x, y, r_fe, &notsquare);
 
@@ -2695,7 +2695,7 @@ ge25519_from_uniform(unsigned char s[32], const unsigned char r[32])
     fe25519_1(p3.Z);
     fe25519_mul(p3.T, p3.X, p3.Y);
     ge25519_clear_cofactor(&p3);
-    ge25519_p3_tobytes(s, &p3);
+    _rubidium_ge25519_p3_tobytes(s, &p3);
 }
 
 static void
@@ -2710,8 +2710,8 @@ fe25519_reduce64(fe25519 fe_f, const unsigned char h[64])
     memcpy(gl, h + 32, 32);
     fl[31] &= 0x7f;
     gl[31] &= 0x7f;
-    fe25519_frombytes(fe_f, fl);
-    fe25519_frombytes(fe_g, gl);
+    _rubidium_fe25519_frombytes(fe_f, fl);
+    _rubidium_fe25519_frombytes(fe_g, gl);
     fe_f[0] += (h[31] >> 7) * 19 + (h[63] >> 7) * 722;
     for (i = 0; i < sizeof (fe25519) / sizeof fe_f[0]; i++) {
         fe_f[i] += 38 * fe_g[i];
@@ -2720,7 +2720,7 @@ fe25519_reduce64(fe25519 fe_f, const unsigned char h[64])
 }
 
 void
-ge25519_from_hash(unsigned char s[32], const unsigned char h[64])
+_rubidium_ge25519_from_hash(unsigned char s[32], const unsigned char h[64])
 {
     ge25519_p3    p3;
     fe25519       fe_f;
@@ -2740,7 +2740,7 @@ ge25519_from_hash(unsigned char s[32], const unsigned char h[64])
     fe25519_1(p3.Z);
     fe25519_mul(p3.T, p3.X, p3.Y);
     ge25519_clear_cofactor(&p3);
-    ge25519_p3_tobytes(s, &p3);
+    _rubidium_ge25519_p3_tobytes(s, &p3);
 }
 
 /* Ristretto group */
@@ -2801,7 +2801,7 @@ ristretto255_is_canonical(const unsigned char *s)
 }
 
 int
-ristretto255_frombytes(ge25519_p3 *h, const unsigned char *s)
+_rubidium_ristretto255_frombytes(ge25519_p3 *h, const unsigned char *s)
 {
     fe25519 inv_sqrt;
     fe25519 one;
@@ -2816,7 +2816,7 @@ ristretto255_frombytes(ge25519_p3 *h, const unsigned char *s)
     if (ristretto255_is_canonical(s) == 0) {
         return -1;
     }
-    fe25519_frombytes(s_, s);
+    _rubidium_fe25519_frombytes(s_, s);
     fe25519_sq(ss, s_);                /* ss = s^2 */
 
     fe25519_1(u1);
@@ -2851,7 +2851,7 @@ ristretto255_frombytes(ge25519_p3 *h, const unsigned char *s)
 }
 
 void
-ristretto255_p3_tobytes(unsigned char *s, const ge25519_p3 *h)
+_rubidium_ristretto255_p3_tobytes(unsigned char *s, const ge25519_p3 *h)
 {
     fe25519 den1, den2;
     fe25519 den_inv;
@@ -2905,7 +2905,7 @@ ristretto255_p3_tobytes(unsigned char *s, const ge25519_p3 *h)
     fe25519_sub(s_, h->Z, y_);
     fe25519_mul(s_, den_inv, s_);
     fe25519_abs(s_, s_);
-    fe25519_tobytes(s, s_);
+    _rubidium_fe25519_tobytes(s, s_);
 }
 
 static void
@@ -2960,7 +2960,7 @@ ristretto255_elligator(ge25519_p3 *p, const fe25519 t)
 }
 
 void
-ristretto255_from_hash(unsigned char s[32], const unsigned char h[64])
+_rubidium_ristretto255_from_hash(unsigned char s[32], const unsigned char h[64])
 {
     fe25519        r0, r1;
     ge25519_cached p1_cached;
@@ -2968,12 +2968,12 @@ ristretto255_from_hash(unsigned char s[32], const unsigned char h[64])
     ge25519_p3     p0, p1;
     ge25519_p3     p;
 
-    fe25519_frombytes(r0, h);
-    fe25519_frombytes(r1, h + 32);
+    _rubidium_fe25519_frombytes(r0, h);
+    _rubidium_fe25519_frombytes(r1, h + 32);
     ristretto255_elligator(&p0, r0);
     ristretto255_elligator(&p1, r1);
-    ge25519_p3_to_cached(&p1_cached, &p1);
-    ge25519_add_cached(&p_p1p1, &p0, &p1_cached);
-    ge25519_p1p1_to_p3(&p, &p_p1p1);
-    ristretto255_p3_tobytes(s, &p);
+    _rubidium_ge25519_p3_to_cached(&p1_cached, &p1);
+    _rubidium_ge25519_add_cached(&p_p1p1, &p0, &p1_cached);
+    _rubidium_ge25519_p1p1_to_p3(&p, &p_p1p1);
+    _rubidium_ristretto255_p3_tobytes(s, &p);
 }

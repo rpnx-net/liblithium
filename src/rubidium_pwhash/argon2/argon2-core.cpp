@@ -184,7 +184,7 @@ _rubidium_argon2_finalize(const argon2_context *context, argon2_instance_t *inst
         {
             uint8_t blockhash_bytes[ARGON2_BLOCK_SIZE];
             store_block(blockhash_bytes, &blockhash);
-            blake2b_long(context->out, context->outlen, blockhash_bytes,
+            _rubidium_blake2b_long(context->out, context->outlen, blockhash_bytes,
                          ARGON2_BLOCK_SIZE);
             rubidium_memzero(blockhash.v,
                            ARGON2_BLOCK_SIZE); /* clear blockhash */
@@ -353,13 +353,13 @@ argon2_fill_first_blocks(uint8_t *blockhash, const argon2_instance_t *instance)
     for (l = 0; l < instance->lanes; ++l) {
         STORE32_LE(blockhash + ARGON2_PREHASH_DIGEST_LENGTH, 0);
         STORE32_LE(blockhash + ARGON2_PREHASH_DIGEST_LENGTH + 4, l);
-        blake2b_long(blockhash_bytes, ARGON2_BLOCK_SIZE, blockhash,
+        _rubidium_blake2b_long(blockhash_bytes, ARGON2_BLOCK_SIZE, blockhash,
                      ARGON2_PREHASH_SEED_LENGTH);
         load_block(&instance->region->memory[l * instance->lane_length + 0],
                    blockhash_bytes);
 
         STORE32_LE(blockhash + ARGON2_PREHASH_DIGEST_LENGTH, 1);
-        blake2b_long(blockhash_bytes, ARGON2_BLOCK_SIZE, blockhash,
+        _rubidium_blake2b_long(blockhash_bytes, ARGON2_BLOCK_SIZE, blockhash,
                      ARGON2_PREHASH_SEED_LENGTH);
         load_block(&instance->region->memory[l * instance->lane_length + 1],
                    blockhash_bytes);

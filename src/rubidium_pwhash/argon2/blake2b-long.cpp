@@ -10,7 +10,7 @@
 #include "blake2b-long.h"
 
 int
-blake2b_long(void *pout, size_t outlen, const void *in, size_t inlen)
+_rubidium_blake2b_long(void *pout, size_t outlen, const void *in, size_t inlen)
 {
     uint8_t *out = (uint8_t *) pout;
     rubidium_generichash_blake2b_state blake_state;

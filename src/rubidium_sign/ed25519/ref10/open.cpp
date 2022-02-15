@@ -29,18 +29,18 @@ _rubidium_sign_ed25519_verify_detached(const unsigned char *sig,
     }
 #else
     if ((sig[63] & 240) != 0 &&
-        sc25519_is_canonical(sig + 32) == 0) {
+            _rubidium_sc25519_is_canonical(sig + 32) == 0) {
         return -1;
     }
-    if (ge25519_has_small_order(sig) != 0) {
+    if (_rubidium_ge25519_has_small_order(sig) != 0) {
         return -1;
     }
-    if (ge25519_is_canonical(pk) == 0 ||
-        ge25519_has_small_order(pk) != 0) {
+    if (_rubidium_ge25519_is_canonical(pk) == 0 ||
+            _rubidium_ge25519_has_small_order(pk) != 0) {
         return -1;
     }
 #endif
-    if (ge25519_frombytes_negate_vartime(&A, pk) != 0) {
+    if (_rubidium_ge25519_frombytes_negate_vartime(&A, pk) != 0) {
         return -1;
     }
     _rubidium_sign_ed25519_ref10_hinit(&hs, prehashed);
@@ -48,10 +48,10 @@ _rubidium_sign_ed25519_verify_detached(const unsigned char *sig,
     rubidium_hash_sha512_update(&hs, pk, 32);
     rubidium_hash_sha512_update(&hs, m, mlen);
     rubidium_hash_sha512_final(&hs, h);
-    sc25519_reduce(h);
+    _rubidium_sc25519_reduce(h);
 
-    ge25519_double_scalarmult_vartime(&R, h, &A, sig + 32);
-    ge25519_tobytes(rcheck, &R);
+    _rubidium_ge25519_double_scalarmult_vartime(&R, h, &A, sig + 32);
+    _rubidium_ge25519_tobytes(rcheck, &R);
 
     return rubidium_verify_32(rcheck, sig) | (-(rcheck == sig)) |
            rubidium_memcmp(sig, rcheck, 32);

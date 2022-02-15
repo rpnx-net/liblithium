@@ -210,24 +210,24 @@ rubidium_pwhash_scryptsalsa208sha256_str(
         return -1;      /* LCOV_EXCL_LINE */
     }
     randombytes_buf(salt, sizeof salt);
-    if (escrypt_gensalt_r(N_log2, r, p, salt, sizeof salt, (uint8_t *) setting,
+    if (_rubidium_escrypt_gensalt_r(N_log2, r, p, salt, sizeof salt, (uint8_t *) setting,
                           sizeof setting) == NULL) {
         errno = EINVAL; /* LCOV_EXCL_LINE */
         return -1;      /* LCOV_EXCL_LINE */
     }
-    if (escrypt_init_local(&escrypt_local) != 0) {
+    if (_rubidium_escrypt_init_local(&escrypt_local) != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
-    if (escrypt_r(&escrypt_local, (const uint8_t *) passwd, (size_t) passwdlen,
+    if (_rubidium_escrypt_r(&escrypt_local, (const uint8_t *) passwd, (size_t) passwdlen,
                   (const uint8_t *) setting, (uint8_t *) out,
                   rubidium_pwhash_scryptsalsa208sha256_STRBYTES) == NULL) {
         /* LCOV_EXCL_START */
-        escrypt_free_local(&escrypt_local);
+        _rubidium_escrypt_free_local(&escrypt_local);
         errno = EINVAL;
         return -1;
         /* LCOV_EXCL_STOP */
     }
-    escrypt_free_local(&escrypt_local);
+    _rubidium_escrypt_free_local(&escrypt_local);
 
     COMPILER_ASSERT(
         SETTING_SIZE(rubidium_pwhash_scryptsalsa208sha256_STRSALTBYTES) ==
@@ -253,17 +253,17 @@ rubidium_pwhash_scryptsalsa208sha256_str_verify(
         rubidium_pwhash_scryptsalsa208sha256_STRBYTES - 1U) {
         return -1;
     }
-    if (escrypt_init_local(&escrypt_local) != 0) {
+    if (_rubidium_escrypt_init_local(&escrypt_local) != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
     memset(wanted, 0, sizeof wanted);
-    if (escrypt_r(&escrypt_local, (const uint8_t *) passwd, (size_t) passwdlen,
+    if (_rubidium_escrypt_r(&escrypt_local, (const uint8_t *) passwd, (size_t) passwdlen,
                   (const uint8_t *) str, (uint8_t *) wanted,
                   sizeof wanted) == NULL) {
-        escrypt_free_local(&escrypt_local);
+        _rubidium_escrypt_free_local(&escrypt_local);
         return -1;
     }
-    escrypt_free_local(&escrypt_local);
+    _rubidium_escrypt_free_local(&escrypt_local);
     ret = rubidium_memcmp(wanted, str, sizeof wanted);
     rubidium_memzero(wanted, sizeof wanted);
 
@@ -288,7 +288,7 @@ rubidium_pwhash_scryptsalsa208sha256_str_needs_rehash(
         errno = EINVAL;
         return -1;
     }
-    if (escrypt_parse_setting((const uint8_t *) str,
+    if (_rubidium_escrypt_parse_setting((const uint8_t *) str,
                               &N_log2_, &r_, &p_) == NULL) {
         errno = EINVAL;
         return -1;
