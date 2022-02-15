@@ -2,27 +2,27 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "crypto_verify_16.h"
-#include "crypto_verify_32.h"
-#include "crypto_verify_64.h"
+#include "rubidium_verify_16.h"
+#include "rubidium_verify_32.h"
+#include "rubidium_verify_64.h"
 #include "private/common.h"
 
 size_t
-crypto_verify_16_bytes(void)
+rubidium_verify_16_bytes(void)
 {
-    return crypto_verify_16_BYTES;
+    return rubidium_verify_16_BYTES;
 }
 
 size_t
-crypto_verify_32_bytes(void)
+rubidium_verify_32_bytes(void)
 {
-    return crypto_verify_32_BYTES;
+    return rubidium_verify_32_BYTES;
 }
 
 size_t
-crypto_verify_64_bytes(void)
+rubidium_verify_64_bytes(void)
 {
-    return crypto_verify_64_BYTES;
+    return rubidium_verify_64_BYTES;
 }
 
 #if defined(HAVE_EMMINTRIN_H) && defined(__SSE2__)
@@ -33,7 +33,7 @@ crypto_verify_64_bytes(void)
 # include <emmintrin.h>
 
 static inline int
-crypto_verify_n(const unsigned char *x_, const unsigned char *y_,
+rubidium_verify_n(const unsigned char *x_, const unsigned char *y_,
                 const int n)
 {
     const    __m128i zero = _mm_setzero_si128();
@@ -62,7 +62,7 @@ crypto_verify_n(const unsigned char *x_, const unsigned char *y_,
 #else
 
 static inline int
-crypto_verify_n(const unsigned char *x_, const unsigned char *y_,
+rubidium_verify_n(const unsigned char *x_, const unsigned char *y_,
                 const int n)
 {
     const volatile unsigned char *volatile x =
@@ -81,19 +81,19 @@ crypto_verify_n(const unsigned char *x_, const unsigned char *y_,
 #endif
 
 int
-crypto_verify_16(const unsigned char *x, const unsigned char *y)
+rubidium_verify_16(const unsigned char *x, const unsigned char *y)
 {
-    return crypto_verify_n(x, y, crypto_verify_16_BYTES);
+    return rubidium_verify_n(x, y, rubidium_verify_16_BYTES);
 }
 
 int
-crypto_verify_32(const unsigned char *x, const unsigned char *y)
+rubidium_verify_32(const unsigned char *x, const unsigned char *y)
 {
-    return crypto_verify_n(x, y, crypto_verify_32_BYTES);
+    return rubidium_verify_n(x, y, rubidium_verify_32_BYTES);
 }
 
 int
-crypto_verify_64(const unsigned char *x, const unsigned char *y)
+rubidium_verify_64(const unsigned char *x, const unsigned char *y)
 {
-    return crypto_verify_n(x, y, crypto_verify_64_BYTES);
+    return rubidium_verify_n(x, y, rubidium_verify_64_BYTES);
 }

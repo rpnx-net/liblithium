@@ -6,12 +6,12 @@ Public domain.
 
 #include <stdint.h>
 
-#include "crypto_core_salsa2012.h"
-#include "crypto_stream_salsa2012.h"
+#include "rubidium_core_salsa2012.h"
+#include "rubidium_stream_salsa2012.h"
 #include "utils.h"
 
 int
-crypto_stream_salsa2012(unsigned char *c, unsigned long long clen,
+rubidium_stream_salsa2012(unsigned char *c, unsigned long long clen,
                         const unsigned char *n, const unsigned char *k)
 {
     unsigned char in[16];
@@ -33,7 +33,7 @@ crypto_stream_salsa2012(unsigned char *c, unsigned long long clen,
         in[i] = 0;
     }
     while (clen >= 64) {
-        crypto_core_salsa2012(c, in, kcopy, NULL);
+        rubidium_core_salsa2012(c, in, kcopy, NULL);
         u = 1;
         for (i = 8; i < 16; ++i) {
             u += (unsigned int)in[i];
@@ -44,19 +44,19 @@ crypto_stream_salsa2012(unsigned char *c, unsigned long long clen,
         c += 64;
     }
     if (clen) {
-        crypto_core_salsa2012(block, in, kcopy, NULL);
+        rubidium_core_salsa2012(block, in, kcopy, NULL);
         for (i = 0; i < (unsigned int)clen; ++i) {
             c[i] = block[i];
         }
     }
-    lithium_memzero(block, sizeof block);
-    lithium_memzero(kcopy, sizeof kcopy);
+    rubidium_memzero(block, sizeof block);
+    rubidium_memzero(kcopy, sizeof kcopy);
 
     return 0;
 }
 
 int
-crypto_stream_salsa2012_xor(unsigned char *c, const unsigned char *m,
+rubidium_stream_salsa2012_xor(unsigned char *c, const unsigned char *m,
                             unsigned long long mlen, const unsigned char *n,
                             const unsigned char *k)
 {
@@ -79,7 +79,7 @@ crypto_stream_salsa2012_xor(unsigned char *c, const unsigned char *m,
         in[i] = 0;
     }
     while (mlen >= 64) {
-        crypto_core_salsa2012(block, in, kcopy, NULL);
+        rubidium_core_salsa2012(block, in, kcopy, NULL);
         for (i = 0; i < 64; ++i) {
             c[i] = m[i] ^ block[i];
         }
@@ -94,13 +94,13 @@ crypto_stream_salsa2012_xor(unsigned char *c, const unsigned char *m,
         m += 64;
     }
     if (mlen) {
-        crypto_core_salsa2012(block, in, kcopy, NULL);
+        rubidium_core_salsa2012(block, in, kcopy, NULL);
         for (i = 0; i < (unsigned int)mlen; ++i) {
             c[i] = m[i] ^ block[i];
         }
     }
-    lithium_memzero(block, sizeof block);
-    lithium_memzero(kcopy, sizeof kcopy);
+    rubidium_memzero(block, sizeof block);
+    rubidium_memzero(kcopy, sizeof kcopy);
 
     return 0;
 }

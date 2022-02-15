@@ -3,38 +3,38 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "crypto_auth_hmacsha256.h"
-#include "crypto_hash_sha256.h"
-#include "crypto_verify_32.h"
+#include "rubidium_auth_hmacsha256.h"
+#include "rubidium_hash_sha256.h"
+#include "rubidium_verify_32.h"
 #include "randombytes.h"
 #include "utils.h"
 
 size_t
-crypto_auth_hmacsha256_bytes(void)
+rubidium_auth_hmacsha256_bytes(void)
 {
-    return crypto_auth_hmacsha256_BYTES;
+    return rubidium_auth_hmacsha256_BYTES;
 }
 
 size_t
-crypto_auth_hmacsha256_keybytes(void)
+rubidium_auth_hmacsha256_keybytes(void)
 {
-    return crypto_auth_hmacsha256_KEYBYTES;
+    return rubidium_auth_hmacsha256_KEYBYTES;
 }
 
 size_t
-crypto_auth_hmacsha256_statebytes(void)
+rubidium_auth_hmacsha256_statebytes(void)
 {
-    return sizeof(crypto_auth_hmacsha256_state);
+    return sizeof(rubidium_auth_hmacsha256_state);
 }
 
 void
-crypto_auth_hmacsha256_keygen(unsigned char k[crypto_auth_hmacsha256_KEYBYTES])
+rubidium_auth_hmacsha256_keygen(unsigned char k[rubidium_auth_hmacsha256_KEYBYTES])
 {
-    randombytes_buf(k, crypto_auth_hmacsha256_KEYBYTES);
+    randombytes_buf(k, rubidium_auth_hmacsha256_KEYBYTES);
 }
 
 int
-crypto_auth_hmacsha256_init(crypto_auth_hmacsha256_state *state,
+rubidium_auth_hmacsha256_init(rubidium_auth_hmacsha256_state *state,
                             const unsigned char *key, size_t keylen)
 {
     unsigned char pad[64];
@@ -42,77 +42,77 @@ crypto_auth_hmacsha256_init(crypto_auth_hmacsha256_state *state,
     size_t        i;
 
     if (keylen > 64) {
-        crypto_hash_sha256_init(&state->ictx);
-        crypto_hash_sha256_update(&state->ictx, key, keylen);
-        crypto_hash_sha256_final(&state->ictx, khash);
+        rubidium_hash_sha256_init(&state->ictx);
+        rubidium_hash_sha256_update(&state->ictx, key, keylen);
+        rubidium_hash_sha256_final(&state->ictx, khash);
         key    = khash;
         keylen = 32;
     }
-    crypto_hash_sha256_init(&state->ictx);
+    rubidium_hash_sha256_init(&state->ictx);
     memset(pad, 0x36, 64);
     for (i = 0; i < keylen; i++) {
         pad[i] ^= key[i];
     }
-    crypto_hash_sha256_update(&state->ictx, pad, 64);
+    rubidium_hash_sha256_update(&state->ictx, pad, 64);
 
-    crypto_hash_sha256_init(&state->octx);
+    rubidium_hash_sha256_init(&state->octx);
     memset(pad, 0x5c, 64);
     for (i = 0; i < keylen; i++) {
         pad[i] ^= key[i];
     }
-    crypto_hash_sha256_update(&state->octx, pad, 64);
+    rubidium_hash_sha256_update(&state->octx, pad, 64);
 
-    lithium_memzero((void *) pad, sizeof pad);
-    lithium_memzero((void *) khash, sizeof khash);
+    rubidium_memzero((void *) pad, sizeof pad);
+    rubidium_memzero((void *) khash, sizeof khash);
 
     return 0;
 }
 
 int
-crypto_auth_hmacsha256_update(crypto_auth_hmacsha256_state *state,
+rubidium_auth_hmacsha256_update(rubidium_auth_hmacsha256_state *state,
                               const unsigned char *in, unsigned long long inlen)
 {
-    crypto_hash_sha256_update(&state->ictx, in, inlen);
+    rubidium_hash_sha256_update(&state->ictx, in, inlen);
 
     return 0;
 }
 
 int
-crypto_auth_hmacsha256_final(crypto_auth_hmacsha256_state *state,
+rubidium_auth_hmacsha256_final(rubidium_auth_hmacsha256_state *state,
                              unsigned char                *out)
 {
     unsigned char ihash[32];
 
-    crypto_hash_sha256_final(&state->ictx, ihash);
-    crypto_hash_sha256_update(&state->octx, ihash, 32);
-    crypto_hash_sha256_final(&state->octx, out);
+    rubidium_hash_sha256_final(&state->ictx, ihash);
+    rubidium_hash_sha256_update(&state->octx, ihash, 32);
+    rubidium_hash_sha256_final(&state->octx, out);
 
-    lithium_memzero((void *) ihash, sizeof ihash);
+    rubidium_memzero((void *) ihash, sizeof ihash);
 
     return 0;
 }
 
 int
-crypto_auth_hmacsha256(unsigned char *out, const unsigned char *in,
+rubidium_auth_hmacsha256(unsigned char *out, const unsigned char *in,
                        unsigned long long inlen, const unsigned char *k)
 {
-    crypto_auth_hmacsha256_state state;
+    rubidium_auth_hmacsha256_state state;
 
-    crypto_auth_hmacsha256_init(&state, k, crypto_auth_hmacsha256_KEYBYTES);
-    crypto_auth_hmacsha256_update(&state, in, inlen);
-    crypto_auth_hmacsha256_final(&state, out);
+    rubidium_auth_hmacsha256_init(&state, k, rubidium_auth_hmacsha256_KEYBYTES);
+    rubidium_auth_hmacsha256_update(&state, in, inlen);
+    rubidium_auth_hmacsha256_final(&state, out);
 
     return 0;
 }
 
 int
-crypto_auth_hmacsha256_verify(const unsigned char *h, const unsigned char *in,
+rubidium_auth_hmacsha256_verify(const unsigned char *h, const unsigned char *in,
                               unsigned long long inlen, const unsigned char *k)
 {
     unsigned char correct[32];
 
-    crypto_auth_hmacsha256(correct, in, inlen, k);
+    rubidium_auth_hmacsha256(correct, in, inlen, k);
 
-    return crypto_verify_32(h, correct) | (-(h == correct)) |
-           lithium_memcmp(correct, h, 32);
+    return rubidium_verify_32(h, correct) | (-(h == correct)) |
+           rubidium_memcmp(correct, h, 32);
 }

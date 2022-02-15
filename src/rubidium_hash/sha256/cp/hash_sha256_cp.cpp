@@ -33,7 +33,7 @@
 
 #include <sys/types.h>
 
-#include "crypto_hash_sha256.h"
+#include "rubidium_hash_sha256.h"
 #include "private/common.h"
 #include "utils.h"
 
@@ -151,7 +151,7 @@ static const uint8_t PAD[64] = { 0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                  0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 static void
-SHA256_Pad(crypto_hash_sha256_state *state, uint32_t tmp32[64 + 8])
+SHA256_Pad(rubidium_hash_sha256_state *state, uint32_t tmp32[64 + 8])
 {
     unsigned int r;
     unsigned int i;
@@ -173,7 +173,7 @@ SHA256_Pad(crypto_hash_sha256_state *state, uint32_t tmp32[64 + 8])
 }
 
 int
-crypto_hash_sha256_init(crypto_hash_sha256_state *state)
+rubidium_hash_sha256_init(rubidium_hash_sha256_state *state)
 {
     static const uint32_t sha256_initial_state[8] = { 0x6a09e667, 0xbb67ae85,
                                                       0x3c6ef372, 0xa54ff53a,
@@ -187,7 +187,7 @@ crypto_hash_sha256_init(crypto_hash_sha256_state *state)
 }
 
 int
-crypto_hash_sha256_update(crypto_hash_sha256_state *state,
+rubidium_hash_sha256_update(rubidium_hash_sha256_state *state,
                           const unsigned char *in, unsigned long long inlen)
 {
     uint32_t           tmp32[64 + 8];
@@ -222,33 +222,33 @@ crypto_hash_sha256_update(crypto_hash_sha256_state *state,
     for (i = 0; i < inlen; i++) {
         state->buf[i] = in[i];
     }
-    lithium_memzero((void *) tmp32, sizeof tmp32);
+    rubidium_memzero((void *) tmp32, sizeof tmp32);
 
     return 0;
 }
 
 int
-crypto_hash_sha256_final(crypto_hash_sha256_state *state, unsigned char *out)
+rubidium_hash_sha256_final(rubidium_hash_sha256_state *state, unsigned char *out)
 {
     uint32_t tmp32[64 + 8];
 
     SHA256_Pad(state, tmp32);
     be32enc_vect(out, state->state, 32);
-    lithium_memzero((void *) tmp32, sizeof tmp32);
-    lithium_memzero((void *) state, sizeof *state);
+    rubidium_memzero((void *) tmp32, sizeof tmp32);
+    rubidium_memzero((void *) state, sizeof *state);
 
     return 0;
 }
 
 int
-crypto_hash_sha256(unsigned char *out, const unsigned char *in,
+rubidium_hash_sha256(unsigned char *out, const unsigned char *in,
                    unsigned long long inlen)
 {
-    crypto_hash_sha256_state state;
+    rubidium_hash_sha256_state state;
 
-    crypto_hash_sha256_init(&state);
-    crypto_hash_sha256_update(&state, in, inlen);
-    crypto_hash_sha256_final(&state, out);
+    rubidium_hash_sha256_init(&state);
+    rubidium_hash_sha256_update(&state, in, inlen);
+    rubidium_hash_sha256_final(&state, out);
 
     return 0;
 }

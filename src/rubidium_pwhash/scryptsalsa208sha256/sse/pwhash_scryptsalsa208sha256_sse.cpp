@@ -47,7 +47,7 @@
 # endif
 # include "private/sse2_64_32.h"
 
-# include "../crypto_scrypt.h"
+# include "../rubidium_scrypt.h"
 # include "../pbkdf2-sha256.h"
 
 # define ARX(out, in1, in2, s)                                     \

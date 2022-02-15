@@ -1,5 +1,5 @@
-#ifndef crypto_shorthash_siphash24_H
-#define crypto_shorthash_siphash24_H
+#ifndef rubidium_shorthash_siphash24_H
+#define rubidium_shorthash_siphash24_H
 
 #include <stddef.h>
 #include "export.h"
@@ -13,32 +13,32 @@ extern "C" {
 
 /* -- 64-bit output -- */
 
-#define crypto_shorthash_siphash24_BYTES 8U
-LITHIUM_EXPORT
-size_t crypto_shorthash_siphash24_bytes(void);
+#define rubidium_shorthash_siphash24_BYTES 8U
+RUBIDIUM_EXPORT
+size_t rubidium_shorthash_siphash24_bytes(void);
 
-#define crypto_shorthash_siphash24_KEYBYTES 16U
-LITHIUM_EXPORT
-size_t crypto_shorthash_siphash24_keybytes(void);
+#define rubidium_shorthash_siphash24_KEYBYTES 16U
+RUBIDIUM_EXPORT
+size_t rubidium_shorthash_siphash24_keybytes(void);
 
-LITHIUM_EXPORT
-int crypto_shorthash_siphash24(unsigned char *out, const unsigned char *in,
+RUBIDIUM_EXPORT
+int rubidium_shorthash_siphash24(unsigned char *out, const unsigned char *in,
                                unsigned long long inlen, const unsigned char *k)
             __attribute__ ((nonnull(1, 4)));
 
-#ifndef LITHIUM_LIBRARY_MINIMAL
+#ifndef RUBIDIUM_LIBRARY_MINIMAL
 /* -- 128-bit output -- */
 
-#define crypto_shorthash_siphashx24_BYTES 16U
-LITHIUM_EXPORT
-size_t crypto_shorthash_siphashx24_bytes(void);
+#define rubidium_shorthash_siphashx24_BYTES 16U
+RUBIDIUM_EXPORT
+size_t rubidium_shorthash_siphashx24_bytes(void);
 
-#define crypto_shorthash_siphashx24_KEYBYTES 16U
-LITHIUM_EXPORT
-size_t crypto_shorthash_siphashx24_keybytes(void);
+#define rubidium_shorthash_siphashx24_KEYBYTES 16U
+RUBIDIUM_EXPORT
+size_t rubidium_shorthash_siphashx24_keybytes(void);
 
-LITHIUM_EXPORT
-int crypto_shorthash_siphashx24(unsigned char *out, const unsigned char *in,
+RUBIDIUM_EXPORT
+int rubidium_shorthash_siphashx24(unsigned char *out, const unsigned char *in,
                                 unsigned long long inlen, const unsigned char *k)
             __attribute__ ((nonnull(1, 4)));
 #endif

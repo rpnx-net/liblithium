@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "../onetimeauth_poly1305.h"
-#include "crypto_verify_16.h"
+#include "rubidium_verify_16.h"
 #include "poly1305_sse2.h"
 #include "private/common.h"
 #include "utils.h"
@@ -196,7 +196,7 @@ static POLY1305_NOINLINE void
 poly1305_blocks(poly1305_state_internal_t *st, const unsigned char *m,
                 unsigned long long bytes)
 {
-    CRYPTO_ALIGN(64)
+    RUBIDIUM_ALIGN(64)
     xmmi HIBIT =
         _mm_shuffle_epi32(_mm_cvtsi32_si128(1 << 24), _MM_SHUFFLE(1, 0, 1, 0));
     const xmmi MMASK = _mm_shuffle_epi32(_mm_cvtsi32_si128((1 << 26) - 1),
@@ -806,7 +806,7 @@ poly1305_finish_ext(poly1305_state_internal_t *st, const unsigned char *m,
     uint64_t h0, h1, h2;
 
     if (leftover) {
-        CRYPTO_ALIGN(16) unsigned char final[32] = { 0 };
+        RUBIDIUM_ALIGN(16) unsigned char final[32] = { 0 };
 
         poly1305_block_copy31(final, m, leftover);
         if (leftover != 16) {
@@ -863,7 +863,7 @@ poly1305_finish_ext(poly1305_state_internal_t *st, const unsigned char *m,
     memcpy(&mac[0], &h0, 8);
     memcpy(&mac[8], &h1, 8);
 
-    lithium_memzero((void *) st, sizeof *st);
+    rubidium_memzero((void *) st, sizeof *st);
 }
 
 static void
@@ -873,10 +873,10 @@ poly1305_finish(poly1305_state_internal_t *st, unsigned char mac[16])
 }
 
 static int
-crypto_onetimeauth_poly1305_sse2_init(crypto_onetimeauth_poly1305_state *state,
+rubidium_onetimeauth_poly1305_sse2_init(rubidium_onetimeauth_poly1305_state *state,
                                       const unsigned char *key)
 {
-    COMPILER_ASSERT(sizeof(crypto_onetimeauth_poly1305_state) >=
+    COMPILER_ASSERT(sizeof(rubidium_onetimeauth_poly1305_state) >=
                     sizeof(poly1305_state_internal_t));
     poly1305_init_ext((poly1305_state_internal_t *) (void *) state, key, 0U);
 
@@ -884,8 +884,8 @@ crypto_onetimeauth_poly1305_sse2_init(crypto_onetimeauth_poly1305_state *state,
 }
 
 static int
-crypto_onetimeauth_poly1305_sse2_update(
-    crypto_onetimeauth_poly1305_state *state, const unsigned char *in,
+rubidium_onetimeauth_poly1305_sse2_update(
+    rubidium_onetimeauth_poly1305_state *state, const unsigned char *in,
     unsigned long long inlen)
 {
     poly1305_update((poly1305_state_internal_t *) (void *) state, in, inlen);
@@ -894,7 +894,7 @@ crypto_onetimeauth_poly1305_sse2_update(
 }
 
 static int
-crypto_onetimeauth_poly1305_sse2_final(crypto_onetimeauth_poly1305_state *state,
+rubidium_onetimeauth_poly1305_sse2_final(rubidium_onetimeauth_poly1305_state *state,
                                        unsigned char *out)
 {
     poly1305_finish((poly1305_state_internal_t *) (void *) state, out);
@@ -903,11 +903,11 @@ crypto_onetimeauth_poly1305_sse2_final(crypto_onetimeauth_poly1305_state *state,
 }
 
 static int
-crypto_onetimeauth_poly1305_sse2(unsigned char *out, const unsigned char *m,
+rubidium_onetimeauth_poly1305_sse2(unsigned char *out, const unsigned char *m,
                                  unsigned long long   inlen,
                                  const unsigned char *key)
 {
-    CRYPTO_ALIGN(64) poly1305_state_internal_t st;
+    RUBIDIUM_ALIGN(64) poly1305_state_internal_t st;
     unsigned long long                         blocks;
 
     poly1305_init_ext(&st, key, inlen);
@@ -923,27 +923,27 @@ crypto_onetimeauth_poly1305_sse2(unsigned char *out, const unsigned char *m,
 }
 
 static int
-crypto_onetimeauth_poly1305_sse2_verify(const unsigned char *h,
+rubidium_onetimeauth_poly1305_sse2_verify(const unsigned char *h,
                                         const unsigned char *in,
                                         unsigned long long   inlen,
                                         const unsigned char *k)
 {
     unsigned char correct[16];
 
-    crypto_onetimeauth_poly1305_sse2(correct, in, inlen, k);
+    rubidium_onetimeauth_poly1305_sse2(correct, in, inlen, k);
 
-    return crypto_verify_16(h, correct);
+    return rubidium_verify_16(h, correct);
 }
 
-struct crypto_onetimeauth_poly1305_implementation
-    crypto_onetimeauth_poly1305_sse2_implementation = {
-        LITHIUM_C99(.onetimeauth =) crypto_onetimeauth_poly1305_sse2,
-        LITHIUM_C99(.onetimeauth_verify =)
-            crypto_onetimeauth_poly1305_sse2_verify,
-        LITHIUM_C99(.onetimeauth_init =) crypto_onetimeauth_poly1305_sse2_init,
-        LITHIUM_C99(.onetimeauth_update =)
-            crypto_onetimeauth_poly1305_sse2_update,
-        LITHIUM_C99(.onetimeauth_final =) crypto_onetimeauth_poly1305_sse2_final
+struct rubidium_onetimeauth_poly1305_implementation
+    rubidium_onetimeauth_poly1305_sse2_implementation = {
+        RUBIDIUM_C99(.onetimeauth =) rubidium_onetimeauth_poly1305_sse2,
+        RUBIDIUM_C99(.onetimeauth_verify =)
+            rubidium_onetimeauth_poly1305_sse2_verify,
+        RUBIDIUM_C99(.onetimeauth_init =) rubidium_onetimeauth_poly1305_sse2_init,
+        RUBIDIUM_C99(.onetimeauth_update =)
+            rubidium_onetimeauth_poly1305_sse2_update,
+        RUBIDIUM_C99(.onetimeauth_final =) rubidium_onetimeauth_poly1305_sse2_final
     };
 
 #endif

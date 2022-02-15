@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "core.h"
-#include "crypto_stream_chacha20.h"
+#include "rubidium_stream_chacha20.h"
 #include "private/common.h"
 #include "utils.h"
 
@@ -86,12 +86,12 @@ stream_ref(unsigned char *c, unsigned long long clen, const unsigned char *n,
     if (!clen) {
         return 0;
     }
-    COMPILER_ASSERT(crypto_stream_chacha20_KEYBYTES == 256 / 8);
+    COMPILER_ASSERT(rubidium_stream_chacha20_KEYBYTES == 256 / 8);
     chacha_keysetup(&ctx, k);
     chacha_ivsetup(&ctx, n, NULL);
     memset(c, 0, clen);
     chacha20_encrypt_bytes(&ctx, c, c, clen);
-    lithium_memzero(&ctx, sizeof ctx);
+    rubidium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
@@ -105,12 +105,12 @@ stream_ietf_ext_ref(unsigned char *c, unsigned long long clen,
     if (!clen) {
         return 0;
     }
-    COMPILER_ASSERT(crypto_stream_chacha20_KEYBYTES == 256 / 8);
+    COMPILER_ASSERT(rubidium_stream_chacha20_KEYBYTES == 256 / 8);
     chacha_keysetup(&ctx, k);
     chacha_ietf_ivsetup(&ctx, n, NULL);
     memset(c, 0, clen);
     chacha20_encrypt_bytes(&ctx, c, c, clen);
-    lithium_memzero(&ctx, sizeof ctx);
+    rubidium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
@@ -135,7 +135,7 @@ stream_ref_xor_ic(unsigned char *c, const unsigned char *m,
     chacha_keysetup(&ctx, k);
     chacha_ivsetup(&ctx, n, ic_bytes);
     chacha20_encrypt_bytes(&ctx, m, c, mlen);
-    lithium_memzero(&ctx, sizeof ctx);
+    rubidium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
@@ -155,17 +155,17 @@ stream_ietf_ext_ref_xor_ic(unsigned char *c, const unsigned char *m,
     chacha_keysetup(&ctx, k);
     chacha_ietf_ivsetup(&ctx, n, ic_bytes);
     chacha20_encrypt_bytes(&ctx, m, c, mlen);
-    lithium_memzero(&ctx, sizeof ctx);
+    rubidium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
 
-struct crypto_stream_chacha20_implementation
-    crypto_stream_chacha20_dolbeau_ssse3_implementation = {
-        LITHIUM_C99(.stream =) stream_ref,
-        LITHIUM_C99(.stream_ietf_ext =) stream_ietf_ext_ref,
-        LITHIUM_C99(.stream_xor_ic =) stream_ref_xor_ic,
-        LITHIUM_C99(.stream_ietf_ext_xor_ic =) stream_ietf_ext_ref_xor_ic
+struct rubidium_stream_chacha20_implementation
+    rubidium_stream_chacha20_dolbeau_ssse3_implementation = {
+        RUBIDIUM_C99(.stream =) stream_ref,
+        RUBIDIUM_C99(.stream_ietf_ext =) stream_ietf_ext_ref,
+        RUBIDIUM_C99(.stream_xor_ic =) stream_ref_xor_ic,
+        RUBIDIUM_C99(.stream_ietf_ext_xor_ic =) stream_ietf_ext_ref_xor_ic
     };
 
 #endif

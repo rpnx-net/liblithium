@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "crypto_verify_32.h"
+#include "rubidium_verify_32.h"
 #include "private/common.h"
 #include "private/ed25519_ref10.h"
 #include "utils.h"
@@ -1121,7 +1121,7 @@ ge25519_is_canonical(const unsigned char *s)
 int
 ge25519_has_small_order(const unsigned char s[32])
 {
-    CRYPTO_ALIGN(16)
+    RUBIDIUM_ALIGN(16)
     static const unsigned char blocklist[][32] = {
         /* 0 (order 4) */
         { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,

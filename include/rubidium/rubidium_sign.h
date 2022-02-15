@@ -1,16 +1,16 @@
-#ifndef crypto_sign_H
-#define crypto_sign_H
+#ifndef rubidium_sign_H
+#define rubidium_sign_H
 
 /*
- * THREAD SAFETY: crypto_sign_keypair() is thread-safe,
- * provided that lithium_init() was called before.
+ * THREAD SAFETY: rubidium_sign_keypair() is thread-safe,
+ * provided that rubidium_init() was called before.
  *
- * Other functions, including crypto_sign_seed_keypair() are always thread-safe.
+ * Other functions, including rubidium_sign_seed_keypair() are always thread-safe.
  */
 
 #include <stddef.h>
 
-#include "crypto_sign_ed25519.h"
+#include "rubidium_sign_ed25519.h"
 #include "export.h"
 
 #ifdef __cplusplus
@@ -20,83 +20,83 @@
 extern "C" {
 #endif
 
-typedef crypto_sign_ed25519ph_state crypto_sign_state;
+typedef rubidium_sign_ed25519ph_state rubidium_sign_state;
 
-LITHIUM_EXPORT
-size_t  crypto_sign_statebytes(void);
+RUBIDIUM_EXPORT
+size_t  rubidium_sign_statebytes(void);
 
-#define crypto_sign_BYTES crypto_sign_ed25519_BYTES
-LITHIUM_EXPORT
-size_t  crypto_sign_bytes(void);
+#define rubidium_sign_BYTES rubidium_sign_ed25519_BYTES
+RUBIDIUM_EXPORT
+size_t  rubidium_sign_bytes(void);
 
-#define crypto_sign_SEEDBYTES crypto_sign_ed25519_SEEDBYTES
-LITHIUM_EXPORT
-size_t  crypto_sign_seedbytes(void);
+#define rubidium_sign_SEEDBYTES rubidium_sign_ed25519_SEEDBYTES
+RUBIDIUM_EXPORT
+size_t  rubidium_sign_seedbytes(void);
 
-#define crypto_sign_PUBLICKEYBYTES crypto_sign_ed25519_PUBLICKEYBYTES
-LITHIUM_EXPORT
-size_t  crypto_sign_publickeybytes(void);
+#define rubidium_sign_PUBLICKEYBYTES rubidium_sign_ed25519_PUBLICKEYBYTES
+RUBIDIUM_EXPORT
+size_t  rubidium_sign_publickeybytes(void);
 
-#define crypto_sign_SECRETKEYBYTES crypto_sign_ed25519_SECRETKEYBYTES
-LITHIUM_EXPORT
-size_t  crypto_sign_secretkeybytes(void);
+#define rubidium_sign_SECRETKEYBYTES rubidium_sign_ed25519_SECRETKEYBYTES
+RUBIDIUM_EXPORT
+size_t  rubidium_sign_secretkeybytes(void);
 
-#define crypto_sign_MESSAGEBYTES_MAX crypto_sign_ed25519_MESSAGEBYTES_MAX
-LITHIUM_EXPORT
-size_t  crypto_sign_messagebytes_max(void);
+#define rubidium_sign_MESSAGEBYTES_MAX rubidium_sign_ed25519_MESSAGEBYTES_MAX
+RUBIDIUM_EXPORT
+size_t  rubidium_sign_messagebytes_max(void);
 
-#define crypto_sign_PRIMITIVE "ed25519"
-LITHIUM_EXPORT
-const char *crypto_sign_primitive(void);
+#define rubidium_sign_PRIMITIVE "ed25519"
+RUBIDIUM_EXPORT
+const char *rubidium_sign_primitive(void);
 
-LITHIUM_EXPORT
-int crypto_sign_seed_keypair(unsigned char *pk, unsigned char *sk,
+RUBIDIUM_EXPORT
+int rubidium_sign_seed_keypair(unsigned char *pk, unsigned char *sk,
                              const unsigned char *seed)
             __attribute__ ((nonnull));
 
-LITHIUM_EXPORT
-int crypto_sign_keypair(unsigned char *pk, unsigned char *sk)
+RUBIDIUM_EXPORT
+int rubidium_sign_keypair(unsigned char *pk, unsigned char *sk)
             __attribute__ ((nonnull));
 
-LITHIUM_EXPORT
-int crypto_sign(unsigned char *sm, unsigned long long *smlen_p,
+RUBIDIUM_EXPORT
+int rubidium_sign(unsigned char *sm, unsigned long long *smlen_p,
                 const unsigned char *m, unsigned long long mlen,
                 const unsigned char *sk) __attribute__ ((nonnull(1, 5)));
 
-LITHIUM_EXPORT
-int crypto_sign_open(unsigned char *m, unsigned long long *mlen_p,
+RUBIDIUM_EXPORT
+int rubidium_sign_open(unsigned char *m, unsigned long long *mlen_p,
                      const unsigned char *sm, unsigned long long smlen,
                      const unsigned char *pk)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(3, 5)));
 
-LITHIUM_EXPORT
-int crypto_sign_detached(unsigned char *sig, unsigned long long *siglen_p,
+RUBIDIUM_EXPORT
+int rubidium_sign_detached(unsigned char *sig, unsigned long long *siglen_p,
                          const unsigned char *m, unsigned long long mlen,
                          const unsigned char *sk) __attribute__ ((nonnull(1, 5)));
 
-LITHIUM_EXPORT
-int crypto_sign_verify_detached(const unsigned char *sig,
+RUBIDIUM_EXPORT
+int rubidium_sign_verify_detached(const unsigned char *sig,
                                 const unsigned char *m,
                                 unsigned long long mlen,
                                 const unsigned char *pk)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(1, 4)));
 
-LITHIUM_EXPORT
-int crypto_sign_init(crypto_sign_state *state);
+RUBIDIUM_EXPORT
+int rubidium_sign_init(rubidium_sign_state *state);
 
-LITHIUM_EXPORT
-int crypto_sign_update(crypto_sign_state *state,
+RUBIDIUM_EXPORT
+int rubidium_sign_update(rubidium_sign_state *state,
                        const unsigned char *m, unsigned long long mlen)
             __attribute__ ((nonnull(1)));
 
-LITHIUM_EXPORT
-int crypto_sign_final_create(crypto_sign_state *state, unsigned char *sig,
+RUBIDIUM_EXPORT
+int rubidium_sign_final_create(rubidium_sign_state *state, unsigned char *sig,
                              unsigned long long *siglen_p,
                              const unsigned char *sk)
             __attribute__ ((nonnull(1, 2, 4)));
 
-LITHIUM_EXPORT
-int crypto_sign_final_verify(crypto_sign_state *state, const unsigned char *sig,
+RUBIDIUM_EXPORT
+int rubidium_sign_final_verify(rubidium_sign_state *state, const unsigned char *sig,
                              const unsigned char *pk)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 

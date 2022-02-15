@@ -21,7 +21,7 @@
 #define z2 var[2]
 
 static int
-crypto_scalarmult_curve25519_sandy2x(unsigned char *q, const unsigned char *n,
+rubidium_scalarmult_curve25519_sandy2x(unsigned char *q, const unsigned char *n,
                                      const unsigned char *p)
 {
   unsigned char *t = q;
@@ -60,10 +60,10 @@ crypto_scalarmult_curve25519_sandy2x(unsigned char *q, const unsigned char *n,
   return 0;
 }
 
-struct crypto_scalarmult_curve25519_implementation
-crypto_scalarmult_curve25519_sandy2x_implementation = {
-    LITHIUM_C99(.mult = ) crypto_scalarmult_curve25519_sandy2x,
-    LITHIUM_C99(.mult_base = ) NULL
+struct rubidium_scalarmult_curve25519_implementation
+rubidium_scalarmult_curve25519_sandy2x_implementation = {
+    RUBIDIUM_C99(.mult = ) rubidium_scalarmult_curve25519_sandy2x,
+    RUBIDIUM_C99(.mult_base = ) NULL
 };
 
 #endif

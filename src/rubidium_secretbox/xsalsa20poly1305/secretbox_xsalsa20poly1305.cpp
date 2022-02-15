@@ -1,10 +1,10 @@
-#include "crypto_onetimeauth_poly1305.h"
-#include "crypto_secretbox_xsalsa20poly1305.h"
-#include "crypto_stream_xsalsa20.h"
+#include "rubidium_onetimeauth_poly1305.h"
+#include "rubidium_secretbox_xsalsa20poly1305.h"
+#include "rubidium_stream_xsalsa20.h"
 #include "randombytes.h"
 
 int
-crypto_secretbox_xsalsa20poly1305(unsigned char *c, const unsigned char *m,
+rubidium_secretbox_xsalsa20poly1305(unsigned char *c, const unsigned char *m,
                                   unsigned long long mlen,
                                   const unsigned char *n,
                                   const unsigned char *k)
@@ -14,8 +14,8 @@ crypto_secretbox_xsalsa20poly1305(unsigned char *c, const unsigned char *m,
     if (mlen < 32) {
         return -1;
     }
-    crypto_stream_xsalsa20_xor(c, m, mlen, n, k);
-    crypto_onetimeauth_poly1305(c + 16, c + 32, mlen - 32, c);
+    rubidium_stream_xsalsa20_xor(c, m, mlen, n, k);
+    rubidium_onetimeauth_poly1305(c + 16, c + 32, mlen - 32, c);
     for (i = 0; i < 16; ++i) {
         c[i] = 0;
     }
@@ -23,7 +23,7 @@ crypto_secretbox_xsalsa20poly1305(unsigned char *c, const unsigned char *m,
 }
 
 int
-crypto_secretbox_xsalsa20poly1305_open(unsigned char *m, const unsigned char *c,
+rubidium_secretbox_xsalsa20poly1305_open(unsigned char *m, const unsigned char *c,
                                        unsigned long long clen,
                                        const unsigned char *n,
                                        const unsigned char *k)
@@ -34,12 +34,12 @@ crypto_secretbox_xsalsa20poly1305_open(unsigned char *m, const unsigned char *c,
     if (clen < 32) {
         return -1;
     }
-    crypto_stream_xsalsa20(subkey, 32, n, k);
-    if (crypto_onetimeauth_poly1305_verify(c + 16, c + 32,
+    rubidium_stream_xsalsa20(subkey, 32, n, k);
+    if (rubidium_onetimeauth_poly1305_verify(c + 16, c + 32,
                                            clen - 32, subkey) != 0) {
         return -1;
     }
-    crypto_stream_xsalsa20_xor(m, c, clen, n, k);
+    rubidium_stream_xsalsa20_xor(m, c, clen, n, k);
     for (i = 0; i < 32; ++i) {
         m[i] = 0;
     }
@@ -47,43 +47,43 @@ crypto_secretbox_xsalsa20poly1305_open(unsigned char *m, const unsigned char *c,
 }
 
 size_t
-crypto_secretbox_xsalsa20poly1305_keybytes(void)
+rubidium_secretbox_xsalsa20poly1305_keybytes(void)
 {
-    return crypto_secretbox_xsalsa20poly1305_KEYBYTES;
+    return rubidium_secretbox_xsalsa20poly1305_KEYBYTES;
 }
 
 size_t
-crypto_secretbox_xsalsa20poly1305_noncebytes(void)
+rubidium_secretbox_xsalsa20poly1305_noncebytes(void)
 {
-    return crypto_secretbox_xsalsa20poly1305_NONCEBYTES;
+    return rubidium_secretbox_xsalsa20poly1305_NONCEBYTES;
 }
 
 size_t
-crypto_secretbox_xsalsa20poly1305_zerobytes(void)
+rubidium_secretbox_xsalsa20poly1305_zerobytes(void)
 {
-    return crypto_secretbox_xsalsa20poly1305_ZEROBYTES;
+    return rubidium_secretbox_xsalsa20poly1305_ZEROBYTES;
 }
 
 size_t
-crypto_secretbox_xsalsa20poly1305_boxzerobytes(void)
+rubidium_secretbox_xsalsa20poly1305_boxzerobytes(void)
 {
-    return crypto_secretbox_xsalsa20poly1305_BOXZEROBYTES;
+    return rubidium_secretbox_xsalsa20poly1305_BOXZEROBYTES;
 }
 
 size_t
-crypto_secretbox_xsalsa20poly1305_macbytes(void)
+rubidium_secretbox_xsalsa20poly1305_macbytes(void)
 {
-    return crypto_secretbox_xsalsa20poly1305_MACBYTES;
+    return rubidium_secretbox_xsalsa20poly1305_MACBYTES;
 }
 
 size_t
-crypto_secretbox_xsalsa20poly1305_messagebytes_max(void)
+rubidium_secretbox_xsalsa20poly1305_messagebytes_max(void)
 {
-    return crypto_secretbox_xsalsa20poly1305_MESSAGEBYTES_MAX;
+    return rubidium_secretbox_xsalsa20poly1305_MESSAGEBYTES_MAX;
 }
 
 void
-crypto_secretbox_xsalsa20poly1305_keygen(unsigned char k[crypto_secretbox_xsalsa20poly1305_KEYBYTES])
+rubidium_secretbox_xsalsa20poly1305_keygen(unsigned char k[rubidium_secretbox_xsalsa20poly1305_KEYBYTES])
 {
-    randombytes_buf(k, crypto_secretbox_xsalsa20poly1305_KEYBYTES);
+    randombytes_buf(k, rubidium_secretbox_xsalsa20poly1305_KEYBYTES);
 }

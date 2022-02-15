@@ -34,7 +34,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../crypto_scrypt.h"
+#include "../rubidium_scrypt.h"
 #include "../pbkdf2-sha256.h"
 #include "private/common.h"
 

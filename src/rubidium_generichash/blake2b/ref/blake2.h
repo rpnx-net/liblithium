@@ -20,7 +20,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "crypto_generichash_blake2b.h"
+#include "rubidium_generichash_blake2b.h"
 #include "export.h"
 #include "private/quirks.h"
 

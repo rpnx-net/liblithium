@@ -50,8 +50,8 @@
 #endif
 
 #include "core.h"
-#include "crypto_core_hchacha20.h"
-#include "crypto_stream_chacha20.h"
+#include "rubidium_core_hchacha20.h"
+#include "rubidium_stream_chacha20.h"
 #include "private/common.h"
 #include "randombytes.h"
 #include "randombytes_internal_random.h"
@@ -73,7 +73,7 @@ BOOLEAN NTAPI RtlGenRandom(PVOID RandomBuffer, ULONG RandomBufferLength);
 # endif
 #endif
 
-#define INTERNAL_RANDOM_BLOCK_SIZE crypto_core_hchacha20_OUTPUTBYTES
+#define INTERNAL_RANDOM_BLOCK_SIZE rubidium_core_hchacha20_OUTPUTBYTES
 
 #if defined(__OpenBSD__) || defined(__CloudABI__) || defined(__wasi__)
 # define HAVE_SAFE_ARC4RANDOM 1
@@ -115,19 +115,19 @@ typedef struct InternalRandomGlobal_ {
 typedef struct InternalRandom_ {
     int           initialized;
     size_t        rnd32_outleft;
-    unsigned char key[crypto_stream_chacha20_KEYBYTES];
+    unsigned char key[rubidium_stream_chacha20_KEYBYTES];
     unsigned char rnd32[16U * INTERNAL_RANDOM_BLOCK_SIZE];
     uint64_t      nonce;
 } InternalRandom;
 
 static InternalRandomGlobal global = {
-    LITHIUM_C99(.initialized =) 0,
-    LITHIUM_C99(.random_data_source_fd =) -1
+    RUBIDIUM_C99(.initialized =) 0,
+    RUBIDIUM_C99(.random_data_source_fd =) -1
 };
 
 static TLS InternalRandom stream = {
-    LITHIUM_C99(.initialized =) 0,
-    LITHIUM_C99(.rnd32_outleft =) (size_t) 0U
+    RUBIDIUM_C99(.initialized =) 0,
+    RUBIDIUM_C99(.rnd32_outleft =) (size_t) 0U
 };
 
 
@@ -137,7 +137,7 @@ static TLS InternalRandom stream = {
 
 #ifdef _WIN32
 static uint64_t
-lithium_hrtime(void)
+rubidium_hrtime(void)
 {
     struct _timeb tb;
 # pragma warning(push)
@@ -150,12 +150,12 @@ lithium_hrtime(void)
 #else /* _WIN32 */
 
 static uint64_t
-lithium_hrtime(void)
+rubidium_hrtime(void)
 {
     struct timeval tv;
 
     if (gettimeofday(&tv, NULL) != 0) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
     return ((uint64_t) tv.tv_sec) * 1000000U + (uint64_t) tv.tv_usec;
 }
@@ -170,7 +170,7 @@ lithium_hrtime(void)
 static void
 randombytes_internal_random_init(void)
 {
-    global.rdrand_available = lithium_runtime_has_rdrand();
+    global.rdrand_available = rubidium_runtime_has_rdrand();
 }
 
 #else /* _WIN32 */
@@ -350,7 +350,7 @@ randombytes_internal_random_init(void)
 {
     const int errno_save = errno;
 
-    global.rdrand_available = lithium_runtime_has_rdrand();
+    global.rdrand_available = rubidium_runtime_has_rdrand();
     global.getentropy_available = 0;
     global.getrandom_available = 0;
 
@@ -380,14 +380,14 @@ randombytes_internal_random_init(void)
     assert((global.getentropy_available | global.getrandom_available) == 0);
     if ((global.random_data_source_fd =
          randombytes_internal_random_random_dev_open()) == -1) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
     errno = errno_save;
     return;
 # endif
 /* LCOV_EXCL_STOP */
 # ifndef HAVE_SAFE_ARC4RANDOM
-    lithium_misuse();
+    rubidium_misuse();
 # endif
 }
 
@@ -400,7 +400,7 @@ randombytes_internal_random_init(void)
 static void
 randombytes_internal_random_stir(void)
 {
-    stream.nonce = lithium_hrtime();
+    stream.nonce = rubidium_hrtime();
     assert(stream.nonce != (uint64_t) 0U);
     memset(stream.rnd32, 0, sizeof stream.rnd32);
     stream.rnd32_outleft = (size_t) 0U;
@@ -417,13 +417,13 @@ randombytes_internal_random_stir(void)
 # ifdef HAVE_GETENTROPY
      if (global.getentropy_available != 0) {
          if (randombytes_getentropy(stream.key, sizeof stream.key) != 0) {
-             lithium_misuse(); /* LCOV_EXCL_LINE */
+             rubidium_misuse(); /* LCOV_EXCL_LINE */
          }
      }
 # elif defined(HAVE_LINUX_COMPATIBLE_GETRANDOM)
      if (global.getrandom_available != 0) {
          if (randombytes_linux_getrandom(stream.key, sizeof stream.key) != 0) {
-             lithium_misuse(); /* LCOV_EXCL_LINE */
+             rubidium_misuse(); /* LCOV_EXCL_LINE */
          }
      }
 # elif defined(NONEXISTENT_DEV_RANDOM) && defined(HAVE_SAFE_ARC4RANDOM)
@@ -432,15 +432,15 @@ randombytes_internal_random_stir(void)
     if (global.random_data_source_fd == -1 ||
         safe_read(global.random_data_source_fd, stream.key,
                   sizeof stream.key) != (ssize_t) sizeof stream.key) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
 # else
-    lithium_misuse();
+    rubidium_misuse();
 # endif
 
 #else /* _WIN32 */
     if (! RtlGenRandom((PVOID) stream.key, (ULONG) sizeof stream.key)) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
 #endif
 
@@ -458,7 +458,7 @@ randombytes_internal_random_stir_if_needed(void)
     if (stream.initialized == 0) {
         randombytes_internal_random_stir();
     } else if (global.pid != getpid()) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
 #else
     if (stream.initialized == 0) {
@@ -481,7 +481,7 @@ randombytes_internal_random_close(void)
         global.initialized = 0;
         ret = 0;
     }
-    lithium_memzero(&stream, sizeof stream);
+    rubidium_memzero(&stream, sizeof stream);
 
     return ret;
 }
@@ -513,7 +513,7 @@ randombytes_internal_random_close(void)
     }
 # endif
 
-    lithium_memzero(&stream, sizeof stream);
+    rubidium_memzero(&stream, sizeof stream);
 
     return ret;
 }
@@ -535,7 +535,7 @@ randombytes_internal_random_xorhwrand(void)
     }
     (void) _rdrand32_step(&r);
     * (uint32_t *) (void *)
-        &stream.key[crypto_stream_chacha20_KEYBYTES - 4] ^= (uint32_t) r;
+        &stream.key[rubidium_stream_chacha20_KEYBYTES - 4] ^= (uint32_t) r;
 #endif
 /* LCOV_EXCL_STOP */
 }
@@ -566,14 +566,14 @@ randombytes_internal_random_buf(void * const buf, const size_t size)
     int    ret;
 
     randombytes_internal_random_stir_if_needed();
-    COMPILER_ASSERT(sizeof stream.nonce == crypto_stream_chacha20_NONCEBYTES);
+    COMPILER_ASSERT(sizeof stream.nonce == rubidium_stream_chacha20_NONCEBYTES);
 #if defined(ULLONG_MAX) && defined(SIZE_MAX)
 # if SIZE_MAX > ULLONG_MAX
     /* coverity[result_independent_of_operands] */
     assert(size <= ULLONG_MAX);
 # endif
 #endif
-    ret = crypto_stream_chacha20((unsigned char *) buf, (unsigned long long) size,
+    ret = rubidium_stream_chacha20((unsigned char *) buf, (unsigned long long) size,
                                  (unsigned char *) &stream.nonce, stream.key);
     assert(ret == 0);
     for (i = 0U; i < sizeof size; i++) {
@@ -581,7 +581,7 @@ randombytes_internal_random_buf(void * const buf, const size_t size)
     }
     randombytes_internal_random_xorhwrand();
     stream.nonce++;
-    crypto_stream_chacha20_xor(stream.key, stream.key, sizeof stream.key,
+    rubidium_stream_chacha20_xor(stream.key, stream.key, sizeof stream.key,
                                (unsigned char *) &stream.nonce, stream.key);
 }
 
@@ -602,8 +602,8 @@ randombytes_internal_random(void)
                     % sizeof val == (size_t) 0U);
     if (stream.rnd32_outleft <= (size_t) 0U) {
         randombytes_internal_random_stir_if_needed();
-        COMPILER_ASSERT(sizeof stream.nonce == crypto_stream_chacha20_NONCEBYTES);
-        ret = crypto_stream_chacha20((unsigned char *) stream.rnd32,
+        COMPILER_ASSERT(sizeof stream.nonce == rubidium_stream_chacha20_NONCEBYTES);
+        ret = rubidium_stream_chacha20((unsigned char *) stream.rnd32,
                                      (unsigned long long) sizeof stream.rnd32,
                                      (unsigned char *) &stream.nonce,
                                      stream.key);
@@ -628,10 +628,10 @@ randombytes_internal_implementation_name(void)
 }
 
 struct randombytes_implementation randombytes_internal_implementation = {
-    LITHIUM_C99(.implementation_name =) randombytes_internal_implementation_name,
-    LITHIUM_C99(.random =) randombytes_internal_random,
-    LITHIUM_C99(.stir =) randombytes_internal_random_stir,
-    LITHIUM_C99(.uniform =) NULL,
-    LITHIUM_C99(.buf =) randombytes_internal_random_buf,
-    LITHIUM_C99(.close =) randombytes_internal_random_close
+    RUBIDIUM_C99(.implementation_name =) randombytes_internal_implementation_name,
+    RUBIDIUM_C99(.random =) randombytes_internal_random,
+    RUBIDIUM_C99(.stir =) randombytes_internal_random_stir,
+    RUBIDIUM_C99(.uniform =) NULL,
+    RUBIDIUM_C99(.buf =) randombytes_internal_random_buf,
+    RUBIDIUM_C99(.close =) randombytes_internal_random_close
 };

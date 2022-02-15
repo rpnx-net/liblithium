@@ -1,8 +1,8 @@
-#ifndef crypto_secretbox_xsalsa20poly1305_H
-#define crypto_secretbox_xsalsa20poly1305_H
+#ifndef rubidium_secretbox_xsalsa20poly1305_H
+#define rubidium_secretbox_xsalsa20poly1305_H
 
 #include <stddef.h>
-#include "crypto_stream_xsalsa20.h"
+#include "rubidium_stream_xsalsa20.h"
 #include "export.h"
 
 #ifdef __cplusplus
@@ -12,52 +12,52 @@
 extern "C" {
 #endif
 
-#define crypto_secretbox_xsalsa20poly1305_KEYBYTES 32U
-LITHIUM_EXPORT
-size_t crypto_secretbox_xsalsa20poly1305_keybytes(void);
+#define rubidium_secretbox_xsalsa20poly1305_KEYBYTES 32U
+RUBIDIUM_EXPORT
+size_t rubidium_secretbox_xsalsa20poly1305_keybytes(void);
 
-#define crypto_secretbox_xsalsa20poly1305_NONCEBYTES 24U
-LITHIUM_EXPORT
-size_t crypto_secretbox_xsalsa20poly1305_noncebytes(void);
+#define rubidium_secretbox_xsalsa20poly1305_NONCEBYTES 24U
+RUBIDIUM_EXPORT
+size_t rubidium_secretbox_xsalsa20poly1305_noncebytes(void);
 
-#define crypto_secretbox_xsalsa20poly1305_MACBYTES 16U
-LITHIUM_EXPORT
-size_t crypto_secretbox_xsalsa20poly1305_macbytes(void);
+#define rubidium_secretbox_xsalsa20poly1305_MACBYTES 16U
+RUBIDIUM_EXPORT
+size_t rubidium_secretbox_xsalsa20poly1305_macbytes(void);
 
-/* Only for the liblithium API - The NaCl compatibility API would require BOXZEROBYTES extra bytes */
-#define crypto_secretbox_xsalsa20poly1305_MESSAGEBYTES_MAX \
-    (crypto_stream_xsalsa20_MESSAGEBYTES_MAX - crypto_secretbox_xsalsa20poly1305_MACBYTES)
-LITHIUM_EXPORT
-size_t crypto_secretbox_xsalsa20poly1305_messagebytes_max(void);
+/* Only for the librubidium API - The NaCl compatibility API would require BOXZEROBYTES extra bytes */
+#define rubidium_secretbox_xsalsa20poly1305_MESSAGEBYTES_MAX \
+    (rubidium_stream_xsalsa20_MESSAGEBYTES_MAX - rubidium_secretbox_xsalsa20poly1305_MACBYTES)
+RUBIDIUM_EXPORT
+size_t rubidium_secretbox_xsalsa20poly1305_messagebytes_max(void);
 
-LITHIUM_EXPORT
-void crypto_secretbox_xsalsa20poly1305_keygen(unsigned char k[crypto_secretbox_xsalsa20poly1305_KEYBYTES])
+RUBIDIUM_EXPORT
+void rubidium_secretbox_xsalsa20poly1305_keygen(unsigned char k[rubidium_secretbox_xsalsa20poly1305_KEYBYTES])
             __attribute__ ((nonnull));
 
 /* -- NaCl compatibility interface ; Requires padding -- */
 
-#define crypto_secretbox_xsalsa20poly1305_BOXZEROBYTES 16U
-LITHIUM_EXPORT
-size_t crypto_secretbox_xsalsa20poly1305_boxzerobytes(void)
+#define rubidium_secretbox_xsalsa20poly1305_BOXZEROBYTES 16U
+RUBIDIUM_EXPORT
+size_t rubidium_secretbox_xsalsa20poly1305_boxzerobytes(void)
             __attribute__ ((deprecated));
 
-#define crypto_secretbox_xsalsa20poly1305_ZEROBYTES \
-    (crypto_secretbox_xsalsa20poly1305_BOXZEROBYTES + \
-     crypto_secretbox_xsalsa20poly1305_MACBYTES)
-LITHIUM_EXPORT
-size_t crypto_secretbox_xsalsa20poly1305_zerobytes(void)
+#define rubidium_secretbox_xsalsa20poly1305_ZEROBYTES \
+    (rubidium_secretbox_xsalsa20poly1305_BOXZEROBYTES + \
+     rubidium_secretbox_xsalsa20poly1305_MACBYTES)
+RUBIDIUM_EXPORT
+size_t rubidium_secretbox_xsalsa20poly1305_zerobytes(void)
             __attribute__ ((deprecated));
 
-LITHIUM_EXPORT
-int crypto_secretbox_xsalsa20poly1305(unsigned char *c,
+RUBIDIUM_EXPORT
+int rubidium_secretbox_xsalsa20poly1305(unsigned char *c,
                                       const unsigned char *m,
                                       unsigned long long mlen,
                                       const unsigned char *n,
                                       const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((nonnull(1, 4, 5)));
 
-LITHIUM_EXPORT
-int crypto_secretbox_xsalsa20poly1305_open(unsigned char *m,
+RUBIDIUM_EXPORT
+int rubidium_secretbox_xsalsa20poly1305_open(unsigned char *m,
                                            const unsigned char *c,
                                            unsigned long long clen,
                                            const unsigned char *n,

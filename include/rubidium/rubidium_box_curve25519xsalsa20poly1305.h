@@ -1,8 +1,8 @@
-#ifndef crypto_box_curve25519xsalsa20poly1305_H
-#define crypto_box_curve25519xsalsa20poly1305_H
+#ifndef rubidium_box_curve25519xsalsa20poly1305_H
+#define rubidium_box_curve25519xsalsa20poly1305_H
 
 #include <stddef.h>
-#include "crypto_stream_xsalsa20.h"
+#include "rubidium_stream_xsalsa20.h"
 #include "export.h"
 
 #ifdef __cplusplus
@@ -12,68 +12,68 @@
 extern "C" {
 #endif
 
-#define crypto_box_curve25519xsalsa20poly1305_SEEDBYTES 32U
-LITHIUM_EXPORT
-size_t crypto_box_curve25519xsalsa20poly1305_seedbytes(void);
+#define rubidium_box_curve25519xsalsa20poly1305_SEEDBYTES 32U
+RUBIDIUM_EXPORT
+size_t rubidium_box_curve25519xsalsa20poly1305_seedbytes(void);
 
-#define crypto_box_curve25519xsalsa20poly1305_PUBLICKEYBYTES 32U
-LITHIUM_EXPORT
-size_t crypto_box_curve25519xsalsa20poly1305_publickeybytes(void);
+#define rubidium_box_curve25519xsalsa20poly1305_PUBLICKEYBYTES 32U
+RUBIDIUM_EXPORT
+size_t rubidium_box_curve25519xsalsa20poly1305_publickeybytes(void);
 
-#define crypto_box_curve25519xsalsa20poly1305_SECRETKEYBYTES 32U
-LITHIUM_EXPORT
-size_t crypto_box_curve25519xsalsa20poly1305_secretkeybytes(void);
+#define rubidium_box_curve25519xsalsa20poly1305_SECRETKEYBYTES 32U
+RUBIDIUM_EXPORT
+size_t rubidium_box_curve25519xsalsa20poly1305_secretkeybytes(void);
 
-#define crypto_box_curve25519xsalsa20poly1305_BEFORENMBYTES 32U
-LITHIUM_EXPORT
-size_t crypto_box_curve25519xsalsa20poly1305_beforenmbytes(void);
+#define rubidium_box_curve25519xsalsa20poly1305_BEFORENMBYTES 32U
+RUBIDIUM_EXPORT
+size_t rubidium_box_curve25519xsalsa20poly1305_beforenmbytes(void);
 
-#define crypto_box_curve25519xsalsa20poly1305_NONCEBYTES 24U
-LITHIUM_EXPORT
-size_t crypto_box_curve25519xsalsa20poly1305_noncebytes(void);
+#define rubidium_box_curve25519xsalsa20poly1305_NONCEBYTES 24U
+RUBIDIUM_EXPORT
+size_t rubidium_box_curve25519xsalsa20poly1305_noncebytes(void);
 
-#define crypto_box_curve25519xsalsa20poly1305_MACBYTES 16U
-LITHIUM_EXPORT
-size_t crypto_box_curve25519xsalsa20poly1305_macbytes(void);
+#define rubidium_box_curve25519xsalsa20poly1305_MACBYTES 16U
+RUBIDIUM_EXPORT
+size_t rubidium_box_curve25519xsalsa20poly1305_macbytes(void);
 
-/* Only for the liblithium API - The NaCl compatibility API would require BOXZEROBYTES extra bytes */
-#define crypto_box_curve25519xsalsa20poly1305_MESSAGEBYTES_MAX \
-    (crypto_stream_xsalsa20_MESSAGEBYTES_MAX - crypto_box_curve25519xsalsa20poly1305_MACBYTES)
-LITHIUM_EXPORT
-size_t crypto_box_curve25519xsalsa20poly1305_messagebytes_max(void);
+/* Only for the librubidium API - The NaCl compatibility API would require BOXZEROBYTES extra bytes */
+#define rubidium_box_curve25519xsalsa20poly1305_MESSAGEBYTES_MAX \
+    (rubidium_stream_xsalsa20_MESSAGEBYTES_MAX - rubidium_box_curve25519xsalsa20poly1305_MACBYTES)
+RUBIDIUM_EXPORT
+size_t rubidium_box_curve25519xsalsa20poly1305_messagebytes_max(void);
 
-LITHIUM_EXPORT
-int crypto_box_curve25519xsalsa20poly1305_seed_keypair(unsigned char *pk,
+RUBIDIUM_EXPORT
+int rubidium_box_curve25519xsalsa20poly1305_seed_keypair(unsigned char *pk,
                                                        unsigned char *sk,
                                                        const unsigned char *seed)
             __attribute__ ((nonnull));
 
-LITHIUM_EXPORT
-int crypto_box_curve25519xsalsa20poly1305_keypair(unsigned char *pk,
+RUBIDIUM_EXPORT
+int rubidium_box_curve25519xsalsa20poly1305_keypair(unsigned char *pk,
                                                   unsigned char *sk)
             __attribute__ ((nonnull));
 
-LITHIUM_EXPORT
-int crypto_box_curve25519xsalsa20poly1305_beforenm(unsigned char *k,
+RUBIDIUM_EXPORT
+int rubidium_box_curve25519xsalsa20poly1305_beforenm(unsigned char *k,
                                                    const unsigned char *pk,
                                                    const unsigned char *sk)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
 /* -- NaCl compatibility interface ; Requires padding -- */
 
-#define crypto_box_curve25519xsalsa20poly1305_BOXZEROBYTES 16U
-LITHIUM_EXPORT
-size_t crypto_box_curve25519xsalsa20poly1305_boxzerobytes(void);
+#define rubidium_box_curve25519xsalsa20poly1305_BOXZEROBYTES 16U
+RUBIDIUM_EXPORT
+size_t rubidium_box_curve25519xsalsa20poly1305_boxzerobytes(void);
 
-#define crypto_box_curve25519xsalsa20poly1305_ZEROBYTES \
-    (crypto_box_curve25519xsalsa20poly1305_BOXZEROBYTES + \
-     crypto_box_curve25519xsalsa20poly1305_MACBYTES)
-LITHIUM_EXPORT
-size_t crypto_box_curve25519xsalsa20poly1305_zerobytes(void)
+#define rubidium_box_curve25519xsalsa20poly1305_ZEROBYTES \
+    (rubidium_box_curve25519xsalsa20poly1305_BOXZEROBYTES + \
+     rubidium_box_curve25519xsalsa20poly1305_MACBYTES)
+RUBIDIUM_EXPORT
+size_t rubidium_box_curve25519xsalsa20poly1305_zerobytes(void)
             __attribute__ ((deprecated));
 
-LITHIUM_EXPORT
-int crypto_box_curve25519xsalsa20poly1305(unsigned char *c,
+RUBIDIUM_EXPORT
+int rubidium_box_curve25519xsalsa20poly1305(unsigned char *c,
                                           const unsigned char *m,
                                           unsigned long long mlen,
                                           const unsigned char *n,
@@ -81,8 +81,8 @@ int crypto_box_curve25519xsalsa20poly1305(unsigned char *c,
                                           const unsigned char *sk)
             __attribute__ ((deprecated)) __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(1, 4, 5, 6)));
 
-LITHIUM_EXPORT
-int crypto_box_curve25519xsalsa20poly1305_open(unsigned char *m,
+RUBIDIUM_EXPORT
+int rubidium_box_curve25519xsalsa20poly1305_open(unsigned char *m,
                                                const unsigned char *c,
                                                unsigned long long clen,
                                                const unsigned char *n,
@@ -90,16 +90,16 @@ int crypto_box_curve25519xsalsa20poly1305_open(unsigned char *m,
                                                const unsigned char *sk)
             __attribute__ ((deprecated)) __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 4, 5, 6)));
 
-LITHIUM_EXPORT
-int crypto_box_curve25519xsalsa20poly1305_afternm(unsigned char *c,
+RUBIDIUM_EXPORT
+int rubidium_box_curve25519xsalsa20poly1305_afternm(unsigned char *c,
                                                   const unsigned char *m,
                                                   unsigned long long mlen,
                                                   const unsigned char *n,
                                                   const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((nonnull(1, 4, 5)));
 
-LITHIUM_EXPORT
-int crypto_box_curve25519xsalsa20poly1305_open_afternm(unsigned char *m,
+RUBIDIUM_EXPORT
+int rubidium_box_curve25519xsalsa20poly1305_open_afternm(unsigned char *m,
                                                        const unsigned char *c,
                                                        unsigned long long clen,
                                                        const unsigned char *n,

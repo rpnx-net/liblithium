@@ -4,9 +4,9 @@
 #include <stddef.h>
 
 #include "../onetimeauth_poly1305.h"
-#include "crypto_onetimeauth_poly1305.h"
+#include "rubidium_onetimeauth_poly1305.h"
 
-extern struct crypto_onetimeauth_poly1305_implementation
-    crypto_onetimeauth_poly1305_sse2_implementation;
+extern struct rubidium_onetimeauth_poly1305_implementation
+    rubidium_onetimeauth_poly1305_sse2_implementation;
 
 #endif /* poly1305_sse2_H */

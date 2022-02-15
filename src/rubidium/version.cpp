@@ -1,9 +1,9 @@
 
 
 int
-lithium_library_minimal(void)
+rubidium_library_minimal(void)
 {
-#ifdef LITHIUM_LIBRARY_MINIMAL
+#ifdef RUBIDIUM_LIBRARY_MINIMAL
     return 1;
 #else
     return 0;

@@ -1,26 +1,26 @@
-#include "crypto_stream_salsa208.h"
+#include "rubidium_stream_salsa208.h"
 #include "randombytes.h"
 
 size_t
-crypto_stream_salsa208_keybytes(void)
+rubidium_stream_salsa208_keybytes(void)
 {
-    return crypto_stream_salsa208_KEYBYTES;
+    return rubidium_stream_salsa208_KEYBYTES;
 }
 
 size_t
-crypto_stream_salsa208_noncebytes(void)
+rubidium_stream_salsa208_noncebytes(void)
 {
-    return crypto_stream_salsa208_NONCEBYTES;
+    return rubidium_stream_salsa208_NONCEBYTES;
 }
 
 size_t
-crypto_stream_salsa208_messagebytes_max(void)
+rubidium_stream_salsa208_messagebytes_max(void)
 {
-    return crypto_stream_salsa208_MESSAGEBYTES_MAX;
+    return rubidium_stream_salsa208_MESSAGEBYTES_MAX;
 }
 
 void
-crypto_stream_salsa208_keygen(unsigned char k[crypto_stream_salsa208_KEYBYTES])
+rubidium_stream_salsa208_keygen(unsigned char k[rubidium_stream_salsa208_KEYBYTES])
 {
-    randombytes_buf(k, crypto_stream_salsa208_KEYBYTES);
+    randombytes_buf(k, rubidium_stream_salsa208_KEYBYTES);
 }

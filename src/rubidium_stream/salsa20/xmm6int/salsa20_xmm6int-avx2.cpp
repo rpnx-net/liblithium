@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "crypto_stream_salsa20.h"
+#include "rubidium_stream_salsa20.h"
 #include "private/common.h"
 #include "utils.h"
 
@@ -87,12 +87,12 @@ stream_avx2(unsigned char *c, unsigned long long clen, const unsigned char *n,
     if (!clen) {
         return 0;
     }
-    COMPILER_ASSERT(crypto_stream_salsa20_KEYBYTES == 256 / 8);
+    COMPILER_ASSERT(rubidium_stream_salsa20_KEYBYTES == 256 / 8);
     salsa_keysetup(&ctx, k);
     salsa_ivsetup(&ctx, n, NULL);
     memset(c, 0, clen);
     salsa20_encrypt_bytes(&ctx, c, c, clen);
-    lithium_memzero(&ctx, sizeof ctx);
+    rubidium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
@@ -117,15 +117,15 @@ stream_avx2_xor_ic(unsigned char *c, const unsigned char *m,
     salsa_keysetup(&ctx, k);
     salsa_ivsetup(&ctx, n, ic_bytes);
     salsa20_encrypt_bytes(&ctx, m, c, mlen);
-    lithium_memzero(&ctx, sizeof ctx);
+    rubidium_memzero(&ctx, sizeof ctx);
 
     return 0;
 }
 
-struct crypto_stream_salsa20_implementation
-    crypto_stream_salsa20_xmm6int_avx2_implementation = {
-        LITHIUM_C99(.stream =) stream_avx2,
-        LITHIUM_C99(.stream_xor_ic =) stream_avx2_xor_ic
+struct rubidium_stream_salsa20_implementation
+    rubidium_stream_salsa20_xmm6int_avx2_implementation = {
+        RUBIDIUM_C99(.stream =) stream_avx2,
+        RUBIDIUM_C99(.stream_xor_ic =) stream_avx2_xor_ic
     };
 
 #endif

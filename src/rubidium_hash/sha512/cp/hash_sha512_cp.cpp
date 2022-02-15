@@ -33,7 +33,7 @@
 
 #include <sys/types.h>
 
-#include "crypto_hash_sha512.h"
+#include "rubidium_hash_sha512.h"
 #include "private/common.h"
 #include "utils.h"
 
@@ -170,7 +170,7 @@ static const uint8_t PAD[128] = {
 };
 
 static void
-SHA512_Pad(crypto_hash_sha512_state *state, uint64_t tmp64[80 + 8])
+SHA512_Pad(rubidium_hash_sha512_state *state, uint64_t tmp64[80 + 8])
 {
     unsigned int r;
     unsigned int i;
@@ -192,7 +192,7 @@ SHA512_Pad(crypto_hash_sha512_state *state, uint64_t tmp64[80 + 8])
 }
 
 int
-crypto_hash_sha512_init(crypto_hash_sha512_state *state)
+rubidium_hash_sha512_init(rubidium_hash_sha512_state *state)
 {
     static const uint64_t sha512_initial_state[8] = {
         0x6a09e667f3bcc908ULL, 0xbb67ae8584caa73bULL, 0x3c6ef372fe94f82bULL,
@@ -207,7 +207,7 @@ crypto_hash_sha512_init(crypto_hash_sha512_state *state)
 }
 
 int
-crypto_hash_sha512_update(crypto_hash_sha512_state *state,
+rubidium_hash_sha512_update(rubidium_hash_sha512_state *state,
                           const unsigned char *in, unsigned long long inlen)
 {
     uint64_t           tmp64[80 + 8];
@@ -250,33 +250,33 @@ crypto_hash_sha512_update(crypto_hash_sha512_state *state,
     for (i = 0; i < inlen; i++) {
         state->buf[i] = in[i];
     }
-    lithium_memzero((void *) tmp64, sizeof tmp64);
+    rubidium_memzero((void *) tmp64, sizeof tmp64);
 
     return 0;
 }
 
 int
-crypto_hash_sha512_final(crypto_hash_sha512_state *state, unsigned char *out)
+rubidium_hash_sha512_final(rubidium_hash_sha512_state *state, unsigned char *out)
 {
     uint64_t tmp64[80 + 8];
 
     SHA512_Pad(state, tmp64);
     be64enc_vect(out, state->state, 64);
-    lithium_memzero((void *) tmp64, sizeof tmp64);
-    lithium_memzero((void *) state, sizeof *state);
+    rubidium_memzero((void *) tmp64, sizeof tmp64);
+    rubidium_memzero((void *) state, sizeof *state);
 
     return 0;
 }
 
 int
-crypto_hash_sha512(unsigned char *out, const unsigned char *in,
+rubidium_hash_sha512(unsigned char *out, const unsigned char *in,
                    unsigned long long inlen)
 {
-    crypto_hash_sha512_state state;
+    rubidium_hash_sha512_state state;
 
-    crypto_hash_sha512_init(&state);
-    crypto_hash_sha512_update(&state, in, inlen);
-    crypto_hash_sha512_final(&state, out);
+    rubidium_hash_sha512_init(&state);
+    rubidium_hash_sha512_update(&state, in, inlen);
+    rubidium_hash_sha512_final(&state, out);
 
     return 0;
 }

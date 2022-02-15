@@ -11,7 +11,7 @@
 
 /* Derived from original code by CodesInChaos */
 char *
-lithium_bin2hex(char *const hex, const size_t hex_maxlen,
+rubidium_bin2hex(char *const hex, const size_t hex_maxlen,
                const unsigned char *const bin, const size_t bin_len)
 {
     size_t       i = (size_t) 0U;
@@ -20,7 +20,7 @@ lithium_bin2hex(char *const hex, const size_t hex_maxlen,
     int          c;
 
     if (bin_len >= SIZE_MAX / 2 || hex_maxlen <= bin_len * 2U) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
     while (i < bin_len) {
         c = bin[i] & 0xf;
@@ -38,7 +38,7 @@ lithium_bin2hex(char *const hex, const size_t hex_maxlen,
 }
 
 int
-lithium_hex2bin(unsigned char *const bin, const size_t bin_maxlen,
+rubidium_hex2bin(unsigned char *const bin, const size_t bin_maxlen,
                const char *const hex, const size_t hex_len,
                const char *const ignore, size_t *const bin_len,
                const char **const hex_end)
@@ -160,23 +160,23 @@ b64_urlsafe_char_to_byte(int c)
 #define VARIANT_URLSAFE_MASK    0x4U
 
 static void
-lithium_base64_check_variant(const int variant)
+rubidium_base64_check_variant(const int variant)
 {
     if ((((unsigned int) variant) & ~ 0x6U) != 0x1U) {
-        lithium_misuse();
+        rubidium_misuse();
     }
 }
 
 size_t
-lithium_base64_encoded_len(const size_t bin_len, const int variant)
+rubidium_base64_encoded_len(const size_t bin_len, const int variant)
 {
-    lithium_base64_check_variant(variant);
+    rubidium_base64_check_variant(variant);
 
-    return lithium_base64_ENCODED_LEN(bin_len, variant);
+    return rubidium_base64_ENCODED_LEN(bin_len, variant);
 }
 
 char *
-lithium_bin2base64(char * const b64, const size_t b64_maxlen,
+rubidium_bin2base64(char * const b64, const size_t b64_maxlen,
                   const unsigned char * const bin, const size_t bin_len,
                   const int variant)
 {
@@ -188,7 +188,7 @@ lithium_bin2base64(char * const b64, const size_t b64_maxlen,
     size_t       remainder;
     unsigned int acc = 0U;
 
-    lithium_base64_check_variant(variant);
+    rubidium_base64_check_variant(variant);
     nibbles = bin_len / 3;
     remainder = bin_len - 3 * nibbles;
     b64_len = nibbles * 4;
@@ -200,7 +200,7 @@ lithium_bin2base64(char * const b64, const size_t b64_maxlen,
         }
     }
     if (b64_maxlen <= b64_len) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if ((((unsigned int) variant) & VARIANT_URLSAFE_MASK) != 0U) {
         while (bin_pos < bin_len) {
@@ -239,7 +239,7 @@ lithium_bin2base64(char * const b64, const size_t b64_maxlen,
 }
 
 static int
-_lithium_base642bin_skip_padding(const char * const b64, const size_t b64_len,
+_rubidium_base642bin_skip_padding(const char * const b64, const size_t b64_len,
                                 size_t * const b64_pos_p,
                                 const char * const ignore, size_t padding_len)
 {
@@ -263,7 +263,7 @@ _lithium_base642bin_skip_padding(const char * const b64, const size_t b64_len,
 }
 
 int
-lithium_base642bin(unsigned char * const bin, const size_t bin_maxlen,
+rubidium_base642bin(unsigned char * const bin, const size_t bin_maxlen,
                   const char * const b64, const size_t b64_len,
                   const char * const ignore, size_t * const bin_len,
                   const char ** const b64_end, const int variant)
@@ -277,7 +277,7 @@ lithium_base642bin(unsigned char * const bin, const size_t bin_maxlen,
     unsigned int d;
     char         c;
 
-    lithium_base64_check_variant(variant);
+    rubidium_base64_check_variant(variant);
     is_urlsafe = ((unsigned int) variant) & VARIANT_URLSAFE_MASK;
     while (b64_pos < b64_len) {
         c = b64[b64_pos];
@@ -310,7 +310,7 @@ lithium_base642bin(unsigned char * const bin, const size_t bin_maxlen,
         ret = -1;
     } else if (ret == 0 &&
                (((unsigned int) variant) & VARIANT_NO_PADDING_MASK) == 0U) {
-        ret = _lithium_base642bin_skip_padding(b64, b64_len, &b64_pos, ignore,
+        ret = _rubidium_base642bin_skip_padding(b64, b64_len, &b64_pos, ignore,
                                               acc_len / 2);
     }
     if (ret != 0) {

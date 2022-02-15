@@ -63,7 +63,7 @@
  * applications released since Windows XP.
  *
  * Also note that Rust, Firefox and BoringSSL (thus, Google Chrome and everything
- * based on Chromium) also depend on it, and that liblithium allows the RNG to be
+ * based on Chromium) also depend on it, and that librubidium allows the RNG to be
  * replaced without patching nor recompiling the library.
  */
 # include <windows.h>
@@ -117,9 +117,9 @@ typedef struct SysRandom_ {
 } SysRandom;
 
 static SysRandom stream = {
-    LITHIUM_C99(.random_data_source_fd =) -1,
-    LITHIUM_C99(.initialized =) 0,
-    LITHIUM_C99(.getrandom_available =) 0
+    RUBIDIUM_C99(.random_data_source_fd =) -1,
+    RUBIDIUM_C99(.initialized =) 0,
+    RUBIDIUM_C99(.getrandom_available =) 0
 };
 
 # ifndef _WIN32
@@ -278,7 +278,7 @@ randombytes_sysrandom_init(void)
 
     if ((stream.random_data_source_fd =
          randombytes_sysrandom_random_dev_open()) == -1) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
     errno = errno_save;
 }
@@ -348,22 +348,22 @@ randombytes_sysrandom_buf(void * const buf, const size_t size)
 #  ifdef HAVE_LINUX_COMPATIBLE_GETRANDOM
     if (stream.getrandom_available != 0) {
         if (randombytes_linux_getrandom(buf, size) != 0) {
-            lithium_misuse(); /* LCOV_EXCL_LINE */
+            rubidium_misuse(); /* LCOV_EXCL_LINE */
         }
         return;
     }
 #  endif
     if (stream.random_data_source_fd == -1 ||
         safe_read(stream.random_data_source_fd, buf, size) != (ssize_t) size) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
 # else /* _WIN32 */
     COMPILER_ASSERT(randombytes_BYTES_MAX <= 0xffffffffUL);
     if (size > (size_t) 0xffffffffUL) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
     if (! RtlGenRandom((PVOID) buf, (ULONG) size)) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
 # endif /* _WIN32 */
 }
@@ -387,10 +387,10 @@ randombytes_sysrandom_implementation_name(void)
 }
 
 struct randombytes_implementation randombytes_sysrandom_implementation = {
-    LITHIUM_C99(.implementation_name =) randombytes_sysrandom_implementation_name,
-    LITHIUM_C99(.random =) randombytes_sysrandom,
-    LITHIUM_C99(.stir =) randombytes_sysrandom_stir,
-    LITHIUM_C99(.uniform =) NULL,
-    LITHIUM_C99(.buf =) randombytes_sysrandom_buf,
-    LITHIUM_C99(.close =) randombytes_sysrandom_close
+    RUBIDIUM_C99(.implementation_name =) randombytes_sysrandom_implementation_name,
+    RUBIDIUM_C99(.random =) randombytes_sysrandom,
+    RUBIDIUM_C99(.stir =) randombytes_sysrandom_stir,
+    RUBIDIUM_C99(.uniform =) NULL,
+    RUBIDIUM_C99(.buf =) randombytes_sysrandom_buf,
+    RUBIDIUM_C99(.close =) randombytes_sysrandom_close
 };

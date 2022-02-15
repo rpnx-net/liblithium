@@ -1,9 +1,9 @@
-#include "crypto_shorthash_siphash24.h"
+#include "rubidium_shorthash_siphash24.h"
 #include "private/common.h"
 #include "shorthash_siphash_ref.h"
 
 int
-crypto_shorthash_siphash24(unsigned char *out, const unsigned char *in,
+rubidium_shorthash_siphash24(unsigned char *out, const unsigned char *in,
                            unsigned long long inlen, const unsigned char *k)
 {
     /* "somepseudorandomlygeneratedbytes" */

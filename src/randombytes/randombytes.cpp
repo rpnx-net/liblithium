@@ -11,7 +11,7 @@
 #endif
 
 #include "core.h"
-#include "crypto_stream_chacha20.h"
+#include "rubidium_stream_chacha20.h"
 #include "randombytes.h"
 #ifndef RANDOMBYTES_CUSTOM_IMPLEMENTATION
 # ifdef RANDOMBYTES_DEFAULT_IMPLEMENTATION
@@ -56,10 +56,10 @@ javascript_stir(void)
         if (Module.getRandomValue === undefined) {
             try {
                 var window_ = 'object' === typeof window ? window : self;
-                var crypto_ = typeof window_.crypto !== 'undefined' ? window_.crypto : window_.msCrypto;
+                var rubidium_ = typeof window_.crypto !== 'undefined' ? window_.crypto : window_.msCrypto;
                 var randomValuesStandard = function() {
                     var buf = new Uint32Array(1);
-                    crypto_.getRandomValues(buf);
+                    rubidium_.getRandomValues(buf);
                     return buf[0] >>> 0;
                 };
                 randomValuesStandard();
@@ -177,18 +177,18 @@ void
 randombytes_buf_deterministic(void * const buf, const size_t size,
                               const unsigned char seed[randombytes_SEEDBYTES])
 {
-    static const unsigned char nonce[crypto_stream_chacha20_ietf_NONCEBYTES] = {
+    static const unsigned char nonce[rubidium_stream_chacha20_ietf_NONCEBYTES] = {
         'L', 'i', 'b', 's', 'o', 'd', 'i', 'u', 'm', 'D', 'R', 'G'
     };
 
-    COMPILER_ASSERT(randombytes_SEEDBYTES == crypto_stream_chacha20_ietf_KEYBYTES);
+    COMPILER_ASSERT(randombytes_SEEDBYTES == rubidium_stream_chacha20_ietf_KEYBYTES);
 #if SIZE_MAX > 0x4000000000ULL
     COMPILER_ASSERT(randombytes_BYTES_MAX <= 0x4000000000ULL);
     if (size > 0x4000000000ULL) {
-        lithium_misuse();
+        rubidium_misuse();
     }
 #endif
-    crypto_stream_chacha20_ietf((unsigned char *) buf, (unsigned long long) size,
+    rubidium_stream_chacha20_ietf((unsigned char *) buf, (unsigned long long) size,
                                 nonce, seed);
 }
 

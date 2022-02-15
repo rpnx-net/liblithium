@@ -16,7 +16,7 @@
 static int
 has_small_order(const unsigned char s[32])
 {
-    CRYPTO_ALIGN(16)
+    RUBIDIUM_ALIGN(16)
     static const unsigned char blocklist[][32] = {
         /* 0 (order 4) */
         { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -70,7 +70,7 @@ has_small_order(const unsigned char s[32])
 }
 
 static int
-crypto_scalarmult_curve25519_ref10(unsigned char *q,
+rubidium_scalarmult_curve25519_ref10(unsigned char *q,
                                    const unsigned char *n,
                                    const unsigned char *p)
 {
@@ -147,7 +147,7 @@ edwards_to_montgomery(fe25519 montgomeryX, const fe25519 edwardsY, const fe25519
 }
 
 static int
-crypto_scalarmult_curve25519_ref10_base(unsigned char *q,
+rubidium_scalarmult_curve25519_ref10_base(unsigned char *q,
                                         const unsigned char *n)
 {
     unsigned char *t = q;
@@ -168,8 +168,8 @@ crypto_scalarmult_curve25519_ref10_base(unsigned char *q,
     return 0;
 }
 
-struct crypto_scalarmult_curve25519_implementation
-    crypto_scalarmult_curve25519_ref10_implementation = {
-        LITHIUM_C99(.mult =) crypto_scalarmult_curve25519_ref10,
-        LITHIUM_C99(.mult_base =) crypto_scalarmult_curve25519_ref10_base
+struct rubidium_scalarmult_curve25519_implementation
+    rubidium_scalarmult_curve25519_ref10_implementation = {
+        RUBIDIUM_C99(.mult =) rubidium_scalarmult_curve25519_ref10,
+        RUBIDIUM_C99(.mult_base =) rubidium_scalarmult_curve25519_ref10_base
     };

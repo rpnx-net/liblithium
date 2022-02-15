@@ -55,7 +55,7 @@ static CPUFeatures _cpu_features;
 #define XCR0_HI16_ZMM  0x00000080
 
 static int
-_lithium_runtime_arm_cpu_features(CPUFeatures * const cpu_features)
+_rubidium_runtime_arm_cpu_features(CPUFeatures * const cpu_features)
 {
     cpu_features->has_neon = 0;
     cpu_features->has_armcrypto = 0;
@@ -97,7 +97,7 @@ _lithium_runtime_arm_cpu_features(CPUFeatures * const cpu_features)
         return 0;
     }
 
-#if __ARM_FEATURE_CRYPTO
+#if __ARM_FEATURE_RUBIDIUM
     cpu_features->has_armcrypto = 1;
 #elif defined(__APPLE__) && defined(CPU_TYPE_ARM64) && defined(CPU_SUBTYPE_ARM64E)
     {
@@ -189,7 +189,7 @@ _cpuid(unsigned int cpu_info[4U], const unsigned int cpu_info_type)
 }
 
 static int
-_lithium_runtime_intel_cpu_features(CPUFeatures * const cpu_features)
+_rubidium_runtime_intel_cpu_features(CPUFeatures * const cpu_features)
 {
     unsigned int cpu_info[4];
     uint32_t     xcr0 = 0U;
@@ -306,85 +306,85 @@ _lithium_runtime_intel_cpu_features(CPUFeatures * const cpu_features)
 }
 
 int
-_lithium_runtime_get_cpu_features(void)
+_rubidium_runtime_get_cpu_features(void)
 {
     int ret = -1;
 
-    ret &= _lithium_runtime_arm_cpu_features(&_cpu_features);
-    ret &= _lithium_runtime_intel_cpu_features(&_cpu_features);
+    ret &= _rubidium_runtime_arm_cpu_features(&_cpu_features);
+    ret &= _rubidium_runtime_intel_cpu_features(&_cpu_features);
     _cpu_features.initialized = 1;
 
     return ret;
 }
 
 int
-lithium_runtime_has_neon(void)
+rubidium_runtime_has_neon(void)
 {
     return _cpu_features.has_neon;
 }
 
 int
-lithium_runtime_has_armcrypto(void)
+rubidium_runtime_has_armcrypto(void)
 {
     return _cpu_features.has_armcrypto;
 }
 
 int
-lithium_runtime_has_sse2(void)
+rubidium_runtime_has_sse2(void)
 {
     return _cpu_features.has_sse2;
 }
 
 int
-lithium_runtime_has_sse3(void)
+rubidium_runtime_has_sse3(void)
 {
     return _cpu_features.has_sse3;
 }
 
 int
-lithium_runtime_has_ssse3(void)
+rubidium_runtime_has_ssse3(void)
 {
     return _cpu_features.has_ssse3;
 }
 
 int
-lithium_runtime_has_sse41(void)
+rubidium_runtime_has_sse41(void)
 {
     return _cpu_features.has_sse41;
 }
 
 int
-lithium_runtime_has_avx(void)
+rubidium_runtime_has_avx(void)
 {
     return _cpu_features.has_avx;
 }
 
 int
-lithium_runtime_has_avx2(void)
+rubidium_runtime_has_avx2(void)
 {
     return _cpu_features.has_avx2;
 }
 
 int
-lithium_runtime_has_avx512f(void)
+rubidium_runtime_has_avx512f(void)
 {
     return _cpu_features.has_avx512f;
 }
 
 int
-lithium_runtime_has_pclmul(void)
+rubidium_runtime_has_pclmul(void)
 {
     return _cpu_features.has_pclmul;
 }
 
 int
-lithium_runtime_has_aesni(void)
+rubidium_runtime_has_aesni(void)
 {
     return _cpu_features.has_aesni;
 }
 
 int
-lithium_runtime_has_rdrand(void)
+rubidium_runtime_has_rdrand(void)
 {
     return _cpu_features.has_rdrand;
 }

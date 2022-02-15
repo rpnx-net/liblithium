@@ -21,8 +21,8 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "crypto_pwhash_scryptsalsa208sha256.h"
-#include "crypto_scrypt.h"
+#include "rubidium_pwhash_scryptsalsa208sha256.h"
+#include "rubidium_scrypt.h"
 #include "private/common.h"
 #include "runtime.h"
 #include "utils.h"
@@ -137,7 +137,7 @@ uint8_t *
 escrypt_r(escrypt_local_t *local, const uint8_t *passwd, size_t passwdlen,
           const uint8_t *setting, uint8_t *buf, size_t buflen)
 {
-    uint8_t        hash[crypto_pwhash_scryptsalsa208sha256_STRHASHBYTES];
+    uint8_t        hash[rubidium_pwhash_scryptsalsa208sha256_STRHASHBYTES];
     escrypt_kdf_t  escrypt_kdf;
     const uint8_t *src;
     const uint8_t *salt;
@@ -165,13 +165,13 @@ escrypt_r(escrypt_local_t *local, const uint8_t *passwd, size_t passwdlen,
         saltlen = strlen((const char *) salt);
     }
     need = prefixlen + saltlen + 1 +
-           crypto_pwhash_scryptsalsa208sha256_STRHASHBYTES_ENCODED + 1;
+           rubidium_pwhash_scryptsalsa208sha256_STRHASHBYTES_ENCODED + 1;
     if (need > buflen || need < saltlen) {
         return NULL;
     }
 #ifdef HAVE_EMMINTRIN_H
     escrypt_kdf =
-        lithium_runtime_has_sse2() ? escrypt_kdf_sse : escrypt_kdf_nosse;
+        rubidium_runtime_has_sse2() ? escrypt_kdf_sse : escrypt_kdf_nosse;
 #else
     escrypt_kdf = escrypt_kdf_nosse;
 #endif
@@ -185,7 +185,7 @@ escrypt_r(escrypt_local_t *local, const uint8_t *passwd, size_t passwdlen,
     *dst++ = '$';
 
     dst = encode64(dst, buflen - (dst - buf), hash, sizeof(hash));
-    lithium_memzero(hash, sizeof hash);
+    rubidium_memzero(hash, sizeof hash);
     if (!dst || dst >= buf + buflen) {
         return NULL; /* Can't happen LCOV_EXCL_LINE */
     }
@@ -236,7 +236,7 @@ escrypt_gensalt_r(uint32_t N_log2, uint32_t r, uint32_t p, const uint8_t *src,
 }
 
 int
-crypto_pwhash_scryptsalsa208sha256_ll(const uint8_t *passwd, size_t passwdlen,
+rubidium_pwhash_scryptsalsa208sha256_ll(const uint8_t *passwd, size_t passwdlen,
                                       const uint8_t *salt, size_t saltlen,
                                       uint64_t N, uint32_t r, uint32_t p,
                                       uint8_t *buf, size_t buflen)
@@ -250,7 +250,7 @@ crypto_pwhash_scryptsalsa208sha256_ll(const uint8_t *passwd, size_t passwdlen,
     }
 #if defined(HAVE_EMMINTRIN_H)
     escrypt_kdf =
-        lithium_runtime_has_sse2() ? escrypt_kdf_sse : escrypt_kdf_nosse;
+        rubidium_runtime_has_sse2() ? escrypt_kdf_sse : escrypt_kdf_nosse;
 #else
     escrypt_kdf = escrypt_kdf_nosse;
 #endif

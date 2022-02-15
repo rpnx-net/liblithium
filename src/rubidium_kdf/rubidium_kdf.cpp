@@ -1,49 +1,49 @@
 
-#include "crypto_kdf.h"
+#include "rubidium_kdf.h"
 #include "randombytes.h"
 
 const char *
-crypto_kdf_primitive(void)
+rubidium_kdf_primitive(void)
 {
-    return crypto_kdf_PRIMITIVE;
+    return rubidium_kdf_PRIMITIVE;
 }
 
 size_t
-crypto_kdf_bytes_min(void)
+rubidium_kdf_bytes_min(void)
 {
-    return crypto_kdf_BYTES_MIN;
+    return rubidium_kdf_BYTES_MIN;
 }
 
 size_t
-crypto_kdf_bytes_max(void)
+rubidium_kdf_bytes_max(void)
 {
-    return crypto_kdf_BYTES_MAX;
+    return rubidium_kdf_BYTES_MAX;
 }
 
 size_t
-crypto_kdf_contextbytes(void)
+rubidium_kdf_contextbytes(void)
 {
-    return crypto_kdf_CONTEXTBYTES;
+    return rubidium_kdf_CONTEXTBYTES;
 }
 
 size_t
-crypto_kdf_keybytes(void)
+rubidium_kdf_keybytes(void)
 {
-    return crypto_kdf_KEYBYTES;
+    return rubidium_kdf_KEYBYTES;
 }
 
 int
-crypto_kdf_derive_from_key(unsigned char *subkey, size_t subkey_len,
+rubidium_kdf_derive_from_key(unsigned char *subkey, size_t subkey_len,
                            uint64_t subkey_id,
-                           const char ctx[crypto_kdf_CONTEXTBYTES],
-                           const unsigned char key[crypto_kdf_KEYBYTES])
+                           const char ctx[rubidium_kdf_CONTEXTBYTES],
+                           const unsigned char key[rubidium_kdf_KEYBYTES])
 {
-    return crypto_kdf_blake2b_derive_from_key(subkey, subkey_len,
+    return rubidium_kdf_blake2b_derive_from_key(subkey, subkey_len,
                                               subkey_id, ctx, key);
 }
 
 void
-crypto_kdf_keygen(unsigned char k[crypto_kdf_KEYBYTES])
+rubidium_kdf_keygen(unsigned char k[rubidium_kdf_KEYBYTES])
 {
-    randombytes_buf(k, crypto_kdf_KEYBYTES);
+    randombytes_buf(k, rubidium_kdf_KEYBYTES);
 }

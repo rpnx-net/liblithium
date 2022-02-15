@@ -1,21 +1,21 @@
 
 #include <string.h>
 
-#include "crypto_hash_sha512.h"
-#include "crypto_scalarmult_curve25519.h"
-#include "crypto_sign_ed25519.h"
+#include "rubidium_hash_sha512.h"
+#include "rubidium_scalarmult_curve25519.h"
+#include "rubidium_sign_ed25519.h"
 #include "sign_ed25519_ref10.h"
 #include "private/ed25519_ref10.h"
 #include "randombytes.h"
 #include "utils.h"
 
 int
-crypto_sign_ed25519_seed_keypair(unsigned char *pk, unsigned char *sk,
+rubidium_sign_ed25519_seed_keypair(unsigned char *pk, unsigned char *sk,
                                  const unsigned char *seed)
 {
     ge25519_p3 A;
 
-    crypto_hash_sha512(sk, seed, 32);
+    rubidium_hash_sha512(sk, seed, 32);
     sk[0] &= 248;
     sk[31] &= 127;
     sk[31] |= 64;
@@ -30,20 +30,20 @@ crypto_sign_ed25519_seed_keypair(unsigned char *pk, unsigned char *sk,
 }
 
 int
-crypto_sign_ed25519_keypair(unsigned char *pk, unsigned char *sk)
+rubidium_sign_ed25519_keypair(unsigned char *pk, unsigned char *sk)
 {
     unsigned char seed[32];
     int           ret;
 
     randombytes_buf(seed, sizeof seed);
-    ret = crypto_sign_ed25519_seed_keypair(pk, sk, seed);
-    lithium_memzero(seed, sizeof seed);
+    ret = rubidium_sign_ed25519_seed_keypair(pk, sk, seed);
+    rubidium_memzero(seed, sizeof seed);
 
     return ret;
 }
 
 int
-crypto_sign_ed25519_pk_to_curve25519(unsigned char *curve25519_pk,
+rubidium_sign_ed25519_pk_to_curve25519(unsigned char *curve25519_pk,
                                      const unsigned char *ed25519_pk)
 {
     ge25519_p3 A;
@@ -67,17 +67,17 @@ crypto_sign_ed25519_pk_to_curve25519(unsigned char *curve25519_pk,
 }
 
 int
-crypto_sign_ed25519_sk_to_curve25519(unsigned char *curve25519_sk,
+rubidium_sign_ed25519_sk_to_curve25519(unsigned char *curve25519_sk,
                                      const unsigned char *ed25519_sk)
 {
-    unsigned char h[crypto_hash_sha512_BYTES];
+    unsigned char h[rubidium_hash_sha512_BYTES];
 
-    crypto_hash_sha512(h, ed25519_sk, 32);
+    rubidium_hash_sha512(h, ed25519_sk, 32);
     h[0] &= 248;
     h[31] &= 127;
     h[31] |= 64;
-    memcpy(curve25519_sk, h, crypto_scalarmult_curve25519_BYTES);
-    lithium_memzero(h, sizeof h);
+    memcpy(curve25519_sk, h, rubidium_scalarmult_curve25519_BYTES);
+    rubidium_memzero(h, sizeof h);
 
     return 0;
 }

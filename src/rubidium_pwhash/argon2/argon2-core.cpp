@@ -22,7 +22,7 @@
 # include <sys/mman.h>
 #endif
 
-#include "crypto_generichash_blake2b.h"
+#include "rubidium_generichash_blake2b.h"
 #include "private/common.h"
 #include "private/implementations.h"
 #include "runtime.h"
@@ -186,9 +186,9 @@ argon2_finalize(const argon2_context *context, argon2_instance_t *instance)
             store_block(blockhash_bytes, &blockhash);
             blake2b_long(context->out, context->outlen, blockhash_bytes,
                          ARGON2_BLOCK_SIZE);
-            lithium_memzero(blockhash.v,
+            rubidium_memzero(blockhash.v,
                            ARGON2_BLOCK_SIZE); /* clear blockhash */
-            lithium_memzero(blockhash_bytes,
+            rubidium_memzero(blockhash_bytes,
                            ARGON2_BLOCK_SIZE); /* clear blockhash_bytes */
         }
 
@@ -364,90 +364,90 @@ argon2_fill_first_blocks(uint8_t *blockhash, const argon2_instance_t *instance)
         load_block(&instance->region->memory[l * instance->lane_length + 1],
                    blockhash_bytes);
     }
-    lithium_memzero(blockhash_bytes, ARGON2_BLOCK_SIZE);
+    rubidium_memzero(blockhash_bytes, ARGON2_BLOCK_SIZE);
 }
 
 static void
 argon2_initial_hash(uint8_t *blockhash, argon2_context *context,
                     argon2_type type)
 {
-    crypto_generichash_blake2b_state BlakeHash;
+    rubidium_generichash_blake2b_state BlakeHash;
     uint8_t                          value[4U /* sizeof(uint32_t) */];
 
     if (NULL == context || NULL == blockhash) {
         return; /* LCOV_EXCL_LINE */
     }
 
-    crypto_generichash_blake2b_init(&BlakeHash, NULL, 0U,
+    rubidium_generichash_blake2b_init(&BlakeHash, NULL, 0U,
                                     ARGON2_PREHASH_DIGEST_LENGTH);
 
     STORE32_LE(value, context->lanes);
-    crypto_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
+    rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     STORE32_LE(value, context->outlen);
-    crypto_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
+    rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     STORE32_LE(value, context->m_cost);
-    crypto_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
+    rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     STORE32_LE(value, context->t_cost);
-    crypto_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
+    rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     STORE32_LE(value, ARGON2_VERSION_NUMBER);
-    crypto_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
+    rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     STORE32_LE(value, (uint32_t) type);
-    crypto_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
+    rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     STORE32_LE(value, context->pwdlen);
-    crypto_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
+    rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     if (context->pwd != NULL) {
-        crypto_generichash_blake2b_update(
+        rubidium_generichash_blake2b_update(
             &BlakeHash, (const uint8_t *) context->pwd, context->pwdlen);
 
         /* LCOV_EXCL_START */
         if (context->flags & ARGON2_FLAG_CLEAR_PASSWORD) {
-            lithium_memzero(context->pwd, context->pwdlen);
+            rubidium_memzero(context->pwd, context->pwdlen);
             context->pwdlen = 0;
         }
         /* LCOV_EXCL_STOP */
     }
 
     STORE32_LE(value, context->saltlen);
-    crypto_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
+    rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     if (context->salt != NULL) {
-        crypto_generichash_blake2b_update(
+        rubidium_generichash_blake2b_update(
             &BlakeHash, (const uint8_t *) context->salt, context->saltlen);
     }
 
     STORE32_LE(value, context->secretlen);
-    crypto_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
+    rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     /* LCOV_EXCL_START */
     if (context->secret != NULL) {
-        crypto_generichash_blake2b_update(
+        rubidium_generichash_blake2b_update(
             &BlakeHash, (const uint8_t *) context->secret, context->secretlen);
 
         if (context->flags & ARGON2_FLAG_CLEAR_SECRET) {
-            lithium_memzero(context->secret, context->secretlen);
+            rubidium_memzero(context->secret, context->secretlen);
             context->secretlen = 0;
         }
     }
     /* LCOV_EXCL_STOP */
 
     STORE32_LE(value, context->adlen);
-    crypto_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
+    rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     /* LCOV_EXCL_START */
     if (context->ad != NULL) {
-        crypto_generichash_blake2b_update(
+        rubidium_generichash_blake2b_update(
             &BlakeHash, (const uint8_t *) context->ad, context->adlen);
     }
     /* LCOV_EXCL_STOP */
 
-    crypto_generichash_blake2b_final(&BlakeHash, blockhash,
+    rubidium_generichash_blake2b_final(&BlakeHash, blockhash,
                                      ARGON2_PREHASH_DIGEST_LENGTH);
 }
 
@@ -480,14 +480,14 @@ argon2_initialize(argon2_instance_t *instance, argon2_context *context)
     /* Hashing all inputs */
     argon2_initial_hash(blockhash, context, instance->type);
     /* Zeroing 8 extra bytes */
-    lithium_memzero(blockhash + ARGON2_PREHASH_DIGEST_LENGTH,
+    rubidium_memzero(blockhash + ARGON2_PREHASH_DIGEST_LENGTH,
                    ARGON2_PREHASH_SEED_LENGTH - ARGON2_PREHASH_DIGEST_LENGTH);
 
     /* 3. Creating first blocks, we always have at least two blocks in a slice
      */
     argon2_fill_first_blocks(blockhash, instance);
     /* Clearing the hash */
-    lithium_memzero(blockhash, ARGON2_PREHASH_SEED_LENGTH);
+    rubidium_memzero(blockhash, ARGON2_PREHASH_SEED_LENGTH);
 
     return ARGON2_OK;
 }
@@ -498,20 +498,20 @@ argon2_pick_best_implementation(void)
 /* LCOV_EXCL_START */
 #if defined(HAVE_AVX512FINTRIN_H) && defined(HAVE_AVX2INTRIN_H) && \
     defined(HAVE_TMMINTRIN_H) && defined(HAVE_SMMINTRIN_H)
-    if (lithium_runtime_has_avx512f()) {
+    if (rubidium_runtime_has_avx512f()) {
         fill_segment = argon2_fill_segment_avx512f;
         return 0;
     }
 #endif
 #if defined(HAVE_AVX2INTRIN_H) && defined(HAVE_TMMINTRIN_H) && \
     defined(HAVE_SMMINTRIN_H)
-    if (lithium_runtime_has_avx2()) {
+    if (rubidium_runtime_has_avx2()) {
         fill_segment = argon2_fill_segment_avx2;
         return 0;
     }
 #endif
 #if defined(HAVE_EMMINTRIN_H) && defined(HAVE_TMMINTRIN_H)
-    if (lithium_runtime_has_ssse3()) {
+    if (rubidium_runtime_has_ssse3()) {
         fill_segment = argon2_fill_segment_ssse3;
         return 0;
     }
@@ -523,7 +523,7 @@ argon2_pick_best_implementation(void)
 }
 
 int
-_crypto_pwhash_argon2_pick_best_implementation(void)
+_rubidium_pwhash_argon2_pick_best_implementation(void)
 {
     return argon2_pick_best_implementation();
 }

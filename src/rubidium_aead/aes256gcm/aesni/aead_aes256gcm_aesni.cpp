@@ -11,7 +11,7 @@
 #include <string.h>
 
 #include "core.h"
-#include "crypto_aead_aes256gcm.h"
+#include "rubidium_aead_aes256gcm.h"
 #include "export.h"
 #include "private/common.h"
 #include "randombytes.h"
@@ -218,7 +218,7 @@ addmulreduce(unsigned char *c, const unsigned char *a, unsigned int xlen, const 
     if (xlen >= 16) {
         A = _mm_loadu_si128((const __m128i *) a);
     } else {
-        CRYPTO_ALIGN(16) unsigned char padded[16];
+        RUBIDIUM_ALIGN(16) unsigned char padded[16];
         unsigned int                   i;
 
         memset(padded, 0, 16);
@@ -579,7 +579,7 @@ mulv(__m128i A, __m128i B)
     } while (0)
 
 int
-crypto_aead_aes256gcm_beforenm(crypto_aead_aes256gcm_state *ctx_, const unsigned char *k)
+rubidium_aead_aes256gcm_beforenm(rubidium_aead_aes256gcm_state *ctx_, const unsigned char *k)
 {
     aes256gcm_state *ctx   = (aes256gcm_state *) (void *) ctx_;
     unsigned char   *H     = ctx->H;
@@ -594,12 +594,12 @@ crypto_aead_aes256gcm_beforenm(crypto_aead_aes256gcm_state *ctx_, const unsigned
 }
 
 int
-crypto_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char *mac,
+rubidium_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char *mac,
                                                unsigned long long *maclen_p, const unsigned char *m,
                                                unsigned long long mlen, const unsigned char *ad,
                                                unsigned long long adlen, const unsigned char *nsec,
                                                const unsigned char *              npub,
-                                               const crypto_aead_aes256gcm_state *ctx_)
+                                               const rubidium_aead_aes256gcm_state *ctx_)
 {
     const __m128i          rev = _mm_set_epi8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
     const aes256gcm_state *ctx = (const aes256gcm_state *) (const void *) ctx_;
@@ -608,16 +608,16 @@ crypto_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char *
     unsigned long long     i, j;
     unsigned long long     adlen_rnd64 = adlen & ~63ULL;
     unsigned long long     mlen_rnd128 = mlen & ~127ULL;
-    CRYPTO_ALIGN(16) uint32_t      n2[4];
-    CRYPTO_ALIGN(16) unsigned char H[16];
-    CRYPTO_ALIGN(16) unsigned char T[16];
-    CRYPTO_ALIGN(16) unsigned char accum[16];
-    CRYPTO_ALIGN(16) unsigned char fb[16];
+    RUBIDIUM_ALIGN(16) uint32_t      n2[4];
+    RUBIDIUM_ALIGN(16) unsigned char H[16];
+    RUBIDIUM_ALIGN(16) unsigned char T[16];
+    RUBIDIUM_ALIGN(16) unsigned char accum[16];
+    RUBIDIUM_ALIGN(16) unsigned char fb[16];
 
     (void) nsec;
     memcpy(H, ctx->H, sizeof H);
-    if (mlen > crypto_aead_aes256gcm_MESSAGEBYTES_MAX) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+    if (mlen > rubidium_aead_aes256gcm_MESSAGEBYTES_MAX) {
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
     memcpy(&n2[0], npub, 3 * 4);
     n2[3] = 0x01000000;
@@ -678,7 +678,7 @@ crypto_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char *
         const int lb   = iter * 16;                       \
                                                           \
         for (i = mlen_rnd128; i < mlen; i += lb) {        \
-            CRYPTO_ALIGN(16) unsigned char outni[8 * 16]; \
+            RUBIDIUM_ALIGN(16) unsigned char outni[8 * 16]; \
             unsigned long long             mj = lb;       \
                                                           \
             aesni_encrypt8(outni, n2, rkeys);             \
@@ -716,26 +716,26 @@ crypto_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char *
 }
 
 int
-crypto_aead_aes256gcm_encrypt_afternm(unsigned char *c, unsigned long long *clen_p,
+rubidium_aead_aes256gcm_encrypt_afternm(unsigned char *c, unsigned long long *clen_p,
                                       const unsigned char *m, unsigned long long mlen,
                                       const unsigned char *ad, unsigned long long adlen,
                                       const unsigned char *nsec, const unsigned char *npub,
-                                      const crypto_aead_aes256gcm_state *ctx_)
+                                      const rubidium_aead_aes256gcm_state *ctx_)
 {
-    int ret = crypto_aead_aes256gcm_encrypt_detached_afternm(c, c + mlen, NULL, m, mlen, ad, adlen,
+    int ret = rubidium_aead_aes256gcm_encrypt_detached_afternm(c, c + mlen, NULL, m, mlen, ad, adlen,
                                                              nsec, npub, ctx_);
     if (clen_p != NULL) {
-        *clen_p = mlen + crypto_aead_aes256gcm_ABYTES;
+        *clen_p = mlen + rubidium_aead_aes256gcm_ABYTES;
     }
     return ret;
 }
 
 int
-crypto_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char *nsec,
+rubidium_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char *nsec,
                                                const unsigned char *c, unsigned long long clen,
                                                const unsigned char *mac, const unsigned char *ad,
                                                unsigned long long adlen, const unsigned char *npub,
-                                               const crypto_aead_aes256gcm_state *ctx_)
+                                               const rubidium_aead_aes256gcm_state *ctx_)
 {
     const __m128i          rev = _mm_set_epi8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
     const aes256gcm_state *ctx = (const aes256gcm_state *) (const void *) ctx_;
@@ -745,15 +745,15 @@ crypto_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char *
     unsigned long long     adlen_rnd64 = adlen & ~63ULL;
     unsigned long long     mlen;
     unsigned long long     mlen_rnd128;
-    CRYPTO_ALIGN(16) uint32_t      n2[4];
-    CRYPTO_ALIGN(16) unsigned char H[16];
-    CRYPTO_ALIGN(16) unsigned char T[16];
-    CRYPTO_ALIGN(16) unsigned char accum[16];
-    CRYPTO_ALIGN(16) unsigned char fb[16];
+    RUBIDIUM_ALIGN(16) uint32_t      n2[4];
+    RUBIDIUM_ALIGN(16) unsigned char H[16];
+    RUBIDIUM_ALIGN(16) unsigned char T[16];
+    RUBIDIUM_ALIGN(16) unsigned char accum[16];
+    RUBIDIUM_ALIGN(16) unsigned char fb[16];
 
     (void) nsec;
-    if (clen > crypto_aead_aes256gcm_MESSAGEBYTES_MAX) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+    if (clen > rubidium_aead_aes256gcm_MESSAGEBYTES_MAX) {
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
     mlen = clen;
 
@@ -815,7 +815,7 @@ crypto_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char *
         const int iter = 8;                               \
         const int lb   = iter * 16;                       \
         for (i = mlen_rnd128; i < mlen; i += lb) {        \
-            CRYPTO_ALIGN(16) unsigned char outni[8 * 16]; \
+            RUBIDIUM_ALIGN(16) unsigned char outni[8 * 16]; \
             unsigned long long             mj = lb;       \
                                                           \
             if ((i + mj) >= mlen) {                       \
@@ -860,23 +860,23 @@ crypto_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char *
 }
 
 int
-crypto_aead_aes256gcm_decrypt_afternm(unsigned char *m, unsigned long long *mlen_p,
+rubidium_aead_aes256gcm_decrypt_afternm(unsigned char *m, unsigned long long *mlen_p,
                                       unsigned char *nsec, const unsigned char *c,
                                       unsigned long long clen, const unsigned char *ad,
                                       unsigned long long adlen, const unsigned char *npub,
-                                      const crypto_aead_aes256gcm_state *ctx_)
+                                      const rubidium_aead_aes256gcm_state *ctx_)
 {
     unsigned long long mlen = 0ULL;
     int                ret  = -1;
 
-    if (clen >= crypto_aead_aes256gcm_ABYTES) {
-        ret = crypto_aead_aes256gcm_decrypt_detached_afternm(
-            m, nsec, c, clen - crypto_aead_aes256gcm_ABYTES,
-            c + clen - crypto_aead_aes256gcm_ABYTES, ad, adlen, npub, ctx_);
+    if (clen >= rubidium_aead_aes256gcm_ABYTES) {
+        ret = rubidium_aead_aes256gcm_decrypt_detached_afternm(
+            m, nsec, c, clen - rubidium_aead_aes256gcm_ABYTES,
+            c + clen - rubidium_aead_aes256gcm_ABYTES, ad, adlen, npub, ctx_);
     }
     if (mlen_p != NULL) {
         if (ret == 0) {
-            mlen = clen - crypto_aead_aes256gcm_ABYTES;
+            mlen = clen - rubidium_aead_aes256gcm_ABYTES;
         }
         *mlen_p = mlen;
     }
@@ -884,76 +884,76 @@ crypto_aead_aes256gcm_decrypt_afternm(unsigned char *m, unsigned long long *mlen
 }
 
 int
-crypto_aead_aes256gcm_encrypt_detached(unsigned char *c, unsigned char *mac,
+rubidium_aead_aes256gcm_encrypt_detached(unsigned char *c, unsigned char *mac,
                                        unsigned long long *maclen_p, const unsigned char *m,
                                        unsigned long long mlen, const unsigned char *ad,
                                        unsigned long long adlen, const unsigned char *nsec,
                                        const unsigned char *npub, const unsigned char *k)
 {
-    CRYPTO_ALIGN(16) crypto_aead_aes256gcm_state ctx;
+    RUBIDIUM_ALIGN(16) rubidium_aead_aes256gcm_state ctx;
 
-    crypto_aead_aes256gcm_beforenm(&ctx, k);
+    rubidium_aead_aes256gcm_beforenm(&ctx, k);
 
-    return crypto_aead_aes256gcm_encrypt_detached_afternm(
+    return rubidium_aead_aes256gcm_encrypt_detached_afternm(
         c, mac, maclen_p, m, mlen, ad, adlen, nsec, npub,
-        (const crypto_aead_aes256gcm_state *) &ctx);
+        (const rubidium_aead_aes256gcm_state *) &ctx);
 }
 
 int
-crypto_aead_aes256gcm_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
+rubidium_aead_aes256gcm_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
                               unsigned long long mlen, const unsigned char *ad,
                               unsigned long long adlen, const unsigned char *nsec,
                               const unsigned char *npub, const unsigned char *k)
 {
-    CRYPTO_ALIGN(16) crypto_aead_aes256gcm_state ctx;
+    RUBIDIUM_ALIGN(16) rubidium_aead_aes256gcm_state ctx;
     int                                          ret;
 
-    crypto_aead_aes256gcm_beforenm(&ctx, k);
+    rubidium_aead_aes256gcm_beforenm(&ctx, k);
 
-    ret = crypto_aead_aes256gcm_encrypt_afternm(c, clen_p, m, mlen, ad, adlen, nsec, npub,
-                                                (const crypto_aead_aes256gcm_state *) &ctx);
-    lithium_memzero(&ctx, sizeof ctx);
+    ret = rubidium_aead_aes256gcm_encrypt_afternm(c, clen_p, m, mlen, ad, adlen, nsec, npub,
+                                                (const rubidium_aead_aes256gcm_state *) &ctx);
+    rubidium_memzero(&ctx, sizeof ctx);
 
     return ret;
 }
 
 int
-crypto_aead_aes256gcm_decrypt_detached(unsigned char *m, unsigned char *nsec,
+rubidium_aead_aes256gcm_decrypt_detached(unsigned char *m, unsigned char *nsec,
                                        const unsigned char *c, unsigned long long clen,
                                        const unsigned char *mac, const unsigned char *ad,
                                        unsigned long long adlen, const unsigned char *npub,
                                        const unsigned char *k)
 {
-    CRYPTO_ALIGN(16) crypto_aead_aes256gcm_state ctx;
+    RUBIDIUM_ALIGN(16) rubidium_aead_aes256gcm_state ctx;
 
-    crypto_aead_aes256gcm_beforenm(&ctx, k);
+    rubidium_aead_aes256gcm_beforenm(&ctx, k);
 
-    return crypto_aead_aes256gcm_decrypt_detached_afternm(
-        m, nsec, c, clen, mac, ad, adlen, npub, (const crypto_aead_aes256gcm_state *) &ctx);
+    return rubidium_aead_aes256gcm_decrypt_detached_afternm(
+        m, nsec, c, clen, mac, ad, adlen, npub, (const rubidium_aead_aes256gcm_state *) &ctx);
 }
 
 int
-crypto_aead_aes256gcm_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
+rubidium_aead_aes256gcm_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
                               const unsigned char *c, unsigned long long clen,
                               const unsigned char *ad, unsigned long long adlen,
                               const unsigned char *npub, const unsigned char *k)
 {
-    CRYPTO_ALIGN(16) crypto_aead_aes256gcm_state ctx;
+    RUBIDIUM_ALIGN(16) rubidium_aead_aes256gcm_state ctx;
     int                                          ret;
 
-    crypto_aead_aes256gcm_beforenm(&ctx, k);
+    rubidium_aead_aes256gcm_beforenm(&ctx, k);
 
-    ret = crypto_aead_aes256gcm_decrypt_afternm(m, mlen_p, nsec, c, clen, ad, adlen, npub,
-                                                (const crypto_aead_aes256gcm_state *) &ctx);
-    lithium_memzero(&ctx, sizeof ctx);
+    ret = rubidium_aead_aes256gcm_decrypt_afternm(m, mlen_p, nsec, c, clen, ad, adlen, npub,
+                                                (const rubidium_aead_aes256gcm_state *) &ctx);
+    rubidium_memzero(&ctx, sizeof ctx);
 
     return ret;
 }
 
 int
-crypto_aead_aes256gcm_is_available(void)
+rubidium_aead_aes256gcm_is_available(void)
 {
-    return lithium_runtime_has_pclmul() & lithium_runtime_has_aesni();
+    return rubidium_runtime_has_pclmul() & rubidium_runtime_has_aesni();
 }
 
 #else
@@ -963,7 +963,7 @@ crypto_aead_aes256gcm_is_available(void)
 #endif
 
 int
-crypto_aead_aes256gcm_encrypt_detached(unsigned char *c, unsigned char *mac,
+rubidium_aead_aes256gcm_encrypt_detached(unsigned char *c, unsigned char *mac,
                                        unsigned long long *maclen_p, const unsigned char *m,
                                        unsigned long long mlen, const unsigned char *ad,
                                        unsigned long long adlen, const unsigned char *nsec,
@@ -974,7 +974,7 @@ crypto_aead_aes256gcm_encrypt_detached(unsigned char *c, unsigned char *mac,
 }
 
 int
-crypto_aead_aes256gcm_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
+rubidium_aead_aes256gcm_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
                               unsigned long long mlen, const unsigned char *ad,
                               unsigned long long adlen, const unsigned char *nsec,
                               const unsigned char *npub, const unsigned char *k)
@@ -984,7 +984,7 @@ crypto_aead_aes256gcm_encrypt(unsigned char *c, unsigned long long *clen_p, cons
 }
 
 int
-crypto_aead_aes256gcm_decrypt_detached(unsigned char *m, unsigned char *nsec,
+rubidium_aead_aes256gcm_decrypt_detached(unsigned char *m, unsigned char *nsec,
                                        const unsigned char *c, unsigned long long clen,
                                        const unsigned char *mac, const unsigned char *ad,
                                        unsigned long long adlen, const unsigned char *npub,
@@ -995,7 +995,7 @@ crypto_aead_aes256gcm_decrypt_detached(unsigned char *m, unsigned char *nsec,
 }
 
 int
-crypto_aead_aes256gcm_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
+rubidium_aead_aes256gcm_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
                               const unsigned char *c, unsigned long long clen,
                               const unsigned char *ad, unsigned long long adlen,
                               const unsigned char *npub, const unsigned char *k)
@@ -1005,59 +1005,59 @@ crypto_aead_aes256gcm_decrypt(unsigned char *m, unsigned long long *mlen_p, unsi
 }
 
 int
-crypto_aead_aes256gcm_beforenm(crypto_aead_aes256gcm_state *ctx_, const unsigned char *k)
+rubidium_aead_aes256gcm_beforenm(rubidium_aead_aes256gcm_state *ctx_, const unsigned char *k)
 {
     errno = ENOSYS;
     return -1;
 }
 
 int
-crypto_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char *mac,
+rubidium_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char *mac,
                                                unsigned long long *maclen_p, const unsigned char *m,
                                                unsigned long long mlen, const unsigned char *ad,
                                                unsigned long long adlen, const unsigned char *nsec,
                                                const unsigned char *              npub,
-                                               const crypto_aead_aes256gcm_state *ctx_)
+                                               const rubidium_aead_aes256gcm_state *ctx_)
 {
     errno = ENOSYS;
     return -1;
 }
 
 int
-crypto_aead_aes256gcm_encrypt_afternm(unsigned char *c, unsigned long long *clen_p,
+rubidium_aead_aes256gcm_encrypt_afternm(unsigned char *c, unsigned long long *clen_p,
                                       const unsigned char *m, unsigned long long mlen,
                                       const unsigned char *ad, unsigned long long adlen,
                                       const unsigned char *nsec, const unsigned char *npub,
-                                      const crypto_aead_aes256gcm_state *ctx_)
+                                      const rubidium_aead_aes256gcm_state *ctx_)
 {
     errno = ENOSYS;
     return -1;
 }
 
 int
-crypto_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char *nsec,
+rubidium_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char *nsec,
                                                const unsigned char *c, unsigned long long clen,
                                                const unsigned char *mac, const unsigned char *ad,
                                                unsigned long long adlen, const unsigned char *npub,
-                                               const crypto_aead_aes256gcm_state *ctx_)
+                                               const rubidium_aead_aes256gcm_state *ctx_)
 {
     errno = ENOSYS;
     return -1;
 }
 
 int
-crypto_aead_aes256gcm_decrypt_afternm(unsigned char *m, unsigned long long *mlen_p,
+rubidium_aead_aes256gcm_decrypt_afternm(unsigned char *m, unsigned long long *mlen_p,
                                       unsigned char *nsec, const unsigned char *c,
                                       unsigned long long clen, const unsigned char *ad,
                                       unsigned long long adlen, const unsigned char *npub,
-                                      const crypto_aead_aes256gcm_state *ctx_)
+                                      const rubidium_aead_aes256gcm_state *ctx_)
 {
     errno = ENOSYS;
     return -1;
 }
 
 int
-crypto_aead_aes256gcm_is_available(void)
+rubidium_aead_aes256gcm_is_available(void)
 {
     return 0;
 }
@@ -1065,43 +1065,43 @@ crypto_aead_aes256gcm_is_available(void)
 #endif
 
 size_t
-crypto_aead_aes256gcm_keybytes(void)
+rubidium_aead_aes256gcm_keybytes(void)
 {
-    return crypto_aead_aes256gcm_KEYBYTES;
+    return rubidium_aead_aes256gcm_KEYBYTES;
 }
 
 size_t
-crypto_aead_aes256gcm_nsecbytes(void)
+rubidium_aead_aes256gcm_nsecbytes(void)
 {
-    return crypto_aead_aes256gcm_NSECBYTES;
+    return rubidium_aead_aes256gcm_NSECBYTES;
 }
 
 size_t
-crypto_aead_aes256gcm_npubbytes(void)
+rubidium_aead_aes256gcm_npubbytes(void)
 {
-    return crypto_aead_aes256gcm_NPUBBYTES;
+    return rubidium_aead_aes256gcm_NPUBBYTES;
 }
 
 size_t
-crypto_aead_aes256gcm_abytes(void)
+rubidium_aead_aes256gcm_abytes(void)
 {
-    return crypto_aead_aes256gcm_ABYTES;
+    return rubidium_aead_aes256gcm_ABYTES;
 }
 
 size_t
-crypto_aead_aes256gcm_statebytes(void)
+rubidium_aead_aes256gcm_statebytes(void)
 {
-    return (sizeof(crypto_aead_aes256gcm_state) + (size_t) 15U) & ~(size_t) 15U;
+    return (sizeof(rubidium_aead_aes256gcm_state) + (size_t) 15U) & ~(size_t) 15U;
 }
 
 size_t
-crypto_aead_aes256gcm_messagebytes_max(void)
+rubidium_aead_aes256gcm_messagebytes_max(void)
 {
-    return crypto_aead_aes256gcm_MESSAGEBYTES_MAX;
+    return rubidium_aead_aes256gcm_MESSAGEBYTES_MAX;
 }
 
 void
-crypto_aead_aes256gcm_keygen(unsigned char k[crypto_aead_aes256gcm_KEYBYTES])
+rubidium_aead_aes256gcm_keygen(unsigned char k[rubidium_aead_aes256gcm_KEYBYTES])
 {
-    randombytes_buf(k, crypto_aead_aes256gcm_KEYBYTES);
+    randombytes_buf(k, rubidium_aead_aes256gcm_KEYBYTES);
 }

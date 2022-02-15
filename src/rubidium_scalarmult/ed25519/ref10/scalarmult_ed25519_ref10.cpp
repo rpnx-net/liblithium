@@ -1,12 +1,12 @@
 
 #include <string.h>
 
-#include "crypto_scalarmult_ed25519.h"
+#include "rubidium_scalarmult_ed25519.h"
 #include "private/ed25519_ref10.h"
 #include "utils.h"
 
 static int
-_crypto_scalarmult_ed25519_is_inf(const unsigned char s[32])
+_rubidium_scalarmult_ed25519_is_inf(const unsigned char s[32])
 {
     unsigned char c;
     unsigned int  i;
@@ -21,14 +21,14 @@ _crypto_scalarmult_ed25519_is_inf(const unsigned char s[32])
 }
 
 static inline void
-_crypto_scalarmult_ed25519_clamp(unsigned char k[32])
+_rubidium_scalarmult_ed25519_clamp(unsigned char k[32])
 {
     k[0] &= 248;
     k[31] |= 64;
 }
 
 static int
-_crypto_scalarmult_ed25519(unsigned char *q, const unsigned char *n,
+_rubidium_scalarmult_ed25519(unsigned char *q, const unsigned char *n,
                            const unsigned char *p, const int clamp)
 {
     unsigned char *t = q;
@@ -44,34 +44,34 @@ _crypto_scalarmult_ed25519(unsigned char *q, const unsigned char *n,
         t[i] = n[i];
     }
     if (clamp != 0) {
-        _crypto_scalarmult_ed25519_clamp(t);
+        _rubidium_scalarmult_ed25519_clamp(t);
     }
     t[31] &= 127;
 
     ge25519_scalarmult(&Q, t, &P);
     ge25519_p3_tobytes(q, &Q);
-    if (_crypto_scalarmult_ed25519_is_inf(q) != 0 || lithium_is_zero(n, 32)) {
+    if (_rubidium_scalarmult_ed25519_is_inf(q) != 0 || rubidium_is_zero(n, 32)) {
         return -1;
     }
     return 0;
 }
 
 int
-crypto_scalarmult_ed25519(unsigned char *q, const unsigned char *n,
+rubidium_scalarmult_ed25519(unsigned char *q, const unsigned char *n,
                           const unsigned char *p)
 {
-    return _crypto_scalarmult_ed25519(q, n, p, 1);
+    return _rubidium_scalarmult_ed25519(q, n, p, 1);
 }
 
 int
-crypto_scalarmult_ed25519_noclamp(unsigned char *q, const unsigned char *n,
+rubidium_scalarmult_ed25519_noclamp(unsigned char *q, const unsigned char *n,
                                   const unsigned char *p)
 {
-    return _crypto_scalarmult_ed25519(q, n, p, 0);
+    return _rubidium_scalarmult_ed25519(q, n, p, 0);
 }
 
 static int
-_crypto_scalarmult_ed25519_base(unsigned char *q,
+_rubidium_scalarmult_ed25519_base(unsigned char *q,
                                 const unsigned char *n, const int clamp)
 {
     unsigned char *t = q;
@@ -82,40 +82,40 @@ _crypto_scalarmult_ed25519_base(unsigned char *q,
         t[i] = n[i];
     }
     if (clamp != 0) {
-        _crypto_scalarmult_ed25519_clamp(t);
+        _rubidium_scalarmult_ed25519_clamp(t);
     }
     t[31] &= 127;
 
     ge25519_scalarmult_base(&Q, t);
     ge25519_p3_tobytes(q, &Q);
-    if (_crypto_scalarmult_ed25519_is_inf(q) != 0 || lithium_is_zero(n, 32)) {
+    if (_rubidium_scalarmult_ed25519_is_inf(q) != 0 || rubidium_is_zero(n, 32)) {
         return -1;
     }
     return 0;
 }
 
 int
-crypto_scalarmult_ed25519_base(unsigned char *q,
+rubidium_scalarmult_ed25519_base(unsigned char *q,
                                const unsigned char *n)
 {
-    return _crypto_scalarmult_ed25519_base(q, n, 1);
+    return _rubidium_scalarmult_ed25519_base(q, n, 1);
 }
 
 int
-crypto_scalarmult_ed25519_base_noclamp(unsigned char *q,
+rubidium_scalarmult_ed25519_base_noclamp(unsigned char *q,
                                        const unsigned char *n)
 {
-    return _crypto_scalarmult_ed25519_base(q, n, 0);
+    return _rubidium_scalarmult_ed25519_base(q, n, 0);
 }
 
 size_t
-crypto_scalarmult_ed25519_bytes(void)
+rubidium_scalarmult_ed25519_bytes(void)
 {
-    return crypto_scalarmult_ed25519_BYTES;
+    return rubidium_scalarmult_ed25519_BYTES;
 }
 
 size_t
-crypto_scalarmult_ed25519_scalarbytes(void)
+rubidium_scalarmult_ed25519_scalarbytes(void)
 {
-    return crypto_scalarmult_ed25519_SCALARBYTES;
+    return rubidium_scalarmult_ed25519_SCALARBYTES;
 }

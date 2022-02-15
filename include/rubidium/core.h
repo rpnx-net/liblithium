@@ -1,6 +1,6 @@
 
-#ifndef lithium_core_H
-#define lithium_core_H
+#ifndef rubidium_core_H
+#define rubidium_core_H
 
 #include "export.h"
 
@@ -8,17 +8,17 @@
 extern "C" {
 #endif
 
-LITHIUM_EXPORT
-int lithium_init(void)
+RUBIDIUM_EXPORT
+int rubidium_init(void)
             __attribute__ ((warn_unused_result));
 
 /* ---- */
 
-LITHIUM_EXPORT
-int lithium_set_misuse_handler(void (*handler)(void));
+RUBIDIUM_EXPORT
+int rubidium_set_misuse_handler(void (*handler)(void));
 
-LITHIUM_EXPORT
-void lithium_misuse(void)
+RUBIDIUM_EXPORT
+void rubidium_misuse(void)
             __attribute__ ((noreturn));
 
 #ifdef __cplusplus

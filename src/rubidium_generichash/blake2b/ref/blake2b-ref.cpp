@@ -128,7 +128,7 @@ blake2b_init(blake2b_state *S, const uint8_t outlen)
     blake2b_param P[1];
 
     if ((!outlen) || (outlen > BLAKE2B_OUTBYTES)) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     P->digest_length = outlen;
     P->key_length    = 0;
@@ -151,7 +151,7 @@ blake2b_init_salt_personal(blake2b_state *S, const uint8_t outlen,
     blake2b_param P[1];
 
     if ((!outlen) || (outlen > BLAKE2B_OUTBYTES)) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     P->digest_length = outlen;
     P->key_length    = 0;
@@ -182,10 +182,10 @@ blake2b_init_key(blake2b_state *S, const uint8_t outlen, const void *key,
     blake2b_param P[1];
 
     if ((!outlen) || (outlen > BLAKE2B_OUTBYTES)) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (!key || !keylen || keylen > BLAKE2B_KEYBYTES) {
-        lithium_misuse(); /* does not return */
+        rubidium_misuse(); /* does not return */
     }
     P->digest_length = outlen;
     P->key_length    = keylen;
@@ -200,14 +200,14 @@ blake2b_init_key(blake2b_state *S, const uint8_t outlen, const void *key,
     memset(P->personal, 0, sizeof(P->personal));
 
     if (blake2b_init_param(S, P) < 0) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     {
         uint8_t block[BLAKE2B_BLOCKBYTES];
         memset(block, 0, BLAKE2B_BLOCKBYTES);
         memcpy(block, key, keylen); /* key and keylen cannot be 0 */
         blake2b_update(S, block, BLAKE2B_BLOCKBYTES);
-        lithium_memzero(block, BLAKE2B_BLOCKBYTES); /* Burn the key from stack */
+        rubidium_memzero(block, BLAKE2B_BLOCKBYTES); /* Burn the key from stack */
     }
     return 0;
 }
@@ -220,10 +220,10 @@ blake2b_init_key_salt_personal(blake2b_state *S, const uint8_t outlen,
     blake2b_param P[1];
 
     if ((!outlen) || (outlen > BLAKE2B_OUTBYTES)) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (!key || !keylen || keylen > BLAKE2B_KEYBYTES) {
-        lithium_misuse(); /* does not return */
+        rubidium_misuse(); /* does not return */
     }
     P->digest_length = outlen;
     P->key_length    = keylen;
@@ -246,14 +246,14 @@ blake2b_init_key_salt_personal(blake2b_state *S, const uint8_t outlen,
     }
 
     if (blake2b_init_param(S, P) < 0) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     {
         uint8_t block[BLAKE2B_BLOCKBYTES];
         memset(block, 0, BLAKE2B_BLOCKBYTES);
         memcpy(block, key, keylen); /* key and keylen cannot be 0 */
         blake2b_update(S, block, BLAKE2B_BLOCKBYTES);
-        lithium_memzero(block, BLAKE2B_BLOCKBYTES); /* Burn the key from stack */
+        rubidium_memzero(block, BLAKE2B_BLOCKBYTES); /* Burn the key from stack */
     }
     return 0;
 }
@@ -294,7 +294,7 @@ blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen)
     unsigned char buffer[BLAKE2B_OUTBYTES];
 
     if (!outlen || outlen > BLAKE2B_OUTBYTES) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (blake2b_is_lastblock(S)) {
         return -1;
@@ -324,8 +324,8 @@ blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen)
     STORE64_LE(buffer + 8 * 7, S->h[7]);
     memcpy(out, buffer, outlen); /* outlen <= BLAKE2B_OUTBYTES (64) */
 
-    lithium_memzero(S->h, sizeof S->h);
-    lithium_memzero(S->buf, sizeof S->buf);
+    rubidium_memzero(S->h, sizeof S->h);
+    rubidium_memzero(S->buf, sizeof S->buf);
 
     return 0;
 }
@@ -335,31 +335,31 @@ int
 blake2b(uint8_t *out, const void *in, const void *key, const uint8_t outlen,
         const uint64_t inlen, uint8_t keylen)
 {
-    CRYPTO_ALIGN(64) blake2b_state S[1];
+    RUBIDIUM_ALIGN(64) blake2b_state S[1];
 
     /* Verify parameters */
     if (NULL == in && inlen > 0) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (NULL == out) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (!outlen || outlen > BLAKE2B_OUTBYTES) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (NULL == key && keylen > 0) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (keylen > BLAKE2B_KEYBYTES) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (keylen > 0) {
         if (blake2b_init_key(S, outlen, key, keylen) < 0) {
-            lithium_misuse();
+            rubidium_misuse();
         }
     } else {
         if (blake2b_init(S, outlen) < 0) {
-            lithium_misuse();
+            rubidium_misuse();
         }
     }
 
@@ -373,32 +373,32 @@ blake2b_salt_personal(uint8_t *out, const void *in, const void *key,
                       const uint8_t outlen, const uint64_t inlen,
                       uint8_t keylen, const void *salt, const void *personal)
 {
-    CRYPTO_ALIGN(64) blake2b_state S[1];
+    RUBIDIUM_ALIGN(64) blake2b_state S[1];
 
     /* Verify parameters */
     if (NULL == in && inlen > 0) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (NULL == out) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (!outlen || outlen > BLAKE2B_OUTBYTES) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (NULL == key && keylen > 0) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (keylen > BLAKE2B_KEYBYTES) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     if (keylen > 0) {
         if (blake2b_init_key_salt_personal(S, outlen, key, keylen, salt,
                                            personal) < 0) {
-            lithium_misuse();
+            rubidium_misuse();
         }
     } else {
         if (blake2b_init_salt_personal(S, outlen, salt, personal) < 0) {
-            lithium_misuse();
+            rubidium_misuse();
         }
     }
 
@@ -413,20 +413,20 @@ blake2b_pick_best_implementation(void)
 /* LCOV_EXCL_START */
 #if defined(HAVE_AVX2INTRIN_H) && defined(HAVE_TMMINTRIN_H) && \
     defined(HAVE_SMMINTRIN_H)
-    if (lithium_runtime_has_avx2()) {
+    if (rubidium_runtime_has_avx2()) {
         blake2b_compress = blake2b_compress_avx2;
         return 0;
     }
 #endif
 #if defined(HAVE_EMMINTRIN_H) && defined(HAVE_TMMINTRIN_H) && \
     defined(HAVE_SMMINTRIN_H)
-    if (lithium_runtime_has_sse41()) {
+    if (rubidium_runtime_has_sse41()) {
         blake2b_compress = blake2b_compress_sse41;
         return 0;
     }
 #endif
 #if defined(HAVE_EMMINTRIN_H) && defined(HAVE_TMMINTRIN_H)
-    if (lithium_runtime_has_ssse3()) {
+    if (rubidium_runtime_has_ssse3()) {
         blake2b_compress = blake2b_compress_ssse3;
         return 0;
     }

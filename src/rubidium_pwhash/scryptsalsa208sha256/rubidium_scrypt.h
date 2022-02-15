@@ -27,8 +27,8 @@
  * This file was originally written by Colin Percival as part of the Tarsnap
  * online backup system.
  */
-#ifndef crypto_scrypt_H
-#define crypto_scrypt_H
+#ifndef rubidium_scrypt_H
+#define rubidium_scrypt_H
 
 #include <limits.h>
 #include <stddef.h>
@@ -42,12 +42,12 @@
 #define ARCH_BITS 32
 #endif
 
-#define crypto_pwhash_scryptsalsa208sha256_STRPREFIXBYTES 14
-#define crypto_pwhash_scryptsalsa208sha256_STRSETTINGBYTES 57
-#define crypto_pwhash_scryptsalsa208sha256_STRSALTBYTES 32
-#define crypto_pwhash_scryptsalsa208sha256_STRSALTBYTES_ENCODED 43
-#define crypto_pwhash_scryptsalsa208sha256_STRHASHBYTES 32
-#define crypto_pwhash_scryptsalsa208sha256_STRHASHBYTES_ENCODED 43
+#define rubidium_pwhash_scryptsalsa208sha256_STRPREFIXBYTES 14
+#define rubidium_pwhash_scryptsalsa208sha256_STRSETTINGBYTES 57
+#define rubidium_pwhash_scryptsalsa208sha256_STRSALTBYTES 32
+#define rubidium_pwhash_scryptsalsa208sha256_STRSALTBYTES_ENCODED 43
+#define rubidium_pwhash_scryptsalsa208sha256_STRHASHBYTES 32
+#define rubidium_pwhash_scryptsalsa208sha256_STRHASHBYTES_ENCODED 43
 
 #define BYTES2CHARS(bytes) ((((bytes) *8) + 5) / 6)
 
@@ -92,4 +92,4 @@ const uint8_t *escrypt_parse_setting(const uint8_t *setting,
                                      uint32_t *N_log2_p, uint32_t *r_p,
                                      uint32_t *p_p);
 
-#endif /* !_CRYPTO_SCRYPT_H_ */
+#endif /* !_RUBIDIUM_SCRYPT_H_ */

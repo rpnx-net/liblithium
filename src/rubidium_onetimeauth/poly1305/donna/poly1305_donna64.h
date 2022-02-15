@@ -217,5 +217,5 @@ poly1305_finish(poly1305_state_internal_t *st, unsigned char mac[16])
     STORE64_LE(&mac[8], h1);
 
     /* zero out the state */
-    lithium_memzero((void *) st, sizeof *st);
+    rubidium_memzero((void *) st, sizeof *st);
 }

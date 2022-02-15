@@ -191,5 +191,5 @@ if (bytes > 0) {
         c[i] = m[i] ^ partialblock[i];
     }
 
-    lithium_memzero(partialblock, sizeof partialblock);
+    rubidium_memzero(partialblock, sizeof partialblock);
 }

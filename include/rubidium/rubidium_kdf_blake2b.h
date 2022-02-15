@@ -1,5 +1,5 @@
-#ifndef crypto_kdf_blake2b_H
-#define crypto_kdf_blake2b_H
+#ifndef rubidium_kdf_blake2b_H
+#define rubidium_kdf_blake2b_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -14,27 +14,27 @@
 extern "C" {
 #endif
 
-#define crypto_kdf_blake2b_BYTES_MIN 16
-LITHIUM_EXPORT
-size_t crypto_kdf_blake2b_bytes_min(void);
+#define rubidium_kdf_blake2b_BYTES_MIN 16
+RUBIDIUM_EXPORT
+size_t rubidium_kdf_blake2b_bytes_min(void);
 
-#define crypto_kdf_blake2b_BYTES_MAX 64
-LITHIUM_EXPORT
-size_t crypto_kdf_blake2b_bytes_max(void);
+#define rubidium_kdf_blake2b_BYTES_MAX 64
+RUBIDIUM_EXPORT
+size_t rubidium_kdf_blake2b_bytes_max(void);
 
-#define crypto_kdf_blake2b_CONTEXTBYTES 8
-LITHIUM_EXPORT
-size_t crypto_kdf_blake2b_contextbytes(void);
+#define rubidium_kdf_blake2b_CONTEXTBYTES 8
+RUBIDIUM_EXPORT
+size_t rubidium_kdf_blake2b_contextbytes(void);
 
-#define crypto_kdf_blake2b_KEYBYTES 32
-LITHIUM_EXPORT
-size_t crypto_kdf_blake2b_keybytes(void);
+#define rubidium_kdf_blake2b_KEYBYTES 32
+RUBIDIUM_EXPORT
+size_t rubidium_kdf_blake2b_keybytes(void);
 
-LITHIUM_EXPORT
-int crypto_kdf_blake2b_derive_from_key(unsigned char *subkey, size_t subkey_len,
+RUBIDIUM_EXPORT
+int rubidium_kdf_blake2b_derive_from_key(unsigned char *subkey, size_t subkey_len,
                                        uint64_t subkey_id,
-                                       const char ctx[crypto_kdf_blake2b_CONTEXTBYTES],
-                                       const unsigned char key[crypto_kdf_blake2b_KEYBYTES])
+                                       const char ctx[rubidium_kdf_blake2b_CONTEXTBYTES],
+                                       const unsigned char key[rubidium_kdf_blake2b_KEYBYTES])
             __attribute__ ((nonnull));
 
 #ifdef __cplusplus

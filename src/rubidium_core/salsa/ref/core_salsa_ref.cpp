@@ -2,13 +2,13 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "crypto_core_salsa20.h"
-#include "crypto_core_salsa2012.h"
-#include "crypto_core_salsa208.h"
+#include "rubidium_core_salsa20.h"
+#include "rubidium_core_salsa2012.h"
+#include "rubidium_core_salsa208.h"
 #include "private/common.h"
 
 static void
-crypto_core_salsa(unsigned char *out, const unsigned char *in,
+rubidium_core_salsa(unsigned char *out, const unsigned char *in,
                   const unsigned char *k, const unsigned char *c,
                   const int rounds)
 {
@@ -95,101 +95,101 @@ crypto_core_salsa(unsigned char *out, const unsigned char *in,
 }
 
 int
-crypto_core_salsa20(unsigned char *out, const unsigned char *in,
+rubidium_core_salsa20(unsigned char *out, const unsigned char *in,
                     const unsigned char *k, const unsigned char *c)
 {
-    crypto_core_salsa(out, in, k, c, 20);
+    rubidium_core_salsa(out, in, k, c, 20);
     return 0;
 }
 
 size_t
-crypto_core_salsa20_outputbytes(void)
+rubidium_core_salsa20_outputbytes(void)
 {
-    return crypto_core_salsa20_OUTPUTBYTES;
+    return rubidium_core_salsa20_OUTPUTBYTES;
 }
 
 size_t
-crypto_core_salsa20_inputbytes(void)
+rubidium_core_salsa20_inputbytes(void)
 {
-    return crypto_core_salsa20_INPUTBYTES;
+    return rubidium_core_salsa20_INPUTBYTES;
 }
 
 size_t
-crypto_core_salsa20_keybytes(void)
+rubidium_core_salsa20_keybytes(void)
 {
-    return crypto_core_salsa20_KEYBYTES;
+    return rubidium_core_salsa20_KEYBYTES;
 }
 
 size_t
-crypto_core_salsa20_constbytes(void)
+rubidium_core_salsa20_constbytes(void)
 {
-    return crypto_core_salsa20_CONSTBYTES;
+    return rubidium_core_salsa20_CONSTBYTES;
 }
 
 #ifndef MINIMAL
 /* LCOV_EXCL_START */
 int
-crypto_core_salsa2012(unsigned char *out, const unsigned char *in,
+rubidium_core_salsa2012(unsigned char *out, const unsigned char *in,
                       const unsigned char *k, const unsigned char *c)
 {
-    crypto_core_salsa(out, in, k, c, 12);
+    rubidium_core_salsa(out, in, k, c, 12);
     return 0;
 }
 
 size_t
-crypto_core_salsa2012_outputbytes(void)
+rubidium_core_salsa2012_outputbytes(void)
 {
-    return crypto_core_salsa2012_OUTPUTBYTES;
+    return rubidium_core_salsa2012_OUTPUTBYTES;
 }
 
 size_t
-crypto_core_salsa2012_inputbytes(void)
+rubidium_core_salsa2012_inputbytes(void)
 {
-    return crypto_core_salsa2012_INPUTBYTES;
+    return rubidium_core_salsa2012_INPUTBYTES;
 }
 
 size_t
-crypto_core_salsa2012_keybytes(void)
+rubidium_core_salsa2012_keybytes(void)
 {
-    return crypto_core_salsa2012_KEYBYTES;
+    return rubidium_core_salsa2012_KEYBYTES;
 }
 
 size_t
-crypto_core_salsa2012_constbytes(void)
+rubidium_core_salsa2012_constbytes(void)
 {
-    return crypto_core_salsa2012_CONSTBYTES;
+    return rubidium_core_salsa2012_CONSTBYTES;
 }
 
 int
-crypto_core_salsa208(unsigned char *out, const unsigned char *in,
+rubidium_core_salsa208(unsigned char *out, const unsigned char *in,
                      const unsigned char *k, const unsigned char *c)
 {
-    crypto_core_salsa(out, in, k, c, 8);
+    rubidium_core_salsa(out, in, k, c, 8);
     return 0;
 }
 
 size_t
-crypto_core_salsa208_outputbytes(void)
+rubidium_core_salsa208_outputbytes(void)
 {
-    return crypto_core_salsa208_OUTPUTBYTES;
+    return rubidium_core_salsa208_OUTPUTBYTES;
 }
 
 size_t
-crypto_core_salsa208_inputbytes(void)
+rubidium_core_salsa208_inputbytes(void)
 {
-    return crypto_core_salsa208_INPUTBYTES;
+    return rubidium_core_salsa208_INPUTBYTES;
 }
 
 size_t
-crypto_core_salsa208_keybytes(void)
+rubidium_core_salsa208_keybytes(void)
 {
-    return crypto_core_salsa208_KEYBYTES;
+    return rubidium_core_salsa208_KEYBYTES;
 }
 
 size_t
-crypto_core_salsa208_constbytes(void)
+rubidium_core_salsa208_constbytes(void)
 {
-    return crypto_core_salsa208_CONSTBYTES;
+    return rubidium_core_salsa208_CONSTBYTES;
 }
 /* LCOV_EXCL_END */
 #endif

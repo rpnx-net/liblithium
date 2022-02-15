@@ -4,12 +4,12 @@
 #include <stdint.h>
 
 #include "blake2.h"
-#include "crypto_generichash_blake2b.h"
+#include "rubidium_generichash_blake2b.h"
 #include "private/common.h"
 #include "private/implementations.h"
 
 int
-crypto_generichash_blake2b(unsigned char *out, size_t outlen,
+rubidium_generichash_blake2b(unsigned char *out, size_t outlen,
                            const unsigned char *in, unsigned long long inlen,
                            const unsigned char *key, size_t keylen)
 {
@@ -25,7 +25,7 @@ crypto_generichash_blake2b(unsigned char *out, size_t outlen,
 }
 
 int
-crypto_generichash_blake2b_salt_personal(
+rubidium_generichash_blake2b_salt_personal(
     unsigned char *out, size_t outlen, const unsigned char *in,
     unsigned long long inlen, const unsigned char *key, size_t keylen,
     const unsigned char *salt, const unsigned char *personal)
@@ -43,7 +43,7 @@ crypto_generichash_blake2b_salt_personal(
 }
 
 int
-crypto_generichash_blake2b_init(crypto_generichash_blake2b_state *state,
+rubidium_generichash_blake2b_init(rubidium_generichash_blake2b_state *state,
                                 const unsigned char *key, const size_t keylen,
                                 const size_t outlen)
 {
@@ -66,8 +66,8 @@ crypto_generichash_blake2b_init(crypto_generichash_blake2b_state *state,
 }
 
 int
-crypto_generichash_blake2b_init_salt_personal(
-    crypto_generichash_blake2b_state *state, const unsigned char *key,
+rubidium_generichash_blake2b_init_salt_personal(
+    rubidium_generichash_blake2b_state *state, const unsigned char *key,
     const size_t keylen, const size_t outlen, const unsigned char *salt,
     const unsigned char *personal)
 {
@@ -92,7 +92,7 @@ crypto_generichash_blake2b_init_salt_personal(
 }
 
 int
-crypto_generichash_blake2b_update(crypto_generichash_blake2b_state *state,
+rubidium_generichash_blake2b_update(rubidium_generichash_blake2b_state *state,
                                   const unsigned char *in,
                                   unsigned long long inlen)
 {
@@ -101,7 +101,7 @@ crypto_generichash_blake2b_update(crypto_generichash_blake2b_state *state,
 }
 
 int
-crypto_generichash_blake2b_final(crypto_generichash_blake2b_state *state,
+rubidium_generichash_blake2b_final(rubidium_generichash_blake2b_state *state,
                                  unsigned char *out, const size_t outlen)
 {
     assert(outlen <= UINT8_MAX);
@@ -110,7 +110,7 @@ crypto_generichash_blake2b_final(crypto_generichash_blake2b_state *state,
 }
 
 int
-_crypto_generichash_blake2b_pick_best_implementation(void)
+_rubidium_generichash_blake2b_pick_best_implementation(void)
 {
     return blake2b_pick_best_implementation();
 }

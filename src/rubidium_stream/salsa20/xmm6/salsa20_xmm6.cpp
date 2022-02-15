@@ -22,10 +22,10 @@ extern int stream_salsa20_xmm6_xor_ic(unsigned char *c, const unsigned char *m,
 }
 #endif
 
-struct crypto_stream_salsa20_implementation
-    crypto_stream_salsa20_xmm6_implementation = {
-        LITHIUM_C99(.stream =) stream_salsa20_xmm6,
-        LITHIUM_C99(.stream_xor_ic =) stream_salsa20_xmm6_xor_ic,
+struct rubidium_stream_salsa20_implementation
+    rubidium_stream_salsa20_xmm6_implementation = {
+        RUBIDIUM_C99(.stream =) stream_salsa20_xmm6,
+        RUBIDIUM_C99(.stream_xor_ic =) stream_salsa20_xmm6_xor_ic,
     };
 
 #endif

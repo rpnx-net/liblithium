@@ -8,11 +8,11 @@
 #endif
 
 #include "core.h"
-#include "crypto_generichash.h"
-#include "crypto_onetimeauth.h"
-#include "crypto_scalarmult.h"
-#include "crypto_stream_chacha20.h"
-#include "crypto_stream_salsa20.h"
+#include "rubidium_generichash.h"
+#include "rubidium_onetimeauth.h"
+#include "rubidium_scalarmult.h"
+#include "rubidium_stream_chacha20.h"
+#include "rubidium_stream_salsa20.h"
 #include "randombytes.h"
 #include "runtime.h"
 #include "utils.h"
@@ -24,28 +24,28 @@ static std::atomic<bool> initialized;
 static std::recursive_mutex lock;
 
 int
-lithium_init(void)
+rubidium_init(void)
 {
-    if (lithium_crit_enter() != 0) {
+    if (rubidium_crit_enter() != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
     if (initialized != 0) {
-        if (lithium_crit_leave() != 0) {
+        if (rubidium_crit_leave() != 0) {
             return -1; /* LCOV_EXCL_LINE */
         }
         return 1;
     }
-    _lithium_runtime_get_cpu_features();
+    _rubidium_runtime_get_cpu_features();
     randombytes_stir();
-    _lithium_alloc_init();
-    _crypto_pwhash_argon2_pick_best_implementation();
-    _crypto_generichash_blake2b_pick_best_implementation();
-    _crypto_onetimeauth_poly1305_pick_best_implementation();
-    _crypto_scalarmult_curve25519_pick_best_implementation();
-    _crypto_stream_chacha20_pick_best_implementation();
-    _crypto_stream_salsa20_pick_best_implementation();
+    _rubidium_alloc_init();
+    _rubidium_pwhash_argon2_pick_best_implementation();
+    _rubidium_generichash_blake2b_pick_best_implementation();
+    _rubidium_onetimeauth_poly1305_pick_best_implementation();
+    _rubidium_scalarmult_curve25519_pick_best_implementation();
+    _rubidium_stream_chacha20_pick_best_implementation();
+    _rubidium_stream_salsa20_pick_best_implementation();
     initialized = 1;
-    if (lithium_crit_leave() != 0) {
+    if (rubidium_crit_leave() != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
     return 0;
@@ -53,14 +53,14 @@ lithium_init(void)
 
 
 int
-lithium_crit_enter(void)
+rubidium_crit_enter(void)
 {
     lock.lock();
     return 0;
 }
 
 int
-lithium_crit_leave(void)
+rubidium_crit_leave(void)
 {
     lock.unlock();
     return 0;
@@ -70,12 +70,12 @@ lithium_crit_leave(void)
 static void (*_misuse_handler)(void);
 
 void
-lithium_misuse(void)
+rubidium_misuse(void)
 {
     void (*handler)(void);
 
-    (void) lithium_crit_leave();
-    if (lithium_crit_enter() == 0) {
+    (void) rubidium_crit_leave();
+    if (rubidium_crit_enter() == 0) {
         handler = _misuse_handler;
         if (handler != NULL) {
             handler();
@@ -87,25 +87,25 @@ lithium_misuse(void)
 /* LCOV_EXCL_STOP */
 
 int
-lithium_set_misuse_handler(void (*handler)(void))
+rubidium_set_misuse_handler(void (*handler)(void))
 {
-    if (lithium_crit_enter() != 0) {
+    if (rubidium_crit_enter() != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
     _misuse_handler = handler;
-    if (lithium_crit_leave() != 0) {
+    if (rubidium_crit_leave() != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
     return 0;
 }
 
-#if defined(_WIN32) && !defined(LITHIUM_STATIC)
+#if defined(_WIN32) && !defined(RUBIDIUM_STATIC)
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
     (void) hinstDLL;
     (void) lpReserved;
 
-    if (fdwReason == DLL_PROCESS_DETACH && _lithium_lock_initialized == 2) {
-        DeleteCriticalSection(&_lithium_lock);
+    if (fdwReason == DLL_PROCESS_DETACH && _rubidium_lock_initialized == 2) {
+        DeleteCriticalSection(&_rubidium_lock);
     }
     return TRUE;
 }

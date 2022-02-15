@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "crypto_core_hchacha20.h"
+#include "rubidium_core_hchacha20.h"
 #include "private/common.h"
 
 #define QUARTERROUND(A, B, C, D)     \
@@ -14,7 +14,7 @@
   } while(0)
 
 int
-crypto_core_hchacha20(unsigned char *out, const unsigned char *in,
+rubidium_core_hchacha20(unsigned char *out, const unsigned char *in,
                       const unsigned char *k, const unsigned char *c)
 {
     int      i;
@@ -69,25 +69,25 @@ crypto_core_hchacha20(unsigned char *out, const unsigned char *in,
 }
 
 size_t
-crypto_core_hchacha20_outputbytes(void)
+rubidium_core_hchacha20_outputbytes(void)
 {
-    return crypto_core_hchacha20_OUTPUTBYTES;
+    return rubidium_core_hchacha20_OUTPUTBYTES;
 }
 
 size_t
-crypto_core_hchacha20_inputbytes(void)
+rubidium_core_hchacha20_inputbytes(void)
 {
-    return crypto_core_hchacha20_INPUTBYTES;
+    return rubidium_core_hchacha20_INPUTBYTES;
 }
 
 size_t
-crypto_core_hchacha20_keybytes(void)
+rubidium_core_hchacha20_keybytes(void)
 {
-    return crypto_core_hchacha20_KEYBYTES;
+    return rubidium_core_hchacha20_KEYBYTES;
 }
 
 size_t
-crypto_core_hchacha20_constbytes(void)
+rubidium_core_hchacha20_constbytes(void)
 {
-    return crypto_core_hchacha20_CONSTBYTES;
+    return rubidium_core_hchacha20_CONSTBYTES;
 }

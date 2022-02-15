@@ -142,9 +142,9 @@ argon2_decode_string(argon2_context *ctx, const char *str, argon2_type type)
     do {                                                                         \
         size_t bin_len = (max_len);                                              \
         const char *str_end;                                                     \
-        if (lithium_base642bin((buf), (max_len), str, strlen(str), NULL,          \
+        if (rubidium_base642bin((buf), (max_len), str, strlen(str), NULL,          \
                               &bin_len, &str_end,                                \
-                              lithium_base64_VARIANT_ORIGINAL_NO_PADDING) != 0 || \
+                              rubidium_base64_VARIANT_ORIGINAL_NO_PADDING) != 0 || \
             bin_len > UINT32_MAX) {                                              \
             return ARGON2_DECODING_FAIL;                                         \
         }                                                                        \
@@ -262,8 +262,8 @@ argon2_encode_string(char *dst, size_t dst_len, argon2_context *ctx,
 #define SB(buf, len)                                                                \
     do {                                                                            \
         size_t sb_len;                                                              \
-        if (lithium_bin2base64(dst, dst_len, (buf), (len),                           \
-                              lithium_base64_VARIANT_ORIGINAL_NO_PADDING) == NULL) { \
+        if (rubidium_bin2base64(dst, dst_len, (buf), (len),                           \
+                              rubidium_base64_VARIANT_ORIGINAL_NO_PADDING) == NULL) { \
             return ARGON2_ENCODING_FAIL;                                            \
         }                                                                           \
         sb_len = strlen(dst);                                                       \

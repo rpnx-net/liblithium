@@ -1,10 +1,10 @@
-#ifndef crypto_pwhash_H
-#define crypto_pwhash_H
+#ifndef rubidium_pwhash_H
+#define rubidium_pwhash_H
 
 #include <stddef.h>
 
-#include "crypto_pwhash_argon2i.h"
-#include "crypto_pwhash_argon2id.h"
+#include "rubidium_pwhash_argon2i.h"
+#include "rubidium_pwhash_argon2id.h"
 #include "export.h"
 
 #ifdef __cplusplus
@@ -14,94 +14,94 @@
 extern "C" {
 #endif
 
-#define crypto_pwhash_ALG_ARGON2I13 crypto_pwhash_argon2i_ALG_ARGON2I13
-LITHIUM_EXPORT
-int crypto_pwhash_alg_argon2i13(void);
+#define rubidium_pwhash_ALG_ARGON2I13 rubidium_pwhash_argon2i_ALG_ARGON2I13
+RUBIDIUM_EXPORT
+int rubidium_pwhash_alg_argon2i13(void);
 
-#define crypto_pwhash_ALG_ARGON2ID13 crypto_pwhash_argon2id_ALG_ARGON2ID13
-LITHIUM_EXPORT
-int crypto_pwhash_alg_argon2id13(void);
+#define rubidium_pwhash_ALG_ARGON2ID13 rubidium_pwhash_argon2id_ALG_ARGON2ID13
+RUBIDIUM_EXPORT
+int rubidium_pwhash_alg_argon2id13(void);
 
-#define crypto_pwhash_ALG_DEFAULT crypto_pwhash_ALG_ARGON2ID13
-LITHIUM_EXPORT
-int crypto_pwhash_alg_default(void);
+#define rubidium_pwhash_ALG_DEFAULT rubidium_pwhash_ALG_ARGON2ID13
+RUBIDIUM_EXPORT
+int rubidium_pwhash_alg_default(void);
 
-#define crypto_pwhash_BYTES_MIN crypto_pwhash_argon2id_BYTES_MIN
-LITHIUM_EXPORT
-size_t crypto_pwhash_bytes_min(void);
+#define rubidium_pwhash_BYTES_MIN rubidium_pwhash_argon2id_BYTES_MIN
+RUBIDIUM_EXPORT
+size_t rubidium_pwhash_bytes_min(void);
 
-#define crypto_pwhash_BYTES_MAX crypto_pwhash_argon2id_BYTES_MAX
-LITHIUM_EXPORT
-size_t crypto_pwhash_bytes_max(void);
+#define rubidium_pwhash_BYTES_MAX rubidium_pwhash_argon2id_BYTES_MAX
+RUBIDIUM_EXPORT
+size_t rubidium_pwhash_bytes_max(void);
 
-#define crypto_pwhash_PASSWD_MIN crypto_pwhash_argon2id_PASSWD_MIN
-LITHIUM_EXPORT
-size_t crypto_pwhash_passwd_min(void);
+#define rubidium_pwhash_PASSWD_MIN rubidium_pwhash_argon2id_PASSWD_MIN
+RUBIDIUM_EXPORT
+size_t rubidium_pwhash_passwd_min(void);
 
-#define crypto_pwhash_PASSWD_MAX crypto_pwhash_argon2id_PASSWD_MAX
-LITHIUM_EXPORT
-size_t crypto_pwhash_passwd_max(void);
+#define rubidium_pwhash_PASSWD_MAX rubidium_pwhash_argon2id_PASSWD_MAX
+RUBIDIUM_EXPORT
+size_t rubidium_pwhash_passwd_max(void);
 
-#define crypto_pwhash_SALTBYTES crypto_pwhash_argon2id_SALTBYTES
-LITHIUM_EXPORT
-size_t crypto_pwhash_saltbytes(void);
+#define rubidium_pwhash_SALTBYTES rubidium_pwhash_argon2id_SALTBYTES
+RUBIDIUM_EXPORT
+size_t rubidium_pwhash_saltbytes(void);
 
-#define crypto_pwhash_STRBYTES crypto_pwhash_argon2id_STRBYTES
-LITHIUM_EXPORT
-size_t crypto_pwhash_strbytes(void);
+#define rubidium_pwhash_STRBYTES rubidium_pwhash_argon2id_STRBYTES
+RUBIDIUM_EXPORT
+size_t rubidium_pwhash_strbytes(void);
 
-#define crypto_pwhash_STRPREFIX crypto_pwhash_argon2id_STRPREFIX
-LITHIUM_EXPORT
-const char *crypto_pwhash_strprefix(void);
+#define rubidium_pwhash_STRPREFIX rubidium_pwhash_argon2id_STRPREFIX
+RUBIDIUM_EXPORT
+const char *rubidium_pwhash_strprefix(void);
 
-#define crypto_pwhash_OPSLIMIT_MIN crypto_pwhash_argon2id_OPSLIMIT_MIN
-LITHIUM_EXPORT
-unsigned long long crypto_pwhash_opslimit_min(void);
+#define rubidium_pwhash_OPSLIMIT_MIN rubidium_pwhash_argon2id_OPSLIMIT_MIN
+RUBIDIUM_EXPORT
+unsigned long long rubidium_pwhash_opslimit_min(void);
 
-#define crypto_pwhash_OPSLIMIT_MAX crypto_pwhash_argon2id_OPSLIMIT_MAX
-LITHIUM_EXPORT
-unsigned long long crypto_pwhash_opslimit_max(void);
+#define rubidium_pwhash_OPSLIMIT_MAX rubidium_pwhash_argon2id_OPSLIMIT_MAX
+RUBIDIUM_EXPORT
+unsigned long long rubidium_pwhash_opslimit_max(void);
 
-#define crypto_pwhash_MEMLIMIT_MIN crypto_pwhash_argon2id_MEMLIMIT_MIN
-LITHIUM_EXPORT
-size_t crypto_pwhash_memlimit_min(void);
+#define rubidium_pwhash_MEMLIMIT_MIN rubidium_pwhash_argon2id_MEMLIMIT_MIN
+RUBIDIUM_EXPORT
+size_t rubidium_pwhash_memlimit_min(void);
 
-#define crypto_pwhash_MEMLIMIT_MAX crypto_pwhash_argon2id_MEMLIMIT_MAX
-LITHIUM_EXPORT
-size_t crypto_pwhash_memlimit_max(void);
+#define rubidium_pwhash_MEMLIMIT_MAX rubidium_pwhash_argon2id_MEMLIMIT_MAX
+RUBIDIUM_EXPORT
+size_t rubidium_pwhash_memlimit_max(void);
 
-#define crypto_pwhash_OPSLIMIT_INTERACTIVE crypto_pwhash_argon2id_OPSLIMIT_INTERACTIVE
-LITHIUM_EXPORT
-unsigned long long crypto_pwhash_opslimit_interactive(void);
+#define rubidium_pwhash_OPSLIMIT_INTERACTIVE rubidium_pwhash_argon2id_OPSLIMIT_INTERACTIVE
+RUBIDIUM_EXPORT
+unsigned long long rubidium_pwhash_opslimit_interactive(void);
 
-#define crypto_pwhash_MEMLIMIT_INTERACTIVE crypto_pwhash_argon2id_MEMLIMIT_INTERACTIVE
-LITHIUM_EXPORT
-size_t crypto_pwhash_memlimit_interactive(void);
+#define rubidium_pwhash_MEMLIMIT_INTERACTIVE rubidium_pwhash_argon2id_MEMLIMIT_INTERACTIVE
+RUBIDIUM_EXPORT
+size_t rubidium_pwhash_memlimit_interactive(void);
 
-#define crypto_pwhash_OPSLIMIT_MODERATE crypto_pwhash_argon2id_OPSLIMIT_MODERATE
-LITHIUM_EXPORT
-unsigned long long crypto_pwhash_opslimit_moderate(void);
+#define rubidium_pwhash_OPSLIMIT_MODERATE rubidium_pwhash_argon2id_OPSLIMIT_MODERATE
+RUBIDIUM_EXPORT
+unsigned long long rubidium_pwhash_opslimit_moderate(void);
 
-#define crypto_pwhash_MEMLIMIT_MODERATE crypto_pwhash_argon2id_MEMLIMIT_MODERATE
-LITHIUM_EXPORT
-size_t crypto_pwhash_memlimit_moderate(void);
+#define rubidium_pwhash_MEMLIMIT_MODERATE rubidium_pwhash_argon2id_MEMLIMIT_MODERATE
+RUBIDIUM_EXPORT
+size_t rubidium_pwhash_memlimit_moderate(void);
 
-#define crypto_pwhash_OPSLIMIT_SENSITIVE crypto_pwhash_argon2id_OPSLIMIT_SENSITIVE
-LITHIUM_EXPORT
-unsigned long long crypto_pwhash_opslimit_sensitive(void);
+#define rubidium_pwhash_OPSLIMIT_SENSITIVE rubidium_pwhash_argon2id_OPSLIMIT_SENSITIVE
+RUBIDIUM_EXPORT
+unsigned long long rubidium_pwhash_opslimit_sensitive(void);
 
-#define crypto_pwhash_MEMLIMIT_SENSITIVE crypto_pwhash_argon2id_MEMLIMIT_SENSITIVE
-LITHIUM_EXPORT
-size_t crypto_pwhash_memlimit_sensitive(void);
+#define rubidium_pwhash_MEMLIMIT_SENSITIVE rubidium_pwhash_argon2id_MEMLIMIT_SENSITIVE
+RUBIDIUM_EXPORT
+size_t rubidium_pwhash_memlimit_sensitive(void);
 
 /*
  * With this function, do not forget to store all parameters, including the
  * algorithm identifier in order to produce deterministic output.
- * The crypto_pwhash_* definitions, including crypto_pwhash_ALG_DEFAULT,
+ * The rubidium_pwhash_* definitions, including rubidium_pwhash_ALG_DEFAULT,
  * may change.
  */
-LITHIUM_EXPORT
-int crypto_pwhash(unsigned char * const out, unsigned long long outlen,
+RUBIDIUM_EXPORT
+int rubidium_pwhash(unsigned char * const out, unsigned long long outlen,
                   const char * const passwd, unsigned long long passwdlen,
                   const unsigned char * const salt,
                   unsigned long long opslimit, size_t memlimit, int alg)
@@ -112,32 +112,32 @@ int crypto_pwhash(unsigned char * const out, unsigned long long outlen,
  * the algorithm identifier. The string is all that has to be stored in
  * order to verify a password.
  */
-LITHIUM_EXPORT
-int crypto_pwhash_str(char out[crypto_pwhash_STRBYTES],
+RUBIDIUM_EXPORT
+int rubidium_pwhash_str(char out[rubidium_pwhash_STRBYTES],
                       const char * const passwd, unsigned long long passwdlen,
                       unsigned long long opslimit, size_t memlimit)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
-LITHIUM_EXPORT
-int crypto_pwhash_str_alg(char out[crypto_pwhash_STRBYTES],
+RUBIDIUM_EXPORT
+int rubidium_pwhash_str_alg(char out[rubidium_pwhash_STRBYTES],
                           const char * const passwd, unsigned long long passwdlen,
                           unsigned long long opslimit, size_t memlimit, int alg)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
-LITHIUM_EXPORT
-int crypto_pwhash_str_verify(const char *str,
+RUBIDIUM_EXPORT
+int rubidium_pwhash_str_verify(const char *str,
                              const char * const passwd,
                              unsigned long long passwdlen)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
-LITHIUM_EXPORT
-int crypto_pwhash_str_needs_rehash(const char *str,
+RUBIDIUM_EXPORT
+int rubidium_pwhash_str_needs_rehash(const char *str,
                                    unsigned long long opslimit, size_t memlimit)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
-#define crypto_pwhash_PRIMITIVE "argon2i"
-LITHIUM_EXPORT
-const char *crypto_pwhash_primitive(void)
+#define rubidium_pwhash_PRIMITIVE "argon2i"
+RUBIDIUM_EXPORT
+const char *rubidium_pwhash_primitive(void)
             __attribute__ ((warn_unused_result));
 
 #ifdef __cplusplus

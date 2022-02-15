@@ -7,8 +7,8 @@
 #include <string.h>
 
 #include "core.h"
-#include "crypto_aead_aegis128l.h"
-#include "crypto_verify_16.h"
+#include "rubidium_aead_aegis128l.h"
+#include "rubidium_verify_16.h"
 #include "export.h"
 #include "randombytes.h"
 #include "runtime.h"
@@ -28,7 +28,7 @@
 #include "private/sse2_64_32.h"
 
 static inline void
-crypto_aead_aegis128l_update(__m128i *const state, const __m128i d1, const __m128i d2)
+rubidium_aead_aegis128l_update(__m128i *const state, const __m128i d1, const __m128i d2)
 {
     __m128i tmp;
 
@@ -47,7 +47,7 @@ crypto_aead_aegis128l_update(__m128i *const state, const __m128i d1, const __m12
 }
 
 static void
-crypto_aead_aegis128l_init(const unsigned char *key, const unsigned char *nonce, __m128i *const state)
+rubidium_aead_aegis128l_init(const unsigned char *key, const unsigned char *nonce, __m128i *const state)
 {
     const __m128i c0 = _mm_set_epi8(0xdd, 0x28, 0xb5, 0x73, 0x42, 0x31, 0x11, 0x20, 0xf1, 0x2f, 0xc2, 0x6d,
                                     0x55, 0x18, 0x3d, 0xdb);
@@ -69,12 +69,12 @@ crypto_aead_aegis128l_init(const unsigned char *key, const unsigned char *nonce,
     state[6] = _mm_xor_si128(k, c0);
     state[7] = _mm_xor_si128(k, c1);
     for (i = 0; i < 10; i++) {
-        crypto_aead_aegis128l_update(state, n, k);
+        rubidium_aead_aegis128l_update(state, n, k);
     }
 }
 
 static void
-crypto_aead_aegis128l_mac(unsigned char *mac, unsigned long long adlen, unsigned long long mlen,
+rubidium_aead_aegis128l_mac(unsigned char *mac, unsigned long long adlen, unsigned long long mlen,
                           __m128i *const state)
 {
     __m128i tmp;
@@ -84,7 +84,7 @@ crypto_aead_aegis128l_mac(unsigned char *mac, unsigned long long adlen, unsigned
     tmp = _mm_xor_si128(tmp, state[2]);
 
     for (i = 0; i < 7; i++) {
-        crypto_aead_aegis128l_update(state, tmp, tmp);
+        rubidium_aead_aegis128l_update(state, tmp, tmp);
     }
 
     tmp = _mm_xor_si128(state[6], state[5]);
@@ -98,7 +98,7 @@ crypto_aead_aegis128l_mac(unsigned char *mac, unsigned long long adlen, unsigned
 }
 
 static void
-crypto_aead_aegis128l_enc(unsigned char *const dst, const unsigned char *const src,
+rubidium_aead_aegis128l_enc(unsigned char *const dst, const unsigned char *const src,
                           __m128i *const state)
 {
     __m128i msg0, msg1;
@@ -115,11 +115,11 @@ crypto_aead_aegis128l_enc(unsigned char *const dst, const unsigned char *const s
     _mm_storeu_si128((__m128i *) (void *) dst, tmp0);
     _mm_storeu_si128((__m128i *) (void *) (dst + 16), tmp1);
 
-    crypto_aead_aegis128l_update(state, msg0, msg1);
+    rubidium_aead_aegis128l_update(state, msg0, msg1);
 }
 
 static void
-crypto_aead_aegis128l_dec(unsigned char *const dst, const unsigned char *const src,
+rubidium_aead_aegis128l_dec(unsigned char *const dst, const unsigned char *const src,
                           __m128i *const state)
 {
     __m128i msg0, msg1;
@@ -135,46 +135,46 @@ crypto_aead_aegis128l_dec(unsigned char *const dst, const unsigned char *const s
     _mm_storeu_si128((__m128i *) (void *) dst, msg0);
     _mm_storeu_si128((__m128i *) (void *) (dst + 16), msg1);
 
-    crypto_aead_aegis128l_update(state, msg0, msg1);
+    rubidium_aead_aegis128l_update(state, msg0, msg1);
 }
 
 int
-crypto_aead_aegis128l_encrypt_detached(unsigned char *c, unsigned char *mac,
+rubidium_aead_aegis128l_encrypt_detached(unsigned char *c, unsigned char *mac,
                                        unsigned long long *maclen_p, const unsigned char *m,
                                        unsigned long long mlen, const unsigned char *ad,
                                        unsigned long long adlen, const unsigned char *nsec,
                                        const unsigned char *npub, const unsigned char *k)
 {
     __m128i                        state[8];
-    CRYPTO_ALIGN(16) unsigned char src[32];
-    CRYPTO_ALIGN(16) unsigned char dst[32];
+    RUBIDIUM_ALIGN(16) unsigned char src[32];
+    RUBIDIUM_ALIGN(16) unsigned char dst[32];
     unsigned long long i;
 
     (void) nsec;
-    crypto_aead_aegis128l_init(k, npub, state);
+    rubidium_aead_aegis128l_init(k, npub, state);
 
     for (i = 0ULL; i + 32ULL <= adlen; i += 32ULL) {
-        crypto_aead_aegis128l_enc(dst, ad + i, state);
+        rubidium_aead_aegis128l_enc(dst, ad + i, state);
     }
     if (adlen & 0x1f) {
         memset(src, 0, 32);
         memcpy(src, ad + i, adlen & 0x1f);
-        crypto_aead_aegis128l_enc(dst, src, state);
+        rubidium_aead_aegis128l_enc(dst, src, state);
     }
     for (i = 0ULL; i + 32ULL <= mlen; i += 32ULL) {
-        crypto_aead_aegis128l_enc(c + i, m + i, state);
+        rubidium_aead_aegis128l_enc(c + i, m + i, state);
     }
     if (mlen & 0x1f) {
         memset(src, 0, 32);
         memcpy(src, m + i, mlen & 0x1f);
-        crypto_aead_aegis128l_enc(dst, src, state);
+        rubidium_aead_aegis128l_enc(dst, src, state);
         memcpy(c + i, dst, mlen & 0x1f);
     }
 
-    crypto_aead_aegis128l_mac(mac, adlen, mlen, state);
-    lithium_memzero(state, sizeof state);
-    lithium_memzero(src, sizeof src);
-    lithium_memzero(dst, sizeof dst);
+    rubidium_aead_aegis128l_mac(mac, adlen, mlen, state);
+    rubidium_memzero(state, sizeof state);
+    rubidium_memzero(src, sizeof src);
+    rubidium_memzero(dst, sizeof dst);
 
     if (maclen_p != NULL) {
         *maclen_p = 16ULL;
@@ -183,7 +183,7 @@ crypto_aead_aegis128l_encrypt_detached(unsigned char *c, unsigned char *mac,
 }
 
 int
-crypto_aead_aegis128l_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
+rubidium_aead_aegis128l_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
                               unsigned long long mlen, const unsigned char *ad,
                               unsigned long long adlen, const unsigned char *nsec,
                               const unsigned char *npub, const unsigned char *k)
@@ -191,10 +191,10 @@ crypto_aead_aegis128l_encrypt(unsigned char *c, unsigned long long *clen_p, cons
     unsigned long long clen = 0ULL;
     int                ret;
 
-    if (mlen > crypto_aead_aegis128l_MESSAGEBYTES_MAX) {
-        lithium_misuse();
+    if (mlen > rubidium_aead_aegis128l_MESSAGEBYTES_MAX) {
+        rubidium_misuse();
     }
-    ret = crypto_aead_aegis128l_encrypt_detached(c, c + mlen, NULL, m, mlen,
+    ret = rubidium_aead_aegis128l_encrypt_detached(c, c + mlen, NULL, m, mlen,
                                                  ad, adlen, nsec, npub, k);
     if (clen_p != NULL) {
         if (ret == 0) {
@@ -206,44 +206,44 @@ crypto_aead_aegis128l_encrypt(unsigned char *c, unsigned long long *clen_p, cons
 }
 
 int
-crypto_aead_aegis128l_decrypt_detached(unsigned char *m, unsigned char *nsec, const unsigned char *c,
+rubidium_aead_aegis128l_decrypt_detached(unsigned char *m, unsigned char *nsec, const unsigned char *c,
                                        unsigned long long clen, const unsigned char *mac,
                                        const unsigned char *ad, unsigned long long adlen,
                                        const unsigned char *npub, const unsigned char *k)
 {
     __m128i                        state[8];
-    CRYPTO_ALIGN(16) unsigned char src[32];
-    CRYPTO_ALIGN(16) unsigned char dst[32];
-    CRYPTO_ALIGN(16) unsigned char computed_mac[16];
+    RUBIDIUM_ALIGN(16) unsigned char src[32];
+    RUBIDIUM_ALIGN(16) unsigned char dst[32];
+    RUBIDIUM_ALIGN(16) unsigned char computed_mac[16];
     unsigned long long i;
     unsigned long long mlen;
     int                ret;
 
     (void) nsec;
     mlen = clen;
-    crypto_aead_aegis128l_init(k, npub, state);
+    rubidium_aead_aegis128l_init(k, npub, state);
 
     for (i = 0ULL; i + 32ULL <= adlen; i += 32ULL) {
-        crypto_aead_aegis128l_enc(dst, ad + i, state);
+        rubidium_aead_aegis128l_enc(dst, ad + i, state);
     }
     if (adlen & 0x1f) {
         memset(src, 0, 32);
         memcpy(src, ad + i, adlen & 0x1f);
-        crypto_aead_aegis128l_enc(dst, src, state);
+        rubidium_aead_aegis128l_enc(dst, src, state);
     }
     if (m != NULL) {
         for (i = 0ULL; i + 32ULL <= mlen; i += 32ULL) {
-            crypto_aead_aegis128l_dec(m + i, c + i, state);
+            rubidium_aead_aegis128l_dec(m + i, c + i, state);
         }
     } else {
         for (i = 0ULL; i + 32ULL <= mlen; i += 32ULL) {
-            crypto_aead_aegis128l_dec(dst, c + i, state);
+            rubidium_aead_aegis128l_dec(dst, c + i, state);
         }
     }
     if (mlen & 0x1f) {
         memset(src, 0, 32);
         memcpy(src, c + i, mlen & 0x1f);
-        crypto_aead_aegis128l_dec(dst, src, state);
+        rubidium_aead_aegis128l_dec(dst, src, state);
         if (m != NULL) {
             memcpy(m + i, dst, mlen & 0x1f);
         }
@@ -254,12 +254,12 @@ crypto_aead_aegis128l_decrypt_detached(unsigned char *m, unsigned char *nsec, co
                                  _mm_loadu_si128((const __m128i *) (const void *) (dst + 16)));
     }
 
-    crypto_aead_aegis128l_mac(computed_mac, adlen, mlen, state);
-    lithium_memzero(state, sizeof state);
-    lithium_memzero(src, sizeof src);
-    lithium_memzero(dst, sizeof dst);
-    ret = crypto_verify_16(computed_mac, mac);
-    lithium_memzero(computed_mac, sizeof computed_mac);
+    rubidium_aead_aegis128l_mac(computed_mac, adlen, mlen, state);
+    rubidium_memzero(state, sizeof state);
+    rubidium_memzero(src, sizeof src);
+    rubidium_memzero(dst, sizeof dst);
+    ret = rubidium_verify_16(computed_mac, mac);
+    rubidium_memzero(computed_mac, sizeof computed_mac);
     if (m == NULL) {
         return ret;
     }
@@ -271,7 +271,7 @@ crypto_aead_aegis128l_decrypt_detached(unsigned char *m, unsigned char *nsec, co
 }
 
 int
-crypto_aead_aegis128l_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
+rubidium_aead_aegis128l_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
                               const unsigned char *c, unsigned long long clen,
                               const unsigned char *ad, unsigned long long adlen,
                               const unsigned char *npub, const unsigned char *k)
@@ -280,7 +280,7 @@ crypto_aead_aegis128l_decrypt(unsigned char *m, unsigned long long *mlen_p, unsi
     int                ret  = -1;
 
     if (clen >= 16ULL) {
-        ret = crypto_aead_aegis128l_decrypt_detached
+        ret = rubidium_aead_aegis128l_decrypt_detached
             (m, nsec, c, clen - 16ULL, c + clen - 16ULL, ad, adlen, npub, k);
     }
     if (mlen_p != NULL) {
@@ -293,9 +293,9 @@ crypto_aead_aegis128l_decrypt(unsigned char *m, unsigned long long *mlen_p, unsi
 }
 
 int
-crypto_aead_aegis128l_is_available(void)
+rubidium_aead_aegis128l_is_available(void)
 {
-    return lithium_runtime_has_aesni();
+    return rubidium_runtime_has_aesni();
 }
 
 #endif

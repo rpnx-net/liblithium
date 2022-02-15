@@ -32,8 +32,8 @@
 #include <sys/types.h>
 
 #include "core.h"
-#include "crypto_auth_hmacsha256.h"
-#include "crypto_pwhash_scryptsalsa208sha256.h"
+#include "rubidium_auth_hmacsha256.h"
+#include "rubidium_pwhash_scryptsalsa208sha256.h"
 #include "pbkdf2-sha256.h"
 #include "private/common.h"
 #include "utils.h"
@@ -48,7 +48,7 @@ escrypt_PBKDF2_SHA256(const uint8_t *passwd, size_t passwdlen,
                       const uint8_t *salt, size_t saltlen, uint64_t c,
                       uint8_t *buf, size_t dkLen)
 {
-    crypto_auth_hmacsha256_state PShctx, hctx;
+    rubidium_auth_hmacsha256_state PShctx, hctx;
     size_t                       i;
     uint8_t                      ivec[4];
     uint8_t                      U[32];
@@ -58,27 +58,27 @@ escrypt_PBKDF2_SHA256(const uint8_t *passwd, size_t passwdlen,
     size_t                       clen;
 
 #if SIZE_MAX > 0x1fffffffe0ULL
-    COMPILER_ASSERT(crypto_pwhash_scryptsalsa208sha256_BYTES_MAX
+    COMPILER_ASSERT(rubidium_pwhash_scryptsalsa208sha256_BYTES_MAX
                     <= 0x1fffffffe0ULL);
     if (dkLen > 0x1fffffffe0ULL) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
 #endif
-    crypto_auth_hmacsha256_init(&PShctx, passwd, passwdlen);
-    crypto_auth_hmacsha256_update(&PShctx, salt, saltlen);
+    rubidium_auth_hmacsha256_init(&PShctx, passwd, passwdlen);
+    rubidium_auth_hmacsha256_update(&PShctx, salt, saltlen);
 
     for (i = 0; i * 32 < dkLen; i++) {
         STORE32_BE(ivec, (uint32_t)(i + 1));
-        memcpy(&hctx, &PShctx, sizeof(crypto_auth_hmacsha256_state));
-        crypto_auth_hmacsha256_update(&hctx, ivec, 4);
-        crypto_auth_hmacsha256_final(&hctx, U);
+        memcpy(&hctx, &PShctx, sizeof(rubidium_auth_hmacsha256_state));
+        rubidium_auth_hmacsha256_update(&hctx, ivec, 4);
+        rubidium_auth_hmacsha256_final(&hctx, U);
 
         memcpy(T, U, 32);
         /* LCOV_EXCL_START */
         for (j = 2; j <= c; j++) {
-            crypto_auth_hmacsha256_init(&hctx, passwd, passwdlen);
-            crypto_auth_hmacsha256_update(&hctx, U, 32);
-            crypto_auth_hmacsha256_final(&hctx, U);
+            rubidium_auth_hmacsha256_init(&hctx, passwd, passwdlen);
+            rubidium_auth_hmacsha256_update(&hctx, U, 32);
+            rubidium_auth_hmacsha256_final(&hctx, U);
 
             for (k = 0; k < 32; k++) {
                 T[k] ^= U[k];
@@ -92,5 +92,5 @@ escrypt_PBKDF2_SHA256(const uint8_t *passwd, size_t passwdlen,
         }
         memcpy(&buf[i * 32], T, clen);
     }
-    lithium_memzero((void *) &PShctx, sizeof PShctx);
+    rubidium_memzero((void *) &PShctx, sizeof PShctx);
 }

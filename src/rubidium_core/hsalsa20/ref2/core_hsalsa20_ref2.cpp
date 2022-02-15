@@ -7,14 +7,14 @@ Public domain.
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "crypto_core_hsalsa20.h"
+#include "rubidium_core_hsalsa20.h"
 #include "private/common.h"
 
 #define ROUNDS 20
 #define U32C(v) (v##U)
 
 int
-crypto_core_hsalsa20(unsigned char *out,
+rubidium_core_hsalsa20(unsigned char *out,
                      const unsigned char *in,
                      const unsigned char *k,
                      const unsigned char *c)

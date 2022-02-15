@@ -1,12 +1,12 @@
-#ifndef crypto_kdf_hkdf_sha256_H
-#define crypto_kdf_hkdf_sha256_H
+#ifndef rubidium_kdf_hkdf_sha256_H
+#define rubidium_kdf_hkdf_sha256_H
 
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "crypto_kdf.h"
-#include "crypto_auth_hmacsha256.h"
+#include "rubidium_kdf.h"
+#include "rubidium_auth_hmacsha256.h"
 #include "export.h"
 
 #ifdef __cplusplus
@@ -16,30 +16,30 @@
 extern "C" {
 #endif
 
-#define crypto_kdf_hkdf_sha256_KEYBYTES crypto_auth_hmacsha256_BYTES
-LITHIUM_EXPORT
-size_t crypto_kdf_hkdf_sha256_keybytes(void);
+#define rubidium_kdf_hkdf_sha256_KEYBYTES rubidium_auth_hmacsha256_BYTES
+RUBIDIUM_EXPORT
+size_t rubidium_kdf_hkdf_sha256_keybytes(void);
 
-#define crypto_kdf_hkdf_sha256_BYTES_MIN 0U
-LITHIUM_EXPORT
-size_t crypto_kdf_hkdf_sha256_bytes_min(void);
+#define rubidium_kdf_hkdf_sha256_BYTES_MIN 0U
+RUBIDIUM_EXPORT
+size_t rubidium_kdf_hkdf_sha256_bytes_min(void);
 
-#define crypto_kdf_hkdf_sha256_BYTES_MAX (0xff * crypto_auth_hmacsha256_BYTES)
-LITHIUM_EXPORT
-size_t crypto_kdf_hkdf_sha256_bytes_max(void);
+#define rubidium_kdf_hkdf_sha256_BYTES_MAX (0xff * rubidium_auth_hmacsha256_BYTES)
+RUBIDIUM_EXPORT
+size_t rubidium_kdf_hkdf_sha256_bytes_max(void);
 
-LITHIUM_EXPORT
-int crypto_kdf_hkdf_sha256_extract(unsigned char prk[crypto_kdf_hkdf_sha256_KEYBYTES],
+RUBIDIUM_EXPORT
+int rubidium_kdf_hkdf_sha256_extract(unsigned char prk[rubidium_kdf_hkdf_sha256_KEYBYTES],
                                    const unsigned char *salt, size_t salt_len,
                                    const unsigned char *ikm, size_t ikm_len);
 
-LITHIUM_EXPORT
-void crypto_kdf_hkdf_sha256_keygen(unsigned char prk[crypto_kdf_hkdf_sha256_KEYBYTES]);
+RUBIDIUM_EXPORT
+void rubidium_kdf_hkdf_sha256_keygen(unsigned char prk[rubidium_kdf_hkdf_sha256_KEYBYTES]);
 
-LITHIUM_EXPORT
-int crypto_kdf_hkdf_sha256_expand(unsigned char *out, size_t out_len,
+RUBIDIUM_EXPORT
+int rubidium_kdf_hkdf_sha256_expand(unsigned char *out, size_t out_len,
                                   const char *ctx, size_t ctx_len,
-                                  const unsigned char prk[crypto_kdf_hkdf_sha256_KEYBYTES]);
+                                  const unsigned char prk[rubidium_kdf_hkdf_sha256_KEYBYTES]);
 
 #ifdef __cplusplus
 }

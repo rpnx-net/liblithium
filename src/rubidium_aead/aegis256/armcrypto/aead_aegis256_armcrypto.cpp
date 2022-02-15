@@ -3,8 +3,8 @@
 #include <string.h>
 
 #include "core.h"
-#include "crypto_aead_aegis256.h"
-#include "crypto_verify_16.h"
+#include "rubidium_aead_aegis256.h"
+#include "rubidium_verify_16.h"
 #include "export.h"
 #include "randombytes.h"
 #include "runtime.h"
@@ -12,12 +12,12 @@
 
 #include "private/common.h"
 
-#ifdef HAVE_ARMCRYPTO
+#ifdef HAVE_ARMRUBIDIUM
 
 # include <arm_neon.h>
 
 static inline void
-crypto_aead_aegis256_update(uint8x16_t *const state, const uint8x16_t data)
+rubidium_aead_aegis256_update(uint8x16_t *const state, const uint8x16_t data)
 {
     const uint8x16_t zero = vmovq_n_u8(0);
     uint8x16_t       tmp;
@@ -32,14 +32,14 @@ crypto_aead_aegis256_update(uint8x16_t *const state, const uint8x16_t data)
 }
 
 static void
-crypto_aead_aegis256_init(const unsigned char *key, const unsigned char *nonce,
+rubidium_aead_aegis256_init(const unsigned char *key, const unsigned char *nonce,
                           uint8x16_t *const state)
 {
-    static CRYPTO_ALIGN(16) const unsigned char c0_[] = {
+    static RUBIDIUM_ALIGN(16) const unsigned char c0_[] = {
         0xdb, 0x3d, 0x18, 0x55, 0x6d, 0xc2, 0x2f, 0xf1, 0x20, 0x11, 0x31, 0x42,
         0x73, 0xb5, 0x28, 0xdd
     };
-    static CRYPTO_ALIGN(16) const unsigned char c1_[] = {
+    static RUBIDIUM_ALIGN(16) const unsigned char c1_[] = {
         0x00, 0x01, 0x01, 0x02, 0x03, 0x05, 0x08, 0x0d, 0x15, 0x22, 0x37, 0x59,
         0x90, 0xe9, 0x79, 0x62
     };
@@ -62,15 +62,15 @@ crypto_aead_aegis256_init(const unsigned char *key, const unsigned char *nonce,
     state[5] = veorq_u8(k2, c0);
 
     for (i = 0; i < 4; i++) {
-        crypto_aead_aegis256_update(state, k1);
-        crypto_aead_aegis256_update(state, k2);
-        crypto_aead_aegis256_update(state, kxn1);
-        crypto_aead_aegis256_update(state, kxn2);
+        rubidium_aead_aegis256_update(state, k1);
+        rubidium_aead_aegis256_update(state, k2);
+        rubidium_aead_aegis256_update(state, kxn1);
+        rubidium_aead_aegis256_update(state, kxn2);
     }
 }
 
 static void
-crypto_aead_aegis256_mac(unsigned char *mac, unsigned long long adlen,
+rubidium_aead_aegis256_mac(unsigned char *mac, unsigned long long adlen,
                          unsigned long long mlen, uint8x16_t *const state)
 {
     uint8x16_t tmp;
@@ -81,7 +81,7 @@ crypto_aead_aegis256_mac(unsigned char *mac, unsigned long long adlen,
     tmp = veorq_u8(tmp, state[3]);
 
     for (i = 0; i < 7; i++) {
-        crypto_aead_aegis256_update(state, tmp);
+        rubidium_aead_aegis256_update(state, tmp);
     }
 
     tmp = veorq_u8(state[5], state[4]);
@@ -94,7 +94,7 @@ crypto_aead_aegis256_mac(unsigned char *mac, unsigned long long adlen,
 }
 
 static void
-crypto_aead_aegis256_enc(unsigned char *const dst,
+rubidium_aead_aegis256_enc(unsigned char *const dst,
                          const unsigned char *const src,
                          uint8x16_t *const state)
 {
@@ -108,12 +108,12 @@ crypto_aead_aegis256_enc(unsigned char *const dst,
     tmp = veorq_u8(tmp, vandq_u8(state[2], state[3]));
     vst1q_u8(dst, tmp);
 
-    crypto_aead_aegis256_update(state, msg);
+    rubidium_aead_aegis256_update(state, msg);
 }
 
 
 static void
-crypto_aead_aegis256_dec(unsigned char *const dst,
+rubidium_aead_aegis256_dec(unsigned char *const dst,
                          const unsigned char *const src,
                          uint8x16_t *const state)
 {
@@ -126,46 +126,46 @@ crypto_aead_aegis256_dec(unsigned char *const dst,
     msg = veorq_u8(msg, vandq_u8(state[2], state[3]));
     vst1q_u8(dst, msg);
 
-    crypto_aead_aegis256_update(state, msg);
+    rubidium_aead_aegis256_update(state, msg);
 }
 
 int
-crypto_aead_aegis256_encrypt_detached(unsigned char *c, unsigned char *mac,
+rubidium_aead_aegis256_encrypt_detached(unsigned char *c, unsigned char *mac,
                                       unsigned long long *maclen_p, const unsigned char *m,
                                       unsigned long long mlen, const unsigned char *ad,
                                       unsigned long long adlen, const unsigned char *nsec,
                                       const unsigned char *npub, const unsigned char *k)
 {
     uint8x16_t                     state[6];
-    CRYPTO_ALIGN(16) unsigned char src[16];
-    CRYPTO_ALIGN(16) unsigned char dst[16];
+    RUBIDIUM_ALIGN(16) unsigned char src[16];
+    RUBIDIUM_ALIGN(16) unsigned char dst[16];
     unsigned long long i;
 
     (void) nsec;
-    crypto_aead_aegis256_init(k, npub, state);
+    rubidium_aead_aegis256_init(k, npub, state);
 
     for (i = 0ULL; i + 16ULL <= adlen; i += 16ULL) {
-        crypto_aead_aegis256_enc(dst, ad + i, state);
+        rubidium_aead_aegis256_enc(dst, ad + i, state);
     }
     if (adlen & 0xf) {
         memset(src, 0, 16);
         memcpy(src, ad + i, adlen & 0xf);
-        crypto_aead_aegis256_enc(dst, src, state);
+        rubidium_aead_aegis256_enc(dst, src, state);
     }
     for (i = 0ULL; i + 16ULL <= mlen; i += 16ULL) {
-        crypto_aead_aegis256_enc(c + i, m + i, state);
+        rubidium_aead_aegis256_enc(c + i, m + i, state);
     }
     if (mlen & 0xf) {
         memset(src, 0, 16);
         memcpy(src, m + i, mlen & 0xf);
-        crypto_aead_aegis256_enc(dst, src, state);
+        rubidium_aead_aegis256_enc(dst, src, state);
         memcpy(c + i, dst, mlen & 0xf);
     }
 
-    crypto_aead_aegis256_mac(mac, adlen, mlen, state);
-    lithium_memzero(state, sizeof state);
-    lithium_memzero(src, sizeof src);
-    lithium_memzero(dst, sizeof dst);
+    rubidium_aead_aegis256_mac(mac, adlen, mlen, state);
+    rubidium_memzero(state, sizeof state);
+    rubidium_memzero(src, sizeof src);
+    rubidium_memzero(dst, sizeof dst);
 
     if (maclen_p != NULL) {
         *maclen_p = 16ULL;
@@ -174,7 +174,7 @@ crypto_aead_aegis256_encrypt_detached(unsigned char *c, unsigned char *mac,
 }
 
 int
-crypto_aead_aegis256_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
+rubidium_aead_aegis256_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
                              unsigned long long mlen, const unsigned char *ad,
                              unsigned long long adlen, const unsigned char *nsec,
                              const unsigned char *npub, const unsigned char *k)
@@ -182,10 +182,10 @@ crypto_aead_aegis256_encrypt(unsigned char *c, unsigned long long *clen_p, const
     unsigned long long clen = 0ULL;
     int                ret;
 
-    if (mlen > crypto_aead_aegis256_MESSAGEBYTES_MAX) {
-        lithium_misuse();
+    if (mlen > rubidium_aead_aegis256_MESSAGEBYTES_MAX) {
+        rubidium_misuse();
     }
-    ret = crypto_aead_aegis256_encrypt_detached(c, c + mlen, NULL, m, mlen,
+    ret = rubidium_aead_aegis256_encrypt_detached(c, c + mlen, NULL, m, mlen,
                                                 ad, adlen, nsec, npub, k);
     if (clen_p != NULL) {
         if (ret == 0) {
@@ -197,44 +197,44 @@ crypto_aead_aegis256_encrypt(unsigned char *c, unsigned long long *clen_p, const
 }
 
 int
-crypto_aead_aegis256_decrypt_detached(unsigned char *m, unsigned char *nsec, const unsigned char *c,
+rubidium_aead_aegis256_decrypt_detached(unsigned char *m, unsigned char *nsec, const unsigned char *c,
                                       unsigned long long clen, const unsigned char *mac,
                                       const unsigned char *ad, unsigned long long adlen,
                                       const unsigned char *npub, const unsigned char *k)
 {
     uint8x16_t                     state[6];
-    CRYPTO_ALIGN(16) unsigned char src[16];
-    CRYPTO_ALIGN(16) unsigned char dst[16];
-    CRYPTO_ALIGN(16) unsigned char computed_mac[16];
+    RUBIDIUM_ALIGN(16) unsigned char src[16];
+    RUBIDIUM_ALIGN(16) unsigned char dst[16];
+    RUBIDIUM_ALIGN(16) unsigned char computed_mac[16];
     unsigned long long i;
     unsigned long long mlen;
     int                ret;
 
     (void) nsec;
     mlen = clen;
-    crypto_aead_aegis256_init(k, npub, state);
+    rubidium_aead_aegis256_init(k, npub, state);
 
     for (i = 0ULL; i + 16ULL <= adlen; i += 16ULL) {
-        crypto_aead_aegis256_enc(dst, ad + i, state);
+        rubidium_aead_aegis256_enc(dst, ad + i, state);
     }
     if (adlen & 0xf) {
         memset(src, 0, 16);
         memcpy(src, ad + i, adlen & 0xf);
-        crypto_aead_aegis256_enc(dst, src, state);
+        rubidium_aead_aegis256_enc(dst, src, state);
     }
     if (m != NULL) {
         for (i = 0ULL; i + 16ULL <= mlen; i += 16ULL) {
-            crypto_aead_aegis256_dec(m + i, c + i, state);
+            rubidium_aead_aegis256_dec(m + i, c + i, state);
         }
     } else {
         for (i = 0ULL; i + 16ULL <= mlen; i += 16ULL) {
-            crypto_aead_aegis256_dec(dst, c + i, state);
+            rubidium_aead_aegis256_dec(dst, c + i, state);
         }
     }
     if (mlen & 0xf) {
         memset(src, 0, 16);
         memcpy(src, c + i, mlen & 0xf);
-        crypto_aead_aegis256_dec(dst, src, state);
+        rubidium_aead_aegis256_dec(dst, src, state);
         if (m != NULL) {
             memcpy(m + i, dst, mlen & 0xf);
         }
@@ -242,12 +242,12 @@ crypto_aead_aegis256_decrypt_detached(unsigned char *m, unsigned char *nsec, con
         state[0] = veorq_u8(state[0], vld1q_u8(dst));
     }
 
-    crypto_aead_aegis256_mac(computed_mac, adlen, mlen, state);
-    lithium_memzero(state, sizeof state);
-    lithium_memzero(src, sizeof src);
-    lithium_memzero(dst, sizeof dst);
-    ret = crypto_verify_16(computed_mac, mac);
-    lithium_memzero(computed_mac, sizeof computed_mac);
+    rubidium_aead_aegis256_mac(computed_mac, adlen, mlen, state);
+    rubidium_memzero(state, sizeof state);
+    rubidium_memzero(src, sizeof src);
+    rubidium_memzero(dst, sizeof dst);
+    ret = rubidium_verify_16(computed_mac, mac);
+    rubidium_memzero(computed_mac, sizeof computed_mac);
     if (m == NULL) {
         return ret;
     }
@@ -259,7 +259,7 @@ crypto_aead_aegis256_decrypt_detached(unsigned char *m, unsigned char *nsec, con
 }
 
 int
-crypto_aead_aegis256_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
+rubidium_aead_aegis256_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
                              const unsigned char *c, unsigned long long clen,
                              const unsigned char *ad, unsigned long long adlen,
                              const unsigned char *npub, const unsigned char *k)
@@ -268,7 +268,7 @@ crypto_aead_aegis256_decrypt(unsigned char *m, unsigned long long *mlen_p, unsig
     int                ret  = -1;
 
     if (clen >= 16ULL) {
-        ret = crypto_aead_aegis256_decrypt_detached(m, nsec, c, clen - 16ULL, c + clen - 16ULL, ad,
+        ret = rubidium_aead_aegis256_decrypt_detached(m, nsec, c, clen - 16ULL, c + clen - 16ULL, ad,
                                                     adlen, npub, k);
     }
     if (mlen_p != NULL) {
@@ -281,9 +281,9 @@ crypto_aead_aegis256_decrypt(unsigned char *m, unsigned long long *mlen_p, unsig
 }
 
 int
-crypto_aead_aegis256_is_available(void)
+rubidium_aead_aegis256_is_available(void)
 {
-    return lithium_runtime_has_armcrypto();
+    return rubidium_runtime_has_armcrypto();
 }
 
 #endif

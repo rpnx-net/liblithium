@@ -1,21 +1,21 @@
-#include "crypto_core_hsalsa20.h"
+#include "rubidium_core_hsalsa20.h"
 
 size_t
-crypto_core_hsalsa20_outputbytes(void) {
-    return crypto_core_hsalsa20_OUTPUTBYTES;
+rubidium_core_hsalsa20_outputbytes(void) {
+    return rubidium_core_hsalsa20_OUTPUTBYTES;
 }
 
 size_t
-crypto_core_hsalsa20_inputbytes(void) {
-    return crypto_core_hsalsa20_INPUTBYTES;
+rubidium_core_hsalsa20_inputbytes(void) {
+    return rubidium_core_hsalsa20_INPUTBYTES;
 }
 
 size_t
-crypto_core_hsalsa20_keybytes(void) {
-    return crypto_core_hsalsa20_KEYBYTES;
+rubidium_core_hsalsa20_keybytes(void) {
+    return rubidium_core_hsalsa20_KEYBYTES;
 }
 
 size_t
-crypto_core_hsalsa20_constbytes(void) {
-    return crypto_core_hsalsa20_CONSTBYTES;
+rubidium_core_hsalsa20_constbytes(void) {
+    return rubidium_core_hsalsa20_CONSTBYTES;
 }

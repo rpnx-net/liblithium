@@ -1,9 +1,9 @@
-#ifndef crypto_shorthash_H
-#define crypto_shorthash_H
+#ifndef rubidium_shorthash_H
+#define rubidium_shorthash_H
 
 #include <stddef.h>
 
-#include "crypto_shorthash_siphash24.h"
+#include "rubidium_shorthash_siphash24.h"
 #include "export.h"
 
 #ifdef __cplusplus
@@ -13,25 +13,25 @@
 extern "C" {
 #endif
 
-#define crypto_shorthash_BYTES crypto_shorthash_siphash24_BYTES
-LITHIUM_EXPORT
-size_t  crypto_shorthash_bytes(void);
+#define rubidium_shorthash_BYTES rubidium_shorthash_siphash24_BYTES
+RUBIDIUM_EXPORT
+size_t  rubidium_shorthash_bytes(void);
 
-#define crypto_shorthash_KEYBYTES crypto_shorthash_siphash24_KEYBYTES
-LITHIUM_EXPORT
-size_t  crypto_shorthash_keybytes(void);
+#define rubidium_shorthash_KEYBYTES rubidium_shorthash_siphash24_KEYBYTES
+RUBIDIUM_EXPORT
+size_t  rubidium_shorthash_keybytes(void);
 
-#define crypto_shorthash_PRIMITIVE "siphash24"
-LITHIUM_EXPORT
-const char *crypto_shorthash_primitive(void);
+#define rubidium_shorthash_PRIMITIVE "siphash24"
+RUBIDIUM_EXPORT
+const char *rubidium_shorthash_primitive(void);
 
-LITHIUM_EXPORT
-int crypto_shorthash(unsigned char *out, const unsigned char *in,
+RUBIDIUM_EXPORT
+int rubidium_shorthash(unsigned char *out, const unsigned char *in,
                      unsigned long long inlen, const unsigned char *k)
             __attribute__ ((nonnull(1, 4)));
 
-LITHIUM_EXPORT
-void crypto_shorthash_keygen(unsigned char k[crypto_shorthash_KEYBYTES])
+RUBIDIUM_EXPORT
+void rubidium_shorthash_keygen(unsigned char k[rubidium_shorthash_KEYBYTES])
             __attribute__ ((nonnull));
 
 #ifdef __cplusplus

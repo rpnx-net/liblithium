@@ -6,8 +6,8 @@ Public domain.
 
 #include <stdint.h>
 
-#include "crypto_core_salsa20.h"
-#include "crypto_stream_salsa20.h"
+#include "rubidium_core_salsa20.h"
+#include "rubidium_stream_salsa20.h"
 #include "utils.h"
 
 #include "../stream_salsa20.h"
@@ -38,7 +38,7 @@ stream_ref(unsigned char *c, unsigned long long clen, const unsigned char *n,
         in[i] = 0;
     }
     while (clen >= 64) {
-        crypto_core_salsa20(c, in, kcopy, NULL);
+        rubidium_core_salsa20(c, in, kcopy, NULL);
         u = 1;
         for (i = 8; i < 16; i++) {
             u += (unsigned int) in[i];
@@ -49,13 +49,13 @@ stream_ref(unsigned char *c, unsigned long long clen, const unsigned char *n,
         c += 64;
     }
     if (clen) {
-        crypto_core_salsa20(block, in, kcopy, NULL);
+        rubidium_core_salsa20(block, in, kcopy, NULL);
         for (i = 0; i < (unsigned int) clen; i++) {
             c[i] = block[i];
         }
     }
-    lithium_memzero(block, sizeof block);
-    lithium_memzero(kcopy, sizeof kcopy);
+    rubidium_memzero(block, sizeof block);
+    rubidium_memzero(kcopy, sizeof kcopy);
 
     return 0;
 }
@@ -85,7 +85,7 @@ stream_ref_xor_ic(unsigned char *c, const unsigned char *m,
         ic >>= 8;
     }
     while (mlen >= 64) {
-        crypto_core_salsa20(block, in, kcopy, NULL);
+        rubidium_core_salsa20(block, in, kcopy, NULL);
         for (i = 0; i < 64; i++) {
             c[i] = m[i] ^ block[i];
         }
@@ -100,21 +100,21 @@ stream_ref_xor_ic(unsigned char *c, const unsigned char *m,
         m += 64;
     }
     if (mlen) {
-        crypto_core_salsa20(block, in, kcopy, NULL);
+        rubidium_core_salsa20(block, in, kcopy, NULL);
         for (i = 0; i < (unsigned int) mlen; i++) {
             c[i] = m[i] ^ block[i];
         }
     }
-    lithium_memzero(block, sizeof block);
-    lithium_memzero(kcopy, sizeof kcopy);
+    rubidium_memzero(block, sizeof block);
+    rubidium_memzero(kcopy, sizeof kcopy);
 
     return 0;
 }
 
-struct crypto_stream_salsa20_implementation
-    crypto_stream_salsa20_ref_implementation = {
-        LITHIUM_C99(.stream =) stream_ref,
-        LITHIUM_C99(.stream_xor_ic =) stream_ref_xor_ic,
+struct rubidium_stream_salsa20_implementation
+    rubidium_stream_salsa20_ref_implementation = {
+        RUBIDIUM_C99(.stream =) stream_ref,
+        RUBIDIUM_C99(.stream_xor_ic =) stream_ref_xor_ic,
     };
 
 #endif

@@ -15,8 +15,8 @@
 
 
 #include "core.h"
-#include "crypto_generichash.h"
-#include "crypto_stream.h"
+#include "rubidium_generichash.h"
+#include "rubidium_stream.h"
 #include "randombytes.h"
 #include "private/common.h"
 #include "utils.h"
@@ -74,10 +74,10 @@ static unsigned char canary[CANARY_SIZE];
 /* LCOV_EXCL_START */
 #ifdef HAVE_WEAK_SYMBOLS
 __attribute__((weak)) void
-_lithium_dummy_symbol_to_prevent_memzero_lto(void *const  pnt,
+_rubidium_dummy_symbol_to_prevent_memzero_lto(void *const  pnt,
                                             const std::size_t len);
 __attribute__((weak)) void
-_lithium_dummy_symbol_to_prevent_memzero_lto(void *const  pnt,
+_rubidium_dummy_symbol_to_prevent_memzero_lto(void *const  pnt,
                                             const std::size_t len)
 {
     (void) pnt; /* LCOV_EXCL_LINE */
@@ -87,13 +87,13 @@ _lithium_dummy_symbol_to_prevent_memzero_lto(void *const  pnt,
 /* LCOV_EXCL_STOP */
 
 void
-lithium_memzero(void * const pnt, const std::size_t len)
+rubidium_memzero(void * const pnt, const std::size_t len)
 {
 #ifdef _WIN32
     SecureZeroMemory(pnt, len);
 #elif defined(HAVE_MEMSET_S)
     if (len > 0U && memset_s(pnt, (rstd::size_t) len, 0, (rstd::size_t) len) != 0) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
 #elif defined(HAVE_EXPLICIT_BZERO)
     explicit_bzero(pnt, len);
@@ -102,7 +102,7 @@ lithium_memzero(void * const pnt, const std::size_t len)
 #elif HAVE_WEAK_SYMBOLS
     if (len > 0U) {
         memset(pnt, 0, len);
-        _lithium_dummy_symbol_to_prevent_memzero_lto(pnt, len);
+        _rubidium_dummy_symbol_to_prevent_memzero_lto(pnt, len);
     }
 # ifdef HAVE_INLINE_ASM
     __asm__ __volatile__ ("" : : "r"(pnt) : "memory");
@@ -120,11 +120,11 @@ lithium_memzero(void * const pnt, const std::size_t len)
 
 #ifdef HAVE_WEAK_SYMBOLS
 __attribute__((weak)) void
-_lithium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
+_rubidium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
                                            const unsigned char *b2,
                                            const std::size_t         len);
 __attribute__((weak)) void
-_lithium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
+_rubidium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
                                            const unsigned char *b2,
                                            const std::size_t         len)
 {
@@ -135,7 +135,7 @@ _lithium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
 #endif
 
 int
-lithium_memcmp(const void *const b1_, const void *const b2_, std::size_t len)
+rubidium_memcmp(const void *const b1_, const void *const b2_, std::size_t len)
 {
 #ifdef HAVE_WEAK_SYMBOLS
     const unsigned char *b1 = (const unsigned char *) b1_;
@@ -150,7 +150,7 @@ lithium_memcmp(const void *const b1_, const void *const b2_, std::size_t len)
     volatile unsigned char d = 0U;
 
 #if HAVE_WEAK_SYMBOLS
-    _lithium_dummy_symbol_to_prevent_memcmp_lto(b1, b2, len);
+    _rubidium_dummy_symbol_to_prevent_memcmp_lto(b1, b2, len);
 #endif
     for (i = 0U; i < len; i++) {
         d = d | (b1[i] ^ b2[i]);
@@ -160,11 +160,11 @@ lithium_memcmp(const void *const b1_, const void *const b2_, std::size_t len)
 
 #ifdef HAVE_WEAK_SYMBOLS
 __attribute__((weak)) void
-_lithium_dummy_symbol_to_prevent_compare_lto(const unsigned char *b1,
+_rubidium_dummy_symbol_to_prevent_compare_lto(const unsigned char *b1,
                                             const unsigned char *b2,
                                             const std::size_t         len);
 __attribute__((weak)) void
-_lithium_dummy_symbol_to_prevent_compare_lto(const unsigned char *b1,
+_rubidium_dummy_symbol_to_prevent_compare_lto(const unsigned char *b1,
                                             const unsigned char *b2,
                                             const std::size_t         len)
 {
@@ -175,7 +175,7 @@ _lithium_dummy_symbol_to_prevent_compare_lto(const unsigned char *b1,
 #endif
 
 int
-lithium_compare(const unsigned char *b1_, const unsigned char *b2_, std::size_t len)
+rubidium_compare(const unsigned char *b1_, const unsigned char *b2_, std::size_t len)
 {
 #ifdef HAVE_WEAK_SYMBOLS
     const unsigned char *b1 = b1_;
@@ -192,7 +192,7 @@ lithium_compare(const unsigned char *b1_, const unsigned char *b2_, std::size_t 
     uint16_t               x1, x2;
 
 #if HAVE_WEAK_SYMBOLS
-    _lithium_dummy_symbol_to_prevent_compare_lto(b1, b2, len);
+    _rubidium_dummy_symbol_to_prevent_compare_lto(b1, b2, len);
 #endif
     i = len;
     while (i != 0U) {
@@ -206,7 +206,7 @@ lithium_compare(const unsigned char *b1_, const unsigned char *b2_, std::size_t 
 }
 
 int
-lithium_is_zero(const unsigned char *n, const std::size_t nlen)
+rubidium_is_zero(const unsigned char *n, const std::size_t nlen)
 {
     std::size_t                 i;
     volatile unsigned char d = 0U;
@@ -218,7 +218,7 @@ lithium_is_zero(const unsigned char *n, const std::size_t nlen)
 }
 
 void
-lithium_increment(unsigned char *n, const std::size_t nlen)
+rubidium_increment(unsigned char *n, const std::size_t nlen)
 {
     std::size_t        i = 0U;
     uint_fast16_t c = 1U;
@@ -265,7 +265,7 @@ lithium_increment(unsigned char *n, const std::size_t nlen)
 }
 
 void
-lithium_add(unsigned char *a, const unsigned char *b, const std::size_t len)
+rubidium_add(unsigned char *a, const unsigned char *b, const std::size_t len)
 {
     std::size_t        i;
     uint_fast16_t c = 0U;
@@ -314,7 +314,7 @@ lithium_add(unsigned char *a, const unsigned char *b, const std::size_t len)
 }
 
 void
-lithium_sub(unsigned char *a, const unsigned char *b, const std::size_t len)
+rubidium_sub(unsigned char *a, const unsigned char *b, const std::size_t len)
 {
     uint_fast16_t c = 0U;
     std::size_t        i;
@@ -357,7 +357,7 @@ lithium_sub(unsigned char *a, const unsigned char *b, const std::size_t len)
 }
 
 int
-_lithium_alloc_init(void)
+_rubidium_alloc_init(void)
 {
 #ifdef HAVE_ALIGNED_MALLOC
 # if defined(_SC_PAGESIZE) && defined(HAVE_SYSCONF)
@@ -373,7 +373,7 @@ _lithium_alloc_init(void)
 #  warning Unknown page size
 # endif
     if (page_size < CANARY_SIZE || page_size < sizeof(std::size_t)) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
 #endif
     randombytes_buf(canary, CANARY_SIZE);
@@ -382,7 +382,7 @@ _lithium_alloc_init(void)
 }
 
 int
-lithium_mlock(void *const addr, const std::size_t len)
+rubidium_mlock(void *const addr, const std::size_t len)
 {
 #if defined(MADV_DONTDUMP) && defined(HAVE_MADVISE)
     (void) madvise(addr, len, MADV_DONTDUMP);
@@ -398,9 +398,9 @@ lithium_mlock(void *const addr, const std::size_t len)
 }
 
 int
-lithium_munlock(void *const addr, const std::size_t len)
+rubidium_munlock(void *const addr, const std::size_t len)
 {
-    lithium_memzero(addr, len);
+    rubidium_memzero(addr, len);
 #if defined(MADV_DODUMP) && defined(HAVE_MADVISE)
     (void) madvise(addr, len, MADV_DODUMP);
 #endif
@@ -527,7 +527,7 @@ _unprotected_ptr_from_user_ptr(void *const ptr)
     page_mask = page_size - 1U;
     unprotected_ptr_u = ((uintptr_t) canary_ptr & (uintptr_t) ~page_mask);
     if (unprotected_ptr_u <= page_size * 2U) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
     return (unsigned char *) unprotected_ptr_u;
 }
@@ -536,13 +536,13 @@ _unprotected_ptr_from_user_ptr(void *const ptr)
 
 #ifndef HAVE_ALIGNED_MALLOC
 static __attribute__((malloc)) void *
-_lithium_malloc(const std::size_t size)
+_rubidium_malloc(const std::size_t size)
 {
     return malloc(size > (std::size_t) 0U ? size : (std::size_t) 1U);
 }
 #else
 static __attribute__((malloc)) void *
-_lithium_malloc(const std::size_t size)
+_rubidium_malloc(const std::size_t size)
 {
     void          *user_ptr;
     unsigned char *base_ptr;
@@ -557,7 +557,7 @@ _lithium_malloc(const std::size_t size)
         return NULL;
     }
     if (page_size <= sizeof canary || page_size < sizeof unprotected_size) {
-        lithium_misuse(); /* LCOV_EXCL_LINE */
+        rubidium_misuse(); /* LCOV_EXCL_LINE */
     }
     size_with_canary = (sizeof canary) + size;
     unprotected_size = _page_round(size_with_canary);
@@ -571,7 +571,7 @@ _lithium_malloc(const std::size_t size)
     memcpy(unprotected_ptr + unprotected_size, canary, sizeof canary);
 # endif
     _mprotect_noaccess(unprotected_ptr + unprotected_size, page_size);
-    lithium_mlock(unprotected_ptr, unprotected_size);
+    rubidium_mlock(unprotected_ptr, unprotected_size);
     canary_ptr =
         unprotected_ptr + _page_round(size_with_canary) - size_with_canary;
     user_ptr = canary_ptr + sizeof canary;
@@ -585,11 +585,11 @@ _lithium_malloc(const std::size_t size)
 #endif /* !HAVE_ALIGNED_MALLOC */
 
 __attribute__((malloc)) void *
-lithium_malloc(const std::size_t size)
+rubidium_malloc(const std::size_t size)
 {
     void *ptr;
 
-    if ((ptr = _lithium_malloc(size)) == NULL) {
+    if ((ptr = _rubidium_malloc(size)) == NULL) {
         return NULL;
     }
     memset(ptr, (int) GARBAGE_VALUE, size);
@@ -598,24 +598,24 @@ lithium_malloc(const std::size_t size)
 }
 
 __attribute__((malloc)) void *
-lithium_allocarray(std::size_t count, std::size_t size)
+rubidium_allocarray(std::size_t count, std::size_t size)
 {
     if (count > (std::size_t) 0U && size >= (std::size_t) SIZE_MAX / count) {
         errno = ENOMEM;
         return NULL;
     }
-    return lithium_malloc(count * size);
+    return rubidium_malloc(count * size);
 }
 
 #ifndef HAVE_ALIGNED_MALLOC
 void
-lithium_free(void *ptr)
+rubidium_free(void *ptr)
 {
     free(ptr);
 }
 #else
 void
-lithium_free(void *ptr)
+rubidium_free(void *ptr)
 {
     unsigned char *base_ptr;
     unsigned char *canary_ptr;
@@ -632,23 +632,23 @@ lithium_free(void *ptr)
     memcpy(&unprotected_size, base_ptr, sizeof unprotected_size);
     total_size = page_size + page_size + unprotected_size + page_size;
     _mprotect_readwrite(base_ptr, total_size);
-    if (lithium_memcmp(canary_ptr, canary, sizeof canary) != 0) {
+    if (rubidium_memcmp(canary_ptr, canary, sizeof canary) != 0) {
         _out_of_bounds();
     }
 # ifndef HAVE_PAGE_PROTECTION
-    if (lithium_memcmp(unprotected_ptr + unprotected_size, canary,
+    if (rubidium_memcmp(unprotected_ptr + unprotected_size, canary,
                       sizeof canary) != 0) {
         _out_of_bounds();
     }
 # endif
-    lithium_munlock(unprotected_ptr, unprotected_size);
+    rubidium_munlock(unprotected_ptr, unprotected_size);
     _free_aligned(base_ptr, total_size);
 }
 #endif /* HAVE_ALIGNED_MALLOC */
 
 #ifndef HAVE_PAGE_PROTECTION
 static int
-_lithium_mprotect(void *ptr, int (*cb)(void *ptr, std::size_t size))
+_rubidium_mprotect(void *ptr, int (*cb)(void *ptr, std::size_t size))
 {
     (void) ptr;
     (void) cb;
@@ -657,7 +657,7 @@ _lithium_mprotect(void *ptr, int (*cb)(void *ptr, std::size_t size))
 }
 #else
 static int
-_lithium_mprotect(void *ptr, int (*cb)(void *ptr, std::size_t size))
+_rubidium_mprotect(void *ptr, int (*cb)(void *ptr, std::size_t size))
 {
     unsigned char *base_ptr;
     unsigned char *unprotected_ptr;
@@ -672,25 +672,25 @@ _lithium_mprotect(void *ptr, int (*cb)(void *ptr, std::size_t size))
 #endif
 
 int
-lithium_mprotect_noaccess(void *ptr)
+rubidium_mprotect_noaccess(void *ptr)
 {
-    return _lithium_mprotect(ptr, _mprotect_noaccess);
+    return _rubidium_mprotect(ptr, _mprotect_noaccess);
 }
 
 int
-lithium_mprotect_readonly(void *ptr)
+rubidium_mprotect_readonly(void *ptr)
 {
-    return _lithium_mprotect(ptr, _mprotect_readonly);
+    return _rubidium_mprotect(ptr, _mprotect_readonly);
 }
 
 int
-lithium_mprotect_readwrite(void *ptr)
+rubidium_mprotect_readwrite(void *ptr)
 {
-    return _lithium_mprotect(ptr, _mprotect_readwrite);
+    return _rubidium_mprotect(ptr, _mprotect_readwrite);
 }
 
 int
-lithium_pad(std::size_t *padded_buflen_p, unsigned char *buf,
+rubidium_pad(std::size_t *padded_buflen_p, unsigned char *buf,
            std::size_t unpadded_buflen, std::size_t blocksize, std::size_t max_buflen)
 {
     unsigned char          *tail;
@@ -710,7 +710,7 @@ lithium_pad(std::size_t *padded_buflen_p, unsigned char *buf,
         xpadlen -= unpadded_buflen % blocksize;
     }
     if ((std::size_t) SIZE_MAX - unpadded_buflen <= xpadlen) {
-        lithium_misuse();
+        rubidium_misuse();
     }
     xpadded_len = unpadded_buflen + xpadlen;
     if (xpadded_len >= max_buflen) {
@@ -731,7 +731,7 @@ lithium_pad(std::size_t *padded_buflen_p, unsigned char *buf,
 }
 
 int
-lithium_unpad(std::size_t *unpadded_buflen_p, const unsigned char *buf,
+rubidium_unpad(std::size_t *unpadded_buflen_p, const unsigned char *buf,
              std::size_t padded_buflen, std::size_t blocksize)
 {
     const unsigned char *tail;

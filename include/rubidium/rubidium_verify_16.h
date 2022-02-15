@@ -1,5 +1,5 @@
-#ifndef crypto_verify_16_H
-#define crypto_verify_16_H
+#ifndef rubidium_verify_16_H
+#define rubidium_verify_16_H
 
 #include <stddef.h>
 #include "export.h"
@@ -8,12 +8,12 @@
 extern "C" {
 #endif
 
-#define crypto_verify_16_BYTES 16U
-LITHIUM_EXPORT
-size_t crypto_verify_16_bytes(void);
+#define rubidium_verify_16_BYTES 16U
+RUBIDIUM_EXPORT
+size_t rubidium_verify_16_bytes(void);
 
-LITHIUM_EXPORT
-int crypto_verify_16(const unsigned char *x, const unsigned char *y)
+RUBIDIUM_EXPORT
+int rubidium_verify_16(const unsigned char *x, const unsigned char *y)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
 #ifdef __cplusplus

@@ -261,7 +261,7 @@ fe25519_iszero(const fe25519 f)
 
     fe25519_tobytes(s, f);
 
-    return lithium_is_zero(s, 32);
+    return rubidium_is_zero(s, 32);
 }
 
 /*

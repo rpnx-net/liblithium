@@ -1,9 +1,9 @@
-#ifndef crypto_onetimeauth_H
-#define crypto_onetimeauth_H
+#ifndef rubidium_onetimeauth_H
+#define rubidium_onetimeauth_H
 
 #include <stddef.h>
 
-#include "crypto_onetimeauth_poly1305.h"
+#include "rubidium_onetimeauth_poly1305.h"
 #include "export.h"
 
 #ifdef __cplusplus
@@ -13,49 +13,49 @@
 extern "C" {
 #endif
 
-typedef crypto_onetimeauth_poly1305_state crypto_onetimeauth_state;
+typedef rubidium_onetimeauth_poly1305_state rubidium_onetimeauth_state;
 
-LITHIUM_EXPORT
-size_t  crypto_onetimeauth_statebytes(void);
+RUBIDIUM_EXPORT
+size_t  rubidium_onetimeauth_statebytes(void);
 
-#define crypto_onetimeauth_BYTES crypto_onetimeauth_poly1305_BYTES
-LITHIUM_EXPORT
-size_t  crypto_onetimeauth_bytes(void);
+#define rubidium_onetimeauth_BYTES rubidium_onetimeauth_poly1305_BYTES
+RUBIDIUM_EXPORT
+size_t  rubidium_onetimeauth_bytes(void);
 
-#define crypto_onetimeauth_KEYBYTES crypto_onetimeauth_poly1305_KEYBYTES
-LITHIUM_EXPORT
-size_t  crypto_onetimeauth_keybytes(void);
+#define rubidium_onetimeauth_KEYBYTES rubidium_onetimeauth_poly1305_KEYBYTES
+RUBIDIUM_EXPORT
+size_t  rubidium_onetimeauth_keybytes(void);
 
-#define crypto_onetimeauth_PRIMITIVE "poly1305"
-LITHIUM_EXPORT
-const char *crypto_onetimeauth_primitive(void);
+#define rubidium_onetimeauth_PRIMITIVE "poly1305"
+RUBIDIUM_EXPORT
+const char *rubidium_onetimeauth_primitive(void);
 
-LITHIUM_EXPORT
-int crypto_onetimeauth(unsigned char *out, const unsigned char *in,
+RUBIDIUM_EXPORT
+int rubidium_onetimeauth(unsigned char *out, const unsigned char *in,
                        unsigned long long inlen, const unsigned char *k)
             __attribute__ ((nonnull(1, 4)));
 
-LITHIUM_EXPORT
-int crypto_onetimeauth_verify(const unsigned char *h, const unsigned char *in,
+RUBIDIUM_EXPORT
+int rubidium_onetimeauth_verify(const unsigned char *h, const unsigned char *in,
                               unsigned long long inlen, const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(1, 4)));
 
-LITHIUM_EXPORT
-int crypto_onetimeauth_init(crypto_onetimeauth_state *state,
+RUBIDIUM_EXPORT
+int rubidium_onetimeauth_init(rubidium_onetimeauth_state *state,
                             const unsigned char *key) __attribute__ ((nonnull));
 
-LITHIUM_EXPORT
-int crypto_onetimeauth_update(crypto_onetimeauth_state *state,
+RUBIDIUM_EXPORT
+int rubidium_onetimeauth_update(rubidium_onetimeauth_state *state,
                               const unsigned char *in,
                               unsigned long long inlen)
             __attribute__ ((nonnull(1)));
 
-LITHIUM_EXPORT
-int crypto_onetimeauth_final(crypto_onetimeauth_state *state,
+RUBIDIUM_EXPORT
+int rubidium_onetimeauth_final(rubidium_onetimeauth_state *state,
                              unsigned char *out) __attribute__ ((nonnull));
 
-LITHIUM_EXPORT
-void crypto_onetimeauth_keygen(unsigned char k[crypto_onetimeauth_KEYBYTES])
+RUBIDIUM_EXPORT
+void rubidium_onetimeauth_keygen(unsigned char k[rubidium_onetimeauth_KEYBYTES])
             __attribute__ ((nonnull));
 
 #ifdef __cplusplus

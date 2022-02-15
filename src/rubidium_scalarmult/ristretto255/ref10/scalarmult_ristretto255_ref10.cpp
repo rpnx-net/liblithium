@@ -1,13 +1,13 @@
 
 #include <string.h>
 
-#include "crypto_scalarmult_ed25519.h"
-#include "crypto_scalarmult_ristretto255.h"
+#include "rubidium_scalarmult_ed25519.h"
+#include "rubidium_scalarmult_ristretto255.h"
 #include "private/ed25519_ref10.h"
 #include "utils.h"
 
 int
-crypto_scalarmult_ristretto255(unsigned char *q, const unsigned char *n,
+rubidium_scalarmult_ristretto255(unsigned char *q, const unsigned char *n,
                                const unsigned char *p)
 {
     unsigned char *t = q;
@@ -24,14 +24,14 @@ crypto_scalarmult_ristretto255(unsigned char *q, const unsigned char *n,
     t[31] &= 127;
     ge25519_scalarmult(&Q, t, &P);
     ristretto255_p3_tobytes(q, &Q);
-    if (lithium_is_zero(q, 32)) {
+    if (rubidium_is_zero(q, 32)) {
         return -1;
     }
     return 0;
 }
 
 int
-crypto_scalarmult_ristretto255_base(unsigned char *q,
+rubidium_scalarmult_ristretto255_base(unsigned char *q,
                                     const unsigned char *n)
 {
     unsigned char *t = q;
@@ -44,20 +44,20 @@ crypto_scalarmult_ristretto255_base(unsigned char *q,
     t[31] &= 127;
     ge25519_scalarmult_base(&Q, t);
     ristretto255_p3_tobytes(q, &Q);
-    if (lithium_is_zero(q, 32)) {
+    if (rubidium_is_zero(q, 32)) {
         return -1;
     }
     return 0;
 }
 
 size_t
-crypto_scalarmult_ristretto255_bytes(void)
+rubidium_scalarmult_ristretto255_bytes(void)
 {
-    return crypto_scalarmult_ristretto255_BYTES;
+    return rubidium_scalarmult_ristretto255_BYTES;
 }
 
 size_t
-crypto_scalarmult_ristretto255_scalarbytes(void)
+rubidium_scalarmult_ristretto255_scalarbytes(void)
 {
-    return crypto_scalarmult_ristretto255_SCALARBYTES;
+    return rubidium_scalarmult_ristretto255_SCALARBYTES;
 }

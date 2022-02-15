@@ -207,11 +207,11 @@ xor_buf(unsigned char *out, const unsigned char *in, size_t n)
 # define __attribute__(a)
 #endif
 
-#ifndef CRYPTO_ALIGN
+#ifndef RUBIDIUM_ALIGN
 # if defined(__INTEL_COMPILER) || defined(_MSC_VER)
-#  define CRYPTO_ALIGN(x) __declspec(align(x))
+#  define RUBIDIUM_ALIGN(x) __declspec(align(x))
 # else
-#  define CRYPTO_ALIGN(x) __attribute__ ((aligned(x)))
+#  define RUBIDIUM_ALIGN(x) __attribute__ ((aligned(x)))
 # endif
 #endif
 

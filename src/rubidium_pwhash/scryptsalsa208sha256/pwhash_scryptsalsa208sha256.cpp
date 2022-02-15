@@ -5,8 +5,8 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "crypto_pwhash_scryptsalsa208sha256.h"
-#include "crypto_scrypt.h"
+#include "rubidium_pwhash_scryptsalsa208sha256.h"
+#include "rubidium_scrypt.h"
 #include "private/common.h"
 #include "randombytes.h"
 #include "utils.h"
@@ -53,7 +53,7 @@ pickparams(unsigned long long opslimit, const size_t memlimit,
 }
 
 static size_t
-lithium_strnlen(const char *str, size_t maxlen)
+rubidium_strnlen(const char *str, size_t maxlen)
 {
     size_t i = 0U;
 
@@ -64,97 +64,97 @@ lithium_strnlen(const char *str, size_t maxlen)
 }
 
 size_t
-crypto_pwhash_scryptsalsa208sha256_bytes_min(void)
+rubidium_pwhash_scryptsalsa208sha256_bytes_min(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_BYTES_MIN;
+    return rubidium_pwhash_scryptsalsa208sha256_BYTES_MIN;
 }
 
 size_t
-crypto_pwhash_scryptsalsa208sha256_bytes_max(void)
+rubidium_pwhash_scryptsalsa208sha256_bytes_max(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_BYTES_MAX;
+    return rubidium_pwhash_scryptsalsa208sha256_BYTES_MAX;
 }
 
 size_t
-crypto_pwhash_scryptsalsa208sha256_passwd_min(void)
+rubidium_pwhash_scryptsalsa208sha256_passwd_min(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_PASSWD_MIN;
+    return rubidium_pwhash_scryptsalsa208sha256_PASSWD_MIN;
 }
 
 size_t
-crypto_pwhash_scryptsalsa208sha256_passwd_max(void)
+rubidium_pwhash_scryptsalsa208sha256_passwd_max(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_PASSWD_MAX;
+    return rubidium_pwhash_scryptsalsa208sha256_PASSWD_MAX;
 }
 
 size_t
-crypto_pwhash_scryptsalsa208sha256_saltbytes(void)
+rubidium_pwhash_scryptsalsa208sha256_saltbytes(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_SALTBYTES;
+    return rubidium_pwhash_scryptsalsa208sha256_SALTBYTES;
 }
 
 size_t
-crypto_pwhash_scryptsalsa208sha256_strbytes(void)
+rubidium_pwhash_scryptsalsa208sha256_strbytes(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_STRBYTES;
+    return rubidium_pwhash_scryptsalsa208sha256_STRBYTES;
 }
 
 const char *
-crypto_pwhash_scryptsalsa208sha256_strprefix(void)
+rubidium_pwhash_scryptsalsa208sha256_strprefix(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_STRPREFIX;
+    return rubidium_pwhash_scryptsalsa208sha256_STRPREFIX;
 }
 
 unsigned long long
-crypto_pwhash_scryptsalsa208sha256_opslimit_min(void)
+rubidium_pwhash_scryptsalsa208sha256_opslimit_min(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_OPSLIMIT_MIN;
+    return rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_MIN;
 }
 
 unsigned long long
-crypto_pwhash_scryptsalsa208sha256_opslimit_max(void)
+rubidium_pwhash_scryptsalsa208sha256_opslimit_max(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_OPSLIMIT_MAX;
+    return rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_MAX;
 }
 
 size_t
-crypto_pwhash_scryptsalsa208sha256_memlimit_min(void)
+rubidium_pwhash_scryptsalsa208sha256_memlimit_min(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_MEMLIMIT_MIN;
+    return rubidium_pwhash_scryptsalsa208sha256_MEMLIMIT_MIN;
 }
 
 size_t
-crypto_pwhash_scryptsalsa208sha256_memlimit_max(void)
+rubidium_pwhash_scryptsalsa208sha256_memlimit_max(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_MEMLIMIT_MAX;
+    return rubidium_pwhash_scryptsalsa208sha256_MEMLIMIT_MAX;
 }
 
 unsigned long long
-crypto_pwhash_scryptsalsa208sha256_opslimit_interactive(void)
+rubidium_pwhash_scryptsalsa208sha256_opslimit_interactive(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_OPSLIMIT_INTERACTIVE;
+    return rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_INTERACTIVE;
 }
 
 size_t
-crypto_pwhash_scryptsalsa208sha256_memlimit_interactive(void)
+rubidium_pwhash_scryptsalsa208sha256_memlimit_interactive(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_MEMLIMIT_INTERACTIVE;
+    return rubidium_pwhash_scryptsalsa208sha256_MEMLIMIT_INTERACTIVE;
 }
 
 unsigned long long
-crypto_pwhash_scryptsalsa208sha256_opslimit_sensitive(void)
+rubidium_pwhash_scryptsalsa208sha256_opslimit_sensitive(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_OPSLIMIT_SENSITIVE;
+    return rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_SENSITIVE;
 }
 
 size_t
-crypto_pwhash_scryptsalsa208sha256_memlimit_sensitive(void)
+rubidium_pwhash_scryptsalsa208sha256_memlimit_sensitive(void)
 {
-    return crypto_pwhash_scryptsalsa208sha256_MEMLIMIT_SENSITIVE;
+    return rubidium_pwhash_scryptsalsa208sha256_MEMLIMIT_SENSITIVE;
 }
 
 int
-crypto_pwhash_scryptsalsa208sha256(unsigned char *const       out,
+rubidium_pwhash_scryptsalsa208sha256(unsigned char *const       out,
                                    unsigned long long         outlen,
                                    const char *const          passwd,
                                    unsigned long long         passwdlen,
@@ -166,12 +166,12 @@ crypto_pwhash_scryptsalsa208sha256(unsigned char *const       out,
     uint32_t r;
 
     memset(out, 0, outlen);
-    if (passwdlen > crypto_pwhash_scryptsalsa208sha256_PASSWD_MAX ||
-        outlen > crypto_pwhash_scryptsalsa208sha256_BYTES_MAX) {
+    if (passwdlen > rubidium_pwhash_scryptsalsa208sha256_PASSWD_MAX ||
+        outlen > rubidium_pwhash_scryptsalsa208sha256_BYTES_MAX) {
         errno = EFBIG; /* LCOV_EXCL_LINE */
         return -1;     /* LCOV_EXCL_LINE */
     }
-    if (outlen < crypto_pwhash_scryptsalsa208sha256_BYTES_MIN ||
+    if (outlen < rubidium_pwhash_scryptsalsa208sha256_BYTES_MIN ||
         pickparams(opslimit, memlimit, &N_log2, &p, &r) != 0) {
         errno = EINVAL; /* LCOV_EXCL_LINE */
         return -1;      /* LCOV_EXCL_LINE */
@@ -180,31 +180,31 @@ crypto_pwhash_scryptsalsa208sha256(unsigned char *const       out,
         errno = EINVAL;
         return -1;
     }
-    return crypto_pwhash_scryptsalsa208sha256_ll(
+    return rubidium_pwhash_scryptsalsa208sha256_ll(
         (const uint8_t *) passwd, (size_t) passwdlen, (const uint8_t *) salt,
-        crypto_pwhash_scryptsalsa208sha256_SALTBYTES, (uint64_t)(1) << N_log2,
+        rubidium_pwhash_scryptsalsa208sha256_SALTBYTES, (uint64_t)(1) << N_log2,
         r, p, out, (size_t) outlen);
 }
 
 int
-crypto_pwhash_scryptsalsa208sha256_str(
-    char              out[crypto_pwhash_scryptsalsa208sha256_STRBYTES],
+rubidium_pwhash_scryptsalsa208sha256_str(
+    char              out[rubidium_pwhash_scryptsalsa208sha256_STRBYTES],
     const char *const passwd, unsigned long long passwdlen,
     unsigned long long opslimit, size_t memlimit)
 {
-    uint8_t salt[crypto_pwhash_scryptsalsa208sha256_STRSALTBYTES];
-    char    setting[crypto_pwhash_scryptsalsa208sha256_STRSETTINGBYTES + 1U];
+    uint8_t salt[rubidium_pwhash_scryptsalsa208sha256_STRSALTBYTES];
+    char    setting[rubidium_pwhash_scryptsalsa208sha256_STRSETTINGBYTES + 1U];
     escrypt_local_t escrypt_local;
     uint32_t        N_log2;
     uint32_t        p;
     uint32_t        r;
 
-    memset(out, 0, crypto_pwhash_scryptsalsa208sha256_STRBYTES);
-    if (passwdlen > crypto_pwhash_scryptsalsa208sha256_PASSWD_MAX) {
+    memset(out, 0, rubidium_pwhash_scryptsalsa208sha256_STRBYTES);
+    if (passwdlen > rubidium_pwhash_scryptsalsa208sha256_PASSWD_MAX) {
         errno = EFBIG; /* LCOV_EXCL_LINE */
         return -1;     /* LCOV_EXCL_LINE */
     }
-    if (passwdlen < crypto_pwhash_scryptsalsa208sha256_PASSWD_MIN ||
+    if (passwdlen < rubidium_pwhash_scryptsalsa208sha256_PASSWD_MIN ||
         pickparams(opslimit, memlimit, &N_log2, &p, &r) != 0) {
         errno = EINVAL; /* LCOV_EXCL_LINE */
         return -1;      /* LCOV_EXCL_LINE */
@@ -220,7 +220,7 @@ crypto_pwhash_scryptsalsa208sha256_str(
     }
     if (escrypt_r(&escrypt_local, (const uint8_t *) passwd, (size_t) passwdlen,
                   (const uint8_t *) setting, (uint8_t *) out,
-                  crypto_pwhash_scryptsalsa208sha256_STRBYTES) == NULL) {
+                  rubidium_pwhash_scryptsalsa208sha256_STRBYTES) == NULL) {
         /* LCOV_EXCL_START */
         escrypt_free_local(&escrypt_local);
         errno = EINVAL;
@@ -230,27 +230,27 @@ crypto_pwhash_scryptsalsa208sha256_str(
     escrypt_free_local(&escrypt_local);
 
     COMPILER_ASSERT(
-        SETTING_SIZE(crypto_pwhash_scryptsalsa208sha256_STRSALTBYTES) ==
-        crypto_pwhash_scryptsalsa208sha256_STRSETTINGBYTES);
+        SETTING_SIZE(rubidium_pwhash_scryptsalsa208sha256_STRSALTBYTES) ==
+        rubidium_pwhash_scryptsalsa208sha256_STRSETTINGBYTES);
     COMPILER_ASSERT(
-        crypto_pwhash_scryptsalsa208sha256_STRSETTINGBYTES + 1U +
-            crypto_pwhash_scryptsalsa208sha256_STRHASHBYTES_ENCODED + 1U ==
-        crypto_pwhash_scryptsalsa208sha256_STRBYTES);
+        rubidium_pwhash_scryptsalsa208sha256_STRSETTINGBYTES + 1U +
+            rubidium_pwhash_scryptsalsa208sha256_STRHASHBYTES_ENCODED + 1U ==
+        rubidium_pwhash_scryptsalsa208sha256_STRBYTES);
 
     return 0;
 }
 
 int
-crypto_pwhash_scryptsalsa208sha256_str_verify(
+rubidium_pwhash_scryptsalsa208sha256_str_verify(
     const char        *str,
     const char *const passwd, unsigned long long passwdlen)
 {
-    char            wanted[crypto_pwhash_scryptsalsa208sha256_STRBYTES];
+    char            wanted[rubidium_pwhash_scryptsalsa208sha256_STRBYTES];
     escrypt_local_t escrypt_local;
     int             ret = -1;
 
-    if (lithium_strnlen(str, crypto_pwhash_scryptsalsa208sha256_STRBYTES) !=
-        crypto_pwhash_scryptsalsa208sha256_STRBYTES - 1U) {
+    if (rubidium_strnlen(str, rubidium_pwhash_scryptsalsa208sha256_STRBYTES) !=
+        rubidium_pwhash_scryptsalsa208sha256_STRBYTES - 1U) {
         return -1;
     }
     if (escrypt_init_local(&escrypt_local) != 0) {
@@ -264,14 +264,14 @@ crypto_pwhash_scryptsalsa208sha256_str_verify(
         return -1;
     }
     escrypt_free_local(&escrypt_local);
-    ret = lithium_memcmp(wanted, str, sizeof wanted);
-    lithium_memzero(wanted, sizeof wanted);
+    ret = rubidium_memcmp(wanted, str, sizeof wanted);
+    rubidium_memzero(wanted, sizeof wanted);
 
     return ret;
 }
 
 int
-crypto_pwhash_scryptsalsa208sha256_str_needs_rehash(
+rubidium_pwhash_scryptsalsa208sha256_str_needs_rehash(
     const char * str,
     unsigned long long opslimit, size_t memlimit)
 {
@@ -283,8 +283,8 @@ crypto_pwhash_scryptsalsa208sha256_str_needs_rehash(
         errno = EINVAL;
         return -1;
     }
-    if (lithium_strnlen(str, crypto_pwhash_scryptsalsa208sha256_STRBYTES) !=
-        crypto_pwhash_scryptsalsa208sha256_STRBYTES - 1U) {
+    if (rubidium_strnlen(str, rubidium_pwhash_scryptsalsa208sha256_STRBYTES) !=
+        rubidium_pwhash_scryptsalsa208sha256_STRBYTES - 1U) {
         errno = EINVAL;
         return -1;
     }

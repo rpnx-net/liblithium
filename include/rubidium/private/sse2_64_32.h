@@ -15,9 +15,9 @@
 # include <stdint.h>
 
 # ifndef _mm_set_epi64x
-#  define _mm_set_epi64x(Q0, Q1) lithium__mm_set_epi64x((Q0), (Q1))
+#  define _mm_set_epi64x(Q0, Q1) rubidium__mm_set_epi64x((Q0), (Q1))
 static inline __m128i
-lithium__mm_set_epi64x(int64_t q1, int64_t q0)
+rubidium__mm_set_epi64x(int64_t q1, int64_t q0)
 {
     union { int64_t as64; int32_t as32[2]; } x0, x1;
     x0.as64 = q0; x1.as64 = q1;
@@ -26,18 +26,18 @@ lithium__mm_set_epi64x(int64_t q1, int64_t q0)
 # endif
 
 # ifndef _mm_set1_epi64x
-#  define _mm_set1_epi64x(Q) lithium__mm_set1_epi64x(Q)
+#  define _mm_set1_epi64x(Q) rubidium__mm_set1_epi64x(Q)
 static inline __m128i
-lithium__mm_set1_epi64x(int64_t q)
+rubidium__mm_set1_epi64x(int64_t q)
 {
     return _mm_set_epi64x(q, q);
 }
 # endif
 
 # ifndef _mm_cvtsi64_si128
-#  define _mm_cvtsi64_si128(Q) lithium__mm_cvtsi64_si128(Q)
+#  define _mm_cvtsi64_si128(Q) rubidium__mm_cvtsi64_si128(Q)
 static inline __m128i
-lithium__mm_cvtsi64_si128(int64_t q)
+rubidium__mm_cvtsi64_si128(int64_t q)
 {
     union { int64_t as64; int32_t as32[2]; } x;
     x.as64 = q;

@@ -32,7 +32,7 @@
 
 #include <sys/types.h>
 
-#include "crypto_auth_hmacsha256.h"
+#include "rubidium_auth_hmacsha256.h"
 #include "private/quirks.h"
 
 /**

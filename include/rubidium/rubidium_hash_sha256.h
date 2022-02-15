@@ -1,10 +1,10 @@
-#ifndef crypto_hash_sha256_H
-#define crypto_hash_sha256_H
+#ifndef rubidium_hash_sha256_H
+#define rubidium_hash_sha256_H
 
 /*
  * WARNING: Unless you absolutely need to use SHA256 for interoperability,
- * purposes, you might want to consider crypto_generichash() instead.
- * Unlike SHA256, crypto_generichash() is not vulnerable to length
+ * purposes, you might want to consider rubidium_generichash() instead.
+ * Unlike SHA256, rubidium_generichash() is not vulnerable to length
  * extension attacks.
  */
 
@@ -21,35 +21,35 @@
 extern "C" {
 #endif
 
-typedef struct crypto_hash_sha256_state {
+typedef struct rubidium_hash_sha256_state {
     uint32_t state[8];
     uint64_t count;
     uint8_t  buf[64];
-} crypto_hash_sha256_state;
+} rubidium_hash_sha256_state;
 
-LITHIUM_EXPORT
-size_t crypto_hash_sha256_statebytes(void);
+RUBIDIUM_EXPORT
+size_t rubidium_hash_sha256_statebytes(void);
 
-#define crypto_hash_sha256_BYTES 32U
-LITHIUM_EXPORT
-size_t crypto_hash_sha256_bytes(void);
+#define rubidium_hash_sha256_BYTES 32U
+RUBIDIUM_EXPORT
+size_t rubidium_hash_sha256_bytes(void);
 
-LITHIUM_EXPORT
-int crypto_hash_sha256(unsigned char *out, const unsigned char *in,
+RUBIDIUM_EXPORT
+int rubidium_hash_sha256(unsigned char *out, const unsigned char *in,
                        unsigned long long inlen) __attribute__ ((nonnull(1)));
 
-LITHIUM_EXPORT
-int crypto_hash_sha256_init(crypto_hash_sha256_state *state)
+RUBIDIUM_EXPORT
+int rubidium_hash_sha256_init(rubidium_hash_sha256_state *state)
             __attribute__ ((nonnull));
 
-LITHIUM_EXPORT
-int crypto_hash_sha256_update(crypto_hash_sha256_state *state,
+RUBIDIUM_EXPORT
+int rubidium_hash_sha256_update(rubidium_hash_sha256_state *state,
                               const unsigned char *in,
                               unsigned long long inlen)
             __attribute__ ((nonnull(1)));
 
-LITHIUM_EXPORT
-int crypto_hash_sha256_final(crypto_hash_sha256_state *state,
+RUBIDIUM_EXPORT
+int rubidium_hash_sha256_final(rubidium_hash_sha256_state *state,
                              unsigned char *out)
             __attribute__ ((nonnull));
 

@@ -9,10 +9,10 @@
 extern "C" {
 #endif
 
-LITHIUM_EXPORT
+RUBIDIUM_EXPORT
 extern struct randombytes_implementation randombytes_internal_implementation;
 
-/* Backwards compatibility with liblithium < 1.0.18 */
+/* Backwards compatibility with librubidium < 1.0.18 */
 #define randombytes_salsa20_implementation randombytes_internal_implementation
 
 #ifdef __cplusplus

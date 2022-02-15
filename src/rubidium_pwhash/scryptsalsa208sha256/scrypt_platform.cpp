@@ -24,7 +24,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#include "crypto_scrypt.h"
+#include "rubidium_scrypt.h"
 #include "runtime.h"
 
 #if !defined(MAP_ANON) && defined(MAP_ANONYMOUS)

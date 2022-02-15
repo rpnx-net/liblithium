@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-LITHIUM_EXPORT
+RUBIDIUM_EXPORT
 extern struct randombytes_implementation randombytes_sysrandom_implementation;
 
 #ifdef __cplusplus
