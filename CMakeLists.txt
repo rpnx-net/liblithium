@@ -81,6 +81,9 @@ set(RUBIDIUM_HEADERS
         include/rubidium/rubidium_generichash_blake2b.h
         #
         )
+include(CheckIncludeFile)
+check_include_file(emmintrin.h HAVE_EMMINTRIN_H)
+
 
 
 install(FILES ${RUBIDIUM_HEADERS} DESTINATION include/rubidium)
@@ -90,9 +93,6 @@ target_sources(rubidium
         include/rubidium.h
         ${RUBIDIUM_HEADERS}
         src/blake2b/ref/blake2b-compress-ref.cpp
-        src/blake2b/ref/blake2b-compress-ssse3.cpp
-        src/blake2b/ref/blake2b-compress-avx2.cpp
-        src/blake2b/ref/blake2b-compress-sse41.cpp
         src/blake2b/ref/generichash_blake2b.cpp
         src/blake2b/ref/blake2b-ref.cpp
         src/blake2b/generichash_blake2.cpp

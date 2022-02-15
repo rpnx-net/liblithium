@@ -81,11 +81,8 @@ rubidium_misuse(void)
             handler();
         }
     }
-/* LCOV_EXCL_START */
     abort();
 }
-/* LCOV_EXCL_STOP */
-
 int
 rubidium_set_misuse_handler(void (*handler)(void))
 {
