@@ -1,7 +1,7 @@
 #ifndef sign_ed25519_ref10_H
 #define sign_ed25519_ref10_H
 
-#include "private/quirks.h"
+
 
 void _rubidium_sign_ed25519_ref10_hinit(rubidium_hash_sha512_state *hs,
                                       int prehashed);

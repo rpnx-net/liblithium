@@ -48,7 +48,6 @@ set(RUBIDIUM_HEADERS
         include/rubidium/rubidium_scalarmult.h
         include/rubidium/rubidium_pwhash.h
         include/rubidium/private/ed25519_ref10.h
-        include/rubidium/private/quirks.h
         include/rubidium/private/ed25519_ref10_fe_25_5.h
         include/rubidium/private/ed25519_ref10_fe_51.h
         include/rubidium/private/sse2_64_32.h

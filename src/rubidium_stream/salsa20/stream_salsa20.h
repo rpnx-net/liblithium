@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 
-#include "private/quirks.h"
+
 
 typedef struct rubidium_stream_salsa20_implementation {
     int (*stream)(unsigned char *c, unsigned long long clen,

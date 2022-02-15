@@ -1,7 +1,7 @@
 #include <string.h>
 
 #include "private/common.h"
-#include "private/quirks.h"
+
 #include "utils.h"
 
 /*
