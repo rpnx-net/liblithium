@@ -8,7 +8,7 @@
 #endif
 
 #include "core.h"
-#include "rubidium_generichash.h"
+#include "rubidium_generichash_blake2b.h"
 #include "rubidium_onetimeauth.h"
 #include "rubidium_scalarmult.h"
 #include "rubidium_stream_chacha20.h"

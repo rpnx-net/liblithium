@@ -5,12 +5,6 @@
 #include "rubidium_stream_xsalsa20.h"
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
 
 #define rubidium_secretbox_xsalsa20poly1305_KEYBYTES 32U
 RUBIDIUM_EXPORT
@@ -64,8 +58,6 @@ int rubidium_secretbox_xsalsa20poly1305_open(unsigned char *m,
                                            const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 4, 5)));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

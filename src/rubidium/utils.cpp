@@ -15,7 +15,7 @@
 
 
 #include "core.h"
-#include "rubidium_generichash.h"
+#include "rubidium_generichash_blake2b.h"
 #include "rubidium_stream.h"
 #include "randombytes.h"
 #include "private/common.h"

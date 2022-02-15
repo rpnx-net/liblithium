@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "rubidium_box_curve25519xchacha20poly1305.h"
-#include "rubidium_generichash.h"
+#include "rubidium_generichash_blake2b.h"
 #include "private/common.h"
 #include "utils.h"
 
@@ -11,7 +11,7 @@ rubidium_box_curve25519xchacha20poly1305_seal_nonce(unsigned char *nonce,
                                                   const unsigned char *pk1,
                                                   const unsigned char *pk2)
 {
-    rubidium_generichash_state st;
+    rubidium_generichash_blake2b_state st;
 
     rubidium_generichash_blake2b_init(&st, NULL, 0U,
                             rubidium_box_curve25519xchacha20poly1305_NONCEBYTES);
