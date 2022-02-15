@@ -11,8 +11,8 @@
  * <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
 
-#ifndef argon2_core_H
-#define argon2_core_H
+#ifndef RUBIDIUM_ARGON2_CORE_H
+#define RUBIDIUM_ARGON2_CORE_H
 
 #include <string.h>
 
