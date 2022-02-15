@@ -92,9 +92,9 @@ target_sources(rubidium
         PRIVATE
         include/rubidium.h
         ${RUBIDIUM_HEADERS}
-        src/blake2b/ref/blake2b-compress-ref.cpp
-        src/blake2b/ref/generichash_blake2b.cpp
-        src/blake2b/ref/blake2b-ref.cpp
+        src/blake2b/blake2b-compress-ref.cpp
+        src/blake2b/generichash_blake2b.cpp
+        src/blake2b/blake2b-ref.cpp
         src/blake2b/generichash_blake2.cpp
         src/rubidium_sign/ed25519/sign_ed25519.cpp
         src/rubidium_sign/ed25519/ref10/sign.cpp
