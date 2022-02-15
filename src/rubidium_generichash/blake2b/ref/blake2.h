@@ -13,9 +13,12 @@
    the [Apache Public License 2.0](http://www.apache.org/licenses/LICENSE-2.0),
    at your choosing.
  */
+ /* Copyright 2022 Ryan P. Nicholl <rnicholl@protonmail.com>
+  * MIT LICENSE
+  */
 
-#ifndef blake2_H
-#define blake2_H
+#ifndef RUBIDIUM_BLAKE2_H
+#define RUBIDIUM_BLAKE2_H
 
 #include <stddef.h>
 #include <stdint.h>
