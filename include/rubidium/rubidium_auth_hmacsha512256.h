@@ -1,16 +1,11 @@
-#ifndef rubidium_auth_hmacsha512256_H
-#define rubidium_auth_hmacsha512256_H
+#ifndef RUBIDIUM_AUTH_HMACSHA512256_H
+#define RUBIDIUM_AUTH_HMACSHA512256_H
 
 #include <stddef.h>
 #include "rubidium_auth_hmacsha512.h"
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_auth_hmacsha512256_BYTES 32U
 RUBIDIUM_EXPORT
@@ -58,8 +53,6 @@ RUBIDIUM_EXPORT
 void rubidium_auth_hmacsha512256_keygen(unsigned char k[rubidium_auth_hmacsha512256_KEYBYTES])
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif
