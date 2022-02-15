@@ -51,15 +51,15 @@ enum argon2_ctx_constants {
  * Memory blocks can be copied, XORed. Internal words can be accessed by [] (no
  * bounds checking).
  */
-typedef struct block_ {
+struct block {
     uint64_t v[ARGON2_QWORDS_IN_BLOCK];
-} block;
+};
 
-typedef struct block_region_ {
+struct block_region {
     void * base;
     block *memory;
     size_t size;
-} block_region;
+};
 
 /*****************Functions that work with the block******************/
 
