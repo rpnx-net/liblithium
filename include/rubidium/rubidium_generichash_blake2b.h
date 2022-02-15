@@ -7,12 +7,6 @@
 
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
 
 
 
@@ -101,8 +95,5 @@ RUBIDIUM_EXPORT
 void rubidium_generichash_blake2b_keygen(unsigned char k[rubidium_generichash_blake2b_KEYBYTES])
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif
