@@ -15,13 +15,13 @@ fBlaMka(uint64_t x, uint64_t y)
 #define G(a, b, c, d)          \
     do {                       \
         a = fBlaMka(a, b);     \
-        d = ROTR64(d ^ a, 32); \
+        d = std::rotr<std::uint64_t>(d ^ a, 32); \
         c = fBlaMka(c, d);     \
-        b = ROTR64(b ^ c, 24); \
+        b = std::rotr<std::uint64_t>(b ^ c, 24); \
         a = fBlaMka(a, b);     \
-        d = ROTR64(d ^ a, 16); \
+        d = std::rotr<std::uint64_t>(d ^ a, 16); \
         c = fBlaMka(c, d);     \
-        b = ROTR64(b ^ c, 63); \
+        b = std::rotr<std::uint64_t>(b ^ c, 63); \
     } while ((void) 0, 0)
 
 #define BLAKE2_ROUND_NOMSG(v0, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, \

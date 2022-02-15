@@ -33,19 +33,9 @@ rotl64(const uint64_t x, const int b)
     return (x << b) | (x >> (64 - b));
 }
 
-#define ROTR32(X, B) rotr32((X), (B))
-static inline uint32_t
-rotr32(const uint32_t x, const int b)
-{
-    return (x >> b) | (x << (32 - b));
-}
 
-#define ROTR64(X, B) rotr64((X), (B))
-static inline uint64_t
-rotr64(const uint64_t x, const int b)
-{
-    return (x >> b) | (x << (64 - b));
-}
+
+
 
 #define LOAD64_LE(SRC) load64_le(SRC)
 static inline uint64_t

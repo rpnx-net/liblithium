@@ -4,7 +4,7 @@
 #include "private/common.h"
 #include "private/sse2_64_32.h"
 
-#define rotr32(x) _mm256_shuffle_epi32(x, _MM_SHUFFLE(2, 3, 0, 1))
+#define std::rotr<std::uint32_t>(x) _mm256_shuffle_epi32(x, _MM_SHUFFLE(2, 3, 0, 1))
 #define rotr24(x) _mm256_shuffle_epi8(x, _mm256_setr_epi8(3, 4, 5, 6, 7, 0, 1, 2, 11, 12, 13, 14, 15, 8, 9, 10, 3, 4, 5, 6, 7, 0, 1, 2, 11, 12, 13, 14, 15, 8, 9, 10))
 #define rotr16(x) _mm256_shuffle_epi8(x, _mm256_setr_epi8(2, 3, 4, 5, 6, 7, 0, 1, 10, 11, 12, 13, 14, 15, 8, 9, 2, 3, 4, 5, 6, 7, 0, 1, 10, 11, 12, 13, 14, 15, 8, 9))
 #define rotr63(x) _mm256_xor_si256(_mm256_srli_epi64((x), 63), _mm256_add_epi64((x), (x)))
@@ -15,7 +15,7 @@
         ml = _mm256_add_epi64(ml, ml); \
         A0 = _mm256_add_epi64(A0, _mm256_add_epi64(B0, ml)); \
         D0 = _mm256_xor_si256(D0, A0); \
-        D0 = rotr32(D0); \
+        D0 = std::rotr<std::uint32_t>(D0); \
         \
         ml = _mm256_mul_epu32(C0, D0); \
         ml = _mm256_add_epi64(ml, ml); \
@@ -28,7 +28,7 @@
         ml = _mm256_add_epi64(ml, ml); \
         A1 = _mm256_add_epi64(A1, _mm256_add_epi64(B1, ml)); \
         D1 = _mm256_xor_si256(D1, A1); \
-        D1 = rotr32(D1); \
+        D1 = std::rotr<std::uint32_t>(D1); \
         \
         ml = _mm256_mul_epu32(C1, D1); \
         ml = _mm256_add_epi64(ml, ml); \

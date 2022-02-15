@@ -19,6 +19,7 @@
 #include "argon2.h"
 #include "blamka-round-ref.h"
 #include "private/common.h"
+#include <bit>
 
 static void
 fill_block(const block *prev_block, const block *ref_block, block *next_block)

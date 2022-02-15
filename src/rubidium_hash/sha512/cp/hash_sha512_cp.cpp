@@ -30,6 +30,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <bit>
 
 #include <sys/types.h>
 
@@ -90,7 +91,7 @@ static const uint64_t Krnd[80] = {
 #define Ch(x, y, z) ((x & (y ^ z)) ^ z)
 #define Maj(x, y, z) ((x & (y | z)) | (y & z))
 #define SHR(x, n) (x >> n)
-#define ROTR(x, n) ROTR64(x, n)
+#define ROTR(x, n) (std::rotr<std::uint64_t>(x, n))
 #define S0(x) (ROTR(x, 28) ^ ROTR(x, 34) ^ ROTR(x, 39))
 #define S1(x) (ROTR(x, 14) ^ ROTR(x, 18) ^ ROTR(x, 41))
 #define s0(x) (ROTR(x, 1) ^ ROTR(x, 8) ^ SHR(x, 7))

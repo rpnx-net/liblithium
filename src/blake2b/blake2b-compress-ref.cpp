@@ -4,6 +4,7 @@
 
 #include "blake2.h"
 #include "private/common.h"
+#include <bit>
 
 RUBIDIUM_ALIGN(64)
 static const uint64_t blake2b_IV[8] = {
@@ -51,13 +52,13 @@ _rubidium_blake2b_compress_ref(blake2b_state *S, const uint8_t block[BLAKE2B_BLO
 #define G(r, i, a, b, c, d)                      \
     do {                                         \
         a += b + m[blake2b_sigma[r][2 * i + 0]]; \
-        d = ROTR64(d ^ a, 32);                   \
+        d = std::rotr<std::uint64_t>(d ^ a, 32);                   \
         c += d;                                  \
-        b = ROTR64(b ^ c, 24);                   \
+        b = std::rotr<std::uint64_t>(b ^ c, 24);                   \
         a += b + m[blake2b_sigma[r][2 * i + 1]]; \
-        d = ROTR64(d ^ a, 16);                   \
+        d = std::rotr<std::uint64_t>(d ^ a, 16);                   \
         c += d;                                  \
-        b = ROTR64(b ^ c, 63);                   \
+        b = std::rotr<std::uint64_t>(b ^ c, 63);                   \
     } while (0)
 #define ROUND(r)                           \
     do {                                   \

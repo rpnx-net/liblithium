@@ -36,6 +36,7 @@
 #include "rubidium_hash_sha256.h"
 #include "private/common.h"
 #include "utils.h"
+#include <bit>
 
 static void
 be32enc_vect(unsigned char *dst, const uint32_t *src, size_t len)
@@ -74,7 +75,7 @@ static const uint32_t Krnd[64] = {
 #define Ch(x, y, z) ((x & (y ^ z)) ^ z)
 #define Maj(x, y, z) ((x & (y | z)) | (y & z))
 #define SHR(x, n) (x >> n)
-#define ROTR(x, n) ROTR32(x, n)
+#define ROTR(x, n) std::rotr<std::uint32_t>(x, n)
 #define S0(x) (ROTR(x, 2) ^ ROTR(x, 13) ^ ROTR(x, 22))
 #define S1(x) (ROTR(x, 6) ^ ROTR(x, 11) ^ ROTR(x, 25))
 #define s0(x) (ROTR(x, 7) ^ ROTR(x, 18) ^ SHR(x, 3))
