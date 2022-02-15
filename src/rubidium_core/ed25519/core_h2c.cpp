@@ -118,7 +118,7 @@ core_h2c_string_to_hash_sha512(unsigned char *h, const size_t h_len, const char 
 }
 
 int
-core_h2c_string_to_hash(unsigned char *h, const size_t h_len, const char *ctx,
+_rubidium_core_h2c_string_to_hash(unsigned char *h, const size_t h_len, const char *ctx,
                         const unsigned char *msg, size_t msg_len, int hash_alg)
 {
     switch (hash_alg) {

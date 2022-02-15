@@ -33,7 +33,7 @@ int rubidium_kdf_blake2b_derive_from_key(unsigned char *subkey, size_t subkey_le
                                        const char ctx[rubidium_kdf_blake2b_CONTEXTBYTES],
                                        const unsigned char key[rubidium_kdf_blake2b_KEYBYTES])
 {
-    unsigned char ctx_padded[rubidium_generichash_blake2b_PERSONALBYTES];
+    unsigned char ctx_padded[RUBIDIUM_GENERICHASH_BLAKE2B_PERSONALBYTES];
     unsigned char salt[rubidium_generichash_blake2b_SALTBYTES];
 
     memcpy(ctx_padded, ctx, rubidium_kdf_blake2b_CONTEXTBYTES);

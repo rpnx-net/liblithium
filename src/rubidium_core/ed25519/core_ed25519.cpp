@@ -87,7 +87,7 @@ _string_to_points(unsigned char * const px, const size_t n,
     if (n > 2U) {
         abort(); /* LCOV_EXCL_LINE */
     }
-    if (core_h2c_string_to_hash(h_be, n * HASH_GE_L, ctx, msg, msg_len,
+    if (_rubidium_core_h2c_string_to_hash(h_be, n * HASH_GE_L, ctx, msg, msg_len,
                                 hash_alg) != 0) {
         return -1;
     }

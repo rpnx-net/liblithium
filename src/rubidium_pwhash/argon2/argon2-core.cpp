@@ -45,7 +45,7 @@
 # define MAP_POPULATE 0
 #endif
 
-static fill_segment_fn fill_segment = argon2_fill_segment_ref;
+static fill_segment_fn fill_segment = _rubidium_argon2_fill_segment_ref;
 
 static void
 load_block(block *dst, const void *input)
@@ -163,7 +163,7 @@ argon2_free_instance(argon2_instance_t *instance, int flags)
 }
 
 void
-argon2_finalize(const argon2_context *context, argon2_instance_t *instance)
+_rubidium_argon2_finalize(const argon2_context *context, argon2_instance_t *instance)
 {
     if (context != NULL && instance != NULL) {
         block    blockhash;
@@ -197,7 +197,7 @@ argon2_finalize(const argon2_context *context, argon2_instance_t *instance)
 }
 
 void
-argon2_fill_memory_blocks(argon2_instance_t *instance, uint32_t pass)
+_rubidium_argon2_fill_memory_blocks(argon2_instance_t *instance, uint32_t pass)
 {
     argon2_position_t position;
     uint32_t l;
@@ -219,7 +219,7 @@ argon2_fill_memory_blocks(argon2_instance_t *instance, uint32_t pass)
 }
 
 int
-argon2_validate_inputs(const argon2_context *context)
+_rubidium_argon2_validate_inputs(const argon2_context *context)
 {
     /* LCOV_EXCL_START */
     if (NULL == context) {
@@ -452,7 +452,7 @@ argon2_initial_hash(uint8_t *blockhash, argon2_context *context,
 }
 
 int
-argon2_initialize(argon2_instance_t *instance, argon2_context *context)
+_rubidium_argon2_initialize(argon2_instance_t *instance, argon2_context *context)
 {
     uint8_t blockhash[ARGON2_PREHASH_SEED_LENGTH];
     int     result = ARGON2_OK;
@@ -516,7 +516,7 @@ argon2_pick_best_implementation(void)
         return 0;
     }
 #endif
-    fill_segment = argon2_fill_segment_ref;
+    fill_segment = _rubidium_argon2_fill_segment_ref;
 
     return 0;
     /* LCOV_EXCL_STOP */

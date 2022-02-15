@@ -215,7 +215,7 @@ static uint32_t index_alpha(const argon2_instance_t *instance,
  * @return ARGON2_OK if everything is all right, otherwise one of error codes
  * (all defined in <argon2.h>
  */
-int argon2_validate_inputs(const argon2_context *context);
+int _rubidium_argon2_validate_inputs(const argon2_context *context);
 
 /*
  * Function allocates memory, hashes the inputs with Blake,  and creates first
@@ -227,7 +227,7 @@ int argon2_validate_inputs(const argon2_context *context);
  * @return Zero if successful, -1 if memory failed to allocate. @context->state
  * will be modified if successful.
  */
-int argon2_initialize(argon2_instance_t *instance, argon2_context *context);
+int _rubidium_argon2_initialize(argon2_instance_t *instance, argon2_context *context);
 
 /*
  * XORing the last block of each lane, hashing it, making the tag. Deallocates
@@ -240,7 +240,7 @@ int argon2_initialize(argon2_instance_t *instance, argon2_context *context);
  * @pre if context->free_cbk is not NULL, it should point to a function that
  * deallocates memory
  */
-void argon2_finalize(const argon2_context *context,
+void _rubidium_argon2_finalize(const argon2_context *context,
                      argon2_instance_t *instance);
 
 /*
@@ -252,13 +252,13 @@ void argon2_finalize(const argon2_context *context,
  */
 typedef void (*fill_segment_fn)(const argon2_instance_t *instance,
                                 argon2_position_t        position);
-void argon2_fill_segment_avx512f(const argon2_instance_t *instance,
+void _rubidium_argon2_fill_segment_avx512f(const argon2_instance_t *instance,
                                  argon2_position_t        position);
-void argon2_fill_segment_avx2(const argon2_instance_t *instance,
+void _rubidium_argon2_fill_segment_avx2(const argon2_instance_t *instance,
                               argon2_position_t        position);
-void argon2_fill_segment_ssse3(const argon2_instance_t *instance,
+void _rubidium_argon2_fill_segment_ssse3(const argon2_instance_t *instance,
                                argon2_position_t        position);
-void argon2_fill_segment_ref(const argon2_instance_t *instance,
+void _rubidium_argon2_fill_segment_ref(const argon2_instance_t *instance,
                              argon2_position_t        position);
 
 /*
@@ -267,6 +267,6 @@ void argon2_fill_segment_ref(const argon2_instance_t *instance,
  * @param instance Pointer to the current instance
  * @return Zero if successful, -1 if memory failed to allocate
  */
-void argon2_fill_memory_blocks(argon2_instance_t *instance, uint32_t pass);
+void _rubidium_argon2_fill_memory_blocks(argon2_instance_t *instance, uint32_t pass);
 
 #endif

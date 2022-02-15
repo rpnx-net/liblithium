@@ -28,7 +28,7 @@ static const uint8_t blake2b_sigma[12][16] = {
 };
 
 int
-blake2b_compress_ref(blake2b_state *S, const uint8_t block[BLAKE2B_BLOCKBYTES])
+_rubidium_blake2b_compress_ref(blake2b_state *S, const uint8_t block[BLAKE2B_BLOCKBYTES])
 {
     uint64_t m[16];
     uint64_t v[16];

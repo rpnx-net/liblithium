@@ -165,7 +165,7 @@ rubidium_pwhash_argon2id(unsigned char *const out, unsigned long long outlen,
     }
     switch (alg) {
     case rubidium_pwhash_argon2id_ALG_ARGON2ID13:
-        if (argon2id_hash_raw((uint32_t) opslimit, (uint32_t) (memlimit / 1024U),
+        if (_rubidium_argon2id_hash_raw((uint32_t) opslimit, (uint32_t) (memlimit / 1024U),
                               (uint32_t) 1U, passwd, (size_t) passwdlen, salt,
                               (size_t) rubidium_pwhash_argon2id_SALTBYTES, out,
                               (size_t) outlen) != ARGON2_OK) {
@@ -200,7 +200,7 @@ rubidium_pwhash_argon2id_str(char out[rubidium_pwhash_argon2id_STRBYTES],
         return -1;
     }
     randombytes_buf(salt, sizeof salt);
-    if (argon2id_hash_encoded((uint32_t) opslimit, (uint32_t) (memlimit / 1024U),
+    if (_rubidium_argon2id_hash_encoded((uint32_t) opslimit, (uint32_t) (memlimit / 1024U),
                               (uint32_t) 1U, passwd, (size_t) passwdlen, salt,
                               sizeof salt, STR_HASHBYTES, out,
                               rubidium_pwhash_argon2id_STRBYTES) != ARGON2_OK) {
@@ -227,7 +227,7 @@ rubidium_pwhash_argon2id_str_verify(const char * str,
     }
     /* LCOV_EXCL_STOP */
 
-    verify_ret = argon2id_verify(str, passwd, (size_t) passwdlen);
+    verify_ret = _rubidium_argon2id_verify(str, passwd, (size_t) passwdlen);
     if (verify_ret == ARGON2_OK) {
         return 0;
     }

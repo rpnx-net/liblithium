@@ -78,7 +78,7 @@ _string_to_element(unsigned char *p,
 {
     unsigned char h[rubidium_core_ristretto255_HASHBYTES];
 
-    if (core_h2c_string_to_hash(h, sizeof h, ctx, msg, msg_len,
+    if (_rubidium_core_h2c_string_to_hash(h, sizeof h, ctx, msg, msg_len,
                                 hash_alg) != 0) {
         return -1;
     }
@@ -184,7 +184,7 @@ rubidium_core_ristretto255_scalar_from_string(unsigned char *s,
     unsigned char h_be[HASH_SC_L];
     size_t        i;
 
-    if (core_h2c_string_to_hash(h_be, sizeof h_be, ctx, msg, msg_len,
+    if (_rubidium_core_h2c_string_to_hash(h_be, sizeof h_be, ctx, msg, msg_len,
                                 hash_alg) != 0) {
         return -1;
     }

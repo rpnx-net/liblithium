@@ -85,7 +85,7 @@ int blake2b_update(blake2b_state *S, const uint8_t *in, uint64_t inlen);
 int blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen);
 
 /* Simple API */
-int blake2b(uint8_t *out, const void *in, const void *key, const uint8_t outlen,
+int _rubidium_blake2b(uint8_t *out, const void *in, const void *key, const uint8_t outlen,
             const uint64_t inlen, uint8_t keylen);
 int blake2b_salt_personal(uint8_t *out, const void *in, const void *key,
                           const uint8_t outlen, const uint64_t inlen,
@@ -95,13 +95,13 @@ int blake2b_salt_personal(uint8_t *out, const void *in, const void *key,
 typedef int (*blake2b_compress_fn)(blake2b_state *S,
                                    const uint8_t  block[BLAKE2B_BLOCKBYTES]);
 int blake2b_pick_best_implementation(void);
-int blake2b_compress_ref(blake2b_state *S,
+int _rubidium_blake2b_compress_ref(blake2b_state *S,
                          const uint8_t  block[BLAKE2B_BLOCKBYTES]);
 int blake2b_compress_ssse3(blake2b_state *S,
                            const uint8_t  block[BLAKE2B_BLOCKBYTES]);
-int blake2b_compress_sse41(blake2b_state *S,
+int _rubidium_blake2b_compress_sse41(blake2b_state *S,
                            const uint8_t  block[BLAKE2B_BLOCKBYTES]);
-int blake2b_compress_avx2(blake2b_state *S,
+int _rubidium_blake2b_compress_avx2(blake2b_state *S,
                           const uint8_t  block[BLAKE2B_BLOCKBYTES]);
 
 #endif

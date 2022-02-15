@@ -48,7 +48,7 @@ size_t rubidium_generichash_blake2b_keybytes(void);
 RUBIDIUM_EXPORT
 size_t rubidium_generichash_blake2b_saltbytes(void);
 
-#define rubidium_generichash_blake2b_PERSONALBYTES 16U
+#define RUBIDIUM_GENERICHASH_BLAKE2B_PERSONALBYTES 16U
 RUBIDIUM_EXPORT
 size_t rubidium_generichash_blake2b_personalbytes(void);
 

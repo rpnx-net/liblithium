@@ -193,7 +193,7 @@ typedef enum Argon2_type { Argon2_i = 1, Argon2_id = 2 } argon2_type;
  * @param  context  Pointer to the Argon2 internal structure
  * @return Error code if smth is wrong, ARGON2_OK otherwise
  */
-int argon2_ctx(argon2_context *context, argon2_type type);
+int _rubidium_argon2_ctx(argon2_context *context, argon2_type type);
 
 /**
  * Hashes a password with Argon2i, producing an encoded hash
@@ -210,7 +210,7 @@ int argon2_ctx(argon2_context *context, argon2_type type);
  * @pre   Different parallelism levels will give different results
  * @pre   Returns ARGON2_OK if successful
  */
-int argon2i_hash_encoded(const uint32_t t_cost, const uint32_t m_cost,
+int _rubidium_argon2i_hash_encoded(const uint32_t t_cost, const uint32_t m_cost,
                          const uint32_t parallelism, const void *pwd,
                          const size_t pwdlen, const void *salt,
                          const size_t saltlen, const size_t hashlen,
@@ -231,7 +231,7 @@ int argon2i_hash_encoded(const uint32_t t_cost, const uint32_t m_cost,
  * @pre   Different parallelism levels will give different results
  * @pre   Returns ARGON2_OK if successful
  */
-int argon2id_hash_encoded(const uint32_t t_cost, const uint32_t m_cost,
+int _rubidium_argon2id_hash_encoded(const uint32_t t_cost, const uint32_t m_cost,
                           const uint32_t parallelism, const void *pwd,
                           const size_t pwdlen, const void *salt,
                           const size_t saltlen, const size_t hashlen,
@@ -251,7 +251,7 @@ int argon2id_hash_encoded(const uint32_t t_cost, const uint32_t m_cost,
  * @pre   Different parallelism levels will give different results
  * @pre   Returns ARGON2_OK if successful
  */
-int argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
+int _rubidium_argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
                      const uint32_t parallelism, const void *pwd,
                      const size_t pwdlen, const void *salt,
                      const size_t saltlen, void *hash, const size_t hashlen);
@@ -270,13 +270,13 @@ int argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
  * @pre   Different parallelism levels will give different results
  * @pre   Returns ARGON2_OK if successful
  */
-int argon2id_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
+int _rubidium_argon2id_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
                       const uint32_t parallelism, const void *pwd,
                       const size_t pwdlen, const void *salt,
                       const size_t saltlen, void *hash, const size_t hashlen);
 
 /* generic function underlying the above ones */
-int argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
+int _rubidium_argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
                 const uint32_t parallelism, const void *pwd,
                 const size_t pwdlen, const void *salt, const size_t saltlen,
                 void *hash, const size_t hashlen, char *encoded,
@@ -289,7 +289,7 @@ int argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
  * @param pwd Pointer to password
  * @pre   Returns ARGON2_OK if successful
  */
-int argon2i_verify(const char *encoded, const void *pwd, const size_t pwdlen);
+int _rubidium_argon2i_verify(const char *encoded, const void *pwd, const size_t pwdlen);
 
 /**
  * Verifies a password against an encoded string
@@ -298,9 +298,9 @@ int argon2i_verify(const char *encoded, const void *pwd, const size_t pwdlen);
  * @param pwd Pointer to password
  * @pre   Returns ARGON2_OK if successful
  */
-int argon2id_verify(const char *encoded, const void *pwd, const size_t pwdlen);
+int _rubidium_argon2id_verify(const char *encoded, const void *pwd, const size_t pwdlen);
 
 /* generic function underlying the above ones */
-int argon2_verify(const char *encoded, const void *pwd, const size_t pwdlen,
+int _rubidium_argon2_verify(const char *encoded, const void *pwd, const size_t pwdlen,
                   argon2_type type);
 #endif

@@ -18,7 +18,7 @@
  *
  * No other parameters are checked
  */
-int argon2_encode_string(char *dst, size_t dst_len, argon2_context *ctx,
+int _rubidium_argon2_encode_string(char *dst, size_t dst_len, argon2_context *ctx,
                          argon2_type type);
 
 /*
@@ -29,7 +29,7 @@ int argon2_encode_string(char *dst, size_t dst_len, argon2_context *ctx,
  *
  * Returned value is ARGON2_OK on success.
  */
-int argon2_decode_string(argon2_context *ctx, const char *str,
+int _rubidium_argon2_decode_string(argon2_context *ctx, const char *str,
                          argon2_type type);
 
 #endif

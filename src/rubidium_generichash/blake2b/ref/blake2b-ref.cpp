@@ -25,7 +25,7 @@
 #include "runtime.h"
 #include "utils.h"
 
-static blake2b_compress_fn blake2b_compress = blake2b_compress_ref;
+static blake2b_compress_fn blake2b_compress = _rubidium_blake2b_compress_ref;
 
 static const uint64_t blake2b_IV[8] = {
     0x6a09e667f3bcc908ULL, 0xbb67ae8584caa73bULL, 0x3c6ef372fe94f82bULL,
@@ -332,7 +332,7 @@ blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen)
 
 /* inlen, at least, should be uint64_t. Others can be size_t. */
 int
-blake2b(uint8_t *out, const void *in, const void *key, const uint8_t outlen,
+_rubidium_blake2b(uint8_t *out, const void *in, const void *key, const uint8_t outlen,
         const uint64_t inlen, uint8_t keylen)
 {
     RUBIDIUM_ALIGN(64) blake2b_state S[1];
@@ -431,7 +431,7 @@ blake2b_pick_best_implementation(void)
         return 0;
     }
 #endif
-    blake2b_compress = blake2b_compress_ref;
+    blake2b_compress = _rubidium_blake2b_compress_ref;
 
     return 0;
     /* LCOV_EXCL_STOP */

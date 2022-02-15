@@ -20,7 +20,7 @@ rubidium_generichash_blake2b(unsigned char *out, size_t outlen,
     assert(outlen <= UINT8_MAX);
     assert(keylen <= UINT8_MAX);
 
-    return blake2b((uint8_t *) out, in, key, (uint8_t) outlen, (uint64_t) inlen,
+    return _rubidium_blake2b((uint8_t *) out, in, key, (uint8_t) outlen, (uint64_t) inlen,
                    (uint8_t) keylen);
 }
 

@@ -38,7 +38,7 @@ rubidium_generichash_blake2b_saltbytes(void) {
 
 size_t
 rubidium_generichash_blake2b_personalbytes(void) {
-    return rubidium_generichash_blake2b_PERSONALBYTES;
+    return RUBIDIUM_GENERICHASH_BLAKE2B_PERSONALBYTES;
 }
 
 size_t

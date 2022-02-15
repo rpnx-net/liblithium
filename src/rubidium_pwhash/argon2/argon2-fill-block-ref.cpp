@@ -141,7 +141,7 @@ generate_addresses(const argon2_instance_t *instance,
 }
 
 void
-argon2_fill_segment_ref(const argon2_instance_t *instance,
+_rubidium_argon2_fill_segment_ref(const argon2_instance_t *instance,
                         argon2_position_t position)
 {
     block    *ref_block = NULL, *curr_block = NULL;
