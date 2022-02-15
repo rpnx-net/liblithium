@@ -13,11 +13,11 @@
 extern "C" {
 #endif
 
-#define rubidium_auth_BYTES rubidium_auth_hmacsha512256_BYTES
+#define rubidium_auth_BYTES RUBIDIUM_AUTH_HMACSHA512256_BYTES
 RUBIDIUM_EXPORT
 size_t  rubidium_auth_bytes(void);
 
-#define rubidium_auth_KEYBYTES rubidium_auth_hmacsha512256_KEYBYTES
+#define rubidium_auth_KEYBYTES RUBIDIUM_AUTH_HMACSHA512256_KEYBYTES
 RUBIDIUM_EXPORT
 size_t  rubidium_auth_keybytes(void);
 

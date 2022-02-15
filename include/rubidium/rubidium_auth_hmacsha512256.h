@@ -7,11 +7,11 @@
 
 
 
-#define rubidium_auth_hmacsha512256_BYTES 32U
+#define RUBIDIUM_AUTH_HMACSHA512256_BYTES 32U
 RUBIDIUM_EXPORT
 size_t rubidium_auth_hmacsha512256_bytes(void);
 
-#define rubidium_auth_hmacsha512256_KEYBYTES 32U
+#define RUBIDIUM_AUTH_HMACSHA512256_KEYBYTES 32U
 RUBIDIUM_EXPORT
 size_t rubidium_auth_hmacsha512256_keybytes(void);
 
@@ -50,7 +50,7 @@ int rubidium_auth_hmacsha512256_final(rubidium_auth_hmacsha512256_state *state,
                                     unsigned char *out) __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
-void rubidium_auth_hmacsha512256_keygen(unsigned char k[rubidium_auth_hmacsha512256_KEYBYTES])
+void rubidium_auth_hmacsha512256_keygen(unsigned char k[RUBIDIUM_AUTH_HMACSHA512256_KEYBYTES])
             __attribute__ ((nonnull));
 
 

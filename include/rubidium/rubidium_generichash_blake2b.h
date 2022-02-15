@@ -1,5 +1,5 @@
-#ifndef rubidium_generichash_blake2b_H
-#define rubidium_generichash_blake2b_H
+#ifndef RUBIDIUM_GENERICHASH_BLAKE2B_H
+#define RUBIDIUM_GENERICHASH_BLAKE2B_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -14,25 +14,11 @@
 extern "C" {
 #endif
 
-#ifdef __IBMC__
-# pragma pack(1)
-#elif defined(__SUNPRO_C) || defined(__SUNPRO_CC)
-# pragma pack(1)
-#else
-# pragma pack(push, 1)
-#endif
+
 
 typedef struct RUBIDIUM_ALIGN(64) rubidium_generichash_blake2b_state {
     unsigned char opaque[384];
 } rubidium_generichash_blake2b_state;
-
-#ifdef __IBMC__
-# pragma pack(pop)
-#elif defined(__SUNPRO_C) || defined(__SUNPRO_CC)
-# pragma pack()
-#else
-# pragma pack(pop)
-#endif
 
 #define rubidium_generichash_blake2b_BYTES_MIN     16U
 RUBIDIUM_EXPORT

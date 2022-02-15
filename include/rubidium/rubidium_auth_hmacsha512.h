@@ -1,5 +1,5 @@
-#ifndef rubidium_auth_hmacsha512_H
-#define rubidium_auth_hmacsha512_H
+#ifndef RUBIDIUM_AUTH_HMACSHA512_H
+#define RUBIDIUM_AUTH_HMACSHA512_H
 
 #include <stddef.h>
 #include "rubidium_hash_sha512.h"

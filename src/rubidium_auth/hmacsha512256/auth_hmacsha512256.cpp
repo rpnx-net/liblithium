@@ -13,13 +13,13 @@
 size_t
 rubidium_auth_hmacsha512256_bytes(void)
 {
-    return rubidium_auth_hmacsha512256_BYTES;
+    return RUBIDIUM_AUTH_HMACSHA512256_BYTES;
 }
 
 size_t
 rubidium_auth_hmacsha512256_keybytes(void)
 {
-    return rubidium_auth_hmacsha512256_KEYBYTES;
+    return RUBIDIUM_AUTH_HMACSHA512256_KEYBYTES;
 }
 
 size_t
@@ -30,9 +30,9 @@ rubidium_auth_hmacsha512256_statebytes(void)
 
 void
 rubidium_auth_hmacsha512256_keygen(
-    unsigned char k[rubidium_auth_hmacsha512256_KEYBYTES])
+    unsigned char k[RUBIDIUM_AUTH_HMACSHA512256_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_auth_hmacsha512256_KEYBYTES);
+    randombytes_buf(k, RUBIDIUM_AUTH_HMACSHA512256_KEYBYTES);
 }
 
 int
@@ -71,7 +71,7 @@ rubidium_auth_hmacsha512256(unsigned char *out, const unsigned char *in,
     rubidium_auth_hmacsha512256_state state;
 
     rubidium_auth_hmacsha512256_init(&state, k,
-                                   rubidium_auth_hmacsha512256_KEYBYTES);
+                                     RUBIDIUM_AUTH_HMACSHA512256_KEYBYTES);
     rubidium_auth_hmacsha512256_update(&state, in, inlen);
     rubidium_auth_hmacsha512256_final(&state, out);
 
