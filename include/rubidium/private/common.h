@@ -155,7 +155,6 @@ store32_be(uint8_t dst[4], uint32_t w)
 #endif
 }
 
-#define XOR_BUF(OUT, IN, N) xor_buf((OUT), (IN), (N))
 static inline void
 xor_buf(unsigned char *out, const unsigned char *in, size_t n)
 {
@@ -166,51 +165,5 @@ xor_buf(unsigned char *out, const unsigned char *in, size_t n)
     }
 }
 
-#if !defined(__clang__) && !defined(__GNUC__)
-# ifdef __attribute__
-#  undef __attribute__
-# endif
-# define __attribute__(a)
-#endif
-
-#ifndef RUBIDIUM_ALIGN
-# if defined(__INTEL_COMPILER) || defined(_MSC_VER)
-#  define RUBIDIUM_ALIGN(x) __declspec(align(x))
-# else
-#  define RUBIDIUM_ALIGN(x) __attribute__ ((aligned(x)))
-# endif
-#endif
-
-#if defined(_MSC_VER) && \
-    (defined(_M_X64) || defined(_M_AMD64) || defined(_M_IX86))
-
-# include <intrin.h>
-
-# define HAVE_INTRIN_H    1
-# define HAVE_MMINTRIN_H  1
-# define HAVE_EMMINTRIN_H 1
-# define HAVE_PMMINTRIN_H 1
-# define HAVE_TMMINTRIN_H 1
-# define HAVE_SMMINTRIN_H 1
-# define HAVE_AVXINTRIN_H 1
-# if _MSC_VER >= 1600
-#  define HAVE_WMMINTRIN_H 1
-# endif
-# if _MSC_VER >= 1700 && defined(_M_X64)
-#  define HAVE_AVX2INTRIN_H 1
-# endif
-#elif defined(HAVE_INTRIN_H)
-# include <intrin.h>
-#endif
-
-#ifdef HAVE_LIBCTGRIND
-extern void ct_poison  (const void *, size_t);
-extern void ct_unpoison(const void *, size_t);
-# define POISON(X, L)   ct_poison((X), (L))
-# define UNPOISON(X, L) ct_unpoison((X), (L))
-#else
-# define POISON(X, L)   (void) 0
-# define UNPOISON(X, L) (void) 0
-#endif
 
 #endif

@@ -162,8 +162,7 @@ rubidium_secretstream_xchacha20poly1305_push
 
     static_assert(rubidium_onetimeauth_poly1305_BYTES >=
                     rubidium_secretstream_xchacha20poly1305_INONCEBYTES);
-    XOR_BUF(STATE_INONCE(state), mac,
-            rubidium_secretstream_xchacha20poly1305_INONCEBYTES);
+    xor_buf((((state)->nonce + 4U)), (mac), (8U));
     rubidium_increment(STATE_COUNTER(state),
                      rubidium_secretstream_xchacha20poly1305_COUNTERBYTES);
     if ((tag & rubidium_secretstream_xchacha20poly1305_TAG_REKEY) != 0 ||
@@ -243,8 +242,7 @@ rubidium_secretstream_xchacha20poly1305_pull
     }
 
     rubidium_stream_chacha20_ietf_xor_ic(m, c, mlen, state->nonce, 2U, state->k);
-    XOR_BUF(STATE_INONCE(state), mac,
-            rubidium_secretstream_xchacha20poly1305_INONCEBYTES);
+    xor_buf((((state)->nonce + 4U)), (mac), (8U));
     rubidium_increment(STATE_COUNTER(state),
                      rubidium_secretstream_xchacha20poly1305_COUNTERBYTES);
     if ((tag & rubidium_secretstream_xchacha20poly1305_TAG_REKEY) != 0 ||
