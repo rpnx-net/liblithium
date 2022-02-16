@@ -1,8 +1,8 @@
 
 #include <errno.h>
 #include <string.h>
+#include <stdexcept>
 
-#include "core.h"
 #include "rubidium_pwhash.h"
 
 int
@@ -166,9 +166,7 @@ rubidium_pwhash_str_alg(char out[rubidium_pwhash_STRBYTES],
         return rubidium_pwhash_argon2id_str(out, passwd, passwdlen,
                                           opslimit, memlimit);
     }
-    rubidium_misuse();
-    /* NOTREACHED */
-    return -1;
+    throw std::invalid_argument("alg not supported");
 }
 
 int

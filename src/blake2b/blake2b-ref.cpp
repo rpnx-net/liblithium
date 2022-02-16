@@ -12,7 +12,7 @@
    this software. If not, see
    <http://creativecommons.org/publicdomain/zero/1.0/>.
 */
-
+#include <stdexcept>
 #include <assert.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -20,7 +20,7 @@
 #include <string.h>
 
 #include "blake2.h"
-#include "core.h"
+
 #include "private/common.h"
 #include "runtime.h"
 #include "utils.h"
@@ -128,7 +128,7 @@ _rubidium_blake2b_init(blake2b_state *S, const uint8_t outlen)
     blake2b_param P[1];
 
     if ((!outlen) || (outlen > BLAKE2B_OUTBYTES)) {
-        rubidium_misuse();
+        throw std::invalid_argument("(!outlen) || (outlen > BLAKE2B_OUTBYTES)");
     }
     P->digest_length = outlen;
     P->key_length    = 0;
@@ -151,7 +151,7 @@ _rubidium_blake2b_init_salt_personal(blake2b_state *S, const uint8_t outlen,
     blake2b_param P[1];
 
     if ((!outlen) || (outlen > BLAKE2B_OUTBYTES)) {
-        rubidium_misuse();
+        throw std::invalid_argument("(!outlen) || (outlen > BLAKE2B_OUTBYTES)");
     }
     P->digest_length = outlen;
     P->key_length    = 0;
@@ -182,10 +182,10 @@ _rubidium_blake2b_init_key(blake2b_state *S, const uint8_t outlen, const void *k
     blake2b_param P[1];
 
     if ((!outlen) || (outlen > BLAKE2B_OUTBYTES)) {
-        rubidium_misuse();
+        throw std::invalid_argument("(!outlen) || (outlen > BLAKE2B_OUTBYTES)");
     }
     if (!key || !keylen || keylen > BLAKE2B_KEYBYTES) {
-        rubidium_misuse(); /* does not return */
+        throw std::invalid_argument("!key || !keylen || keylen > BLAKE2B_KEYBYTES"); /* does not return */
     }
     P->digest_length = outlen;
     P->key_length    = keylen;
@@ -200,7 +200,7 @@ _rubidium_blake2b_init_key(blake2b_state *S, const uint8_t outlen, const void *k
     memset(P->personal, 0, sizeof(P->personal));
 
     if (_rubidium_blake2b_init_param(S, P) < 0) {
-        rubidium_misuse();
+        throw std::invalid_argument("_rubidium_blake2b_init_param(S, P) < 0");
     }
     {
         uint8_t block[BLAKE2B_BLOCKBYTES];
@@ -220,10 +220,10 @@ _rubidium_blake2b_init_key_salt_personal(blake2b_state *S, const uint8_t outlen,
     blake2b_param P[1];
 
     if ((!outlen) || (outlen > BLAKE2B_OUTBYTES)) {
-        rubidium_misuse();
+        throw std::invalid_argument("(!outlen) || (outlen > BLAKE2B_OUTBYTES)");
     }
     if (!key || !keylen || keylen > BLAKE2B_KEYBYTES) {
-        rubidium_misuse(); /* does not return */
+        throw std::invalid_argument("!key || !keylen || keylen > BLAKE2B_KEYBYTES"); /* does not return */
     }
     P->digest_length = outlen;
     P->key_length    = keylen;
@@ -246,7 +246,7 @@ _rubidium_blake2b_init_key_salt_personal(blake2b_state *S, const uint8_t outlen,
     }
 
     if (_rubidium_blake2b_init_param(S, P) < 0) {
-        rubidium_misuse();
+        throw std::invalid_argument("_rubidium_blake2b_init_param(S, P) < 0");
     }
     {
         uint8_t block[BLAKE2B_BLOCKBYTES];
@@ -294,7 +294,7 @@ _rubidium_blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen)
     unsigned char buffer[BLAKE2B_OUTBYTES];
 
     if (!outlen || outlen > BLAKE2B_OUTBYTES) {
-        rubidium_misuse();
+        throw std::invalid_argument("!outlen || outlen > BLAKE2B_OUTBYTES");
     }
     if (blake2b_is_lastblock(S)) {
         return -1;
@@ -339,27 +339,27 @@ _rubidium_blake2b(uint8_t *out, const void *in, const void *key, const uint8_t o
 
     /* Verify parameters */
     if (NULL == in && inlen > 0) {
-        rubidium_misuse();
+        throw std::invalid_argument("NULL == in && inlen > 0");
     }
     if (NULL == out) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     if (!outlen || outlen > BLAKE2B_OUTBYTES) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     if (NULL == key && keylen > 0) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     if (keylen > BLAKE2B_KEYBYTES) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     if (keylen > 0) {
         if (_rubidium_blake2b_init_key(S, outlen, key, keylen) < 0) {
-            rubidium_misuse();
+            throw std::invalid_argument("");
         }
     } else {
         if (_rubidium_blake2b_init(S, outlen) < 0) {
-            rubidium_misuse();
+            throw std::invalid_argument("");
         }
     }
 
@@ -377,28 +377,28 @@ _rubidium_blake2b_salt_personal(uint8_t *out, const void *in, const void *key,
 
     /* Verify parameters */
     if (NULL == in && inlen > 0) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     if (NULL == out) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     if (!outlen || outlen > BLAKE2B_OUTBYTES) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     if (NULL == key && keylen > 0) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     if (keylen > BLAKE2B_KEYBYTES) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     if (keylen > 0) {
         if (_rubidium_blake2b_init_key_salt_personal(S, outlen, key, keylen, salt,
                                            personal) < 0) {
-            rubidium_misuse();
+            throw std::invalid_argument("");
         }
     } else {
         if (_rubidium_blake2b_init_salt_personal(S, outlen, salt, personal) < 0) {
-            rubidium_misuse();
+            throw std::invalid_argument("");
         }
     }
 

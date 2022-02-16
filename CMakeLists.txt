@@ -15,7 +15,6 @@ set(RUBIDIUM_HEADERS
         include/rubidium/rubidium_core_hchacha20.h
         include/rubidium/rubidium_aead_aegis256.h
         include/rubidium/rubidium_hash_sha512.h
-        include/rubidium/core.h
         include/rubidium/export.h
         include/rubidium/rubidium_core_salsa20.h
         include/rubidium/rubidium_shorthash_siphash24.h
@@ -39,7 +38,6 @@ set(RUBIDIUM_HEADERS
         include/rubidium/rubidium_auth_hmacsha512256.h
         include/rubidium/rubidium_aead_aegis128l.h
         include/rubidium/rubidium_aead_chacha20poly1305.h
-        include/rubidium/randombytes_sysrandom.h
         include/rubidium/runtime.h
         include/rubidium/rubidium_stream_salsa208.h
         include/rubidium/rubidium_aead_aes256gcm.h
@@ -73,7 +71,6 @@ set(RUBIDIUM_HEADERS
         include/rubidium/rubidium_core_ed25519.h
         include/rubidium/rubidium_kdf_hkdf_sha512.h
         include/rubidium/rubidium_pwhash_argon2i.h
-        include/rubidium/randombytes_internal_random.h
         include/rubidium/rubidium_secretbox_xsalsa20poly1305.h
         include/rubidium/rubidium_secretbox.h
         include/rubidium/rubidium_scalarmult_ed25519.h
@@ -147,16 +144,10 @@ target_sources(rubidium
         src/rubidium_onetimeauth/poly1305/donna/poly1305_donna.cpp
         src/rubidium_onetimeauth/poly1305/sse2/poly1305_sse2.cpp
         src/rubidium_onetimeauth/poly1305/onetimeauth_poly1305.cpp
-        src/randombytes/sysrandom/randombytes_sysrandom.cpp
-        src/randombytes/internal/randombytes_internal_random.cpp
         src/randombytes/randombytes.cpp
         src/rubidium_box/curve25519xsalsa20poly1305/box_curve25519xsalsa20poly1305.cpp
         src/rubidium_box/curve25519xchacha20poly1305/box_curve25519xchacha20poly1305.cpp
         src/rubidium_box/curve25519xchacha20poly1305/box_seal_curve25519xchacha20poly1305.cpp
-        src/rubidium/codecs.cpp
-        src/rubidium/runtime.cpp
-        src/rubidium/core.cpp
-        src/rubidium/utils.cpp
         src/rubidium_stream/xchacha20/stream_xchacha20.cpp
         src/rubidium_stream/chacha20/ref/chacha20_ref.cpp
         src/rubidium_stream/chacha20/stream_chacha20.cpp

@@ -14,7 +14,7 @@
 
 
 
-#include "core.h"
+
 #include "rubidium_generichash_blake2b.h"
 #include "rubidium_stream.h"
 #include "randombytes.h"
@@ -93,7 +93,7 @@ rubidium_memzero(void * const pnt, const std::size_t len)
     SecureZeroMemory(pnt, len);
 #elif defined(HAVE_MEMSET_S)
     if (len > 0U && memset_s(pnt, (rstd::size_t) len, 0, (rstd::size_t) len) != 0) {
-        rubidium_misuse(); /* LCOV_EXCL_LINE */
+        throw std::invalid_argument(""); /* LCOV_EXCL_LINE */
     }
 #elif defined(HAVE_EXPLICIT_BZERO)
     explicit_bzero(pnt, len);
@@ -373,7 +373,7 @@ _rubidium_alloc_init(void)
 #  warning Unknown page size
 # endif
     if (page_size < CANARY_SIZE || page_size < sizeof(std::size_t)) {
-        rubidium_misuse(); /* LCOV_EXCL_LINE */
+        throw std::invalid_argument(""); /* LCOV_EXCL_LINE */
     }
 #endif
     randombytes_buf(canary, CANARY_SIZE);
@@ -527,7 +527,7 @@ _unprotected_ptr_from_user_ptr(void *const ptr)
     page_mask = page_size - 1U;
     unprotected_ptr_u = ((uintptr_t) canary_ptr & (uintptr_t) ~page_mask);
     if (unprotected_ptr_u <= page_size * 2U) {
-        rubidium_misuse(); /* LCOV_EXCL_LINE */
+        throw std::invalid_argument(""); /* LCOV_EXCL_LINE */
     }
     return (unsigned char *) unprotected_ptr_u;
 }
@@ -557,7 +557,7 @@ _rubidium_malloc(const std::size_t size)
         return NULL;
     }
     if (page_size <= sizeof canary || page_size < sizeof unprotected_size) {
-        rubidium_misuse(); /* LCOV_EXCL_LINE */
+        throw std::invalid_argument(""); /* LCOV_EXCL_LINE */
     }
     size_with_canary = (sizeof canary) + size;
     unprotected_size = _page_round(size_with_canary);
@@ -710,7 +710,7 @@ rubidium_pad(std::size_t *padded_buflen_p, unsigned char *buf,
         xpadlen -= unpadded_buflen % blocksize;
     }
     if ((std::size_t) SIZE_MAX - unpadded_buflen <= xpadlen) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     xpadded_len = unpadded_buflen + xpadlen;
     if (xpadded_len >= max_buflen) {

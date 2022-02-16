@@ -1,5 +1,5 @@
 #include "rubidium_stream_chacha20.h"
-#include "core.h"
+
 #include "private/chacha20_ietf_ext.h"
 #include "private/common.h"
 #include "private/implementations.h"
@@ -15,6 +15,7 @@
 #if defined(HAVE_EMMINTRIN_H) && defined(HAVE_TMMINTRIN_H)
 # include "dolbeau/chacha20_dolbeau-ssse3.h"
 #endif
+#include <stdexcept>
 
 static const rubidium_stream_chacha20_implementation *implementation =
     &rubidium_stream_chacha20_ref_implementation;
@@ -56,7 +57,7 @@ rubidium_stream_chacha20(unsigned char *c, unsigned long long clen,
                        const unsigned char *n, const unsigned char *k)
 {
     if (clen > rubidium_stream_chacha20_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("clen > rubidium_stream_chacha20_MESSAGEBYTES_MAX");
     }
     return implementation->stream(c, clen, n, k);
 }
@@ -68,7 +69,7 @@ rubidium_stream_chacha20_xor_ic(unsigned char *c, const unsigned char *m,
                               const unsigned char *k)
 {
     if (mlen > rubidium_stream_chacha20_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     return implementation->stream_xor_ic(c, m, mlen, n, ic, k);
 }
@@ -79,7 +80,7 @@ rubidium_stream_chacha20_xor(unsigned char *c, const unsigned char *m,
                            const unsigned char *k)
 {
     if (mlen > rubidium_stream_chacha20_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     return implementation->stream_xor_ic(c, m, mlen, n, 0U, k);
 }
@@ -89,7 +90,7 @@ rubidium_stream_chacha20_ietf_ext(unsigned char *c, unsigned long long clen,
                                 const unsigned char *n, const unsigned char *k)
 {
     if (clen > rubidium_stream_chacha20_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     return implementation->stream_ietf_ext(c, clen, n, k);
 }
@@ -101,7 +102,7 @@ rubidium_stream_chacha20_ietf_ext_xor_ic(unsigned char *c, const unsigned char *
                                        const unsigned char *k)
 {
     if (mlen > rubidium_stream_chacha20_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     return implementation->stream_ietf_ext_xor_ic(c, m, mlen, n, ic, k);
 }
@@ -112,7 +113,7 @@ rubidium_stream_chacha20_ietf_ext_xor(unsigned char *c, const unsigned char *m,
                                     const unsigned char *k)
 {
     if (mlen > rubidium_stream_chacha20_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     return implementation->stream_ietf_ext_xor_ic(c, m, mlen, n, 0U, k);
 }
@@ -122,7 +123,7 @@ rubidium_stream_chacha20_ietf(unsigned char *c, unsigned long long clen,
                             const unsigned char *n, const unsigned char *k)
 {
     if (clen > rubidium_stream_chacha20_ietf_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     return rubidium_stream_chacha20_ietf_ext(c, clen, n, k);
 }
@@ -135,7 +136,7 @@ rubidium_stream_chacha20_ietf_xor_ic(unsigned char *c, const unsigned char *m,
 {
     if ((unsigned long long) ic >
         (64ULL * (1ULL << 32)) / 64ULL - (mlen + 63ULL) / 64ULL) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     return rubidium_stream_chacha20_ietf_ext_xor_ic(c, m, mlen, n, ic, k);
 }
@@ -146,7 +147,7 @@ rubidium_stream_chacha20_ietf_xor(unsigned char *c, const unsigned char *m,
                                 const unsigned char *k)
 {
     if (mlen > rubidium_stream_chacha20_ietf_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     return rubidium_stream_chacha20_ietf_ext_xor(c, m, mlen, n, k);
 }

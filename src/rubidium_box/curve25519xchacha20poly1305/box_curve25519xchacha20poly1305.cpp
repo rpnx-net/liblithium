@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "core.h"
+
 #include "rubidium_box_curve25519xchacha20poly1305.h"
 #include "rubidium_core_hchacha20.h"
 #include "rubidium_hash_sha512.h"
@@ -13,7 +13,7 @@
 #include "private/common.h"
 #include "randombytes.h"
 #include "utils.h"
-
+#include <stdexcept>
 namespace rubidium {
     int
     rubidium_box_curve25519xchacha20poly1305_seed_keypair(unsigned char *pk,
@@ -90,7 +90,7 @@ rubidium_box_curve25519xchacha20poly1305_easy_afternm(unsigned char *c,
                                                     const unsigned char *k)
 {
     if (mlen > rubidium_box_curve25519xchacha20poly1305_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("mlen > rubidium_box_curve25519xchacha20poly1305_MESSAGEBYTES_MAX");
     }
     return rubidium_box_curve25519xchacha20poly1305_detached_afternm(
         c + rubidium_box_curve25519xchacha20poly1305_MACBYTES, c, m, mlen, n, k);
@@ -102,7 +102,7 @@ rubidium_box_curve25519xchacha20poly1305_easy(
     const unsigned char *n, const unsigned char *pk, const unsigned char *sk)
 {
     if (mlen > rubidium_box_curve25519xchacha20poly1305_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     return rubidium_box_curve25519xchacha20poly1305_detached(
         c + rubidium_box_curve25519xchacha20poly1305_MACBYTES, c, m, mlen, n, pk,

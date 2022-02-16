@@ -3,9 +3,10 @@
 #include <limits.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <string.h>
+#include <cstring>
+#include <stdexcept>
 
-#include "core.h"
+
 #include "rubidium_core_hchacha20.h"
 #include "rubidium_onetimeauth_poly1305.h"
 #include "rubidium_secretbox_xchacha20poly1305.h"
@@ -43,11 +44,11 @@ rubidium_secretbox_xchacha20poly1305_detached(unsigned char *c,
          (uintptr_t) c - (uintptr_t) m < mlen) ||
         ((uintptr_t) m > (uintptr_t) c &&
          (uintptr_t) m - (uintptr_t) c < mlen)) { /* LCOV_EXCL_LINE */
-        memmove(c, m, mlen);
+        std::memmove(c, m, mlen);
         m = c;
     }
     memset(block0, 0U, rubidium_secretbox_xchacha20poly1305_ZEROBYTES);
-    COMPILER_ASSERT(64U >= rubidium_secretbox_xchacha20poly1305_ZEROBYTES);
+    static_assert(64U >= rubidium_secretbox_xchacha20poly1305_ZEROBYTES);
     mlen0 = mlen;
     if (mlen0 > 64U - rubidium_secretbox_xchacha20poly1305_ZEROBYTES) {
         mlen0 = 64U - rubidium_secretbox_xchacha20poly1305_ZEROBYTES;
@@ -58,7 +59,7 @@ rubidium_secretbox_xchacha20poly1305_detached(unsigned char *c,
     rubidium_stream_chacha20_xor(block0, block0,
                                mlen0 + rubidium_secretbox_xchacha20poly1305_ZEROBYTES,
                                n + 16, subkey);
-    COMPILER_ASSERT(rubidium_secretbox_xchacha20poly1305_ZEROBYTES >=
+    static_assert(rubidium_secretbox_xchacha20poly1305_ZEROBYTES >=
                     rubidium_onetimeauth_poly1305_KEYBYTES);
     rubidium_onetimeauth_poly1305_init(&state, block0);
 
@@ -87,7 +88,7 @@ rubidium_secretbox_xchacha20poly1305_easy(unsigned char *c,
                                         const unsigned char *k)
 {
     if (mlen > rubidium_secretbox_xchacha20poly1305_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("mlen > rubidium_secretbox_xchacha20poly1305_MESSAGEBYTES_MAX");
     }
     return rubidium_secretbox_xchacha20poly1305_detached
         (c + rubidium_secretbox_xchacha20poly1305_MACBYTES, c, m, mlen, n, k);

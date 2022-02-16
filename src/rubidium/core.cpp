@@ -7,7 +7,7 @@
 # include <windows.h>
 #endif
 
-#include "core.h"
+
 #include "rubidium_generichash_blake2b.h"
 #include "rubidium_onetimeauth.h"
 #include "rubidium_scalarmult.h"

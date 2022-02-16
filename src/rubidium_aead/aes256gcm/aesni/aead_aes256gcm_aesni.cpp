@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "core.h"
+
 #include "rubidium_aead_aes256gcm.h"
 #include "export.h"
 #include "private/common.h"
@@ -617,7 +617,7 @@ rubidium_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char
     (void) nsec;
     memcpy(H, ctx->H, sizeof H);
     if (mlen > rubidium_aead_aes256gcm_MESSAGEBYTES_MAX) {
-        rubidium_misuse(); /* LCOV_EXCL_LINE */
+        throw std::invalid_argument(""); /* LCOV_EXCL_LINE */
     }
     memcpy(&n2[0], npub, 3 * 4);
     n2[3] = 0x01000000;
@@ -753,7 +753,7 @@ rubidium_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char
 
     (void) nsec;
     if (clen > rubidium_aead_aes256gcm_MESSAGEBYTES_MAX) {
-        rubidium_misuse(); /* LCOV_EXCL_LINE */
+        throw std::invalid_argument(""); /* LCOV_EXCL_LINE */
     }
     mlen = clen;
 

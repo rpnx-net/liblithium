@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "core.h"
+
 #include "rubidium_aead_aegis128l.h"
 #include "rubidium_verify_16.h"
 #include "export.h"
@@ -192,7 +192,7 @@ rubidium_aead_aegis128l_encrypt(unsigned char *c, unsigned long long *clen_p, co
     int                ret;
 
     if (mlen > rubidium_aead_aegis128l_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     ret = rubidium_aead_aegis128l_encrypt_detached(c, c + mlen, NULL, m, mlen,
                                                  ad, adlen, nsec, npub, k);

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "core.h"
+
 #include "rubidium_aead_aegis256.h"
 #include "rubidium_verify_16.h"
 #include "export.h"
@@ -183,7 +183,7 @@ rubidium_aead_aegis256_encrypt(unsigned char *c, unsigned long long *clen_p, con
     int                ret;
 
     if (mlen > rubidium_aead_aegis256_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     ret = rubidium_aead_aegis256_encrypt_detached(c, c + mlen, NULL, m, mlen,
                                                 ad, adlen, nsec, npub, k);

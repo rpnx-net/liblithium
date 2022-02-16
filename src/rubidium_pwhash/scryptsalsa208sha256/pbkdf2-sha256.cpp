@@ -28,10 +28,11 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdexcept>
 
 #include <sys/types.h>
 
-#include "core.h"
+
 #include "rubidium_auth_hmacsha256.h"
 #include "rubidium_pwhash_scryptsalsa208sha256.h"
 #include "pbkdf2-sha256.h"
@@ -58,10 +59,10 @@ _rubidium_escrypt_PBKDF2_SHA256(const uint8_t *passwd, size_t passwdlen,
     size_t                       clen;
 
 #if SIZE_MAX > 0x1fffffffe0ULL
-    COMPILER_ASSERT(rubidium_pwhash_scryptsalsa208sha256_BYTES_MAX
+    static_assert(rubidium_pwhash_scryptsalsa208sha256_BYTES_MAX
                     <= 0x1fffffffe0ULL);
     if (dkLen > 0x1fffffffe0ULL) {
-        rubidium_misuse(); /* LCOV_EXCL_LINE */
+        throw std::invalid_argument("dkLen > 0x1fffffffe0ULL");
     }
 #endif
     rubidium_auth_hmacsha256_init(&PShctx, passwd, passwdlen);

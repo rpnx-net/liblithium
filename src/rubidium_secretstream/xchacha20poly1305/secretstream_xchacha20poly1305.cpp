@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
+#include <stdexcept>
 
-#include "core.h"
+
 #include "rubidium_aead_chacha20poly1305.h"
 #include "rubidium_aead_xchacha20poly1305.h"
 #include "rubidium_core_hchacha20.h"
@@ -123,10 +124,10 @@ rubidium_secretstream_xchacha20poly1305_push
     if (outlen_p != NULL) {
         *outlen_p = 0U;
     }
-    COMPILER_ASSERT(rubidium_secretstream_xchacha20poly1305_MESSAGEBYTES_MAX
+    static_assert(rubidium_secretstream_xchacha20poly1305_MESSAGEBYTES_MAX
                     <= rubidium_aead_chacha20poly1305_ietf_MESSAGEBYTES_MAX);
     if (mlen > rubidium_secretstream_xchacha20poly1305_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("mlen > rubidium_secretstream_xchacha20poly1305_MESSAGEBYTES_MAX");
     }
     rubidium_stream_chacha20_ietf(block, sizeof block, state->nonce, state->k);
     rubidium_onetimeauth_poly1305_init(&poly1305_state, block);
@@ -203,7 +204,7 @@ rubidium_secretstream_xchacha20poly1305_pull
     }
     mlen = inlen - rubidium_secretstream_xchacha20poly1305_ABYTES;
     if (mlen > rubidium_secretstream_xchacha20poly1305_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     rubidium_stream_chacha20_ietf(block, sizeof block, state->nonce, state->k);
     rubidium_onetimeauth_poly1305_init(&poly1305_state, block);

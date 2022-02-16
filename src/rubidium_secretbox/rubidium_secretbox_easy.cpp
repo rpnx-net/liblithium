@@ -4,8 +4,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdexcept>
 
-#include "core.h"
+
 #include "rubidium_core_hsalsa20.h"
 #include "rubidium_onetimeauth_poly1305.h"
 #include "rubidium_secretbox.h"
@@ -79,7 +80,7 @@ rubidium_secretbox_easy(unsigned char *c, const unsigned char *m,
                       const unsigned char *k)
 {
     if (mlen > rubidium_secretbox_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("mlen > rubidium_secretbox_MESSAGEBYTES_MAX");
     }
     return rubidium_secretbox_detached(c + rubidium_secretbox_MACBYTES,
                                      c, m, mlen, n, k);

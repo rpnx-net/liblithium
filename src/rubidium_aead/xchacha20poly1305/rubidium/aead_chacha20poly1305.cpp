@@ -4,7 +4,7 @@
 #include <limits.h>
 #include <string.h>
 
-#include "core.h"
+
 #include "rubidium_aead_chacha20poly1305.h"
 #include "rubidium_onetimeauth_poly1305.h"
 #include "rubidium_stream_chacha20.h"
@@ -14,7 +14,7 @@
 
 #include "private/chacha20_ietf_ext.h"
 #include "private/common.h"
-
+#include <stdexcept>
 static const unsigned char _pad0[16] = { 0 };
 
 int
@@ -72,7 +72,7 @@ rubidium_aead_chacha20poly1305_encrypt(unsigned char *c,
     int                ret;
 
     if (mlen > rubidium_aead_chacha20poly1305_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     ret = rubidium_aead_chacha20poly1305_encrypt_detached(c,
                                                         c + mlen, NULL,
@@ -147,7 +147,7 @@ rubidium_aead_chacha20poly1305_ietf_encrypt(unsigned char *c,
     int                ret;
 
     if (mlen > rubidium_aead_chacha20poly1305_ietf_MESSAGEBYTES_MAX) {
-        rubidium_misuse();
+        throw std::invalid_argument("");
     }
     ret = rubidium_aead_chacha20poly1305_ietf_encrypt_detached(c,
                                                              c + mlen, NULL,
