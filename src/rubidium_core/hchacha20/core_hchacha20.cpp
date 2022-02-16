@@ -7,10 +7,10 @@
 
 #define QUARTERROUND(A, B, C, D)     \
   do {                               \
-      A += B; D = ROTL32(D ^ A, 16); \
-      C += D; B = ROTL32(B ^ C, 12); \
-      A += B; D = ROTL32(D ^ A,  8); \
-      C += D; B = ROTL32(B ^ C,  7); \
+      A += B; D = std::rotl<std::uint32_t>(D ^ A, 16); \
+      C += D; B = std::rotl<std::uint32_t>(B ^ C, 12); \
+      A += B; D = std::rotl<std::uint32_t>(D ^ A,  8); \
+      C += D; B = std::rotl<std::uint32_t>(B ^ C,  7); \
   } while(0)
 
 int

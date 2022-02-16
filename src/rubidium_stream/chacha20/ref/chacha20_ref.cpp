@@ -26,7 +26,7 @@ typedef struct chacha_ctx chacha_ctx;
 
 #define U32V(v) ((uint32_t)(v) &U32C(0xFFFFFFFF))
 
-#define ROTATE(v, c) (ROTL32(v, c))
+#define ROTATE(v, c) (std::rotl<std::uint32_t>(v, c))
 #define XOR(v, w) ((v) ^ (w))
 #define PLUS(v, w) (U32V((v) + (w)))
 #define PLUSONE(v) (PLUS((v), 1))

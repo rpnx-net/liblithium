@@ -19,19 +19,7 @@ typedef unsigned uint128_t __attribute__((mode(TI)));
 # endif
 #endif
 
-#define ROTL32(X, B) rotl32((X), (B))
-static inline uint32_t
-rotl32(const uint32_t x, const int b)
-{
-    return std::rotl<std::uint32_t>(x, b);
-}
 
-#define ROTL64(X, B) rotl64((X), (B))
-static inline uint64_t
-rotl64(const uint64_t x, const int b)
-{
-    return std::rotl<std::uint64_t>(x, b);
-}
 
 
 
