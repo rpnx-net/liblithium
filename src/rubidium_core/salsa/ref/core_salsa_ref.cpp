@@ -23,24 +23,24 @@ rubidium_core_salsa(unsigned char *out, const unsigned char *in,
     j10 = x10 = 0x79622d32;
     j15 = x15 = 0x6b206574;
     if (c != NULL) {
-        j0  = x0  = LOAD32_LE(c + 0);
-        j5  = x5  = LOAD32_LE(c + 4);
-        j10 = x10 = LOAD32_LE(c + 8);
-        j15 = x15 = LOAD32_LE(c + 12);
+        j0  = x0  = load32_le(c + 0);
+        j5  = x5  = load32_le(c + 4);
+        j10 = x10 = load32_le(c + 8);
+        j15 = x15 = load32_le(c + 12);
     }
-    j1  = x1  = LOAD32_LE(k + 0);
-    j2  = x2  = LOAD32_LE(k + 4);
-    j3  = x3  = LOAD32_LE(k + 8);
-    j4  = x4  = LOAD32_LE(k + 12);
-    j11 = x11 = LOAD32_LE(k + 16);
-    j12 = x12 = LOAD32_LE(k + 20);
-    j13 = x13 = LOAD32_LE(k + 24);
-    j14 = x14 = LOAD32_LE(k + 28);
+    j1  = x1  = load32_le(k + 0);
+    j2  = x2  = load32_le(k + 4);
+    j3  = x3  = load32_le(k + 8);
+    j4  = x4  = load32_le(k + 12);
+    j11 = x11 = load32_le(k + 16);
+    j12 = x12 = load32_le(k + 20);
+    j13 = x13 = load32_le(k + 24);
+    j14 = x14 = load32_le(k + 28);
 
-    j6  = x6  = LOAD32_LE(in + 0);
-    j7  = x7  = LOAD32_LE(in + 4);
-    j8  = x8  = LOAD32_LE(in + 8);
-    j9  = x9  = LOAD32_LE(in + 12);
+    j6  = x6  = load32_le(in + 0);
+    j7  = x7  = load32_le(in + 4);
+    j8  = x8  = load32_le(in + 8);
+    j9  = x9  = load32_le(in + 12);
 
     for (i = 0; i < rounds; i += 2) {
         x4  ^= std::rotl<std::uint32_t>(x0  + x12, 7);
@@ -76,22 +76,22 @@ rubidium_core_salsa(unsigned char *out, const unsigned char *in,
         x14 ^= std::rotl<std::uint32_t>(x13 + x12, 13);
         x15 ^= std::rotl<std::uint32_t>(x14 + x13, 18);
     }
-    STORE32_LE(out + 0,  x0  + j0);
-    STORE32_LE(out + 4,  x1  + j1);
-    STORE32_LE(out + 8,  x2  + j2);
-    STORE32_LE(out + 12, x3  + j3);
-    STORE32_LE(out + 16, x4  + j4);
-    STORE32_LE(out + 20, x5  + j5);
-    STORE32_LE(out + 24, x6  + j6);
-    STORE32_LE(out + 28, x7  + j7);
-    STORE32_LE(out + 32, x8  + j8);
-    STORE32_LE(out + 36, x9  + j9);
-    STORE32_LE(out + 40, x10 + j10);
-    STORE32_LE(out + 44, x11 + j11);
-    STORE32_LE(out + 48, x12 + j12);
-    STORE32_LE(out + 52, x13 + j13);
-    STORE32_LE(out + 56, x14 + j14);
-    STORE32_LE(out + 60, x15 + j15);
+    store32_le((out + 0), (x0 + j0));
+    store32_le((out + 4), (x1 + j1));
+    store32_le((out + 8), (x2 + j2));
+    store32_le((out + 12), (x3 + j3));
+    store32_le((out + 16), (x4 + j4));
+    store32_le((out + 20), (x5 + j5));
+    store32_le((out + 24), (x6 + j6));
+    store32_le((out + 28), (x7 + j7));
+    store32_le((out + 32), (x8 + j8));
+    store32_le((out + 36), (x9 + j9));
+    store32_le((out + 40), (x10 + j10));
+    store32_le((out + 44), (x11 + j11));
+    store32_le((out + 48), (x12 + j12));
+    store32_le((out + 52), (x13 + j13));
+    store32_le((out + 56), (x14 + j14));
+    store32_le((out + 60), (x15 + j15));
 }
 
 int

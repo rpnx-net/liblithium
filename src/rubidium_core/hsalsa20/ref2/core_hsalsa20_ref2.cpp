@@ -29,23 +29,23 @@ rubidium_core_hsalsa20(unsigned char *out,
         x10 = U32C(0x79622d32);
         x15 = U32C(0x6b206574);
     } else {
-        x0 = LOAD32_LE(c + 0);
-        x5 = LOAD32_LE(c + 4);
-        x10 = LOAD32_LE(c + 8);
-        x15 = LOAD32_LE(c + 12);
+        x0 = load32_le(c + 0);
+        x5 = load32_le(c + 4);
+        x10 = load32_le(c + 8);
+        x15 = load32_le(c + 12);
     }
-    x1 = LOAD32_LE(k + 0);
-    x2 = LOAD32_LE(k + 4);
-    x3 = LOAD32_LE(k + 8);
-    x4 = LOAD32_LE(k + 12);
-    x11 = LOAD32_LE(k + 16);
-    x12 = LOAD32_LE(k + 20);
-    x13 = LOAD32_LE(k + 24);
-    x14 = LOAD32_LE(k + 28);
-    x6 = LOAD32_LE(in + 0);
-    x7 = LOAD32_LE(in + 4);
-    x8 = LOAD32_LE(in + 8);
-    x9 = LOAD32_LE(in + 12);
+    x1 = load32_le(k + 0);
+    x2 = load32_le(k + 4);
+    x3 = load32_le(k + 8);
+    x4 = load32_le(k + 12);
+    x11 = load32_le(k + 16);
+    x12 = load32_le(k + 20);
+    x13 = load32_le(k + 24);
+    x14 = load32_le(k + 28);
+    x6 = load32_le(in + 0);
+    x7 = load32_le(in + 4);
+    x8 = load32_le(in + 8);
+    x9 = load32_le(in + 12);
 
     for (i = ROUNDS; i > 0; i -= 2) {
         x4 ^= std::rotl<std::uint32_t>(x0 + x12, 7);
@@ -82,14 +82,14 @@ rubidium_core_hsalsa20(unsigned char *out,
         x15 ^= std::rotl<std::uint32_t>(x14 + x13, 18);
     }
 
-    STORE32_LE(out + 0, x0);
-    STORE32_LE(out + 4, x5);
-    STORE32_LE(out + 8, x10);
-    STORE32_LE(out + 12, x15);
-    STORE32_LE(out + 16, x6);
-    STORE32_LE(out + 20, x7);
-    STORE32_LE(out + 24, x8);
-    STORE32_LE(out + 28, x9);
+    store32_le((out + 0), (x0));
+    store32_le((out + 4), (x5));
+    store32_le((out + 8), (x10));
+    store32_le((out + 12), (x15));
+    store32_le((out + 16), (x6));
+    store32_le((out + 20), (x7));
+    store32_le((out + 24), (x8));
+    store32_le((out + 28), (x9));
 
     return 0;
 }

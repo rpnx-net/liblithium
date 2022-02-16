@@ -54,7 +54,7 @@ be64dec_vect(uint64_t *dst, const unsigned char *src, size_t len)
     size_t i;
 
     for (i = 0; i < len / 8; i++) {
-        dst[i] = LOAD64_BE(src + i * 8);
+        dst[i] = load64_be(src + i * 8);
     }
 }
 

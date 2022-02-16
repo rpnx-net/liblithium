@@ -48,32 +48,32 @@ chacha_keysetup(chacha_ctx *ctx, const uint8_t *k)
     ctx->input[1]  = U32C(0x3320646e);
     ctx->input[2]  = U32C(0x79622d32);
     ctx->input[3]  = U32C(0x6b206574);
-    ctx->input[4]  = LOAD32_LE(k + 0);
-    ctx->input[5]  = LOAD32_LE(k + 4);
-    ctx->input[6]  = LOAD32_LE(k + 8);
-    ctx->input[7]  = LOAD32_LE(k + 12);
-    ctx->input[8]  = LOAD32_LE(k + 16);
-    ctx->input[9]  = LOAD32_LE(k + 20);
-    ctx->input[10] = LOAD32_LE(k + 24);
-    ctx->input[11] = LOAD32_LE(k + 28);
+    ctx->input[4]  = load32_le(k + 0);
+    ctx->input[5]  = load32_le(k + 4);
+    ctx->input[6]  = load32_le(k + 8);
+    ctx->input[7]  = load32_le(k + 12);
+    ctx->input[8]  = load32_le(k + 16);
+    ctx->input[9]  = load32_le(k + 20);
+    ctx->input[10] = load32_le(k + 24);
+    ctx->input[11] = load32_le(k + 28);
 }
 
 static void
 chacha_ivsetup(chacha_ctx *ctx, const uint8_t *iv, const uint8_t *counter)
 {
-    ctx->input[12] = counter == NULL ? 0 : LOAD32_LE(counter + 0);
-    ctx->input[13] = counter == NULL ? 0 : LOAD32_LE(counter + 4);
-    ctx->input[14] = LOAD32_LE(iv + 0);
-    ctx->input[15] = LOAD32_LE(iv + 4);
+    ctx->input[12] = counter == NULL ? 0 : load32_le(counter + 0);
+    ctx->input[13] = counter == NULL ? 0 : load32_le(counter + 4);
+    ctx->input[14] = load32_le(iv + 0);
+    ctx->input[15] = load32_le(iv + 4);
 }
 
 static void
 chacha_ietf_ivsetup(chacha_ctx *ctx, const uint8_t *iv, const uint8_t *counter)
 {
-    ctx->input[12] = counter == NULL ? 0 : LOAD32_LE(counter);
-    ctx->input[13] = LOAD32_LE(iv + 0);
-    ctx->input[14] = LOAD32_LE(iv + 4);
-    ctx->input[15] = LOAD32_LE(iv + 8);
+    ctx->input[12] = counter == NULL ? 0 : load32_le(counter);
+    ctx->input[13] = load32_le(iv + 0);
+    ctx->input[14] = load32_le(iv + 4);
+    ctx->input[15] = load32_le(iv + 8);
 }
 
 static void
@@ -161,22 +161,22 @@ chacha20_encrypt_bytes(chacha_ctx *ctx, const uint8_t *m, uint8_t *c,
         x14 = PLUS(x14, j14);
         x15 = PLUS(x15, j15);
 
-        x0  = XOR(x0, LOAD32_LE(m + 0));
-        x1  = XOR(x1, LOAD32_LE(m + 4));
-        x2  = XOR(x2, LOAD32_LE(m + 8));
-        x3  = XOR(x3, LOAD32_LE(m + 12));
-        x4  = XOR(x4, LOAD32_LE(m + 16));
-        x5  = XOR(x5, LOAD32_LE(m + 20));
-        x6  = XOR(x6, LOAD32_LE(m + 24));
-        x7  = XOR(x7, LOAD32_LE(m + 28));
-        x8  = XOR(x8, LOAD32_LE(m + 32));
-        x9  = XOR(x9, LOAD32_LE(m + 36));
-        x10 = XOR(x10, LOAD32_LE(m + 40));
-        x11 = XOR(x11, LOAD32_LE(m + 44));
-        x12 = XOR(x12, LOAD32_LE(m + 48));
-        x13 = XOR(x13, LOAD32_LE(m + 52));
-        x14 = XOR(x14, LOAD32_LE(m + 56));
-        x15 = XOR(x15, LOAD32_LE(m + 60));
+        x0  = ((x0) ^ (load32_le(m + 0)));
+        x1  = ((x1) ^ (load32_le(m + 4)));
+        x2  = ((x2) ^ (load32_le(m + 8)));
+        x3  = ((x3) ^ (load32_le(m + 12)));
+        x4  = ((x4) ^ (load32_le(m + 16)));
+        x5  = ((x5) ^ (load32_le(m + 20)));
+        x6  = ((x6) ^ (load32_le(m + 24)));
+        x7  = ((x7) ^ (load32_le(m + 28)));
+        x8  = ((x8) ^ (load32_le(m + 32)));
+        x9  = ((x9) ^ (load32_le(m + 36)));
+        x10 = ((x10) ^ (load32_le(m + 40)));
+        x11 = ((x11) ^ (load32_le(m + 44)));
+        x12 = ((x12) ^ (load32_le(m + 48)));
+        x13 = ((x13) ^ (load32_le(m + 52)));
+        x14 = ((x14) ^ (load32_le(m + 56)));
+        x15 = ((x15) ^ (load32_le(m + 60)));
 
         j12 = PLUSONE(j12);
         /* LCOV_EXCL_START */
@@ -185,22 +185,22 @@ chacha20_encrypt_bytes(chacha_ctx *ctx, const uint8_t *m, uint8_t *c,
         }
         /* LCOV_EXCL_STOP */
 
-        STORE32_LE(c + 0, x0);
-        STORE32_LE(c + 4, x1);
-        STORE32_LE(c + 8, x2);
-        STORE32_LE(c + 12, x3);
-        STORE32_LE(c + 16, x4);
-        STORE32_LE(c + 20, x5);
-        STORE32_LE(c + 24, x6);
-        STORE32_LE(c + 28, x7);
-        STORE32_LE(c + 32, x8);
-        STORE32_LE(c + 36, x9);
-        STORE32_LE(c + 40, x10);
-        STORE32_LE(c + 44, x11);
-        STORE32_LE(c + 48, x12);
-        STORE32_LE(c + 52, x13);
-        STORE32_LE(c + 56, x14);
-        STORE32_LE(c + 60, x15);
+        store32_le((c + 0), (x0));
+        store32_le((c + 4), (x1));
+        store32_le((c + 8), (x2));
+        store32_le((c + 12), (x3));
+        store32_le((c + 16), (x4));
+        store32_le((c + 20), (x5));
+        store32_le((c + 24), (x6));
+        store32_le((c + 28), (x7));
+        store32_le((c + 32), (x8));
+        store32_le((c + 36), (x9));
+        store32_le((c + 40), (x10));
+        store32_le((c + 44), (x11));
+        store32_le((c + 48), (x12));
+        store32_le((c + 52), (x13));
+        store32_le((c + 56), (x14));
+        store32_le((c + 60), (x15));
 
         if (bytes <= 64) {
             if (bytes < 64) {
@@ -272,8 +272,8 @@ stream_ref_xor_ic(unsigned char *c, const unsigned char *m,
     }
     ic_high = U32V(ic >> 32);
     ic_low  = U32V(ic);
-    STORE32_LE(&ic_bytes[0], ic_low);
-    STORE32_LE(&ic_bytes[4], ic_high);
+    store32_le((&ic_bytes[0]), (ic_low));
+    store32_le((&ic_bytes[4]), (ic_high));
     chacha_keysetup(&ctx, k);
     chacha_ivsetup(&ctx, n, ic_bytes);
     chacha20_encrypt_bytes(&ctx, m, c, mlen);
@@ -293,7 +293,7 @@ stream_ietf_ext_ref_xor_ic(unsigned char *c, const unsigned char *m,
     if (!mlen) {
         return 0;
     }
-    STORE32_LE(ic_bytes, ic);
+    store32_le((ic_bytes), (ic));
     chacha_keysetup(&ctx, k);
     chacha_ietf_ivsetup(&ctx, n, ic_bytes);
     chacha20_encrypt_bytes(&ctx, m, c, mlen);

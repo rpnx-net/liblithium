@@ -22,7 +22,7 @@ _rubidium_blake2b_long(void *pout, size_t outlen, const void *in, size_t inlen)
     }
 
     /* Ensure little-endian byte order! */
-    STORE32_LE(outlen_bytes, (uint32_t) outlen);
+    store32_le((outlen_bytes), ((uint32_t) outlen));
 
 #define TRY(statement)   \
     do {                 \

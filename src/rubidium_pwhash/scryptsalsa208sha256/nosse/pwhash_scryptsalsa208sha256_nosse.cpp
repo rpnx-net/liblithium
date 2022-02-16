@@ -195,7 +195,7 @@ smix(uint8_t *B, size_t r, uint64_t N, uint32_t *V, uint32_t *XY)
 
     /* 1: X <-- B */
     for (k = 0; k < 32 * r; k++) {
-        X[k] = LOAD32_LE(&B[4 * k]);
+        X[k] = load32_le(&B[4 * k]);
     }
     /* 2: for i = 0 to N - 1 do */
     for (i = 0; i < N; i += 2) {
@@ -230,7 +230,7 @@ smix(uint8_t *B, size_t r, uint64_t N, uint32_t *V, uint32_t *XY)
     }
     /* 10: B' <-- X */
     for (k = 0; k < 32 * r; k++) {
-        STORE32_LE(&B[4 * k], X[k]);
+        store32_le((&B[4 * k]), (X[k]));
     }
 }
 

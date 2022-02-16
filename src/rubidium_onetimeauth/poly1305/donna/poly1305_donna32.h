@@ -29,11 +29,11 @@ static void
 poly1305_init(poly1305_state_internal_t *st, const unsigned char key[32])
 {
     /* r &= 0xffffffc0ffffffc0ffffffc0fffffff - wiped after finalization */
-    st->r[0] = (LOAD32_LE(&key[0])) & 0x3ffffff;
-    st->r[1] = (LOAD32_LE(&key[3]) >> 2) & 0x3ffff03;
-    st->r[2] = (LOAD32_LE(&key[6]) >> 4) & 0x3ffc0ff;
-    st->r[3] = (LOAD32_LE(&key[9]) >> 6) & 0x3f03fff;
-    st->r[4] = (LOAD32_LE(&key[12]) >> 8) & 0x00fffff;
+    st->r[0] = (load32_le(&key[0])) & 0x3ffffff;
+    st->r[1] = (load32_le(&key[3]) >> 2) & 0x3ffff03;
+    st->r[2] = (load32_le(&key[6]) >> 4) & 0x3ffc0ff;
+    st->r[3] = (load32_le(&key[9]) >> 6) & 0x3f03fff;
+    st->r[4] = (load32_le(&key[12]) >> 8) & 0x00fffff;
 
     /* h = 0 */
     st->h[0] = 0;
@@ -43,10 +43,10 @@ poly1305_init(poly1305_state_internal_t *st, const unsigned char key[32])
     st->h[4] = 0;
 
     /* save pad for later */
-    st->pad[0] = LOAD32_LE(&key[16]);
-    st->pad[1] = LOAD32_LE(&key[20]);
-    st->pad[2] = LOAD32_LE(&key[24]);
-    st->pad[3] = LOAD32_LE(&key[28]);
+    st->pad[0] = load32_le(&key[16]);
+    st->pad[1] = load32_le(&key[20]);
+    st->pad[2] = load32_le(&key[24]);
+    st->pad[3] = load32_le(&key[28]);
 
     st->leftover = 0;
     st->final    = 0;
@@ -82,11 +82,11 @@ poly1305_blocks(poly1305_state_internal_t *st, const unsigned char *m,
 
     while (bytes >= poly1305_block_size) {
         /* h += m[i] */
-        h0 += (LOAD32_LE(m + 0)) & 0x3ffffff;
-        h1 += (LOAD32_LE(m + 3) >> 2) & 0x3ffffff;
-        h2 += (LOAD32_LE(m + 6) >> 4) & 0x3ffffff;
-        h3 += (LOAD32_LE(m + 9) >> 6) & 0x3ffffff;
-        h4 += (LOAD32_LE(m + 12) >> 8) | hibit;
+        h0 += (load32_le(m + 0)) & 0x3ffffff;
+        h1 += (load32_le(m + 3) >> 2) & 0x3ffffff;
+        h2 += (load32_le(m + 6) >> 4) & 0x3ffffff;
+        h3 += (load32_le(m + 9) >> 6) & 0x3ffffff;
+        h4 += (load32_le(m + 12) >> 8) | hibit;
 
         /* h *= r */
         d0 = ((unsigned long long) h0 * r0) + ((unsigned long long) h1 * s4) +
@@ -225,10 +225,10 @@ poly1305_finish(poly1305_state_internal_t *st, unsigned char mac[16])
     f  = (unsigned long long) h3 + st->pad[3] + (f >> 32);
     h3 = (unsigned long) f;
 
-    STORE32_LE(mac + 0, (uint32_t) h0);
-    STORE32_LE(mac + 4, (uint32_t) h1);
-    STORE32_LE(mac + 8, (uint32_t) h2);
-    STORE32_LE(mac + 12, (uint32_t) h3);
+    store32_le((mac + 0), ((uint32_t) h0));
+    store32_le((mac + 4), ((uint32_t) h1));
+    store32_le((mac + 8), ((uint32_t) h2));
+    store32_le((mac + 12), ((uint32_t) h3));
 
     /* zero out the state */
     rubidium_memzero((void *) st, sizeof *st);

@@ -351,14 +351,14 @@ argon2_fill_first_blocks(uint8_t *blockhash, const argon2_instance_t *instance)
        G(H0||i||1) */
     uint8_t blockhash_bytes[ARGON2_BLOCK_SIZE];
     for (l = 0; l < instance->lanes; ++l) {
-        STORE32_LE(blockhash + ARGON2_PREHASH_DIGEST_LENGTH, 0);
-        STORE32_LE(blockhash + ARGON2_PREHASH_DIGEST_LENGTH + 4, l);
+        store32_le((blockhash + ARGON2_PREHASH_DIGEST_LENGTH), (0));
+        store32_le((blockhash + ARGON2_PREHASH_DIGEST_LENGTH + 4), (l));
         _rubidium_blake2b_long(blockhash_bytes, ARGON2_BLOCK_SIZE, blockhash,
                      ARGON2_PREHASH_SEED_LENGTH);
         load_block(&instance->region->memory[l * instance->lane_length + 0],
                    blockhash_bytes);
 
-        STORE32_LE(blockhash + ARGON2_PREHASH_DIGEST_LENGTH, 1);
+        store32_le((blockhash + ARGON2_PREHASH_DIGEST_LENGTH), (1));
         _rubidium_blake2b_long(blockhash_bytes, ARGON2_BLOCK_SIZE, blockhash,
                      ARGON2_PREHASH_SEED_LENGTH);
         load_block(&instance->region->memory[l * instance->lane_length + 1],
@@ -381,25 +381,25 @@ argon2_initial_hash(uint8_t *blockhash, argon2_context *context,
     rubidium_generichash_blake2b_init(&BlakeHash, NULL, 0U,
                                     ARGON2_PREHASH_DIGEST_LENGTH);
 
-    STORE32_LE(value, context->lanes);
+    store32_le((value), (context->lanes));
     rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
-    STORE32_LE(value, context->outlen);
+    store32_le((value), (context->outlen));
     rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
-    STORE32_LE(value, context->m_cost);
+    store32_le((value), (context->m_cost));
     rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
-    STORE32_LE(value, context->t_cost);
+    store32_le((value), (context->t_cost));
     rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
-    STORE32_LE(value, ARGON2_VERSION_NUMBER);
+    store32_le((value), (ARGON2_VERSION_NUMBER));
     rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
-    STORE32_LE(value, (uint32_t) type);
+    store32_le((value), ((uint32_t) type));
     rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
-    STORE32_LE(value, context->pwdlen);
+    store32_le((value), (context->pwdlen));
     rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     if (context->pwd != NULL) {
@@ -414,7 +414,7 @@ argon2_initial_hash(uint8_t *blockhash, argon2_context *context,
         /* LCOV_EXCL_STOP */
     }
 
-    STORE32_LE(value, context->saltlen);
+    store32_le((value), (context->saltlen));
     rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     if (context->salt != NULL) {
@@ -422,7 +422,7 @@ argon2_initial_hash(uint8_t *blockhash, argon2_context *context,
             &BlakeHash, (const uint8_t *) context->salt, context->saltlen);
     }
 
-    STORE32_LE(value, context->secretlen);
+    store32_le((value), (context->secretlen));
     rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     /* LCOV_EXCL_START */
@@ -437,7 +437,7 @@ argon2_initial_hash(uint8_t *blockhash, argon2_context *context,
     }
     /* LCOV_EXCL_STOP */
 
-    STORE32_LE(value, context->adlen);
+    store32_le((value), (context->adlen));
     rubidium_generichash_blake2b_update(&BlakeHash, value, sizeof(value));
 
     /* LCOV_EXCL_START */

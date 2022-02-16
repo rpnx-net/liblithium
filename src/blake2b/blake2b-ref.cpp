@@ -134,7 +134,7 @@ _rubidium_blake2b_init(blake2b_state *S, const uint8_t outlen)
     P->key_length    = 0;
     P->fanout        = 1;
     P->depth         = 1;
-    STORE32_LE(P->leaf_length, 0);
+    store32_le((P->leaf_length), (0));
     STORE64_LE(P->node_offset, 0);
     P->node_depth   = 0;
     P->inner_length = 0;
@@ -157,7 +157,7 @@ _rubidium_blake2b_init_salt_personal(blake2b_state *S, const uint8_t outlen,
     P->key_length    = 0;
     P->fanout        = 1;
     P->depth         = 1;
-    STORE32_LE(P->leaf_length, 0);
+    store32_le((P->leaf_length), (0));
     STORE64_LE(P->node_offset, 0);
     P->node_depth   = 0;
     P->inner_length = 0;
@@ -191,7 +191,7 @@ _rubidium_blake2b_init_key(blake2b_state *S, const uint8_t outlen, const void *k
     P->key_length    = keylen;
     P->fanout        = 1;
     P->depth         = 1;
-    STORE32_LE(P->leaf_length, 0);
+    store32_le((P->leaf_length), (0));
     STORE64_LE(P->node_offset, 0);
     P->node_depth   = 0;
     P->inner_length = 0;
@@ -229,7 +229,7 @@ _rubidium_blake2b_init_key_salt_personal(blake2b_state *S, const uint8_t outlen,
     P->key_length    = keylen;
     P->fanout        = 1;
     P->depth         = 1;
-    STORE32_LE(P->leaf_length, 0);
+    store32_le((P->leaf_length), (0));
     STORE64_LE(P->node_offset, 0);
     P->node_depth   = 0;
     P->inner_length = 0;
