@@ -20,32 +20,32 @@ extern "C" {
 #endif
 
 #define rubidium_stream_salsa208_KEYBYTES 32U
-RUBIDIUM_EXPORT
+
 size_t rubidium_stream_salsa208_keybytes(void)
             __attribute__ ((deprecated));
 
 #define rubidium_stream_salsa208_NONCEBYTES 8U
-RUBIDIUM_EXPORT
+
 size_t rubidium_stream_salsa208_noncebytes(void)
             __attribute__ ((deprecated));
 
 #define rubidium_stream_salsa208_MESSAGEBYTES_MAX RUBIDIUM_SIZE_MAX
-    RUBIDIUM_EXPORT
+
 size_t rubidium_stream_salsa208_messagebytes_max(void)
             __attribute__ ((deprecated));
 
-RUBIDIUM_EXPORT
+
 int rubidium_stream_salsa208(unsigned char *c, std::size_t clen,
                            const unsigned char *n, const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 int rubidium_stream_salsa208_xor(unsigned char *c, const unsigned char *m,
                                std::size_t mlen, const unsigned char *n,
                                const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 void rubidium_stream_salsa208_keygen(unsigned char k[rubidium_stream_salsa208_KEYBYTES])
             __attribute__ ((deprecated)) __attribute__ ((nonnull));
 

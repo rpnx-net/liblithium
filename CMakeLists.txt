@@ -187,5 +187,5 @@ target_sources(rubidium
         src/rubidium_core/ed25519/core_h2c.cpp
         )
 
-install(TARGETS rubidium EXPORT rubidium_exports DESTINATION lib)
-install(EXPORT rubidium_exports DESTINATION cmake FILE rubidium-config.cmake NAMESPACE Rubidium::)
+install(TARGETS rubidium EXPORT s DESTINATION lib)
+install(EXPORT s DESTINATION cmake FILE rubidium-config.cmake NAMESPACE Rubidium::)

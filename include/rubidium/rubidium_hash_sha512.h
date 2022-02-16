@@ -27,28 +27,28 @@ typedef struct rubidium_hash_sha512_state {
     uint8_t  buf[128];
 } rubidium_hash_sha512_state;
 
-RUBIDIUM_EXPORT
+
 size_t rubidium_hash_sha512_statebytes(void);
 
 #define rubidium_hash_sha512_BYTES 64U
-RUBIDIUM_EXPORT
+
 size_t rubidium_hash_sha512_bytes(void);
 
-RUBIDIUM_EXPORT
+
 int rubidium_hash_sha512(unsigned char *out, const unsigned char *in,
                        std::size_t inlen) __attribute__ ((nonnull(1)));
 
-RUBIDIUM_EXPORT
+
 int rubidium_hash_sha512_init(rubidium_hash_sha512_state *state)
             __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 int rubidium_hash_sha512_update(rubidium_hash_sha512_state *state,
                               const unsigned char *in,
                               std::size_t inlen)
             __attribute__ ((nonnull(1)));
 
-RUBIDIUM_EXPORT
+
 int rubidium_hash_sha512_final(rubidium_hash_sha512_state *state,
                              unsigned char *out)
             __attribute__ ((nonnull));

@@ -2,7 +2,6 @@
 #ifndef rubidium_H
 #define rubidium_H
 
-#include "rubidium/core.h"
 #include "rubidium/rubidium_aead_aes256gcm.h"
 #include "rubidium/rubidium_aead_aegis128l.h"
 #include "rubidium/rubidium_aead_aegis256.h"
@@ -18,7 +17,6 @@
 #include "rubidium/rubidium_core_salsa20.h"
 #include "rubidium/rubidium_core_salsa2012.h"
 #include "rubidium/rubidium_core_salsa208.h"
-#include "rubidium/rubidium_generichash.h"
 #include "rubidium/rubidium_generichash_blake2b.h"
 #include "rubidium/rubidium_hash.h"
 #include "rubidium/rubidium_hash_sha256.h"
@@ -47,12 +45,8 @@
 #include "rubidium/rubidium_verify_32.h"
 #include "rubidium/rubidium_verify_64.h"
 #include "rubidium/randombytes.h"
-#include "rubidium/randombytes_internal_random.h"
-#include "rubidium/randombytes_sysrandom.h"
 #include "rubidium/runtime.h"
 #include "rubidium/utils.h"
-
-#ifndef RUBIDIUM_LIBRARY_MINIMAL
 # include "rubidium/rubidium_box_curve25519xchacha20poly1305.h"
 # include "rubidium/rubidium_core_ed25519.h"
 # include "rubidium/rubidium_core_ristretto255.h"
@@ -65,6 +59,5 @@
 # include "rubidium/rubidium_stream_salsa2012.h"
 # include "rubidium/rubidium_stream_salsa208.h"
 # include "rubidium/rubidium_stream_xchacha20.h"
-#endif
 
 #endif

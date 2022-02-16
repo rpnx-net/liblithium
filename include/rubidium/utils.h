@@ -18,7 +18,7 @@ extern "C" {
 # endif
 #endif
 
-RUBIDIUM_EXPORT
+
 void rubidium_memzero(void * const pnt, const size_t len);
 
 /*
@@ -27,7 +27,7 @@ void rubidium_memzero(void * const pnt, const size_t len);
  * It returns 0 if the keys are equal, and -1 if they differ.
  * This function is not designed for lexicographical comparisons.
  */
-RUBIDIUM_EXPORT
+
 int rubidium_memcmp(const void * const b1_, const void * const b2_, size_t len)
             __attribute__ ((warn_unused_result));
 
@@ -37,28 +37,28 @@ int rubidium_memcmp(const void * const b1_, const void * const b2_, size_t len)
  * and counters stored in little-endian format.
  * However, it is slower than rubidium_memcmp().
  */
-RUBIDIUM_EXPORT
+
 int rubidium_compare(const unsigned char *b1_, const unsigned char *b2_,
                    size_t len) __attribute__ ((warn_unused_result));
 
-RUBIDIUM_EXPORT
+
 int rubidium_is_zero(const unsigned char *n, const size_t nlen);
 
-RUBIDIUM_EXPORT
+
 void rubidium_increment(unsigned char *n, const size_t nlen);
 
-RUBIDIUM_EXPORT
+
 void rubidium_add(unsigned char *a, const unsigned char *b, const size_t len);
 
-RUBIDIUM_EXPORT
+
 void rubidium_sub(unsigned char *a, const unsigned char *b, const size_t len);
 
-RUBIDIUM_EXPORT
+
 char *rubidium_bin2hex(char * const hex, const size_t hex_maxlen,
                      const unsigned char * const bin, const size_t bin_len)
             __attribute__ ((nonnull(1)));
 
-RUBIDIUM_EXPORT
+
 int rubidium_hex2bin(unsigned char * const bin, const size_t bin_maxlen,
                    const char * const hex, const size_t hex_len,
                    const char * const ignore, size_t * const bin_len,
@@ -79,26 +79,26 @@ int rubidium_hex2bin(unsigned char * const bin, const size_t bin_maxlen,
     ((((BIN_LEN) - ((BIN_LEN) / 3U) * 3U) | (((BIN_LEN) - ((BIN_LEN) / 3U) * 3U) >> 1)) & 1U) * \
      (4U - (~((((VARIANT) & 2U) >> 1) - 1U) & (3U - ((BIN_LEN) - ((BIN_LEN) / 3U) * 3U)))) + 1U)
 
-RUBIDIUM_EXPORT
+
 size_t rubidium_base64_encoded_len(const size_t bin_len, const int variant);
 
-RUBIDIUM_EXPORT
+
 char *rubidium_bin2base64(char * const b64, const size_t b64_maxlen,
                         const unsigned char * const bin, const size_t bin_len,
                         const int variant) __attribute__ ((nonnull(1)));
 
-RUBIDIUM_EXPORT
+
 int rubidium_base642bin(unsigned char * const bin, const size_t bin_maxlen,
                       const char * const b64, const size_t b64_len,
                       const char * const ignore, size_t * const bin_len,
                       const char ** const b64_end, const int variant)
             __attribute__ ((nonnull(1)));
 
-RUBIDIUM_EXPORT
+
 int rubidium_mlock(void * const addr, const size_t len)
             __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 int rubidium_munlock(void * const addr, const size_t len)
             __attribute__ ((nonnull));
 
@@ -135,32 +135,32 @@ int rubidium_munlock(void * const addr, const size_t len)
  * state = rubidium_malloc(rubidium_generichash_statebytes());
  */
 
-RUBIDIUM_EXPORT
+
 void *rubidium_malloc(const size_t size)
             __attribute__ ((malloc));
 
-RUBIDIUM_EXPORT
+
 void *rubidium_allocarray(size_t count, size_t size)
             __attribute__ ((malloc));
 
-RUBIDIUM_EXPORT
+
 void rubidium_free(void *ptr);
 
-RUBIDIUM_EXPORT
+
 int rubidium_mprotect_noaccess(void *ptr) __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 int rubidium_mprotect_readonly(void *ptr) __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 int rubidium_mprotect_readwrite(void *ptr) __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 int rubidium_pad(size_t *padded_buflen_p, unsigned char *buf,
                size_t unpadded_buflen, size_t blocksize, size_t max_buflen)
             __attribute__ ((nonnull(2)));
 
-RUBIDIUM_EXPORT
+
 int rubidium_unpad(size_t *unpadded_buflen_p, const unsigned char *buf,
                  size_t padded_buflen, size_t blocksize)
             __attribute__ ((nonnull(2)));

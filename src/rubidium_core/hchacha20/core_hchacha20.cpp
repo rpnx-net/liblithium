@@ -5,14 +5,13 @@
 #include "rubidium_core_hchacha20.h"
 #include "private/common.h"
 
-#define QUARTERROUND(A, B, C, D)     \
-  do {                               \
-      A += B; D = std::rotl<std::uint32_t>(D ^ A, 16); \
-      C += D; B = std::rotl<std::uint32_t>(B ^ C, 12); \
-      A += B; D = std::rotl<std::uint32_t>(D ^ A,  8); \
-      C += D; B = std::rotl<std::uint32_t>(B ^ C,  7); \
-  } while(0)
-
+inline constexpr void hchacha_quarterround(std::uint32_t & A, std::uint32_t & B, std::uint32_t &C, std::uint32_t & D)
+{
+    A += B; D = std::rotl<std::uint32_t>(D ^ A, 16);
+    C += D; B = std::rotl<std::uint32_t>(B ^ C, 12);
+    A += B; D = std::rotl<std::uint32_t>(D ^ A,  8);
+    C += D; B = std::rotl<std::uint32_t>(B ^ C,  7);
+}
 int
 rubidium_core_hchacha20(unsigned char *out, const unsigned char *in,
                       const unsigned char *k, const unsigned char *c)
@@ -46,14 +45,14 @@ rubidium_core_hchacha20(unsigned char *out, const unsigned char *in,
     x15 = load32_le(in + 12);
 
     for (i = 0; i < 10; i++) {
-        QUARTERROUND(x0, x4,  x8, x12);
-        QUARTERROUND(x1, x5,  x9, x13);
-        QUARTERROUND(x2, x6, x10, x14);
-        QUARTERROUND(x3, x7, x11, x15);
-        QUARTERROUND(x0, x5, x10, x15);
-        QUARTERROUND(x1, x6, x11, x12);
-        QUARTERROUND(x2, x7,  x8, x13);
-        QUARTERROUND(x3, x4,  x9, x14);
+        hchacha_quarterround(x0, x4, x8, x12);
+        hchacha_quarterround(x1, x5, x9, x13);
+        hchacha_quarterround(x2, x6, x10, x14);
+        hchacha_quarterround(x3, x7, x11, x15);
+        hchacha_quarterround(x0, x5, x10, x15);
+        hchacha_quarterround(x1, x6, x11, x12);
+        hchacha_quarterround(x2, x7, x8, x13);
+        hchacha_quarterround(x3, x4, x9, x14);
     }
 
     store32_le((out + 0), (x0));

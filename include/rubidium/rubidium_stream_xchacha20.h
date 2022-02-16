@@ -21,36 +21,36 @@ extern "C" {
 #endif
 
 #define rubidium_stream_xchacha20_KEYBYTES 32U
-RUBIDIUM_EXPORT
+
 size_t rubidium_stream_xchacha20_keybytes(void);
 
 #define rubidium_stream_xchacha20_NONCEBYTES 24U
-RUBIDIUM_EXPORT
+
 size_t rubidium_stream_xchacha20_noncebytes(void);
 
 #define rubidium_stream_xchacha20_MESSAGEBYTES_MAX RUBIDIUM_SIZE_MAX
-RUBIDIUM_EXPORT
+
 size_t rubidium_stream_xchacha20_messagebytes_max(void);
 
-RUBIDIUM_EXPORT
+
 int rubidium_stream_xchacha20(unsigned char *c, std::size_t clen,
                             const unsigned char *n, const unsigned char *k)
             __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 int rubidium_stream_xchacha20_xor(unsigned char *c, const unsigned char *m,
                                 std::size_t mlen, const unsigned char *n,
                                 const unsigned char *k)
             __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 int rubidium_stream_xchacha20_xor_ic(unsigned char *c, const unsigned char *m,
                                    std::size_t mlen,
                                    const unsigned char *n, uint64_t ic,
                                    const unsigned char *k)
             __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 void rubidium_stream_xchacha20_keygen(unsigned char k[rubidium_stream_xchacha20_KEYBYTES])
             __attribute__ ((nonnull));
 

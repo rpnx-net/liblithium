@@ -11,18 +11,18 @@ extern "C" {
 #endif
 
 #define rubidium_scalarmult_BYTES rubidium_scalarmult_curve25519_BYTES
-RUBIDIUM_EXPORT
+
 size_t  rubidium_scalarmult_bytes(void);
 
 #define rubidium_scalarmult_SCALARBYTES rubidium_scalarmult_curve25519_SCALARBYTES
-RUBIDIUM_EXPORT
+
 size_t  rubidium_scalarmult_scalarbytes(void);
 
 #define rubidium_scalarmult_PRIMITIVE "curve25519"
-RUBIDIUM_EXPORT
+
 const char *rubidium_scalarmult_primitive(void);
 
-RUBIDIUM_EXPORT
+
 int rubidium_scalarmult_base(unsigned char *q, const unsigned char *n)
             __attribute__ ((nonnull));
 
@@ -34,7 +34,7 @@ int rubidium_scalarmult_base(unsigned char *q, const unsigned char *n)
  *
  * Or unless this is not an option, use the rubidium_kx() API instead.
  */
-RUBIDIUM_EXPORT
+
 int rubidium_scalarmult(unsigned char *q, const unsigned char *n,
                       const unsigned char *p)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));

@@ -22,33 +22,33 @@ extern "C" {
 #endif
 
 #define rubidium_stream_KEYBYTES rubidium_stream_xsalsa20_KEYBYTES
-RUBIDIUM_EXPORT
+
 size_t  rubidium_stream_keybytes(void);
 
 #define rubidium_stream_NONCEBYTES rubidium_stream_xsalsa20_NONCEBYTES
-RUBIDIUM_EXPORT
+
 size_t  rubidium_stream_noncebytes(void);
 
 #define rubidium_stream_MESSAGEBYTES_MAX rubidium_stream_xsalsa20_MESSAGEBYTES_MAX
-RUBIDIUM_EXPORT
+
 size_t  rubidium_stream_messagebytes_max(void);
 
 #define rubidium_stream_PRIMITIVE "xsalsa20"
-RUBIDIUM_EXPORT
+
 const char *rubidium_stream_primitive(void);
 
-RUBIDIUM_EXPORT
+
 int rubidium_stream(unsigned char *c, std::size_t clen,
                   const unsigned char *n, const unsigned char *k)
             __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 int rubidium_stream_xor(unsigned char *c, const unsigned char *m,
                       std::size_t mlen, const unsigned char *n,
                       const unsigned char *k)
             __attribute__ ((nonnull));
 
-RUBIDIUM_EXPORT
+
 void rubidium_stream_keygen(unsigned char k[rubidium_stream_KEYBYTES])
             __attribute__ ((nonnull));
 
