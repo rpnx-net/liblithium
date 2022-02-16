@@ -60,54 +60,13 @@
 # define MADV_DONTDUMP MADV_NOCORE
 #endif
 
-#ifndef DEFAULT_PAGE_SIZE
-# ifdef PAGE_SIZE
-#  define DEFAULT_PAGE_SIZE PAGE_SIZE
-# else
-#  define DEFAULT_PAGE_SIZE 0x10000
-# endif
-#endif
 
-static std::size_t        page_size = DEFAULT_PAGE_SIZE;
+
 static unsigned char canary[CANARY_SIZE];
-
-/* LCOV_EXCL_START */
-#ifdef HAVE_WEAK_SYMBOLS
-__attribute__((weak)) void
-_rubidium_dummy_symbol_to_prevent_memzero_lto(void *const  pnt,
-                                            const std::size_t len);
-__attribute__((weak)) void
-_rubidium_dummy_symbol_to_prevent_memzero_lto(void *const  pnt,
-                                            const std::size_t len)
-{
-    (void) pnt; /* LCOV_EXCL_LINE */
-    (void) len; /* LCOV_EXCL_LINE */
-}
-#endif
-/* LCOV_EXCL_STOP */
 
 void
 rubidium_memzero(void * const pnt, const std::size_t len)
 {
-#ifdef _WIN32
-    SecureZeroMemory(pnt, len);
-#elif defined(HAVE_MEMSET_S)
-    if (len > 0U && memset_s(pnt, (rstd::size_t) len, 0, (rstd::size_t) len) != 0) {
-        throw std::invalid_argument(""); /* LCOV_EXCL_LINE */
-    }
-#elif defined(HAVE_EXPLICIT_BZERO)
-    explicit_bzero(pnt, len);
-#elif defined(HAVE_EXPLICIT_MEMSET)
-    explicit_memset(pnt, 0, len);
-#elif HAVE_WEAK_SYMBOLS
-    if (len > 0U) {
-        memset(pnt, 0, len);
-        _rubidium_dummy_symbol_to_prevent_memzero_lto(pnt, len);
-    }
-# ifdef HAVE_INLINE_ASM
-    __asm__ __volatile__ ("" : : "r"(pnt) : "memory");
-# endif
-#else
     volatile unsigned char *volatile pnt_ =
         (volatile unsigned char *volatile) pnt;
     std::size_t i = (std::size_t) 0U;
@@ -115,24 +74,7 @@ rubidium_memzero(void * const pnt, const std::size_t len)
     while (i < len) {
         pnt_[i++] = 0U;
     }
-#endif
 }
-
-#ifdef HAVE_WEAK_SYMBOLS
-__attribute__((weak)) void
-_rubidium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
-                                           const unsigned char *b2,
-                                           const std::size_t         len);
-__attribute__((weak)) void
-_rubidium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
-                                           const unsigned char *b2,
-                                           const std::size_t         len)
-{
-    (void) b1;
-    (void) b2;
-    (void) len;
-}
-#endif
 
 int
 rubidium_memcmp(const void *const b1_, const void *const b2_, std::size_t len)
