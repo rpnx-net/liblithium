@@ -44,7 +44,7 @@ be64enc_vect(unsigned char *dst, const uint64_t *src, size_t len)
     size_t i;
 
     for (i = 0; i < len / 8; i++) {
-        STORE64_BE(dst + i * 8, src[i]);
+        store64_be((dst + i * 8), (src[i]));
     }
 }
 

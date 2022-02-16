@@ -54,7 +54,7 @@ be32dec_vect(uint32_t *dst, const unsigned char *src, size_t len)
     size_t i;
 
     for (i = 0; i < len / 4; i++) {
-        dst[i] = LOAD32_BE(src + i * 4);
+        dst[i] = load32_be(src + i * 4);
     }
 }
 
@@ -169,7 +169,7 @@ SHA256_Pad(rubidium_hash_sha256_state *state, uint32_t tmp32[64 + 8])
         SHA256_Transform(state->state, state->buf, &tmp32[0], &tmp32[64]);
         memset(&state->buf[0], 0, 56);
     }
-    STORE64_BE(&state->buf[56], state->count);
+    store64_be((&state->buf[56]), (state->count));
     SHA256_Transform(state->state, state->buf, &tmp32[0], &tmp32[64]);
 }
 
