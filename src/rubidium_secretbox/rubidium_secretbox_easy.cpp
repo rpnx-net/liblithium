@@ -54,7 +54,7 @@ rubidium_secretbox_detached(unsigned char *c, unsigned char *mac,
     }
     rubidium_stream_salsa20_xor(block0, block0, 64U, n + 16, subkey);
     COMPILER_ASSERT(rubidium_secretbox_ZEROBYTES >=
-                    rubidium_onetimeauth_poly1305_KEYBYTES);
+                    RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES);
     rubidium_onetimeauth_poly1305_init(&state, block0);
 
     for (i = 0U; i < mlen0; i++) {

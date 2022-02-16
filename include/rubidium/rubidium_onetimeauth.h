@@ -22,7 +22,7 @@ size_t  rubidium_onetimeauth_statebytes(void);
 RUBIDIUM_EXPORT
 size_t  rubidium_onetimeauth_bytes(void);
 
-#define rubidium_onetimeauth_KEYBYTES rubidium_onetimeauth_poly1305_KEYBYTES
+#define rubidium_onetimeauth_KEYBYTES RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES
 RUBIDIUM_EXPORT
 size_t  rubidium_onetimeauth_keybytes(void);
 

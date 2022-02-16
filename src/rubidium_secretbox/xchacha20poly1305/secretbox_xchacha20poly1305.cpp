@@ -59,7 +59,7 @@ rubidium_secretbox_xchacha20poly1305_detached(unsigned char *c,
                                  mlen0 + RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_ZEROBYTES,
                                n + 16, subkey);
     static_assert(RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_ZEROBYTES >=
-                  rubidium_onetimeauth_poly1305_KEYBYTES);
+                  RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES);
     rubidium_onetimeauth_poly1305_init(&state, block0);
 
     for (std::size_t i = 0U; i < mlen0; i++) {

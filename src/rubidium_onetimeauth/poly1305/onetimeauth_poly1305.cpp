@@ -61,7 +61,7 @@ rubidium_onetimeauth_poly1305_bytes(void)
 size_t
 rubidium_onetimeauth_poly1305_keybytes(void)
 {
-    return rubidium_onetimeauth_poly1305_KEYBYTES;
+    return RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES;
 }
 
 size_t
@@ -72,9 +72,9 @@ rubidium_onetimeauth_poly1305_statebytes(void)
 
 void
 rubidium_onetimeauth_poly1305_keygen(
-    unsigned char k[rubidium_onetimeauth_poly1305_KEYBYTES])
+    unsigned char k[RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_onetimeauth_poly1305_KEYBYTES);
+    randombytes_buf(k, RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES);
 }
 
 int

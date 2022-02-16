@@ -27,7 +27,7 @@ size_t rubidium_onetimeauth_poly1305_statebytes(void);
 RUBIDIUM_EXPORT
 size_t rubidium_onetimeauth_poly1305_bytes(void);
 
-#define rubidium_onetimeauth_poly1305_KEYBYTES 32U
+#define RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES 32U
 RUBIDIUM_EXPORT
 size_t rubidium_onetimeauth_poly1305_keybytes(void);
 
@@ -62,7 +62,7 @@ int rubidium_onetimeauth_poly1305_final(rubidium_onetimeauth_poly1305_state *sta
             __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
-void rubidium_onetimeauth_poly1305_keygen(unsigned char k[rubidium_onetimeauth_poly1305_KEYBYTES])
+void rubidium_onetimeauth_poly1305_keygen(unsigned char k[RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES])
             __attribute__ ((nonnull));
 
 #ifdef __cplusplus
