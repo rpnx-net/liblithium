@@ -10,7 +10,7 @@
  Here the field is \Z/(2^255-19).
  */
 
-#ifdef std::rotl<std::uint64_t>
+#ifdef HAVE_TI_MODE
 typedef uint64_t fe25519[5];
 #else
 typedef int32_t fe25519[10];
