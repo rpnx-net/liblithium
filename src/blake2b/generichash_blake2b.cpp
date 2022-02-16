@@ -53,7 +53,7 @@ rubidium_generichash_blake2b_init(rubidium_generichash_blake2b_state *state,
     }
     assert(outlen <= UINT8_MAX);
     assert(keylen <= UINT8_MAX);
-    COMPILER_ASSERT(sizeof(blake2b_state) <= sizeof *state);
+    static_assert(sizeof(blake2b_state) <= sizeof *state);
     if (key == NULL || keylen <= 0U) {
         if (_rubidium_blake2b_init((blake2b_state *) (void *) state, (uint8_t) outlen) != 0) {
             return -1; /* LCOV_EXCL_LINE */

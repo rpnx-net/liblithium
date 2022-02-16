@@ -111,7 +111,7 @@ _rubidium_blake2b_init_param(blake2b_state *S, const blake2b_param *P)
     size_t         i;
     const uint8_t *p;
 
-    COMPILER_ASSERT(sizeof *P == 64);
+    static_assert(sizeof *P == 64);
     blake2b_init0(S);
     p = (const uint8_t *) (P);
 
@@ -313,7 +313,7 @@ _rubidium_blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen)
            2 * BLAKE2B_BLOCKBYTES - S->buflen); /* Padding */
     blake2b_compress(S, S->buf);
 
-    COMPILER_ASSERT(sizeof buffer == 64U);
+    static_assert(sizeof buffer == 64U);
     STORE64_LE(buffer + 8 * 0, S->h[0]);
     STORE64_LE(buffer + 8 * 1, S->h[1]);
     STORE64_LE(buffer + 8 * 2, S->h[2]);

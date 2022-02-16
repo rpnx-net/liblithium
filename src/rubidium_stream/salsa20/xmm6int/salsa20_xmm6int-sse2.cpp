@@ -78,7 +78,7 @@ stream_sse2(unsigned char *c, unsigned long long clen, const unsigned char *n,
     if (!clen) {
         return 0;
     }
-    COMPILER_ASSERT(rubidium_stream_salsa20_KEYBYTES == 256 / 8);
+    static_assert(rubidium_stream_salsa20_KEYBYTES == 256 / 8);
     salsa_keysetup(&ctx, k);
     salsa_ivsetup(&ctx, n, NULL);
     memset(c, 0, clen);

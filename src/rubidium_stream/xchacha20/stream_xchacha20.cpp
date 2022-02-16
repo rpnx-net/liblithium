@@ -32,8 +32,8 @@ rubidium_stream_xchacha20(unsigned char *c, unsigned long long clen,
     unsigned char k2[rubidium_core_hchacha20_OUTPUTBYTES];
 
     rubidium_core_hchacha20(k2, n, k, NULL);
-    COMPILER_ASSERT(RUBIDIUM_STREAM_CHACHA20_KEYBYTES <= sizeof k2);
-    COMPILER_ASSERT(rubidium_stream_chacha20_NONCEBYTES ==
+    static_assert(RUBIDIUM_STREAM_CHACHA20_KEYBYTES <= sizeof k2);
+    static_assert(rubidium_stream_chacha20_NONCEBYTES ==
                     rubidium_stream_xchacha20_NONCEBYTES -
                     rubidium_core_hchacha20_INPUTBYTES);
 

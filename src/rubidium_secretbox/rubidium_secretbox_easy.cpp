@@ -44,7 +44,7 @@ rubidium_secretbox_detached(unsigned char *c, unsigned char *mac,
         m = c;
     }
     memset(block0, 0U, rubidium_secretbox_ZEROBYTES);
-    COMPILER_ASSERT(64U >= rubidium_secretbox_ZEROBYTES);
+    static_assert(64U >= rubidium_secretbox_ZEROBYTES);
     mlen0 = mlen;
     if (mlen0 > 64U - rubidium_secretbox_ZEROBYTES) {
         mlen0 = 64U - rubidium_secretbox_ZEROBYTES;
@@ -53,7 +53,7 @@ rubidium_secretbox_detached(unsigned char *c, unsigned char *mac,
         block0[i + rubidium_secretbox_ZEROBYTES] = m[i];
     }
     rubidium_stream_salsa20_xor(block0, block0, 64U, n + 16, subkey);
-    COMPILER_ASSERT(rubidium_secretbox_ZEROBYTES >=
+    static_assert(rubidium_secretbox_ZEROBYTES >=
                     RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES);
     rubidium_onetimeauth_poly1305_init(&state, block0);
 

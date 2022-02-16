@@ -229,10 +229,10 @@ rubidium_pwhash_scryptsalsa208sha256_str(
     }
     _rubidium_escrypt_free_local(&escrypt_local);
 
-    COMPILER_ASSERT(
+    static_assert(
         SETTING_SIZE(rubidium_pwhash_scryptsalsa208sha256_STRSALTBYTES) ==
         rubidium_pwhash_scryptsalsa208sha256_STRSETTINGBYTES);
-    COMPILER_ASSERT(
+    static_assert(
         rubidium_pwhash_scryptsalsa208sha256_STRSETTINGBYTES + 1U +
             rubidium_pwhash_scryptsalsa208sha256_STRHASHBYTES_ENCODED + 1U ==
         rubidium_pwhash_scryptsalsa208sha256_STRBYTES);

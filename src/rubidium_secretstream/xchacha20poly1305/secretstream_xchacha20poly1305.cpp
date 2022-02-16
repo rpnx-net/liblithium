@@ -46,12 +46,12 @@ rubidium_secretstream_xchacha20poly1305_init_push
     unsigned char out[rubidium_secretstream_xchacha20poly1305_HEADERBYTES],
     const unsigned char k[rubidium_secretstream_xchacha20poly1305_KEYBYTES])
 {
-    COMPILER_ASSERT(rubidium_secretstream_xchacha20poly1305_HEADERBYTES ==
+    static_assert(rubidium_secretstream_xchacha20poly1305_HEADERBYTES ==
                     rubidium_core_hchacha20_INPUTBYTES +
                     rubidium_secretstream_xchacha20poly1305_INONCEBYTES);
-    COMPILER_ASSERT(rubidium_secretstream_xchacha20poly1305_HEADERBYTES ==
+    static_assert(rubidium_secretstream_xchacha20poly1305_HEADERBYTES ==
                     rubidium_aead_xchacha20poly1305_ietf_NPUBBYTES);
-    COMPILER_ASSERT(sizeof state->nonce ==
+    static_assert(sizeof state->nonce ==
                     rubidium_secretstream_xchacha20poly1305_INONCEBYTES +
                     rubidium_secretstream_xchacha20poly1305_COUNTERBYTES);
 
@@ -160,7 +160,7 @@ rubidium_secretstream_xchacha20poly1305_push
     rubidium_onetimeauth_poly1305_final(&poly1305_state, mac);
     rubidium_memzero(&poly1305_state, sizeof poly1305_state);
 
-    COMPILER_ASSERT(rubidium_onetimeauth_poly1305_BYTES >=
+    static_assert(rubidium_onetimeauth_poly1305_BYTES >=
                     rubidium_secretstream_xchacha20poly1305_INONCEBYTES);
     XOR_BUF(STATE_INONCE(state), mac,
             rubidium_secretstream_xchacha20poly1305_INONCEBYTES);

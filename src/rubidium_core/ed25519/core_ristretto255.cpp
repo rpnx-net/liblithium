@@ -188,7 +188,7 @@ rubidium_core_ristretto255_scalar_from_string(unsigned char *s,
                                 hash_alg) != 0) {
         return -1;
     }
-    COMPILER_ASSERT(sizeof h >= sizeof h_be);
+    static_assert(sizeof h >= sizeof h_be);
     for (i = 0U; i < HASH_SC_L; i++) {
         h[i] = h_be[HASH_SC_L - 1U - i];
     }

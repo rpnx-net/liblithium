@@ -27,36 +27,36 @@ rubidium_pwhash_argon2i_alg_argon2i13(void)
 size_t
 rubidium_pwhash_argon2i_bytes_min(void)
 {
-    COMPILER_ASSERT(rubidium_pwhash_argon2i_BYTES_MIN >= ARGON2_MIN_OUTLEN);
+    static_assert(rubidium_pwhash_argon2i_BYTES_MIN >= ARGON2_MIN_OUTLEN);
     return rubidium_pwhash_argon2i_BYTES_MIN;
 }
 
 size_t
 rubidium_pwhash_argon2i_bytes_max(void)
 {
-    COMPILER_ASSERT(rubidium_pwhash_argon2i_BYTES_MAX <= ARGON2_MAX_OUTLEN);
+    static_assert(rubidium_pwhash_argon2i_BYTES_MAX <= ARGON2_MAX_OUTLEN);
     return rubidium_pwhash_argon2i_BYTES_MAX;
 }
 
 size_t
 rubidium_pwhash_argon2i_passwd_min(void)
 {
-    COMPILER_ASSERT(rubidium_pwhash_argon2i_PASSWD_MIN >= ARGON2_MIN_PWD_LENGTH);
+    static_assert(rubidium_pwhash_argon2i_PASSWD_MIN >= ARGON2_MIN_PWD_LENGTH);
     return rubidium_pwhash_argon2i_PASSWD_MIN;
 }
 
 size_t
 rubidium_pwhash_argon2i_passwd_max(void)
 {
-    COMPILER_ASSERT(rubidium_pwhash_argon2i_PASSWD_MAX <= ARGON2_MAX_PWD_LENGTH);
+    static_assert(rubidium_pwhash_argon2i_PASSWD_MAX <= ARGON2_MAX_PWD_LENGTH);
     return rubidium_pwhash_argon2i_PASSWD_MAX;
 }
 
 size_t
 rubidium_pwhash_argon2i_saltbytes(void)
 {
-    COMPILER_ASSERT(rubidium_pwhash_argon2i_SALTBYTES >= ARGON2_MIN_SALT_LENGTH);
-    COMPILER_ASSERT(rubidium_pwhash_argon2i_SALTBYTES <= ARGON2_MAX_SALT_LENGTH);
+    static_assert(rubidium_pwhash_argon2i_SALTBYTES >= ARGON2_MIN_SALT_LENGTH);
+    static_assert(rubidium_pwhash_argon2i_SALTBYTES <= ARGON2_MAX_SALT_LENGTH);
     return rubidium_pwhash_argon2i_SALTBYTES;
 }
 
@@ -75,28 +75,28 @@ rubidium_pwhash_argon2i_strprefix(void)
 unsigned long long
 rubidium_pwhash_argon2i_opslimit_min(void)
 {
-    COMPILER_ASSERT(rubidium_pwhash_argon2i_OPSLIMIT_MIN >= ARGON2_MIN_TIME);
+    static_assert(rubidium_pwhash_argon2i_OPSLIMIT_MIN >= ARGON2_MIN_TIME);
     return rubidium_pwhash_argon2i_OPSLIMIT_MIN;
 }
 
 unsigned long long
 rubidium_pwhash_argon2i_opslimit_max(void)
 {
-    COMPILER_ASSERT(rubidium_pwhash_argon2i_OPSLIMIT_MAX <= ARGON2_MAX_TIME);
+    static_assert(rubidium_pwhash_argon2i_OPSLIMIT_MAX <= ARGON2_MAX_TIME);
     return rubidium_pwhash_argon2i_OPSLIMIT_MAX;
 }
 
 size_t
 rubidium_pwhash_argon2i_memlimit_min(void)
 {
-    COMPILER_ASSERT((rubidium_pwhash_argon2i_MEMLIMIT_MIN / 1024U) >= ARGON2_MIN_MEMORY);
+    static_assert((rubidium_pwhash_argon2i_MEMLIMIT_MIN / 1024U) >= ARGON2_MIN_MEMORY);
     return rubidium_pwhash_argon2i_MEMLIMIT_MIN;
 }
 
 size_t
 rubidium_pwhash_argon2i_memlimit_max(void)
 {
-    COMPILER_ASSERT((rubidium_pwhash_argon2i_MEMLIMIT_MAX / 1024U) <= ARGON2_MAX_MEMORY);
+    static_assert((rubidium_pwhash_argon2i_MEMLIMIT_MAX / 1024U) <= ARGON2_MAX_MEMORY);
     return rubidium_pwhash_argon2i_MEMLIMIT_MAX;
 }
 

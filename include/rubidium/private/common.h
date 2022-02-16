@@ -6,10 +6,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <bit>
 
 
 
-#define COMPILER_ASSERT(X) (void) sizeof(char[(X) ? 1 : -1])
 
 #ifdef HAVE_TI_MODE
 # if defined(__SIZEOF_INT128__)
@@ -23,14 +23,14 @@ typedef unsigned uint128_t __attribute__((mode(TI)));
 static inline uint32_t
 rotl32(const uint32_t x, const int b)
 {
-    return (x << b) | (x >> (32 - b));
+    return std::rotl(x, b);
 }
 
 #define ROTL64(X, B) rotl64((X), (B))
 static inline uint64_t
 rotl64(const uint64_t x, const int b)
 {
-    return (x << b) | (x >> (64 - b));
+    return std::rotl(x, b);
 }
 
 

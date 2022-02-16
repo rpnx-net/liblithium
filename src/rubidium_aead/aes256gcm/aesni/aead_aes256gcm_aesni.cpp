@@ -586,7 +586,7 @@ rubidium_aead_aes256gcm_beforenm(rubidium_aead_aes256gcm_state *ctx_, const unsi
     __m128i         *rkeys = ctx->rkeys;
     const __m128i    zero  = _mm_setzero_si128();
 
-    COMPILER_ASSERT((sizeof *ctx_) >= (sizeof *ctx));
+    static_assert((sizeof *ctx_) >= (sizeof *ctx));
     aesni_key256_expand(k, rkeys);
     aesni_encrypt1(H, zero, rkeys);
 

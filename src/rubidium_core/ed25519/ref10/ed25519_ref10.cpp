@@ -1158,7 +1158,7 @@ _rubidium_ge25519_has_small_order(const unsigned char s[32])
     unsigned int  k;
     size_t        i, j;
 
-    COMPILER_ASSERT(7 == sizeof blocklist / sizeof blocklist[0]);
+    static_assert(7 == sizeof blocklist / sizeof blocklist[0]);
     for (j = 0; j < 31; j++) {
         for (i = 0; i < sizeof blocklist / sizeof blocklist[0]; i++) {
             c[i] |= s[j] ^ blocklist[i][j];

@@ -198,7 +198,7 @@ rubidium_aead_chacha20poly1305_decrypt_detached(unsigned char *m,
     rubidium_onetimeauth_poly1305_final(&state, computed_mac);
     rubidium_memzero(&state, sizeof state);
 
-    COMPILER_ASSERT(sizeof computed_mac == 16U);
+    static_assert(sizeof computed_mac == 16U);
     ret = rubidium_verify_16(computed_mac, mac);
     rubidium_memzero(computed_mac, sizeof computed_mac);
     if (m == NULL) {
@@ -282,7 +282,7 @@ rubidium_aead_chacha20poly1305_ietf_decrypt_detached(unsigned char *m,
     rubidium_onetimeauth_poly1305_final(&state, computed_mac);
     rubidium_memzero(&state, sizeof state);
 
-    COMPILER_ASSERT(sizeof computed_mac == 16U);
+    static_assert(sizeof computed_mac == 16U);
     ret = rubidium_verify_16(computed_mac, mac);
     rubidium_memzero(computed_mac, sizeof computed_mac);
     if (m == NULL) {

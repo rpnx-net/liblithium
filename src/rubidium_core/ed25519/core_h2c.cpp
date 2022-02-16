@@ -34,7 +34,7 @@ core_h2c_string_to_hash_sha256(unsigned char *h, const size_t h_len, const char 
         rubidium_hash_sha256_final(&st, u0);
         ctx = (const char *) u0;
         ctx_len = HASH_BYTES;
-        COMPILER_ASSERT(HASH_BYTES <= (size_t) 0xff);
+        static_assert(HASH_BYTES <= (size_t) 0xff);
     }
     ctx_len_u8 = (unsigned char) ctx_len;
     rubidium_hash_sha256_init(&st);
@@ -90,7 +90,7 @@ core_h2c_string_to_hash_sha512(unsigned char *h, const size_t h_len, const char 
         rubidium_hash_sha512_final(&st, u0);
         ctx = (const char *) u0;
         ctx_len = HASH_BYTES;
-        COMPILER_ASSERT(HASH_BYTES <= (size_t) 0xff);
+        static_assert(HASH_BYTES <= (size_t) 0xff);
     }
     ctx_len_u8 = (unsigned char) ctx_len;
     rubidium_hash_sha512_init(&st);

@@ -63,7 +63,7 @@ rubidium_box_curve25519xchacha20poly1305_seal_open(unsigned char *m, const unsig
     }
     rubidium_box_curve25519xchacha20poly1305_seal_nonce(nonce, c, pk);
 
-    COMPILER_ASSERT(rubidium_box_curve25519xchacha20poly1305_PUBLICKEYBYTES <
+    static_assert(rubidium_box_curve25519xchacha20poly1305_PUBLICKEYBYTES <
                     rubidium_box_curve25519xchacha20poly1305_SEALBYTES);
 
     return rubidium::rubidium_box_curve25519xchacha20poly1305_open_easy(

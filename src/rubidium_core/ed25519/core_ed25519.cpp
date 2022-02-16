@@ -91,7 +91,7 @@ _string_to_points(unsigned char * const px, const size_t n,
                                 hash_alg) != 0) {
         return -1;
     }
-    COMPILER_ASSERT(sizeof h >= HASH_GE_L);
+    static_assert(sizeof h >= HASH_GE_L);
     for (i = 0U; i < n; i++) {
         for (j = 0U; j < HASH_GE_L; j++) {
             h[j] = h_be[i * HASH_GE_L + HASH_GE_L - 1U - j];
@@ -163,7 +163,7 @@ rubidium_core_ed25519_scalar_negate(unsigned char *neg, const unsigned char *s)
     unsigned char t_[rubidium_core_ed25519_NONREDUCEDSCALARBYTES];
     unsigned char s_[rubidium_core_ed25519_NONREDUCEDSCALARBYTES];
 
-    COMPILER_ASSERT(rubidium_core_ed25519_NONREDUCEDSCALARBYTES >=
+    static_assert(rubidium_core_ed25519_NONREDUCEDSCALARBYTES >=
                     2 * rubidium_core_ed25519_SCALARBYTES);
     memset(t_, 0, sizeof t_);
     memset(s_, 0, sizeof s_);
@@ -182,7 +182,7 @@ rubidium_core_ed25519_scalar_complement(unsigned char *comp,
     unsigned char t_[rubidium_core_ed25519_NONREDUCEDSCALARBYTES];
     unsigned char s_[rubidium_core_ed25519_NONREDUCEDSCALARBYTES];
 
-    COMPILER_ASSERT(rubidium_core_ed25519_NONREDUCEDSCALARBYTES >=
+    static_assert(rubidium_core_ed25519_NONREDUCEDSCALARBYTES >=
                     2 * rubidium_core_ed25519_SCALARBYTES);
     memset(t_, 0, sizeof t_);
     memset(s_, 0, sizeof s_);

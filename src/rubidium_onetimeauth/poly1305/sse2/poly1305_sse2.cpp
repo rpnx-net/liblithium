@@ -876,7 +876,7 @@ static int
 rubidium_onetimeauth_poly1305_sse2_init(rubidium_onetimeauth_poly1305_state *state,
                                       const unsigned char *key)
 {
-    COMPILER_ASSERT(sizeof(rubidium_onetimeauth_poly1305_state) >=
+    static_assert(sizeof(rubidium_onetimeauth_poly1305_state) >=
                     sizeof(poly1305_state_internal_t));
     poly1305_init_ext((poly1305_state_internal_t *) (void *) state, key, 0U);
 
