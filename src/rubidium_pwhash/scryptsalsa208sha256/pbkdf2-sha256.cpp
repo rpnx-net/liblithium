@@ -69,7 +69,7 @@ _rubidium_escrypt_PBKDF2_SHA256(const uint8_t *passwd, size_t passwdlen,
     rubidium_auth_hmacsha256_update(&PShctx, salt, saltlen);
 
     for (i = 0; i * 32 < dkLen; i++) {
-        STORE32_BE(ivec, (uint32_t)(i + 1));
+        store32_be((ivec), ((uint32_t) (i + 1)));
         memcpy(&hctx, &PShctx, sizeof(rubidium_auth_hmacsha256_state));
         rubidium_auth_hmacsha256_update(&hctx, ivec, 4);
         rubidium_auth_hmacsha256_final(&hctx, U);

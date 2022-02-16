@@ -129,18 +129,13 @@ load32_be(const uint8_t src[4])
     return w;
 }
 
-#define STORE32_BE(DST, W) store32_be((DST), (W))
 static inline void
 store32_be(uint8_t dst[4], uint32_t w)
 {
-#ifdef NATIVE_BIG_ENDIAN
-    memcpy(dst, &w, sizeof w);
-#else
     dst[3] = (uint8_t) w; w >>= 8;
     dst[2] = (uint8_t) w; w >>= 8;
     dst[1] = (uint8_t) w; w >>= 8;
     dst[0] = (uint8_t) w;
-#endif
 }
 
 static inline void
