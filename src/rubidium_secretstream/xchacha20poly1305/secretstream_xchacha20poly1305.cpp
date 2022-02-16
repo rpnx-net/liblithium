@@ -151,9 +151,9 @@ rubidium_secretstream_xchacha20poly1305_push
         (&poly1305_state, _pad0, (0x10 - (sizeof block) + mlen) & 0xf);
     /* should have been (0x10 - (sizeof block + mlen)) & 0xf to keep input blocks aligned */
 
-    STORE64_LE(slen, (uint64_t) adlen);
+    store64_le((slen), ((uint64_t) adlen));
     rubidium_onetimeauth_poly1305_update(&poly1305_state, slen, sizeof slen);
-    STORE64_LE(slen, (sizeof block) + mlen);
+    store64_le((slen), ((sizeof block) + mlen));
     rubidium_onetimeauth_poly1305_update(&poly1305_state, slen, sizeof slen);
 
     mac = c + mlen;
@@ -227,9 +227,9 @@ rubidium_secretstream_xchacha20poly1305_pull
         (&poly1305_state, _pad0, (0x10 - (sizeof block) + mlen) & 0xf);
     /* should have been (0x10 - (sizeof block + mlen)) & 0xf to keep input blocks aligned */
 
-    STORE64_LE(slen, (uint64_t) adlen);
+    store64_le((slen), ((uint64_t) adlen));
     rubidium_onetimeauth_poly1305_update(&poly1305_state, slen, sizeof slen);
-    STORE64_LE(slen, (sizeof block) + mlen);
+    store64_le((slen), ((sizeof block) + mlen));
     rubidium_onetimeauth_poly1305_update(&poly1305_state, slen, sizeof slen);
 
     rubidium_onetimeauth_poly1305_final(&poly1305_state, mac);

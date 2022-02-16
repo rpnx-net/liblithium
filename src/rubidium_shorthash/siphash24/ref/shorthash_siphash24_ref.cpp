@@ -65,7 +65,7 @@ rubidium_shorthash_siphash24(unsigned char *out, const unsigned char *in,
     SIPROUND;
     SIPROUND;
     b = v0 ^ v1 ^ v2 ^ v3;
-    STORE64_LE(out, b);
+    store64_le((out), (b));
 
     return 0;
 }

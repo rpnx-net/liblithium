@@ -38,7 +38,7 @@ int rubidium_kdf_blake2b_derive_from_key(unsigned char *subkey, size_t subkey_le
 
     memcpy(ctx_padded, ctx, rubidium_kdf_blake2b_CONTEXTBYTES);
     memset(ctx_padded + rubidium_kdf_blake2b_CONTEXTBYTES, 0, sizeof ctx_padded - rubidium_kdf_blake2b_CONTEXTBYTES);
-    STORE64_LE(salt, subkey_id);
+    store64_le((salt), (subkey_id));
     memset(salt + 8, 0, (sizeof salt) - 8);
     if (subkey_len < rubidium_kdf_blake2b_BYTES_MIN ||
         subkey_len > rubidium_kdf_blake2b_BYTES_MAX) {

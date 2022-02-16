@@ -7,17 +7,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <bit>
+#include <cstdint>
 
 
 
-
-#ifdef HAVE_TI_MODE
-# if defined(__SIZEOF_INT128__)
-typedef unsigned __int128 uint128_t;
-# else
-typedef unsigned uint128_t __attribute__((mode(TI)));
-# endif
-#endif
 
 
 static constexpr inline uint64_t
@@ -34,7 +27,6 @@ load64_le(const uint8_t src[8])
     return w;
 }
 
-#define STORE64_LE(DST, W) store64_le((DST), (W))
 static inline void
 store64_le(uint8_t dst[8], uint64_t w)
 {

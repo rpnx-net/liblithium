@@ -61,7 +61,7 @@ store_block(void *output, const block *src)
 {
     unsigned i;
     for (i = 0; i < ARGON2_QWORDS_IN_BLOCK; ++i) {
-        STORE64_LE((uint8_t *) output + i * sizeof(src->v[i]), src->v[i]);
+        store64_le(((uint8_t *) output + i * sizeof(src->v[i])), (src->v[i]));
     }
 }
 

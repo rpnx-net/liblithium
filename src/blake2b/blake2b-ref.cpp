@@ -135,7 +135,7 @@ _rubidium_blake2b_init(blake2b_state *S, const uint8_t outlen)
     P->fanout        = 1;
     P->depth         = 1;
     store32_le((P->leaf_length), (0));
-    STORE64_LE(P->node_offset, 0);
+    store64_le((P->node_offset), (0));
     P->node_depth   = 0;
     P->inner_length = 0;
     memset(P->reserved, 0, sizeof(P->reserved));
@@ -158,7 +158,7 @@ _rubidium_blake2b_init_salt_personal(blake2b_state *S, const uint8_t outlen,
     P->fanout        = 1;
     P->depth         = 1;
     store32_le((P->leaf_length), (0));
-    STORE64_LE(P->node_offset, 0);
+    store64_le((P->node_offset), (0));
     P->node_depth   = 0;
     P->inner_length = 0;
     memset(P->reserved, 0, sizeof(P->reserved));
@@ -192,7 +192,7 @@ _rubidium_blake2b_init_key(blake2b_state *S, const uint8_t outlen, const void *k
     P->fanout        = 1;
     P->depth         = 1;
     store32_le((P->leaf_length), (0));
-    STORE64_LE(P->node_offset, 0);
+    store64_le((P->node_offset), (0));
     P->node_depth   = 0;
     P->inner_length = 0;
     memset(P->reserved, 0, sizeof(P->reserved));
@@ -230,7 +230,7 @@ _rubidium_blake2b_init_key_salt_personal(blake2b_state *S, const uint8_t outlen,
     P->fanout        = 1;
     P->depth         = 1;
     store32_le((P->leaf_length), (0));
-    STORE64_LE(P->node_offset, 0);
+    store64_le((P->node_offset), (0));
     P->node_depth   = 0;
     P->inner_length = 0;
     memset(P->reserved, 0, sizeof(P->reserved));
@@ -314,14 +314,14 @@ _rubidium_blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen)
     blake2b_compress(S, S->buf);
 
     static_assert(sizeof buffer == 64U);
-    STORE64_LE(buffer + 8 * 0, S->h[0]);
-    STORE64_LE(buffer + 8 * 1, S->h[1]);
-    STORE64_LE(buffer + 8 * 2, S->h[2]);
-    STORE64_LE(buffer + 8 * 3, S->h[3]);
-    STORE64_LE(buffer + 8 * 4, S->h[4]);
-    STORE64_LE(buffer + 8 * 5, S->h[5]);
-    STORE64_LE(buffer + 8 * 6, S->h[6]);
-    STORE64_LE(buffer + 8 * 7, S->h[7]);
+    store64_le((buffer + 8 * 0), (S->h[0]));
+    store64_le((buffer + 8 * 1), (S->h[1]));
+    store64_le((buffer + 8 * 2), (S->h[2]));
+    store64_le((buffer + 8 * 3), (S->h[3]));
+    store64_le((buffer + 8 * 4), (S->h[4]));
+    store64_le((buffer + 8 * 5), (S->h[5]));
+    store64_le((buffer + 8 * 6), (S->h[6]));
+    store64_le((buffer + 8 * 7), (S->h[7]));
     memcpy(out, buffer, outlen); /* outlen <= BLAKE2B_OUTBYTES (64) */
 
     rubidium_memzero(S->h, sizeof S->h);

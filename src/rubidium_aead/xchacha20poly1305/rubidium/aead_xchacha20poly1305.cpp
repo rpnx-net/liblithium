@@ -49,10 +49,10 @@ _encrypt_detached(unsigned char *c,
     rubidium_onetimeauth_poly1305_update(&state, c, mlen);
     rubidium_onetimeauth_poly1305_update(&state, _pad0, (0x10 - mlen) & 0xf);
 
-    STORE64_LE(slen, (uint64_t) adlen);
+    store64_le((slen), ((uint64_t) adlen));
     rubidium_onetimeauth_poly1305_update(&state, slen, sizeof slen);
 
-    STORE64_LE(slen, (uint64_t) mlen);
+    store64_le((slen), ((uint64_t) mlen));
     rubidium_onetimeauth_poly1305_update(&state, slen, sizeof slen);
 
     rubidium_onetimeauth_poly1305_final(&state, mac);
@@ -94,10 +94,10 @@ _decrypt_detached(unsigned char *m,
     rubidium_onetimeauth_poly1305_update(&state, c, mlen);
     rubidium_onetimeauth_poly1305_update(&state, _pad0, (0x10 - mlen) & 0xf);
 
-    STORE64_LE(slen, (uint64_t) adlen);
+    store64_le((slen), ((uint64_t) adlen));
     rubidium_onetimeauth_poly1305_update(&state, slen, sizeof slen);
 
-    STORE64_LE(slen, (uint64_t) mlen);
+    store64_le((slen), ((uint64_t) mlen));
     rubidium_onetimeauth_poly1305_update(&state, slen, sizeof slen);
 
     rubidium_onetimeauth_poly1305_final(&state, computed_mac);
