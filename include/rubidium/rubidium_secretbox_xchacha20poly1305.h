@@ -12,20 +12,20 @@
 extern "C" {
 #endif
 
-#define rubidium_secretbox_xchacha20poly1305_KEYBYTES 32U
+#define RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_KEYBYTES 32U
 RUBIDIUM_EXPORT
 size_t rubidium_secretbox_xchacha20poly1305_keybytes(void);
 
-#define rubidium_secretbox_xchacha20poly1305_NONCEBYTES 24U
+#define RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_NONCEBYTES 24U
 RUBIDIUM_EXPORT
 size_t rubidium_secretbox_xchacha20poly1305_noncebytes(void);
 
-#define rubidium_secretbox_xchacha20poly1305_MACBYTES 16U
+#define RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_MACBYTES 16U
 RUBIDIUM_EXPORT
 size_t rubidium_secretbox_xchacha20poly1305_macbytes(void);
 
-#define rubidium_secretbox_xchacha20poly1305_MESSAGEBYTES_MAX \
-    (rubidium_stream_xchacha20_MESSAGEBYTES_MAX - rubidium_secretbox_xchacha20poly1305_MACBYTES)
+#define RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_MESSAGEBYTES_MAX \
+    (rubidium_stream_xchacha20_MESSAGEBYTES_MAX - RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_MACBYTES)
 RUBIDIUM_EXPORT
 size_t rubidium_secretbox_xchacha20poly1305_messagebytes_max(void);
 

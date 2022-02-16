@@ -22,7 +22,7 @@ static const rubidium_stream_chacha20_implementation *implementation =
 
 size_t
 rubidium_stream_chacha20_keybytes(void) {
-    return rubidium_stream_chacha20_KEYBYTES;
+    return RUBIDIUM_STREAM_CHACHA20_KEYBYTES;
 }
 
 size_t
@@ -159,9 +159,9 @@ rubidium_stream_chacha20_ietf_keygen(unsigned char k[rubidium_stream_chacha20_ie
 }
 
 void
-rubidium_stream_chacha20_keygen(unsigned char k[rubidium_stream_chacha20_KEYBYTES])
+rubidium_stream_chacha20_keygen(unsigned char k[RUBIDIUM_STREAM_CHACHA20_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_stream_chacha20_KEYBYTES);
+    randombytes_buf(k, RUBIDIUM_STREAM_CHACHA20_KEYBYTES);
 }
 
 int

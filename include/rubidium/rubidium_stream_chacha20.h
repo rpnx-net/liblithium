@@ -20,7 +20,7 @@
 extern "C" {
 #endif
 
-#define rubidium_stream_chacha20_KEYBYTES 32U
+#define RUBIDIUM_STREAM_CHACHA20_KEYBYTES 32U
 RUBIDIUM_EXPORT
 size_t rubidium_stream_chacha20_keybytes(void);
 
@@ -53,7 +53,7 @@ int rubidium_stream_chacha20_xor_ic(unsigned char *c, const unsigned char *m,
             __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
-void rubidium_stream_chacha20_keygen(unsigned char k[rubidium_stream_chacha20_KEYBYTES])
+void rubidium_stream_chacha20_keygen(unsigned char k[RUBIDIUM_STREAM_CHACHA20_KEYBYTES])
             __attribute__ ((nonnull));
 
 /* ChaCha20 with a 96-bit nonce and a 32-bit counter (IETF) */

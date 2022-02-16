@@ -26,7 +26,7 @@ rubidium_secretbox_xchacha20poly1305_detached(unsigned char *c,
 {
     rubidium_onetimeauth_poly1305_state state;
     unsigned char                     block0[64U];
-    unsigned char                     subkey[rubidium_stream_chacha20_KEYBYTES];
+    unsigned char                     subkey[RUBIDIUM_STREAM_CHACHA20_KEYBYTES];
     unsigned long long                mlen0;
 
     rubidium_core_hchacha20(subkey, n, k, NULL);
@@ -86,11 +86,11 @@ rubidium_secretbox_xchacha20poly1305_easy(unsigned char *c,
                                         const unsigned char *n,
                                         const unsigned char *k)
 {
-    if (mlen > rubidium_secretbox_xchacha20poly1305_MESSAGEBYTES_MAX) {
-        throw std::invalid_argument("mlen > rubidium_secretbox_xchacha20poly1305_MESSAGEBYTES_MAX");
+    if (mlen > RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_MESSAGEBYTES_MAX) {
+        throw std::invalid_argument("mlen > RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_MESSAGEBYTES_MAX");
     }
     return rubidium_secretbox_xchacha20poly1305_detached
-        (c + rubidium_secretbox_xchacha20poly1305_MACBYTES, c, m, mlen, n, k);
+        (c + RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_MACBYTES, c, m, mlen, n, k);
 }
 
 int
@@ -102,7 +102,7 @@ rubidium_secretbox_xchacha20poly1305_open_detached(unsigned char *m,
                                                  const unsigned char *k)
 {
     unsigned char      block0[64U];
-    unsigned char      subkey[rubidium_stream_chacha20_KEYBYTES];
+    unsigned char      subkey[RUBIDIUM_STREAM_CHACHA20_KEYBYTES];
     unsigned long long i;
     unsigned long long mlen0;
 
@@ -159,34 +159,34 @@ rubidium_secretbox_xchacha20poly1305_open_easy(unsigned char *m,
                                              const unsigned char *n,
                                              const unsigned char *k)
 {
-    if (clen < rubidium_secretbox_xchacha20poly1305_MACBYTES) {
+    if (clen < RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_MACBYTES) {
         return -1;
     }
     return rubidium_secretbox_xchacha20poly1305_open_detached
-        (m, c + rubidium_secretbox_xchacha20poly1305_MACBYTES, c,
-         clen - rubidium_secretbox_xchacha20poly1305_MACBYTES, n, k);
+        (m, c + RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_MACBYTES, c,
+         clen - RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_MACBYTES, n, k);
 }
 
 size_t
 rubidium_secretbox_xchacha20poly1305_keybytes(void)
 {
-    return rubidium_secretbox_xchacha20poly1305_KEYBYTES;
+    return RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_KEYBYTES;
 }
 
 size_t
 rubidium_secretbox_xchacha20poly1305_noncebytes(void)
 {
-    return rubidium_secretbox_xchacha20poly1305_NONCEBYTES;
+    return RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_NONCEBYTES;
 }
 
 size_t
 rubidium_secretbox_xchacha20poly1305_macbytes(void)
 {
-    return rubidium_secretbox_xchacha20poly1305_MACBYTES;
+    return RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_MACBYTES;
 }
 
 size_t
 rubidium_secretbox_xchacha20poly1305_messagebytes_max(void)
 {
-    return rubidium_secretbox_xchacha20poly1305_MESSAGEBYTES_MAX;
+    return RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_MESSAGEBYTES_MAX;
 }

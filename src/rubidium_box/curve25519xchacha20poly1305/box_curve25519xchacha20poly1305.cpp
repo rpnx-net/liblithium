@@ -71,7 +71,7 @@ rubidium_box_curve25519xchacha20poly1305_detached(
     int           ret;
 
     COMPILER_ASSERT(rubidium_box_curve25519xchacha20poly1305_BEFORENMBYTES >=
-                    rubidium_secretbox_xchacha20poly1305_KEYBYTES);
+                    RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_KEYBYTES);
     if (rubidium_box_curve25519xchacha20poly1305_beforenm(k, pk, sk) != 0) {
         return -1;
     }
