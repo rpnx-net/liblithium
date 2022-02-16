@@ -29,11 +29,6 @@ typedef unsigned uint128_t __attribute__((mode(TI)));
 static inline uint64_t
 load64_le(const uint8_t src[8])
 {
-#ifdef NATIVE_LITTLE_ENDIAN
-    uint64_t w;
-    memcpy(&w, src, sizeof w);
-    return w;
-#else
     uint64_t w = (uint64_t) src[0];
     w |= (uint64_t) src[1] <<  8;
     w |= (uint64_t) src[2] << 16;
@@ -43,7 +38,6 @@ load64_le(const uint8_t src[8])
     w |= (uint64_t) src[6] << 48;
     w |= (uint64_t) src[7] << 56;
     return w;
-#endif
 }
 
 #define STORE64_LE(DST, W) store64_le((DST), (W))
