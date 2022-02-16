@@ -27,7 +27,6 @@ rubidium_secretbox_xchacha20poly1305_detached(unsigned char *c,
     rubidium_onetimeauth_poly1305_state state;
     unsigned char                     block0[64U];
     unsigned char                     subkey[rubidium_stream_chacha20_KEYBYTES];
-    unsigned long long                i;
     unsigned long long                mlen0;
 
     rubidium_core_hchacha20(subkey, n, k, NULL);
@@ -53,7 +52,7 @@ rubidium_secretbox_xchacha20poly1305_detached(unsigned char *c,
     if (mlen0 > 64U - rubidium_secretbox_xchacha20poly1305_ZEROBYTES) {
         mlen0 = 64U - rubidium_secretbox_xchacha20poly1305_ZEROBYTES;
     }
-    for (i = 0U; i < mlen0; i++) {
+    for (std::size_t i = 0; i < mlen0; i++) {
         block0[i + rubidium_secretbox_xchacha20poly1305_ZEROBYTES] = m[i];
     }
     rubidium_stream_chacha20_xor(block0, block0,
