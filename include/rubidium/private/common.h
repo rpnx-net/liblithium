@@ -38,9 +38,6 @@ load64_le(const uint8_t src[8])
 static inline void
 store64_le(uint8_t dst[8], uint64_t w)
 {
-#ifdef NATIVE_LITTLE_ENDIAN
-    memcpy(dst, &w, sizeof w);
-#else
     dst[0] = (uint8_t) w; w >>= 8;
     dst[1] = (uint8_t) w; w >>= 8;
     dst[2] = (uint8_t) w; w >>= 8;
@@ -49,7 +46,6 @@ store64_le(uint8_t dst[8], uint64_t w)
     dst[5] = (uint8_t) w; w >>= 8;
     dst[6] = (uint8_t) w; w >>= 8;
     dst[7] = (uint8_t) w;
-#endif
 }
 
 static inline uint32_t
