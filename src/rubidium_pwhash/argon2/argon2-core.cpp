@@ -52,7 +52,7 @@ load_block(block *dst, const void *input)
 {
     unsigned i;
     for (i = 0; i < ARGON2_QWORDS_IN_BLOCK; ++i) {
-        dst->v[i] = LOAD64_LE((const uint8_t *) input + i * sizeof(dst->v[i]));
+        dst->v[i] = load64_le((const uint8_t *) input + i * sizeof(dst->v[i]));
     }
 }
 

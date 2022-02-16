@@ -36,7 +36,7 @@ _rubidium_blake2b_compress_ref(blake2b_state *S, const uint8_t block[BLAKE2B_BLO
     int      i;
 
     for (i = 0; i < 16; ++i) {
-        m[i] = LOAD64_LE(block + i * sizeof m[i]);
+        m[i] = load64_le(block + i * sizeof m[i]);
     }
     for (i = 0; i < 8; ++i) {
         v[i] = S->h[i];

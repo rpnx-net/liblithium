@@ -11,8 +11,8 @@ rubidium_shorthash_siphashx24(unsigned char *out, const unsigned char *in,
     uint64_t       v2 = 0x6c7967656e657261ULL;
     uint64_t       v3 = 0x7465646279746573ULL;
     uint64_t       b;
-    uint64_t       k0 = LOAD64_LE(k);
-    uint64_t       k1 = LOAD64_LE(k + 8);
+    uint64_t       k0 = load64_le(k);
+    uint64_t       k1 = load64_le(k + 8);
     uint64_t       m;
     const uint8_t *end  = in + inlen - (inlen % sizeof(uint64_t));
     const int      left = inlen & 7;
@@ -23,7 +23,7 @@ rubidium_shorthash_siphashx24(unsigned char *out, const unsigned char *in,
     v1 ^= k1;
     v0 ^= k0;
     for (; in != end; in += 8) {
-        m = LOAD64_LE(in);
+        m = load64_le(in);
         v3 ^= m;
         SIPROUND;
         SIPROUND;

@@ -20,13 +20,7 @@ typedef unsigned uint128_t __attribute__((mode(TI)));
 #endif
 
 
-
-
-
-
-
-#define LOAD64_LE(SRC) load64_le(SRC)
-static inline uint64_t
+static constexpr inline uint64_t
 load64_le(const uint8_t src[8])
 {
     uint64_t w = (uint64_t) src[0];

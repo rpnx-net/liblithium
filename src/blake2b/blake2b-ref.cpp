@@ -117,7 +117,7 @@ _rubidium_blake2b_init_param(blake2b_state *S, const blake2b_param *P)
 
     /* IV XOR ParamBlock */
     for (i = 0; i < 8; i++) {
-        S->h[i] ^= LOAD64_LE(p + sizeof(S->h[i]) * i);
+        S->h[i] ^= load64_le(p + sizeof(S->h[i]) * i);
     }
     return 0;
 }
