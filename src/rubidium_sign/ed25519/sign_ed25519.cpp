@@ -66,7 +66,7 @@ rubidium_sign_ed25519ph_init(rubidium_sign_ed25519ph_state *state)
 
 int
 rubidium_sign_ed25519ph_update(rubidium_sign_ed25519ph_state *state,
-                             const unsigned char *m, unsigned long long mlen)
+                             const unsigned char *m, std::size_t mlen)
 {
     return rubidium_hash_sha512_update(&state->hs, m, mlen);
 }
@@ -74,7 +74,7 @@ rubidium_sign_ed25519ph_update(rubidium_sign_ed25519ph_state *state,
 int
 rubidium_sign_ed25519ph_final_create(rubidium_sign_ed25519ph_state *state,
                                    unsigned char               *sig,
-                                   unsigned long long          *siglen_p,
+                                   std::size_t          *siglen_p,
                                    const unsigned char         *sk)
 {
     unsigned char ph[rubidium_hash_sha512_BYTES];

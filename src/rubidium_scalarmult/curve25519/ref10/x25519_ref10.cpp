@@ -1,6 +1,6 @@
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 #include "../scalarmult_curve25519.h"
 #include "export.h"

@@ -1,5 +1,5 @@
 
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 
 #include "rubidium_core_hchacha20.h"

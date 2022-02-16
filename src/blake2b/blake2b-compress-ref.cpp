@@ -1,5 +1,5 @@
 
-#include <stdint.h>
+#include <cstdint>
 #include <string.h>
 
 #include "blake2.h"

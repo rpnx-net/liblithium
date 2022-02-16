@@ -48,7 +48,7 @@ rubidium_box_curve25519xsalsa20poly1305_beforenm(unsigned char *k,
 int
 rubidium_box_curve25519xsalsa20poly1305_afternm(unsigned char *c,
                                               const unsigned char *m,
-                                              unsigned long long mlen,
+                                              std::size_t mlen,
                                               const unsigned char *n,
                                               const unsigned char *k)
 {
@@ -58,7 +58,7 @@ rubidium_box_curve25519xsalsa20poly1305_afternm(unsigned char *c,
 int
 rubidium_box_curve25519xsalsa20poly1305_open_afternm(unsigned char *m,
                                                    const unsigned char *c,
-                                                   unsigned long long clen,
+                                                   std::size_t clen,
                                                    const unsigned char *n,
                                                    const unsigned char *k)
 {
@@ -67,7 +67,7 @@ rubidium_box_curve25519xsalsa20poly1305_open_afternm(unsigned char *m,
 
 int
 rubidium_box_curve25519xsalsa20poly1305(unsigned char *c, const unsigned char *m,
-                                      unsigned long long   mlen,
+                                      std::size_t   mlen,
                                       const unsigned char *n,
                                       const unsigned char *pk,
                                       const unsigned char *sk)
@@ -86,7 +86,7 @@ rubidium_box_curve25519xsalsa20poly1305(unsigned char *c, const unsigned char *m
 
 int
 rubidium_box_curve25519xsalsa20poly1305_open(
-    unsigned char *m, const unsigned char *c, unsigned long long clen,
+    unsigned char *m, const unsigned char *c, std::size_t clen,
     const unsigned char *n, const unsigned char *pk, const unsigned char *sk)
 {
     unsigned char k[rubidium_box_curve25519xsalsa20poly1305_BEFORENMBYTES];

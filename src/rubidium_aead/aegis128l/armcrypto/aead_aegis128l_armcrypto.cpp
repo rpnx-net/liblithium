@@ -72,8 +72,8 @@ rubidium_aead_aegis128l_init(const unsigned char *key, const unsigned char *nonc
 }
 
 static void
-rubidium_aead_aegis128l_mac(unsigned char *mac, unsigned long long adlen,
-                          unsigned long long mlen, uint8x16_t *const state)
+rubidium_aead_aegis128l_mac(unsigned char *mac, std::size_t adlen,
+                          std::size_t mlen, uint8x16_t *const state)
 {
     uint8x16_t tmp;
     int        i;
@@ -142,15 +142,15 @@ rubidium_aead_aegis128l_dec(unsigned char *const dst,
 
 int
 rubidium_aead_aegis128l_encrypt_detached(unsigned char *c, unsigned char *mac,
-                                       unsigned long long *maclen_p, const unsigned char *m,
-                                       unsigned long long mlen, const unsigned char *ad,
-                                       unsigned long long adlen, const unsigned char *nsec,
+                                       std::size_t *maclen_p, const unsigned char *m,
+                                       std::size_t mlen, const unsigned char *ad,
+                                       std::size_t adlen, const unsigned char *nsec,
                                        const unsigned char *npub, const unsigned char *k)
 {
     uint8x16_t                     state[8];
     RUBIDIUM_ALIGN(16) unsigned char src[32];
     RUBIDIUM_ALIGN(16) unsigned char dst[32];
-    unsigned long long i;
+    std::size_t i;
 
     (void) nsec;
     rubidium_aead_aegis128l_init(k, npub, state);
@@ -185,12 +185,12 @@ rubidium_aead_aegis128l_encrypt_detached(unsigned char *c, unsigned char *mac,
 }
 
 int
-rubidium_aead_aegis128l_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
-                              unsigned long long mlen, const unsigned char *ad,
-                              unsigned long long adlen, const unsigned char *nsec,
+rubidium_aead_aegis128l_encrypt(unsigned char *c, std::size_t *clen_p, const unsigned char *m,
+                              std::size_t mlen, const unsigned char *ad,
+                              std::size_t adlen, const unsigned char *nsec,
                               const unsigned char *npub, const unsigned char *k)
 {
-    unsigned long long clen = 0ULL;
+    std::size_t clen = 0ULL;
     int                ret;
 
     if (mlen > rubidium_aead_aegis128l_MESSAGEBYTES_MAX) {
@@ -209,16 +209,16 @@ rubidium_aead_aegis128l_encrypt(unsigned char *c, unsigned long long *clen_p, co
 
 int
 rubidium_aead_aegis128l_decrypt_detached(unsigned char *m, unsigned char *nsec, const unsigned char *c,
-                                       unsigned long long clen, const unsigned char *mac,
-                                       const unsigned char *ad, unsigned long long adlen,
+                                       std::size_t clen, const unsigned char *mac,
+                                       const unsigned char *ad, std::size_t adlen,
                                        const unsigned char *npub, const unsigned char *k)
 {
     uint8x16_t                     state[8];
     RUBIDIUM_ALIGN(16) unsigned char src[32];
     RUBIDIUM_ALIGN(16) unsigned char dst[32];
     RUBIDIUM_ALIGN(16) unsigned char computed_mac[16];
-    unsigned long long i;
-    unsigned long long mlen;
+    std::size_t i;
+    std::size_t mlen;
     int                ret;
 
     (void) nsec;
@@ -271,12 +271,12 @@ rubidium_aead_aegis128l_decrypt_detached(unsigned char *m, unsigned char *nsec, 
 }
 
 int
-rubidium_aead_aegis128l_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
-                              const unsigned char *c, unsigned long long clen,
-                              const unsigned char *ad, unsigned long long adlen,
+rubidium_aead_aegis128l_decrypt(unsigned char *m, std::size_t *mlen_p, unsigned char *nsec,
+                              const unsigned char *c, std::size_t clen,
+                              const unsigned char *ad, std::size_t adlen,
                               const unsigned char *npub, const unsigned char *k)
 {
-    unsigned long long mlen = 0ULL;
+    std::size_t mlen = 0ULL;
     int                ret  = -1;
 
     if (clen >= 16ULL) {

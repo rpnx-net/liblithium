@@ -1,7 +1,7 @@
 
 #include <assert.h>
 #include <limits.h>
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 #include <cstring>
 #include <stdexcept>
@@ -20,14 +20,14 @@ int
 rubidium_secretbox_xchacha20poly1305_detached(unsigned char *c,
                                             unsigned char *mac,
                                             const unsigned char *m,
-                                            unsigned long long mlen,
+                                            std::size_t mlen,
                                             const unsigned char *n,
                                             const unsigned char *k)
 {
     rubidium_onetimeauth_poly1305_state state;
     unsigned char                     block0[64U];
     unsigned char                     subkey[RUBIDIUM_STREAM_CHACHA20_KEYBYTES];
-    unsigned long long                mlen0;
+    std::size_t                mlen0;
 
     rubidium_core_hchacha20(subkey, n, k, NULL);
 
@@ -82,7 +82,7 @@ rubidium_secretbox_xchacha20poly1305_detached(unsigned char *c,
 int
 rubidium_secretbox_xchacha20poly1305_easy(unsigned char *c,
                                         const unsigned char *m,
-                                        unsigned long long mlen,
+                                        std::size_t mlen,
                                         const unsigned char *n,
                                         const unsigned char *k)
 {
@@ -97,14 +97,14 @@ int
 rubidium_secretbox_xchacha20poly1305_open_detached(unsigned char *m,
                                                  const unsigned char *c,
                                                  const unsigned char *mac,
-                                                 unsigned long long clen,
+                                                 std::size_t clen,
                                                  const unsigned char *n,
                                                  const unsigned char *k)
 {
     unsigned char      block0[64U];
     unsigned char      subkey[RUBIDIUM_STREAM_CHACHA20_KEYBYTES];
-    unsigned long long i;
-    unsigned long long mlen0;
+    std::size_t i;
+    std::size_t mlen0;
 
     rubidium_core_hchacha20(subkey, n, k, NULL);
 
@@ -155,7 +155,7 @@ rubidium_secretbox_xchacha20poly1305_open_detached(unsigned char *m,
 int
 rubidium_secretbox_xchacha20poly1305_open_easy(unsigned char *m,
                                              const unsigned char *c,
-                                             unsigned long long clen,
+                                             std::size_t clen,
                                              const unsigned char *n,
                                              const unsigned char *k)
 {

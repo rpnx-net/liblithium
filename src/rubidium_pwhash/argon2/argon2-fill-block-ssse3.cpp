@@ -11,7 +11,7 @@
  * <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
 
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 #include <string.h>
 

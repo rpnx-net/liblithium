@@ -22,14 +22,14 @@ rubidium_onetimeauth_keybytes(void)
 
 int
 rubidium_onetimeauth(unsigned char *out, const unsigned char *in,
-                   unsigned long long inlen, const unsigned char *k)
+                   std::size_t inlen, const unsigned char *k)
 {
     return rubidium_onetimeauth_poly1305(out, in, inlen, k);
 }
 
 int
 rubidium_onetimeauth_verify(const unsigned char *h, const unsigned char *in,
-                          unsigned long long inlen, const unsigned char *k)
+                          std::size_t inlen, const unsigned char *k)
 {
     return rubidium_onetimeauth_poly1305_verify(h, in, inlen, k);
 }
@@ -45,7 +45,7 @@ rubidium_onetimeauth_init(rubidium_onetimeauth_state *state,
 int
 rubidium_onetimeauth_update(rubidium_onetimeauth_state *state,
                           const unsigned char *in,
-                          unsigned long long inlen)
+                          std::size_t inlen)
 {
     return rubidium_onetimeauth_poly1305_update
         ((rubidium_onetimeauth_poly1305_state *) state, in, inlen);

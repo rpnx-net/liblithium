@@ -1,6 +1,6 @@
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 #include <string.h>
 
 #include "rubidium_auth_hmacsha512.h"
@@ -46,7 +46,7 @@ rubidium_auth_hmacsha512256_init(rubidium_auth_hmacsha512256_state *state,
 int
 rubidium_auth_hmacsha512256_update(rubidium_auth_hmacsha512256_state *state,
                                  const unsigned char             *in,
-                                 unsigned long long               inlen)
+                                 std::size_t               inlen)
 {
     return rubidium_auth_hmacsha512_update((rubidium_auth_hmacsha512_state *) state,
                                          in, inlen);
@@ -66,7 +66,7 @@ rubidium_auth_hmacsha512256_final(rubidium_auth_hmacsha512256_state *state,
 
 int
 rubidium_auth_hmacsha512256(unsigned char *out, const unsigned char *in,
-                          unsigned long long inlen, const unsigned char *k)
+                          std::size_t inlen, const unsigned char *k)
 {
     rubidium_auth_hmacsha512256_state state;
 
@@ -81,7 +81,7 @@ rubidium_auth_hmacsha512256(unsigned char *out, const unsigned char *in,
 int
 rubidium_auth_hmacsha512256_verify(const unsigned char *h,
                                  const unsigned char *in,
-                                 unsigned long long   inlen,
+                                 std::size_t   inlen,
                                  const unsigned char *k)
 {
     unsigned char correct[32];

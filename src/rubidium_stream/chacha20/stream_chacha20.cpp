@@ -53,7 +53,7 @@ rubidium_stream_chacha20_ietf_messagebytes_max(void)
 }
 
 int
-rubidium_stream_chacha20(unsigned char *c, unsigned long long clen,
+rubidium_stream_chacha20(unsigned char *c, std::size_t clen,
                        const unsigned char *n, const unsigned char *k)
 {
     if (clen > rubidium_stream_chacha20_MESSAGEBYTES_MAX) {
@@ -64,7 +64,7 @@ rubidium_stream_chacha20(unsigned char *c, unsigned long long clen,
 
 int
 rubidium_stream_chacha20_xor_ic(unsigned char *c, const unsigned char *m,
-                              unsigned long long mlen,
+                              std::size_t mlen,
                               const unsigned char *n, uint64_t ic,
                               const unsigned char *k)
 {
@@ -76,7 +76,7 @@ rubidium_stream_chacha20_xor_ic(unsigned char *c, const unsigned char *m,
 
 int
 rubidium_stream_chacha20_xor(unsigned char *c, const unsigned char *m,
-                           unsigned long long mlen, const unsigned char *n,
+                           std::size_t mlen, const unsigned char *n,
                            const unsigned char *k)
 {
     if (mlen > rubidium_stream_chacha20_MESSAGEBYTES_MAX) {
@@ -86,7 +86,7 @@ rubidium_stream_chacha20_xor(unsigned char *c, const unsigned char *m,
 }
 
 int
-rubidium_stream_chacha20_ietf_ext(unsigned char *c, unsigned long long clen,
+rubidium_stream_chacha20_ietf_ext(unsigned char *c, std::size_t clen,
                                 const unsigned char *n, const unsigned char *k)
 {
     if (clen > rubidium_stream_chacha20_MESSAGEBYTES_MAX) {
@@ -97,7 +97,7 @@ rubidium_stream_chacha20_ietf_ext(unsigned char *c, unsigned long long clen,
 
 int
 rubidium_stream_chacha20_ietf_ext_xor_ic(unsigned char *c, const unsigned char *m,
-                                       unsigned long long mlen,
+                                       std::size_t mlen,
                                        const unsigned char *n, uint32_t ic,
                                        const unsigned char *k)
 {
@@ -109,7 +109,7 @@ rubidium_stream_chacha20_ietf_ext_xor_ic(unsigned char *c, const unsigned char *
 
 static int
 rubidium_stream_chacha20_ietf_ext_xor(unsigned char *c, const unsigned char *m,
-                                    unsigned long long mlen, const unsigned char *n,
+                                    std::size_t mlen, const unsigned char *n,
                                     const unsigned char *k)
 {
     if (mlen > rubidium_stream_chacha20_MESSAGEBYTES_MAX) {
@@ -119,7 +119,7 @@ rubidium_stream_chacha20_ietf_ext_xor(unsigned char *c, const unsigned char *m,
 }
 
 int
-rubidium_stream_chacha20_ietf(unsigned char *c, unsigned long long clen,
+rubidium_stream_chacha20_ietf(unsigned char *c, std::size_t clen,
                             const unsigned char *n, const unsigned char *k)
 {
     if (clen > rubidium_stream_chacha20_ietf_MESSAGEBYTES_MAX) {
@@ -130,11 +130,11 @@ rubidium_stream_chacha20_ietf(unsigned char *c, unsigned long long clen,
 
 int
 rubidium_stream_chacha20_ietf_xor_ic(unsigned char *c, const unsigned char *m,
-                                   unsigned long long mlen,
+                                   std::size_t mlen,
                                    const unsigned char *n, uint32_t ic,
                                    const unsigned char *k)
 {
-    if ((unsigned long long) ic >
+    if ((std::size_t) ic >
         (64ULL * (1ULL << 32)) / 64ULL - (mlen + 63ULL) / 64ULL) {
         throw std::invalid_argument("");
     }
@@ -143,7 +143,7 @@ rubidium_stream_chacha20_ietf_xor_ic(unsigned char *c, const unsigned char *m,
 
 int
 rubidium_stream_chacha20_ietf_xor(unsigned char *c, const unsigned char *m,
-                                unsigned long long mlen, const unsigned char *n,
+                                std::size_t mlen, const unsigned char *n,
                                 const unsigned char *k)
 {
     if (mlen > rubidium_stream_chacha20_ietf_MESSAGEBYTES_MAX) {

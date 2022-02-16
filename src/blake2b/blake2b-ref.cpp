@@ -14,8 +14,8 @@
 */
 #include <stdexcept>
 #include <assert.h>
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 #include <stdlib.h>
 #include <string.h>
 

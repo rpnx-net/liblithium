@@ -13,13 +13,13 @@
 
 static void
 poly1305_update(poly1305_state_internal_t *st, const unsigned char *m,
-                unsigned long long bytes)
+                std::size_t bytes)
 {
-    unsigned long long i;
+    std::size_t i;
 
     /* handle leftover */
     if (st->leftover) {
-        unsigned long long want = (poly1305_block_size - st->leftover);
+        std::size_t want = (poly1305_block_size - st->leftover);
 
         if (want > bytes) {
             want = bytes;
@@ -39,7 +39,7 @@ poly1305_update(poly1305_state_internal_t *st, const unsigned char *m,
 
     /* process full blocks */
     if (bytes >= poly1305_block_size) {
-        unsigned long long want = (bytes & ~(poly1305_block_size - 1));
+        std::size_t want = (bytes & ~(poly1305_block_size - 1));
 
         poly1305_blocks(st, m, want);
         m += want;
@@ -57,7 +57,7 @@ poly1305_update(poly1305_state_internal_t *st, const unsigned char *m,
 
 static int
 rubidium_onetimeauth_poly1305_donna(unsigned char *out, const unsigned char *m,
-                                  unsigned long long   inlen,
+                                  std::size_t   inlen,
                                   const unsigned char *key)
 {
     RUBIDIUM_ALIGN(64) poly1305_state_internal_t state;
@@ -83,7 +83,7 @@ rubidium_onetimeauth_poly1305_donna_init(rubidium_onetimeauth_poly1305_state *st
 static int
 rubidium_onetimeauth_poly1305_donna_update(
     rubidium_onetimeauth_poly1305_state *state, const unsigned char *in,
-    unsigned long long inlen)
+    std::size_t inlen)
 {
     poly1305_update((poly1305_state_internal_t *) (void *) state, in, inlen);
 
@@ -102,7 +102,7 @@ rubidium_onetimeauth_poly1305_donna_final(
 static int
 rubidium_onetimeauth_poly1305_donna_verify(const unsigned char *h,
                                          const unsigned char *in,
-                                         unsigned long long   inlen,
+                                         std::size_t   inlen,
                                          const unsigned char *k)
 {
     unsigned char correct[16];

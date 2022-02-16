@@ -1,8 +1,8 @@
 #ifndef rubidium_kdf_H
 #define rubidium_kdf_H
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 #include "rubidium_kdf_blake2b.h"
 #include "export.h"

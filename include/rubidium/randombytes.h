@@ -35,7 +35,7 @@ int randombytes_close(void);
 /* -- NaCl compatibility interface -- */
 
 RUBIDIUM_EXPORT
-void randombytes(unsigned char * const buf, const unsigned long long buf_len)
+void randombytes(unsigned char * const buf, const std::size_t buf_len)
             __attribute__ ((nonnull));
 
 

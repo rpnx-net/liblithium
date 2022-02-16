@@ -31,8 +31,8 @@
 #define rubidium_scrypt_H
 
 #include <limits.h>
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 
 

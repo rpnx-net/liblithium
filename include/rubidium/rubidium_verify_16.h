@@ -1,7 +1,7 @@
 #ifndef rubidium_verify_16_H
 #define rubidium_verify_16_H
 
-#include <stddef.h>
+#include <cstddef>
 #include "export.h"
 
 #ifdef __cplusplus

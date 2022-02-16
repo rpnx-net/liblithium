@@ -8,7 +8,7 @@
  * Other functions, including rubidium_sign_seed_keypair() are always thread-safe.
  */
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "rubidium_sign_ed25519.h"
 #include "export.h"
@@ -59,25 +59,25 @@ int rubidium_sign_keypair(unsigned char *pk, unsigned char *sk)
             __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
-int rubidium_sign(unsigned char *sm, unsigned long long *smlen_p,
-                const unsigned char *m, unsigned long long mlen,
+int rubidium_sign(unsigned char *sm, std::size_t *smlen_p,
+                const unsigned char *m, std::size_t mlen,
                 const unsigned char *sk) __attribute__ ((nonnull(1, 5)));
 
 RUBIDIUM_EXPORT
-int rubidium_sign_open(unsigned char *m, unsigned long long *mlen_p,
-                     const unsigned char *sm, unsigned long long smlen,
+int rubidium_sign_open(unsigned char *m, std::size_t *mlen_p,
+                     const unsigned char *sm, std::size_t smlen,
                      const unsigned char *pk)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(3, 5)));
 
 RUBIDIUM_EXPORT
-int rubidium_sign_detached(unsigned char *sig, unsigned long long *siglen_p,
-                         const unsigned char *m, unsigned long long mlen,
+int rubidium_sign_detached(unsigned char *sig, std::size_t *siglen_p,
+                         const unsigned char *m, std::size_t mlen,
                          const unsigned char *sk) __attribute__ ((nonnull(1, 5)));
 
 RUBIDIUM_EXPORT
 int rubidium_sign_verify_detached(const unsigned char *sig,
                                 const unsigned char *m,
-                                unsigned long long mlen,
+                                std::size_t mlen,
                                 const unsigned char *pk)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(1, 4)));
 
@@ -86,12 +86,12 @@ int rubidium_sign_init(rubidium_sign_state *state);
 
 RUBIDIUM_EXPORT
 int rubidium_sign_update(rubidium_sign_state *state,
-                       const unsigned char *m, unsigned long long mlen)
+                       const unsigned char *m, std::size_t mlen)
             __attribute__ ((nonnull(1)));
 
 RUBIDIUM_EXPORT
 int rubidium_sign_final_create(rubidium_sign_state *state, unsigned char *sig,
-                             unsigned long long *siglen_p,
+                             std::size_t *siglen_p,
                              const unsigned char *sk)
             __attribute__ ((nonnull(1, 2, 4)));
 

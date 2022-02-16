@@ -1,7 +1,7 @@
 #ifndef rubidium_aead_chacha20poly1305_H
 #define rubidium_aead_chacha20poly1305_H
 
-#include <stddef.h>
+#include <cstddef>
 #include "export.h"
 
 #ifdef __cplusplus
@@ -38,11 +38,11 @@ size_t rubidium_aead_chacha20poly1305_ietf_messagebytes_max(void);
 
 RUBIDIUM_EXPORT
 int rubidium_aead_chacha20poly1305_ietf_encrypt(unsigned char *c,
-                                              unsigned long long *clen_p,
+                                              std::size_t *clen_p,
                                               const unsigned char *m,
-                                              unsigned long long mlen,
+                                              std::size_t mlen,
                                               const unsigned char *ad,
-                                              unsigned long long adlen,
+                                              std::size_t adlen,
                                               const unsigned char *nsec,
                                               const unsigned char *npub,
                                               const unsigned char *k)
@@ -50,12 +50,12 @@ int rubidium_aead_chacha20poly1305_ietf_encrypt(unsigned char *c,
 
 RUBIDIUM_EXPORT
 int rubidium_aead_chacha20poly1305_ietf_decrypt(unsigned char *m,
-                                              unsigned long long *mlen_p,
+                                              std::size_t *mlen_p,
                                               unsigned char *nsec,
                                               const unsigned char *c,
-                                              unsigned long long clen,
+                                              std::size_t clen,
                                               const unsigned char *ad,
-                                              unsigned long long adlen,
+                                              std::size_t adlen,
                                               const unsigned char *npub,
                                               const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(4, 8, 9)));
@@ -63,11 +63,11 @@ int rubidium_aead_chacha20poly1305_ietf_decrypt(unsigned char *m,
 RUBIDIUM_EXPORT
 int rubidium_aead_chacha20poly1305_ietf_encrypt_detached(unsigned char *c,
                                                        unsigned char *mac,
-                                                       unsigned long long *maclen_p,
+                                                       std::size_t *maclen_p,
                                                        const unsigned char *m,
-                                                       unsigned long long mlen,
+                                                       std::size_t mlen,
                                                        const unsigned char *ad,
-                                                       unsigned long long adlen,
+                                                       std::size_t adlen,
                                                        const unsigned char *nsec,
                                                        const unsigned char *npub,
                                                        const unsigned char *k)
@@ -77,10 +77,10 @@ RUBIDIUM_EXPORT
 int rubidium_aead_chacha20poly1305_ietf_decrypt_detached(unsigned char *m,
                                                        unsigned char *nsec,
                                                        const unsigned char *c,
-                                                       unsigned long long clen,
+                                                       std::size_t clen,
                                                        const unsigned char *mac,
                                                        const unsigned char *ad,
-                                                       unsigned long long adlen,
+                                                       std::size_t adlen,
                                                        const unsigned char *npub,
                                                        const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(3, 5, 8, 9)));
@@ -114,11 +114,11 @@ size_t rubidium_aead_chacha20poly1305_messagebytes_max(void);
 
 RUBIDIUM_EXPORT
 int rubidium_aead_chacha20poly1305_encrypt(unsigned char *c,
-                                         unsigned long long *clen_p,
+                                         std::size_t *clen_p,
                                          const unsigned char *m,
-                                         unsigned long long mlen,
+                                         std::size_t mlen,
                                          const unsigned char *ad,
-                                         unsigned long long adlen,
+                                         std::size_t adlen,
                                          const unsigned char *nsec,
                                          const unsigned char *npub,
                                          const unsigned char *k)
@@ -126,12 +126,12 @@ int rubidium_aead_chacha20poly1305_encrypt(unsigned char *c,
 
 RUBIDIUM_EXPORT
 int rubidium_aead_chacha20poly1305_decrypt(unsigned char *m,
-                                         unsigned long long *mlen_p,
+                                         std::size_t *mlen_p,
                                          unsigned char *nsec,
                                          const unsigned char *c,
-                                         unsigned long long clen,
+                                         std::size_t clen,
                                          const unsigned char *ad,
-                                         unsigned long long adlen,
+                                         std::size_t adlen,
                                          const unsigned char *npub,
                                          const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(4, 8, 9)));
@@ -139,11 +139,11 @@ int rubidium_aead_chacha20poly1305_decrypt(unsigned char *m,
 RUBIDIUM_EXPORT
 int rubidium_aead_chacha20poly1305_encrypt_detached(unsigned char *c,
                                                   unsigned char *mac,
-                                                  unsigned long long *maclen_p,
+                                                  std::size_t *maclen_p,
                                                   const unsigned char *m,
-                                                  unsigned long long mlen,
+                                                  std::size_t mlen,
                                                   const unsigned char *ad,
-                                                  unsigned long long adlen,
+                                                  std::size_t adlen,
                                                   const unsigned char *nsec,
                                                   const unsigned char *npub,
                                                   const unsigned char *k)
@@ -153,10 +153,10 @@ RUBIDIUM_EXPORT
 int rubidium_aead_chacha20poly1305_decrypt_detached(unsigned char *m,
                                                   unsigned char *nsec,
                                                   const unsigned char *c,
-                                                  unsigned long long clen,
+                                                  std::size_t clen,
                                                   const unsigned char *mac,
                                                   const unsigned char *ad,
-                                                  unsigned long long adlen,
+                                                  std::size_t adlen,
                                                   const unsigned char *npub,
                                                   const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(3, 5, 8, 9)));

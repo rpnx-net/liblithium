@@ -1,7 +1,7 @@
 #ifndef rubidium_pwhash_H
 #define rubidium_pwhash_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "rubidium_pwhash_argon2i.h"
 #include "rubidium_pwhash_argon2id.h"
@@ -56,11 +56,11 @@ const char *rubidium_pwhash_strprefix(void);
 
 #define rubidium_pwhash_OPSLIMIT_MIN rubidium_pwhash_argon2id_OPSLIMIT_MIN
 RUBIDIUM_EXPORT
-unsigned long long rubidium_pwhash_opslimit_min(void);
+std::size_t rubidium_pwhash_opslimit_min(void);
 
 #define rubidium_pwhash_OPSLIMIT_MAX rubidium_pwhash_argon2id_OPSLIMIT_MAX
 RUBIDIUM_EXPORT
-unsigned long long rubidium_pwhash_opslimit_max(void);
+std::size_t rubidium_pwhash_opslimit_max(void);
 
 #define rubidium_pwhash_MEMLIMIT_MIN rubidium_pwhash_argon2id_MEMLIMIT_MIN
 RUBIDIUM_EXPORT
@@ -72,7 +72,7 @@ size_t rubidium_pwhash_memlimit_max(void);
 
 #define rubidium_pwhash_OPSLIMIT_INTERACTIVE rubidium_pwhash_argon2id_OPSLIMIT_INTERACTIVE
 RUBIDIUM_EXPORT
-unsigned long long rubidium_pwhash_opslimit_interactive(void);
+std::size_t rubidium_pwhash_opslimit_interactive(void);
 
 #define rubidium_pwhash_MEMLIMIT_INTERACTIVE rubidium_pwhash_argon2id_MEMLIMIT_INTERACTIVE
 RUBIDIUM_EXPORT
@@ -80,7 +80,7 @@ size_t rubidium_pwhash_memlimit_interactive(void);
 
 #define rubidium_pwhash_OPSLIMIT_MODERATE rubidium_pwhash_argon2id_OPSLIMIT_MODERATE
 RUBIDIUM_EXPORT
-unsigned long long rubidium_pwhash_opslimit_moderate(void);
+std::size_t rubidium_pwhash_opslimit_moderate(void);
 
 #define rubidium_pwhash_MEMLIMIT_MODERATE rubidium_pwhash_argon2id_MEMLIMIT_MODERATE
 RUBIDIUM_EXPORT
@@ -88,7 +88,7 @@ size_t rubidium_pwhash_memlimit_moderate(void);
 
 #define rubidium_pwhash_OPSLIMIT_SENSITIVE rubidium_pwhash_argon2id_OPSLIMIT_SENSITIVE
 RUBIDIUM_EXPORT
-unsigned long long rubidium_pwhash_opslimit_sensitive(void);
+std::size_t rubidium_pwhash_opslimit_sensitive(void);
 
 #define rubidium_pwhash_MEMLIMIT_SENSITIVE rubidium_pwhash_argon2id_MEMLIMIT_SENSITIVE
 RUBIDIUM_EXPORT
@@ -101,10 +101,10 @@ size_t rubidium_pwhash_memlimit_sensitive(void);
  * may change.
  */
 RUBIDIUM_EXPORT
-int rubidium_pwhash(unsigned char * const out, unsigned long long outlen,
-                  const char * const passwd, unsigned long long passwdlen,
+int rubidium_pwhash(unsigned char * const out, std::size_t outlen,
+                  const char * const passwd, std::size_t passwdlen,
                   const unsigned char * const salt,
-                  unsigned long long opslimit, size_t memlimit, int alg)
+                  std::size_t opslimit, size_t memlimit, int alg)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
 /*
@@ -114,25 +114,25 @@ int rubidium_pwhash(unsigned char * const out, unsigned long long outlen,
  */
 RUBIDIUM_EXPORT
 int rubidium_pwhash_str(char out[rubidium_pwhash_STRBYTES],
-                      const char * const passwd, unsigned long long passwdlen,
-                      unsigned long long opslimit, size_t memlimit)
+                      const char * const passwd, std::size_t passwdlen,
+                      std::size_t opslimit, size_t memlimit)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
 int rubidium_pwhash_str_alg(char out[rubidium_pwhash_STRBYTES],
-                          const char * const passwd, unsigned long long passwdlen,
-                          unsigned long long opslimit, size_t memlimit, int alg)
+                          const char * const passwd, std::size_t passwdlen,
+                          std::size_t opslimit, size_t memlimit, int alg)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
 int rubidium_pwhash_str_verify(const char *str,
                              const char * const passwd,
-                             unsigned long long passwdlen)
+                             std::size_t passwdlen)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
 int rubidium_pwhash_str_needs_rehash(const char *str,
-                                   unsigned long long opslimit, size_t memlimit)
+                                   std::size_t opslimit, size_t memlimit)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
 #define rubidium_pwhash_PRIMITIVE "argon2i"

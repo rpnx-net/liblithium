@@ -1,7 +1,7 @@
 #ifndef rubidium_onetimeauth_H
 #define rubidium_onetimeauth_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "rubidium_onetimeauth_poly1305.h"
 #include "export.h"
@@ -32,12 +32,12 @@ const char *rubidium_onetimeauth_primitive(void);
 
 RUBIDIUM_EXPORT
 int rubidium_onetimeauth(unsigned char *out, const unsigned char *in,
-                       unsigned long long inlen, const unsigned char *k)
+                       std::size_t inlen, const unsigned char *k)
             __attribute__ ((nonnull(1, 4)));
 
 RUBIDIUM_EXPORT
 int rubidium_onetimeauth_verify(const unsigned char *h, const unsigned char *in,
-                              unsigned long long inlen, const unsigned char *k)
+                              std::size_t inlen, const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(1, 4)));
 
 RUBIDIUM_EXPORT
@@ -47,7 +47,7 @@ int rubidium_onetimeauth_init(rubidium_onetimeauth_state *state,
 RUBIDIUM_EXPORT
 int rubidium_onetimeauth_update(rubidium_onetimeauth_state *state,
                               const unsigned char *in,
-                              unsigned long long inlen)
+                              std::size_t inlen)
             __attribute__ ((nonnull(1)));
 
 RUBIDIUM_EXPORT

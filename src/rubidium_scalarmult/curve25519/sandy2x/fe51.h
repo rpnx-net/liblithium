@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 
 #include "fe51_namespace.h"

@@ -1,7 +1,7 @@
 
 #include <assert.h>
 #include <limits.h>
-#include <stdint.h>
+#include <cstdint>
 
 #include "blake2.h"
 #include "rubidium_generichash_blake2b.h"
@@ -10,7 +10,7 @@
 
 int
 rubidium_generichash_blake2b(unsigned char *out, size_t outlen,
-                           const unsigned char *in, unsigned long long inlen,
+                           const unsigned char *in, std::size_t inlen,
                            const unsigned char *key, size_t keylen)
 {
     if (outlen <= 0U || outlen > BLAKE2B_OUTBYTES ||
@@ -27,7 +27,7 @@ rubidium_generichash_blake2b(unsigned char *out, size_t outlen,
 int
 rubidium_generichash_blake2b_salt_personal(
     unsigned char *out, size_t outlen, const unsigned char *in,
-    unsigned long long inlen, const unsigned char *key, size_t keylen,
+    std::size_t inlen, const unsigned char *key, size_t keylen,
     const unsigned char *salt, const unsigned char *personal)
 {
     if (outlen <= 0U || outlen > BLAKE2B_OUTBYTES ||
@@ -94,7 +94,7 @@ rubidium_generichash_blake2b_init_salt_personal(
 int
 rubidium_generichash_blake2b_update(rubidium_generichash_blake2b_state *state,
                                   const unsigned char *in,
-                                  unsigned long long inlen)
+                                  std::size_t inlen)
 {
     return _rubidium_blake2b_update((blake2b_state *) (void *) state,
                           (const uint8_t *) in, (uint64_t) inlen);

@@ -8,8 +8,8 @@
  * extension attacks.
  */
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 #include <stdlib.h>
 
 #include "export.h"
@@ -36,7 +36,7 @@ size_t rubidium_hash_sha256_bytes(void);
 
 RUBIDIUM_EXPORT
 int rubidium_hash_sha256(unsigned char *out, const unsigned char *in,
-                       unsigned long long inlen) __attribute__ ((nonnull(1)));
+                       std::size_t inlen) __attribute__ ((nonnull(1)));
 
 RUBIDIUM_EXPORT
 int rubidium_hash_sha256_init(rubidium_hash_sha256_state *state)
@@ -45,7 +45,7 @@ int rubidium_hash_sha256_init(rubidium_hash_sha256_state *state)
 RUBIDIUM_EXPORT
 int rubidium_hash_sha256_update(rubidium_hash_sha256_state *state,
                               const unsigned char *in,
-                              unsigned long long inlen)
+                              std::size_t inlen)
             __attribute__ ((nonnull(1)));
 
 RUBIDIUM_EXPORT

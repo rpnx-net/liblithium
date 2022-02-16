@@ -1,7 +1,7 @@
 #ifndef rubidium_core_salsa2012_H
 #define rubidium_core_salsa2012_H
 
-#include <stddef.h>
+#include <cstddef>
 #include "export.h"
 
 #ifdef __cplusplus

@@ -18,7 +18,7 @@
  * SUCH DAMAGE.
  */
 
-#include <stdint.h>
+#include <cstdint>
 #include <string.h>
 
 #include "rubidium_pwhash_scryptsalsa208sha256.h"

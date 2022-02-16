@@ -1,7 +1,7 @@
 
 #include <assert.h>
 #include <limits.h>
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 #include <string.h>
 #include <stdexcept>
@@ -17,14 +17,14 @@
 int
 rubidium_secretbox_detached(unsigned char *c, unsigned char *mac,
                           const unsigned char *m,
-                          unsigned long long mlen, const unsigned char *n,
+                          std::size_t mlen, const unsigned char *n,
                           const unsigned char *k)
 {
     rubidium_onetimeauth_poly1305_state state;
     unsigned char                     block0[64U];
     unsigned char                     subkey[rubidium_stream_salsa20_KEYBYTES];
-    unsigned long long                i;
-    unsigned long long                mlen0;
+    std::size_t                i;
+    std::size_t                mlen0;
 
     rubidium_core_hsalsa20(subkey, n, k, NULL);
 
@@ -76,7 +76,7 @@ rubidium_secretbox_detached(unsigned char *c, unsigned char *mac,
 
 int
 rubidium_secretbox_easy(unsigned char *c, const unsigned char *m,
-                      unsigned long long mlen, const unsigned char *n,
+                      std::size_t mlen, const unsigned char *n,
                       const unsigned char *k)
 {
     if (mlen > rubidium_secretbox_MESSAGEBYTES_MAX) {
@@ -89,14 +89,14 @@ rubidium_secretbox_easy(unsigned char *c, const unsigned char *m,
 int
 rubidium_secretbox_open_detached(unsigned char *m, const unsigned char *c,
                                const unsigned char *mac,
-                               unsigned long long clen,
+                               std::size_t clen,
                                const unsigned char *n,
                                const unsigned char *k)
 {
     unsigned char      block0[64U];
     unsigned char      subkey[rubidium_stream_salsa20_KEYBYTES];
-    unsigned long long i;
-    unsigned long long mlen0;
+    std::size_t i;
+    std::size_t mlen0;
 
     rubidium_core_hsalsa20(subkey, n, k, NULL);
 
@@ -146,7 +146,7 @@ rubidium_secretbox_open_detached(unsigned char *m, const unsigned char *c,
 
 int
 rubidium_secretbox_open_easy(unsigned char *m, const unsigned char *c,
-                           unsigned long long clen, const unsigned char *n,
+                           std::size_t clen, const unsigned char *n,
                            const unsigned char *k)
 {
     if (clen < rubidium_secretbox_MACBYTES) {

@@ -9,7 +9,7 @@
  *  the rubidium_box functions.
  */
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "rubidium_stream_xsalsa20.h"
 #include "export.h"
@@ -38,13 +38,13 @@ RUBIDIUM_EXPORT
 const char *rubidium_stream_primitive(void);
 
 RUBIDIUM_EXPORT
-int rubidium_stream(unsigned char *c, unsigned long long clen,
+int rubidium_stream(unsigned char *c, std::size_t clen,
                   const unsigned char *n, const unsigned char *k)
             __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
 int rubidium_stream_xor(unsigned char *c, const unsigned char *m,
-                      unsigned long long mlen, const unsigned char *n,
+                      std::size_t mlen, const unsigned char *n,
                       const unsigned char *k)
             __attribute__ ((nonnull));
 

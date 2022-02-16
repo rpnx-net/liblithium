@@ -1,6 +1,6 @@
 
 #include <assert.h>
-#include <stdint.h>
+#include <cstdint>
 #include <string.h>
 
 #include "core_h2c.h"

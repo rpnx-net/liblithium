@@ -13,8 +13,8 @@
 #define argon2_H
 
 #include <limits.h>
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 
 

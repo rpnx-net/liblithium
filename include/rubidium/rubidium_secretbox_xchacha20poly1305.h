@@ -1,7 +1,7 @@
 #ifndef rubidium_secretbox_xchacha20poly1305_H
 #define rubidium_secretbox_xchacha20poly1305_H
 
-#include <stddef.h>
+#include <cstddef>
 #include "rubidium_stream_xchacha20.h"
 #include "export.h"
 
@@ -32,7 +32,7 @@ size_t rubidium_secretbox_xchacha20poly1305_messagebytes_max(void);
 RUBIDIUM_EXPORT
 int rubidium_secretbox_xchacha20poly1305_easy(unsigned char *c,
                                             const unsigned char *m,
-                                            unsigned long long mlen,
+                                            std::size_t mlen,
                                             const unsigned char *n,
                                             const unsigned char *k)
             __attribute__ ((nonnull(1, 4, 5)));
@@ -40,7 +40,7 @@ int rubidium_secretbox_xchacha20poly1305_easy(unsigned char *c,
 RUBIDIUM_EXPORT
 int rubidium_secretbox_xchacha20poly1305_open_easy(unsigned char *m,
                                                  const unsigned char *c,
-                                                 unsigned long long clen,
+                                                 std::size_t clen,
                                                  const unsigned char *n,
                                                  const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 4, 5)));
@@ -49,7 +49,7 @@ RUBIDIUM_EXPORT
 int rubidium_secretbox_xchacha20poly1305_detached(unsigned char *c,
                                                 unsigned char *mac,
                                                 const unsigned char *m,
-                                                unsigned long long mlen,
+                                                std::size_t mlen,
                                                 const unsigned char *n,
                                                 const unsigned char *k)
             __attribute__ ((nonnull(1, 2, 5, 6)));
@@ -58,7 +58,7 @@ RUBIDIUM_EXPORT
 int rubidium_secretbox_xchacha20poly1305_open_detached(unsigned char *m,
                                                      const unsigned char *c,
                                                      const unsigned char *mac,
-                                                     unsigned long long clen,
+                                                     std::size_t clen,
                                                      const unsigned char *n,
                                                      const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 3, 5, 6)));

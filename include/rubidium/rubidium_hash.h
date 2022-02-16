@@ -8,7 +8,7 @@
  * extension attacks.
  */
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "rubidium_hash_sha512.h"
 #include "export.h"
@@ -26,7 +26,7 @@ size_t rubidium_hash_bytes(void);
 
 RUBIDIUM_EXPORT
 int rubidium_hash(unsigned char *out, const unsigned char *in,
-                unsigned long long inlen) __attribute__ ((nonnull(1)));
+                std::size_t inlen) __attribute__ ((nonnull(1)));
 
 #define rubidium_hash_PRIMITIVE "sha512"
 RUBIDIUM_EXPORT

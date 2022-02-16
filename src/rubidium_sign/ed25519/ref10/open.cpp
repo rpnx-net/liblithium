@@ -1,6 +1,6 @@
 
 #include <limits.h>
-#include <stdint.h>
+#include <cstdint>
 #include <string.h>
 
 #include "rubidium_hash_sha512.h"
@@ -13,7 +13,7 @@
 int
 _rubidium_sign_ed25519_verify_detached(const unsigned char *sig,
                                      const unsigned char *m,
-                                     unsigned long long   mlen,
+                                     std::size_t   mlen,
                                      const unsigned char *pk,
                                      int prehashed)
 {
@@ -60,18 +60,18 @@ _rubidium_sign_ed25519_verify_detached(const unsigned char *sig,
 int
 rubidium_sign_ed25519_verify_detached(const unsigned char *sig,
                                     const unsigned char *m,
-                                    unsigned long long   mlen,
+                                    std::size_t   mlen,
                                     const unsigned char *pk)
 {
     return _rubidium_sign_ed25519_verify_detached(sig, m, mlen, pk, 0);
 }
 
 int
-rubidium_sign_ed25519_open(unsigned char *m, unsigned long long *mlen_p,
-                         const unsigned char *sm, unsigned long long smlen,
+rubidium_sign_ed25519_open(unsigned char *m, std::size_t *mlen_p,
+                         const unsigned char *sm, std::size_t smlen,
                          const unsigned char *pk)
 {
-    unsigned long long mlen;
+    std::size_t mlen;
 
     if (smlen < 64 || smlen - 64 > rubidium_sign_ed25519_MESSAGEBYTES_MAX) {
         goto badsig;

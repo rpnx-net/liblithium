@@ -1,7 +1,7 @@
 #ifndef rubidium_secretstream_xchacha20poly1305_H
 #define rubidium_secretstream_xchacha20poly1305_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "rubidium_aead_xchacha20poly1305.h"
 #include "rubidium_stream_chacha20.h"
@@ -77,9 +77,9 @@ int rubidium_secretstream_xchacha20poly1305_init_push
 RUBIDIUM_EXPORT
 int rubidium_secretstream_xchacha20poly1305_push
    (rubidium_secretstream_xchacha20poly1305_state *state,
-    unsigned char *c, unsigned long long *clen_p,
-    const unsigned char *m, unsigned long long mlen,
-    const unsigned char *ad, unsigned long long adlen, unsigned char tag)
+    unsigned char *c, std::size_t *clen_p,
+    const unsigned char *m, std::size_t mlen,
+    const unsigned char *ad, std::size_t adlen, unsigned char tag)
             __attribute__ ((nonnull(1)));
 
 RUBIDIUM_EXPORT
@@ -92,9 +92,9 @@ int rubidium_secretstream_xchacha20poly1305_init_pull
 RUBIDIUM_EXPORT
 int rubidium_secretstream_xchacha20poly1305_pull
    (rubidium_secretstream_xchacha20poly1305_state *state,
-    unsigned char *m, unsigned long long *mlen_p, unsigned char *tag_p,
-    const unsigned char *c, unsigned long long clen,
-    const unsigned char *ad, unsigned long long adlen)
+    unsigned char *m, std::size_t *mlen_p, unsigned char *tag_p,
+    const unsigned char *c, std::size_t clen,
+    const unsigned char *ad, std::size_t adlen)
             __attribute__ ((nonnull(1)));
 
 RUBIDIUM_EXPORT

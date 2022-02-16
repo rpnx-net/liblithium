@@ -62,8 +62,8 @@ _rubidium_sign_ed25519_synthetic_r_hv(rubidium_hash_sha512_state *hs,
 #endif
 
 int
-_rubidium_sign_ed25519_detached(unsigned char *sig, unsigned long long *siglen_p,
-                              const unsigned char *m, unsigned long long mlen,
+_rubidium_sign_ed25519_detached(unsigned char *sig, std::size_t *siglen_p,
+                              const unsigned char *m, std::size_t mlen,
                               const unsigned char *sk, int prehashed)
 {
     rubidium_hash_sha512_state hs;
@@ -109,19 +109,19 @@ _rubidium_sign_ed25519_detached(unsigned char *sig, unsigned long long *siglen_p
 }
 
 int
-rubidium_sign_ed25519_detached(unsigned char *sig, unsigned long long *siglen_p,
-                             const unsigned char *m, unsigned long long mlen,
+rubidium_sign_ed25519_detached(unsigned char *sig, std::size_t *siglen_p,
+                             const unsigned char *m, std::size_t mlen,
                              const unsigned char *sk)
 {
     return _rubidium_sign_ed25519_detached(sig, siglen_p, m, mlen, sk, 0);
 }
 
 int
-rubidium_sign_ed25519(unsigned char *sm, unsigned long long *smlen_p,
-                    const unsigned char *m, unsigned long long mlen,
+rubidium_sign_ed25519(unsigned char *sm, std::size_t *smlen_p,
+                    const unsigned char *m, std::size_t mlen,
                     const unsigned char *sk)
 {
-    unsigned long long siglen;
+    std::size_t siglen;
 
     memmove(sm + rubidium_sign_ed25519_BYTES, m, mlen);
     /* LCOV_EXCL_START */

@@ -1,8 +1,8 @@
 
 #include <errno.h>
 #include <limits.h>
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 #include <string.h>
 
 #include "argon2-core.h"
@@ -68,14 +68,14 @@ rubidium_pwhash_argon2id_strprefix(void)
     return rubidium_pwhash_argon2id_STRPREFIX;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_argon2id_opslimit_min(void)
 {
     static_assert(rubidium_pwhash_argon2id_OPSLIMIT_MIN >= ARGON2_MIN_TIME);
     return rubidium_pwhash_argon2id_OPSLIMIT_MIN;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_argon2id_opslimit_max(void)
 {
     static_assert(rubidium_pwhash_argon2id_OPSLIMIT_MAX <= ARGON2_MAX_TIME);
@@ -96,7 +96,7 @@ rubidium_pwhash_argon2id_memlimit_max(void)
     return rubidium_pwhash_argon2id_MEMLIMIT_MAX;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_argon2id_opslimit_interactive(void)
 {
     return rubidium_pwhash_argon2id_OPSLIMIT_INTERACTIVE;
@@ -108,7 +108,7 @@ rubidium_pwhash_argon2id_memlimit_interactive(void)
     return rubidium_pwhash_argon2id_MEMLIMIT_INTERACTIVE;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_argon2id_opslimit_moderate(void)
 {
     return rubidium_pwhash_argon2id_OPSLIMIT_MODERATE;
@@ -120,7 +120,7 @@ rubidium_pwhash_argon2id_memlimit_moderate(void)
     return rubidium_pwhash_argon2id_MEMLIMIT_MODERATE;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_argon2id_opslimit_sensitive(void)
 {
     return rubidium_pwhash_argon2id_OPSLIMIT_SENSITIVE;
@@ -133,10 +133,10 @@ rubidium_pwhash_argon2id_memlimit_sensitive(void)
 }
 
 int
-rubidium_pwhash_argon2id(unsigned char *const out, unsigned long long outlen,
-                       const char *const passwd, unsigned long long passwdlen,
+rubidium_pwhash_argon2id(unsigned char *const out, std::size_t outlen,
+                       const char *const passwd, std::size_t passwdlen,
                        const unsigned char *const salt,
-                       unsigned long long opslimit, size_t memlimit, int alg)
+                       std::size_t opslimit, size_t memlimit, int alg)
 {
     memset(out, 0, outlen);
     if (outlen > rubidium_pwhash_argon2id_BYTES_MAX) {
@@ -181,8 +181,8 @@ rubidium_pwhash_argon2id(unsigned char *const out, unsigned long long outlen,
 int
 rubidium_pwhash_argon2id_str(char out[rubidium_pwhash_argon2id_STRBYTES],
                            const char *const passwd,
-                           unsigned long long passwdlen,
-                           unsigned long long opslimit, size_t memlimit)
+                           std::size_t passwdlen,
+                           std::size_t opslimit, size_t memlimit)
 {
     unsigned char salt[rubidium_pwhash_argon2id_SALTBYTES];
 
@@ -212,7 +212,7 @@ rubidium_pwhash_argon2id_str(char out[rubidium_pwhash_argon2id_STRBYTES],
 int
 rubidium_pwhash_argon2id_str_verify(const char * str,
                                   const char * const passwd,
-                                  unsigned long long passwdlen)
+                                  std::size_t passwdlen)
 {
     int verify_ret;
 

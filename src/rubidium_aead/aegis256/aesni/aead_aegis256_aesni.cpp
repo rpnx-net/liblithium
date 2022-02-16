@@ -73,7 +73,7 @@ rubidium_aead_aegis256_init(const unsigned char *key, const unsigned char *nonce
 }
 
 static void
-rubidium_aead_aegis256_mac(unsigned char *mac, unsigned long long adlen, unsigned long long mlen,
+rubidium_aead_aegis256_mac(unsigned char *mac, std::size_t adlen, std::size_t mlen,
                          __m128i *const state)
 {
     __m128i tmp;
@@ -130,15 +130,15 @@ rubidium_aead_aegis256_dec(unsigned char *const dst, const unsigned char *const 
 
 int
 rubidium_aead_aegis256_encrypt_detached(unsigned char *c, unsigned char *mac,
-                                      unsigned long long *maclen_p, const unsigned char *m,
-                                      unsigned long long mlen, const unsigned char *ad,
-                                      unsigned long long adlen, const unsigned char *nsec,
+                                      std::size_t *maclen_p, const unsigned char *m,
+                                      std::size_t mlen, const unsigned char *ad,
+                                      std::size_t adlen, const unsigned char *nsec,
                                       const unsigned char *npub, const unsigned char *k)
 {
     __m128i                        state[6];
     RUBIDIUM_ALIGN(16) unsigned char src[16];
     RUBIDIUM_ALIGN(16) unsigned char dst[16];
-    unsigned long long i;
+    std::size_t i;
 
     (void) nsec;
     rubidium_aead_aegis256_init(k, npub, state);
@@ -173,12 +173,12 @@ rubidium_aead_aegis256_encrypt_detached(unsigned char *c, unsigned char *mac,
 }
 
 int
-rubidium_aead_aegis256_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
-                             unsigned long long mlen, const unsigned char *ad,
-                             unsigned long long adlen, const unsigned char *nsec,
+rubidium_aead_aegis256_encrypt(unsigned char *c, std::size_t *clen_p, const unsigned char *m,
+                             std::size_t mlen, const unsigned char *ad,
+                             std::size_t adlen, const unsigned char *nsec,
                              const unsigned char *npub, const unsigned char *k)
 {
-    unsigned long long clen = 0ULL;
+    std::size_t clen = 0ULL;
     int                ret;
 
     if (mlen > rubidium_aead_aegis256_MESSAGEBYTES_MAX) {
@@ -197,16 +197,16 @@ rubidium_aead_aegis256_encrypt(unsigned char *c, unsigned long long *clen_p, con
 
 int
 rubidium_aead_aegis256_decrypt_detached(unsigned char *m, unsigned char *nsec, const unsigned char *c,
-                                      unsigned long long clen, const unsigned char *mac,
-                                      const unsigned char *ad, unsigned long long adlen,
+                                      std::size_t clen, const unsigned char *mac,
+                                      const unsigned char *ad, std::size_t adlen,
                                       const unsigned char *npub, const unsigned char *k)
 {
     __m128i                        state[6];
     RUBIDIUM_ALIGN(16) unsigned char src[16];
     RUBIDIUM_ALIGN(16) unsigned char dst[16];
     RUBIDIUM_ALIGN(16) unsigned char computed_mac[16];
-    unsigned long long i;
-    unsigned long long mlen;
+    std::size_t i;
+    std::size_t mlen;
     int                ret;
 
     (void) nsec;
@@ -259,12 +259,12 @@ rubidium_aead_aegis256_decrypt_detached(unsigned char *m, unsigned char *nsec, c
 }
 
 int
-rubidium_aead_aegis256_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
-                             const unsigned char *c, unsigned long long clen,
-                             const unsigned char *ad, unsigned long long adlen,
+rubidium_aead_aegis256_decrypt(unsigned char *m, std::size_t *mlen_p, unsigned char *nsec,
+                             const unsigned char *c, std::size_t clen,
+                             const unsigned char *ad, std::size_t adlen,
                              const unsigned char *npub, const unsigned char *k)
 {
-    unsigned long long mlen = 0ULL;
+    std::size_t mlen = 0ULL;
     int                ret  = -1;
 
     if (clen >= 16ULL) {

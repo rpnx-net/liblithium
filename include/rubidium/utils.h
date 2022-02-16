@@ -2,7 +2,7 @@
 #ifndef rubidium_utils_H
 #define rubidium_utils_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "export.h"
 

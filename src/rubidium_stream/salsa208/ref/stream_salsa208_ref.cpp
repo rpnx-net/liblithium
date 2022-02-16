@@ -4,7 +4,7 @@ D. J. Bernstein
 Public domain.
 */
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "rubidium_core_salsa208.h"
 #include "rubidium_stream_salsa208.h"

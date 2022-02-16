@@ -9,7 +9,7 @@
  *  the rubidium_box functions.
  */
 
-#include <stddef.h>
+#include <cstddef>
 #include "export.h"
 
 #ifdef __cplusplus
@@ -35,13 +35,13 @@ size_t rubidium_stream_salsa208_messagebytes_max(void)
             __attribute__ ((deprecated));
 
 RUBIDIUM_EXPORT
-int rubidium_stream_salsa208(unsigned char *c, unsigned long long clen,
+int rubidium_stream_salsa208(unsigned char *c, std::size_t clen,
                            const unsigned char *n, const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
 int rubidium_stream_salsa208_xor(unsigned char *c, const unsigned char *m,
-                               unsigned long long mlen, const unsigned char *n,
+                               std::size_t mlen, const unsigned char *n,
                                const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((nonnull));
 

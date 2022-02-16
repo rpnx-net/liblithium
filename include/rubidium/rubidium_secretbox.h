@@ -1,7 +1,7 @@
 #ifndef rubidium_secretbox_H
 #define rubidium_secretbox_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "rubidium_secretbox_xsalsa20poly1305.h"
 #include "export.h"
@@ -35,19 +35,19 @@ size_t rubidium_secretbox_messagebytes_max(void);
 
 RUBIDIUM_EXPORT
 int rubidium_secretbox_easy(unsigned char *c, const unsigned char *m,
-                          unsigned long long mlen, const unsigned char *n,
+                          std::size_t mlen, const unsigned char *n,
                           const unsigned char *k) __attribute__ ((nonnull(1, 4, 5)));
 
 RUBIDIUM_EXPORT
 int rubidium_secretbox_open_easy(unsigned char *m, const unsigned char *c,
-                               unsigned long long clen, const unsigned char *n,
+                               std::size_t clen, const unsigned char *n,
                                const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 4, 5)));
 
 RUBIDIUM_EXPORT
 int rubidium_secretbox_detached(unsigned char *c, unsigned char *mac,
                               const unsigned char *m,
-                              unsigned long long mlen,
+                              std::size_t mlen,
                               const unsigned char *n,
                               const unsigned char *k)
             __attribute__ ((nonnull(1, 2, 5, 6)));
@@ -56,7 +56,7 @@ RUBIDIUM_EXPORT
 int rubidium_secretbox_open_detached(unsigned char *m,
                                    const unsigned char *c,
                                    const unsigned char *mac,
-                                   unsigned long long clen,
+                                   std::size_t clen,
                                    const unsigned char *n,
                                    const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 3, 5, 6)));
@@ -77,13 +77,13 @@ size_t  rubidium_secretbox_boxzerobytes(void) __attribute__ ((deprecated));
 
 RUBIDIUM_EXPORT
 int rubidium_secretbox(unsigned char *c, const unsigned char *m,
-                     unsigned long long mlen, const unsigned char *n,
+                     std::size_t mlen, const unsigned char *n,
                      const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((nonnull(1, 4, 5)));
 
 RUBIDIUM_EXPORT
 int rubidium_secretbox_open(unsigned char *m, const unsigned char *c,
-                          unsigned long long clen, const unsigned char *n,
+                          std::size_t clen, const unsigned char *n,
                           const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 4, 5)));
 

@@ -1,6 +1,6 @@
 
 #include <limits.h>
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 #include <string.h>
 
@@ -56,7 +56,7 @@ rubidium_box_curve25519xchacha20poly1305_beforenm(unsigned char *k,
 int
 rubidium_box_curve25519xchacha20poly1305_detached_afternm(
     unsigned char *c, unsigned char *mac, const unsigned char *m,
-    unsigned long long mlen, const unsigned char *n, const unsigned char *k)
+    std::size_t mlen, const unsigned char *n, const unsigned char *k)
 {
     return rubidium_secretbox_xchacha20poly1305_detached(c, mac, m, mlen, n, k);
 }
@@ -64,7 +64,7 @@ rubidium_box_curve25519xchacha20poly1305_detached_afternm(
 int
 rubidium_box_curve25519xchacha20poly1305_detached(
     unsigned char *c, unsigned char *mac, const unsigned char *m,
-    unsigned long long mlen, const unsigned char *n, const unsigned char *pk,
+    std::size_t mlen, const unsigned char *n, const unsigned char *pk,
     const unsigned char *sk)
 {
     unsigned char k[rubidium_box_curve25519xchacha20poly1305_BEFORENMBYTES];
@@ -85,7 +85,7 @@ rubidium_box_curve25519xchacha20poly1305_detached(
 int
 rubidium_box_curve25519xchacha20poly1305_easy_afternm(unsigned char *c,
                                                     const unsigned char *m,
-                                                    unsigned long long mlen,
+                                                    std::size_t mlen,
                                                     const unsigned char *n,
                                                     const unsigned char *k)
 {
@@ -98,7 +98,7 @@ rubidium_box_curve25519xchacha20poly1305_easy_afternm(unsigned char *c,
 
 int
 rubidium_box_curve25519xchacha20poly1305_easy(
-    unsigned char *c, const unsigned char *m, unsigned long long mlen,
+    unsigned char *c, const unsigned char *m, std::size_t mlen,
     const unsigned char *n, const unsigned char *pk, const unsigned char *sk)
 {
     if (mlen > rubidium_box_curve25519xchacha20poly1305_MESSAGEBYTES_MAX) {
@@ -112,7 +112,7 @@ rubidium_box_curve25519xchacha20poly1305_easy(
 int
 rubidium_box_curve25519xchacha20poly1305_open_detached_afternm(
     unsigned char *m, const unsigned char *c, const unsigned char *mac,
-    unsigned long long clen, const unsigned char *n, const unsigned char *k)
+    std::size_t clen, const unsigned char *n, const unsigned char *k)
 {
     return rubidium_secretbox_xchacha20poly1305_open_detached(m, c, mac, clen, n,
                                                             k);
@@ -121,7 +121,7 @@ rubidium_box_curve25519xchacha20poly1305_open_detached_afternm(
 int
 rubidium_box_curve25519xchacha20poly1305_open_detached(
     unsigned char *m, const unsigned char *c, const unsigned char *mac,
-    unsigned long long clen, const unsigned char *n, const unsigned char *pk,
+    std::size_t clen, const unsigned char *n, const unsigned char *pk,
     const unsigned char *sk)
 {
     unsigned char k[rubidium_box_curve25519xchacha20poly1305_BEFORENMBYTES];
@@ -139,7 +139,7 @@ rubidium_box_curve25519xchacha20poly1305_open_detached(
 
 int
 rubidium_box_curve25519xchacha20poly1305_open_easy_afternm(
-    unsigned char *m, const unsigned char *c, unsigned long long clen,
+    unsigned char *m, const unsigned char *c, std::size_t clen,
     const unsigned char *n, const unsigned char *k)
 {
     if (clen < rubidium_box_curve25519xchacha20poly1305_MACBYTES) {
@@ -152,7 +152,7 @@ rubidium_box_curve25519xchacha20poly1305_open_easy_afternm(
 
 int
 rubidium_box_curve25519xchacha20poly1305_open_easy(
-    unsigned char *m, const unsigned char *c, unsigned long long clen,
+    unsigned char *m, const unsigned char *c, std::size_t clen,
     const unsigned char *n, const unsigned char *pk, const unsigned char *sk)
 {
     if (clen < rubidium_box_curve25519xchacha20poly1305_MACBYTES) {

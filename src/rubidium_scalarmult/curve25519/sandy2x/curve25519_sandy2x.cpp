@@ -5,7 +5,7 @@
    (fe is first converted into fe51 after Mongomery ladder)
 */
 
-#include <stddef.h>
+#include <cstddef>
 
 #ifdef HAVE_AVX_ASM
 

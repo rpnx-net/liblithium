@@ -1,5 +1,5 @@
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "../stream_salsa20.h"
 #include "rubidium_stream_salsa20.h"

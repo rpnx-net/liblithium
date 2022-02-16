@@ -27,7 +27,7 @@
  */
 
 #include <limits.h>
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 #include <string.h>
 #include <bit>
@@ -209,17 +209,17 @@ rubidium_hash_sha512_init(rubidium_hash_sha512_state *state)
 
 int
 rubidium_hash_sha512_update(rubidium_hash_sha512_state *state,
-                          const unsigned char *in, unsigned long long inlen)
+                          const unsigned char *in, std::size_t inlen)
 {
     uint64_t           tmp64[80 + 8];
     uint64_t           bitlen[2];
-    unsigned long long i;
-    unsigned long long r;
+    std::size_t i;
+    std::size_t r;
 
     if (inlen <= 0U) {
         return 0;
     }
-    r = (unsigned long long) ((state->count[1] >> 3) & 0x7f);
+    r = (std::size_t) ((state->count[1] >> 3) & 0x7f);
 
     bitlen[1] = ((uint64_t) inlen) << 3;
     bitlen[0] = ((uint64_t) inlen) >> 61;
@@ -271,7 +271,7 @@ rubidium_hash_sha512_final(rubidium_hash_sha512_state *state, unsigned char *out
 
 int
 rubidium_hash_sha512(unsigned char *out, const unsigned char *in,
-                   unsigned long long inlen)
+                   std::size_t inlen)
 {
     rubidium_hash_sha512_state state;
 

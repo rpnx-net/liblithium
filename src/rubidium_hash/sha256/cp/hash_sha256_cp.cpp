@@ -27,7 +27,7 @@
  */
 
 #include <limits.h>
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 #include <string.h>
 
@@ -189,16 +189,16 @@ rubidium_hash_sha256_init(rubidium_hash_sha256_state *state)
 
 int
 rubidium_hash_sha256_update(rubidium_hash_sha256_state *state,
-                          const unsigned char *in, unsigned long long inlen)
+                          const unsigned char *in, std::size_t inlen)
 {
     uint32_t           tmp32[64 + 8];
-    unsigned long long i;
-    unsigned long long r;
+    std::size_t i;
+    std::size_t r;
 
     if (inlen <= 0U) {
         return 0;
     }
-    r = (unsigned long long) ((state->count >> 3) & 0x3f);
+    r = (std::size_t) ((state->count >> 3) & 0x3f);
 
     state->count += ((uint64_t) inlen) << 3;
     if (inlen < 64 - r) {
@@ -243,7 +243,7 @@ rubidium_hash_sha256_final(rubidium_hash_sha256_state *state, unsigned char *out
 
 int
 rubidium_hash_sha256(unsigned char *out, const unsigned char *in,
-                   unsigned long long inlen)
+                   std::size_t inlen)
 {
     rubidium_hash_sha256_state state;
 

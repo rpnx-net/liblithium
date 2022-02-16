@@ -6,7 +6,7 @@
  */
 
 #include <errno.h>
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 #include <string.h>
 
@@ -595,9 +595,9 @@ rubidium_aead_aes256gcm_beforenm(rubidium_aead_aes256gcm_state *ctx_, const unsi
 
 int
 rubidium_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char *mac,
-                                               unsigned long long *maclen_p, const unsigned char *m,
-                                               unsigned long long mlen, const unsigned char *ad,
-                                               unsigned long long adlen, const unsigned char *nsec,
+                                               std::size_t *maclen_p, const unsigned char *m,
+                                               std::size_t mlen, const unsigned char *ad,
+                                               std::size_t adlen, const unsigned char *nsec,
                                                const unsigned char *              npub,
                                                const rubidium_aead_aes256gcm_state *ctx_)
 {
@@ -605,9 +605,9 @@ rubidium_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char
     const aes256gcm_state *ctx = (const aes256gcm_state *) (const void *) ctx_;
     const __m128i *        rkeys = ctx->rkeys;
     __m128i                Hv, H2v, H3v, H4v, H5v, H6v, H7v, H8v, accv;
-    unsigned long long     i, j;
-    unsigned long long     adlen_rnd64 = adlen & ~63ULL;
-    unsigned long long     mlen_rnd128 = mlen & ~127ULL;
+    std::size_t     i, j;
+    std::size_t     adlen_rnd64 = adlen & ~63ULL;
+    std::size_t     mlen_rnd128 = mlen & ~127ULL;
     RUBIDIUM_ALIGN(16) uint32_t      n2[4];
     RUBIDIUM_ALIGN(16) unsigned char H[16];
     RUBIDIUM_ALIGN(16) unsigned char T[16];
@@ -654,7 +654,7 @@ rubidium_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char
     for (i = adlen_rnd64; i < adlen; i += 16) {
         unsigned int blocklen = 16;
 
-        if (i + (unsigned long long) blocklen > adlen) {
+        if (i + (std::size_t) blocklen > adlen) {
             blocklen = (unsigned int) (adlen - i);
         }
         addmulreduce(accum, ad + i, blocklen, H);
@@ -679,7 +679,7 @@ rubidium_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char
                                                           \
         for (i = mlen_rnd128; i < mlen; i += lb) {        \
             RUBIDIUM_ALIGN(16) unsigned char outni[8 * 16]; \
-            unsigned long long             mj = lb;       \
+            std::size_t             mj = lb;       \
                                                           \
             aesni_encrypt8(outni, n2, rkeys);             \
             if ((i + mj) >= mlen) {                       \
@@ -691,7 +691,7 @@ rubidium_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char
             for (j = 0; j < mj; j += 16) {                \
                 unsigned int bl = 16;                     \
                                                           \
-                if (j + (unsigned long long) bl >= mj) {  \
+                if (j + (std::size_t) bl >= mj) {  \
                     bl = (unsigned int) (mj - j);         \
                 }                                         \
                 addmulreduce(accum, c + i + j, bl, H);    \
@@ -716,9 +716,9 @@ rubidium_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char
 }
 
 int
-rubidium_aead_aes256gcm_encrypt_afternm(unsigned char *c, unsigned long long *clen_p,
-                                      const unsigned char *m, unsigned long long mlen,
-                                      const unsigned char *ad, unsigned long long adlen,
+rubidium_aead_aes256gcm_encrypt_afternm(unsigned char *c, std::size_t *clen_p,
+                                      const unsigned char *m, std::size_t mlen,
+                                      const unsigned char *ad, std::size_t adlen,
                                       const unsigned char *nsec, const unsigned char *npub,
                                       const rubidium_aead_aes256gcm_state *ctx_)
 {
@@ -732,19 +732,19 @@ rubidium_aead_aes256gcm_encrypt_afternm(unsigned char *c, unsigned long long *cl
 
 int
 rubidium_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char *nsec,
-                                               const unsigned char *c, unsigned long long clen,
+                                               const unsigned char *c, std::size_t clen,
                                                const unsigned char *mac, const unsigned char *ad,
-                                               unsigned long long adlen, const unsigned char *npub,
+                                               std::size_t adlen, const unsigned char *npub,
                                                const rubidium_aead_aes256gcm_state *ctx_)
 {
     const __m128i          rev = _mm_set_epi8(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
     const aes256gcm_state *ctx = (const aes256gcm_state *) (const void *) ctx_;
     const __m128i *        rkeys = ctx->rkeys;
     __m128i                Hv, H2v, H3v, H4v, H5v, H6v, H7v, H8v, accv;
-    unsigned long long     i, j;
-    unsigned long long     adlen_rnd64 = adlen & ~63ULL;
-    unsigned long long     mlen;
-    unsigned long long     mlen_rnd128;
+    std::size_t     i, j;
+    std::size_t     adlen_rnd64 = adlen & ~63ULL;
+    std::size_t     mlen;
+    std::size_t     mlen_rnd128;
     RUBIDIUM_ALIGN(16) uint32_t      n2[4];
     RUBIDIUM_ALIGN(16) unsigned char H[16];
     RUBIDIUM_ALIGN(16) unsigned char T[16];
@@ -793,7 +793,7 @@ rubidium_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char
     /* GCM remainder loop */
     for (i = adlen_rnd64; i < adlen; i += 16) {
         unsigned int blocklen = 16;
-        if (i + (unsigned long long) blocklen > adlen) {
+        if (i + (std::size_t) blocklen > adlen) {
             blocklen = (unsigned int) (adlen - i);
         }
         addmulreduce(accum, ad + i, blocklen, H);
@@ -816,13 +816,13 @@ rubidium_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char
         const int lb   = iter * 16;                       \
         for (i = mlen_rnd128; i < mlen; i += lb) {        \
             RUBIDIUM_ALIGN(16) unsigned char outni[8 * 16]; \
-            unsigned long long             mj = lb;       \
+            std::size_t             mj = lb;       \
                                                           \
             if ((i + mj) >= mlen) {                       \
                 mj = mlen - i;                            \
             }                                             \
             for (j = 0; j < mj; j += 16) {                \
-                unsigned long long bl = 16;               \
+                std::size_t bl = 16;               \
                 if (j + bl >= mj) {                       \
                     bl = mj - j;                          \
                 }                                         \
@@ -860,13 +860,13 @@ rubidium_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char
 }
 
 int
-rubidium_aead_aes256gcm_decrypt_afternm(unsigned char *m, unsigned long long *mlen_p,
+rubidium_aead_aes256gcm_decrypt_afternm(unsigned char *m, std::size_t *mlen_p,
                                       unsigned char *nsec, const unsigned char *c,
-                                      unsigned long long clen, const unsigned char *ad,
-                                      unsigned long long adlen, const unsigned char *npub,
+                                      std::size_t clen, const unsigned char *ad,
+                                      std::size_t adlen, const unsigned char *npub,
                                       const rubidium_aead_aes256gcm_state *ctx_)
 {
-    unsigned long long mlen = 0ULL;
+    std::size_t mlen = 0ULL;
     int                ret  = -1;
 
     if (clen >= rubidium_aead_aes256gcm_ABYTES) {
@@ -885,9 +885,9 @@ rubidium_aead_aes256gcm_decrypt_afternm(unsigned char *m, unsigned long long *ml
 
 int
 rubidium_aead_aes256gcm_encrypt_detached(unsigned char *c, unsigned char *mac,
-                                       unsigned long long *maclen_p, const unsigned char *m,
-                                       unsigned long long mlen, const unsigned char *ad,
-                                       unsigned long long adlen, const unsigned char *nsec,
+                                       std::size_t *maclen_p, const unsigned char *m,
+                                       std::size_t mlen, const unsigned char *ad,
+                                       std::size_t adlen, const unsigned char *nsec,
                                        const unsigned char *npub, const unsigned char *k)
 {
     RUBIDIUM_ALIGN(16) rubidium_aead_aes256gcm_state ctx;
@@ -900,9 +900,9 @@ rubidium_aead_aes256gcm_encrypt_detached(unsigned char *c, unsigned char *mac,
 }
 
 int
-rubidium_aead_aes256gcm_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
-                              unsigned long long mlen, const unsigned char *ad,
-                              unsigned long long adlen, const unsigned char *nsec,
+rubidium_aead_aes256gcm_encrypt(unsigned char *c, std::size_t *clen_p, const unsigned char *m,
+                              std::size_t mlen, const unsigned char *ad,
+                              std::size_t adlen, const unsigned char *nsec,
                               const unsigned char *npub, const unsigned char *k)
 {
     RUBIDIUM_ALIGN(16) rubidium_aead_aes256gcm_state ctx;
@@ -919,9 +919,9 @@ rubidium_aead_aes256gcm_encrypt(unsigned char *c, unsigned long long *clen_p, co
 
 int
 rubidium_aead_aes256gcm_decrypt_detached(unsigned char *m, unsigned char *nsec,
-                                       const unsigned char *c, unsigned long long clen,
+                                       const unsigned char *c, std::size_t clen,
                                        const unsigned char *mac, const unsigned char *ad,
-                                       unsigned long long adlen, const unsigned char *npub,
+                                       std::size_t adlen, const unsigned char *npub,
                                        const unsigned char *k)
 {
     RUBIDIUM_ALIGN(16) rubidium_aead_aes256gcm_state ctx;
@@ -933,9 +933,9 @@ rubidium_aead_aes256gcm_decrypt_detached(unsigned char *m, unsigned char *nsec,
 }
 
 int
-rubidium_aead_aes256gcm_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
-                              const unsigned char *c, unsigned long long clen,
-                              const unsigned char *ad, unsigned long long adlen,
+rubidium_aead_aes256gcm_decrypt(unsigned char *m, std::size_t *mlen_p, unsigned char *nsec,
+                              const unsigned char *c, std::size_t clen,
+                              const unsigned char *ad, std::size_t adlen,
                               const unsigned char *npub, const unsigned char *k)
 {
     RUBIDIUM_ALIGN(16) rubidium_aead_aes256gcm_state ctx;
@@ -964,9 +964,9 @@ rubidium_aead_aes256gcm_is_available(void)
 
 int
 rubidium_aead_aes256gcm_encrypt_detached(unsigned char *c, unsigned char *mac,
-                                       unsigned long long *maclen_p, const unsigned char *m,
-                                       unsigned long long mlen, const unsigned char *ad,
-                                       unsigned long long adlen, const unsigned char *nsec,
+                                       std::size_t *maclen_p, const unsigned char *m,
+                                       std::size_t mlen, const unsigned char *ad,
+                                       std::size_t adlen, const unsigned char *nsec,
                                        const unsigned char *npub, const unsigned char *k)
 {
     errno = ENOSYS;
@@ -974,9 +974,9 @@ rubidium_aead_aes256gcm_encrypt_detached(unsigned char *c, unsigned char *mac,
 }
 
 int
-rubidium_aead_aes256gcm_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
-                              unsigned long long mlen, const unsigned char *ad,
-                              unsigned long long adlen, const unsigned char *nsec,
+rubidium_aead_aes256gcm_encrypt(unsigned char *c, std::size_t *clen_p, const unsigned char *m,
+                              std::size_t mlen, const unsigned char *ad,
+                              std::size_t adlen, const unsigned char *nsec,
                               const unsigned char *npub, const unsigned char *k)
 {
     errno = ENOSYS;
@@ -985,9 +985,9 @@ rubidium_aead_aes256gcm_encrypt(unsigned char *c, unsigned long long *clen_p, co
 
 int
 rubidium_aead_aes256gcm_decrypt_detached(unsigned char *m, unsigned char *nsec,
-                                       const unsigned char *c, unsigned long long clen,
+                                       const unsigned char *c, std::size_t clen,
                                        const unsigned char *mac, const unsigned char *ad,
-                                       unsigned long long adlen, const unsigned char *npub,
+                                       std::size_t adlen, const unsigned char *npub,
                                        const unsigned char *k)
 {
     errno = ENOSYS;
@@ -995,9 +995,9 @@ rubidium_aead_aes256gcm_decrypt_detached(unsigned char *m, unsigned char *nsec,
 }
 
 int
-rubidium_aead_aes256gcm_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
-                              const unsigned char *c, unsigned long long clen,
-                              const unsigned char *ad, unsigned long long adlen,
+rubidium_aead_aes256gcm_decrypt(unsigned char *m, std::size_t *mlen_p, unsigned char *nsec,
+                              const unsigned char *c, std::size_t clen,
+                              const unsigned char *ad, std::size_t adlen,
                               const unsigned char *npub, const unsigned char *k)
 {
     errno = ENOSYS;
@@ -1013,9 +1013,9 @@ rubidium_aead_aes256gcm_beforenm(rubidium_aead_aes256gcm_state *ctx_, const unsi
 
 int
 rubidium_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char *mac,
-                                               unsigned long long *maclen_p, const unsigned char *m,
-                                               unsigned long long mlen, const unsigned char *ad,
-                                               unsigned long long adlen, const unsigned char *nsec,
+                                               std::size_t *maclen_p, const unsigned char *m,
+                                               std::size_t mlen, const unsigned char *ad,
+                                               std::size_t adlen, const unsigned char *nsec,
                                                const unsigned char *              npub,
                                                const rubidium_aead_aes256gcm_state *ctx_)
 {
@@ -1024,9 +1024,9 @@ rubidium_aead_aes256gcm_encrypt_detached_afternm(unsigned char *c, unsigned char
 }
 
 int
-rubidium_aead_aes256gcm_encrypt_afternm(unsigned char *c, unsigned long long *clen_p,
-                                      const unsigned char *m, unsigned long long mlen,
-                                      const unsigned char *ad, unsigned long long adlen,
+rubidium_aead_aes256gcm_encrypt_afternm(unsigned char *c, std::size_t *clen_p,
+                                      const unsigned char *m, std::size_t mlen,
+                                      const unsigned char *ad, std::size_t adlen,
                                       const unsigned char *nsec, const unsigned char *npub,
                                       const rubidium_aead_aes256gcm_state *ctx_)
 {
@@ -1036,9 +1036,9 @@ rubidium_aead_aes256gcm_encrypt_afternm(unsigned char *c, unsigned long long *cl
 
 int
 rubidium_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char *nsec,
-                                               const unsigned char *c, unsigned long long clen,
+                                               const unsigned char *c, std::size_t clen,
                                                const unsigned char *mac, const unsigned char *ad,
-                                               unsigned long long adlen, const unsigned char *npub,
+                                               std::size_t adlen, const unsigned char *npub,
                                                const rubidium_aead_aes256gcm_state *ctx_)
 {
     errno = ENOSYS;
@@ -1046,10 +1046,10 @@ rubidium_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m, unsigned char
 }
 
 int
-rubidium_aead_aes256gcm_decrypt_afternm(unsigned char *m, unsigned long long *mlen_p,
+rubidium_aead_aes256gcm_decrypt_afternm(unsigned char *m, std::size_t *mlen_p,
                                       unsigned char *nsec, const unsigned char *c,
-                                      unsigned long long clen, const unsigned char *ad,
-                                      unsigned long long adlen, const unsigned char *npub,
+                                      std::size_t clen, const unsigned char *ad,
+                                      std::size_t adlen, const unsigned char *npub,
                                       const rubidium_aead_aes256gcm_state *ctx_)
 {
     errno = ENOSYS;

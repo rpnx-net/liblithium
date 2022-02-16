@@ -2,8 +2,8 @@
 #define rubidium_pwhash_scryptsalsa208sha256_H
 
 #include <limits.h>
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 #include "export.h"
 
@@ -45,11 +45,11 @@ const char *rubidium_pwhash_scryptsalsa208sha256_strprefix(void);
 
 #define rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_MIN 32768U
 RUBIDIUM_EXPORT
-unsigned long long rubidium_pwhash_scryptsalsa208sha256_opslimit_min(void);
+std::size_t rubidium_pwhash_scryptsalsa208sha256_opslimit_min(void);
 
 #define rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_MAX 4294967295U
 RUBIDIUM_EXPORT
-unsigned long long rubidium_pwhash_scryptsalsa208sha256_opslimit_max(void);
+std::size_t rubidium_pwhash_scryptsalsa208sha256_opslimit_max(void);
 
 #define rubidium_pwhash_scryptsalsa208sha256_MEMLIMIT_MIN 16777216U
 RUBIDIUM_EXPORT
@@ -62,7 +62,7 @@ size_t rubidium_pwhash_scryptsalsa208sha256_memlimit_max(void);
 
 #define rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_INTERACTIVE 524288U
 RUBIDIUM_EXPORT
-unsigned long long rubidium_pwhash_scryptsalsa208sha256_opslimit_interactive(void);
+std::size_t rubidium_pwhash_scryptsalsa208sha256_opslimit_interactive(void);
 
 #define rubidium_pwhash_scryptsalsa208sha256_MEMLIMIT_INTERACTIVE 16777216U
 RUBIDIUM_EXPORT
@@ -70,7 +70,7 @@ size_t rubidium_pwhash_scryptsalsa208sha256_memlimit_interactive(void);
 
 #define rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_SENSITIVE 33554432U
 RUBIDIUM_EXPORT
-unsigned long long rubidium_pwhash_scryptsalsa208sha256_opslimit_sensitive(void);
+std::size_t rubidium_pwhash_scryptsalsa208sha256_opslimit_sensitive(void);
 
 #define rubidium_pwhash_scryptsalsa208sha256_MEMLIMIT_SENSITIVE 1073741824U
 RUBIDIUM_EXPORT
@@ -78,26 +78,26 @@ size_t rubidium_pwhash_scryptsalsa208sha256_memlimit_sensitive(void);
 
 RUBIDIUM_EXPORT
 int rubidium_pwhash_scryptsalsa208sha256(unsigned char * const out,
-                                       unsigned long long outlen,
+                                       std::size_t outlen,
                                        const char * const passwd,
-                                       unsigned long long passwdlen,
+                                       std::size_t passwdlen,
                                        const unsigned char * const salt,
-                                       unsigned long long opslimit,
+                                       std::size_t opslimit,
                                        size_t memlimit)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
 int rubidium_pwhash_scryptsalsa208sha256_str(char out[rubidium_pwhash_scryptsalsa208sha256_STRBYTES],
                                            const char * const passwd,
-                                           unsigned long long passwdlen,
-                                           unsigned long long opslimit,
+                                           std::size_t passwdlen,
+                                           std::size_t opslimit,
                                            size_t memlimit)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
 int rubidium_pwhash_scryptsalsa208sha256_str_verify(const char * str,
                                                   const char * const passwd,
-                                                  unsigned long long passwdlen)
+                                                  std::size_t passwdlen)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
 RUBIDIUM_EXPORT
@@ -109,7 +109,7 @@ int rubidium_pwhash_scryptsalsa208sha256_ll(const uint8_t * passwd, size_t passw
 
 RUBIDIUM_EXPORT
 int rubidium_pwhash_scryptsalsa208sha256_str_needs_rehash(const char * str,
-                                                        unsigned long long opslimit,
+                                                        std::size_t opslimit,
                                                         size_t memlimit)
             __attribute__ ((warn_unused_result))  __attribute__ ((nonnull));
 

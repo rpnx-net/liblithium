@@ -27,7 +27,7 @@ rubidium_box_curve25519xchacha20poly1305_seal_nonce(unsigned char *nonce,
 
 int
 rubidium_box_curve25519xchacha20poly1305_seal(unsigned char *c, const unsigned char *m,
-                                            unsigned long long mlen,
+                                            std::size_t mlen,
                                             const unsigned char *pk)
 {
     unsigned char nonce[rubidium_box_curve25519xchacha20poly1305_NONCEBYTES];
@@ -52,7 +52,7 @@ rubidium_box_curve25519xchacha20poly1305_seal(unsigned char *c, const unsigned c
 
 int
 rubidium_box_curve25519xchacha20poly1305_seal_open(unsigned char *m, const unsigned char *c,
-                                                 unsigned long long clen,
+                                                 std::size_t clen,
                                                  const unsigned char *pk,
                                                  const unsigned char *sk)
 {

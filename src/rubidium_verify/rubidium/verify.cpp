@@ -1,6 +1,6 @@
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 #include "rubidium_verify_16.h"
 #include "rubidium_verify_32.h"

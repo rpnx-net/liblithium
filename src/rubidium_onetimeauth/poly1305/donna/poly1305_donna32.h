@@ -15,12 +15,12 @@
 
 #define poly1305_block_size 16
 
-/* 17 + sizeof(unsigned long long) + 14*sizeof(unsigned long) */
+/* 17 + sizeof(std::size_t) + 14*sizeof(unsigned long) */
 typedef struct poly1305_state_internal_t {
     unsigned long      r[5];
     unsigned long      h[5];
     unsigned long      pad[4];
-    unsigned long long leftover;
+    std::size_t leftover;
     unsigned char      buffer[poly1305_block_size];
     unsigned char      final;
 } poly1305_state_internal_t;
@@ -54,13 +54,13 @@ poly1305_init(poly1305_state_internal_t *st, const unsigned char key[32])
 
 static void
 poly1305_blocks(poly1305_state_internal_t *st, const unsigned char *m,
-                unsigned long long bytes)
+                std::size_t bytes)
 {
     const unsigned long hibit = (st->final) ? 0UL : (1UL << 24); /* 1 << 128 */
     unsigned long       r0, r1, r2, r3, r4;
     unsigned long       s1, s2, s3, s4;
     unsigned long       h0, h1, h2, h3, h4;
-    unsigned long long  d0, d1, d2, d3, d4;
+    std::size_t  d0, d1, d2, d3, d4;
     unsigned long       c;
 
     r0 = st->r[0];
@@ -89,21 +89,21 @@ poly1305_blocks(poly1305_state_internal_t *st, const unsigned char *m,
         h4 += (load32_le(m + 12) >> 8) | hibit;
 
         /* h *= r */
-        d0 = ((unsigned long long) h0 * r0) + ((unsigned long long) h1 * s4) +
-             ((unsigned long long) h2 * s3) + ((unsigned long long) h3 * s2) +
-             ((unsigned long long) h4 * s1);
-        d1 = ((unsigned long long) h0 * r1) + ((unsigned long long) h1 * r0) +
-             ((unsigned long long) h2 * s4) + ((unsigned long long) h3 * s3) +
-             ((unsigned long long) h4 * s2);
-        d2 = ((unsigned long long) h0 * r2) + ((unsigned long long) h1 * r1) +
-             ((unsigned long long) h2 * r0) + ((unsigned long long) h3 * s4) +
-             ((unsigned long long) h4 * s3);
-        d3 = ((unsigned long long) h0 * r3) + ((unsigned long long) h1 * r2) +
-             ((unsigned long long) h2 * r1) + ((unsigned long long) h3 * r0) +
-             ((unsigned long long) h4 * s4);
-        d4 = ((unsigned long long) h0 * r4) + ((unsigned long long) h1 * r3) +
-             ((unsigned long long) h2 * r2) + ((unsigned long long) h3 * r1) +
-             ((unsigned long long) h4 * r0);
+        d0 = ((std::size_t) h0 * r0) + ((std::size_t) h1 * s4) +
+             ((std::size_t) h2 * s3) + ((std::size_t) h3 * s2) +
+             ((std::size_t) h4 * s1);
+        d1 = ((std::size_t) h0 * r1) + ((std::size_t) h1 * r0) +
+             ((std::size_t) h2 * s4) + ((std::size_t) h3 * s3) +
+             ((std::size_t) h4 * s2);
+        d2 = ((std::size_t) h0 * r2) + ((std::size_t) h1 * r1) +
+             ((std::size_t) h2 * r0) + ((std::size_t) h3 * s4) +
+             ((std::size_t) h4 * s3);
+        d3 = ((std::size_t) h0 * r3) + ((std::size_t) h1 * r2) +
+             ((std::size_t) h2 * r1) + ((std::size_t) h3 * r0) +
+             ((std::size_t) h4 * s4);
+        d4 = ((std::size_t) h0 * r4) + ((std::size_t) h1 * r3) +
+             ((std::size_t) h2 * r2) + ((std::size_t) h3 * r1) +
+             ((std::size_t) h4 * r0);
 
         /* (partial) h %= p */
         c  = (unsigned long) (d0 >> 26);
@@ -141,12 +141,12 @@ poly1305_finish(poly1305_state_internal_t *st, unsigned char mac[16])
 {
     unsigned long      h0, h1, h2, h3, h4, c;
     unsigned long      g0, g1, g2, g3, g4;
-    unsigned long long f;
+    std::size_t f;
     unsigned long      mask;
 
     /* process the remaining block */
     if (st->leftover) {
-        unsigned long long i = st->leftover;
+        std::size_t i = st->leftover;
 
         st->buffer[i++] = 1;
         for (; i < poly1305_block_size; i++) {
@@ -216,13 +216,13 @@ poly1305_finish(poly1305_state_internal_t *st, unsigned char mac[16])
     h3 = ((h3 >> 18) | (h4 << 8)) & 0xffffffff;
 
     /* mac = (h + pad) % (2^128) */
-    f  = (unsigned long long) h0 + st->pad[0];
+    f  = (std::size_t) h0 + st->pad[0];
     h0 = (unsigned long) f;
-    f  = (unsigned long long) h1 + st->pad[1] + (f >> 32);
+    f  = (std::size_t) h1 + st->pad[1] + (f >> 32);
     h1 = (unsigned long) f;
-    f  = (unsigned long long) h2 + st->pad[2] + (f >> 32);
+    f  = (std::size_t) h2 + st->pad[2] + (f >> 32);
     h2 = (unsigned long) f;
-    f  = (unsigned long long) h3 + st->pad[3] + (f >> 32);
+    f  = (std::size_t) h3 + st->pad[3] + (f >> 32);
     h3 = (unsigned long) f;
 
     store32_le((mac + 0), ((uint32_t) h0));

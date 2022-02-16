@@ -2,7 +2,7 @@
 #ifndef rubidium_box_curve25519xchacha20poly1305_H
 #define rubidium_box_curve25519xchacha20poly1305_H
 
-#include <stddef.h>
+#include <cstddef>
 #include "rubidium_stream_xchacha20.h"
 #include "export.h"
 
@@ -58,7 +58,7 @@ namespace rubidium {
     RUBIDIUM_EXPORT
     int rubidium_box_curve25519xchacha20poly1305_easy(unsigned char *c,
                                                     const unsigned char *m,
-                                                    unsigned long long mlen,
+                                                    std::size_t mlen,
                                                     const unsigned char *n,
                                                     const unsigned char *pk,
                                                     const unsigned char *sk)
@@ -67,7 +67,7 @@ namespace rubidium {
     RUBIDIUM_EXPORT
     int rubidium_box_curve25519xchacha20poly1305_open_easy(unsigned char *m,
                                                          const unsigned char *c,
-                                                         unsigned long long clen,
+                                                         std::size_t clen,
                                                          const unsigned char *n,
                                                          const unsigned char *pk,
                                                          const unsigned char *sk)
@@ -77,7 +77,7 @@ namespace rubidium {
     int rubidium_box_curve25519xchacha20poly1305_detached(unsigned char *c,
                                                         unsigned char *mac,
                                                         const unsigned char *m,
-                                                        unsigned long long mlen,
+                                                        std::size_t mlen,
                                                         const unsigned char *n,
                                                         const unsigned char *pk,
                                                         const unsigned char *sk)
@@ -87,7 +87,7 @@ namespace rubidium {
     int rubidium_box_curve25519xchacha20poly1305_open_detached(unsigned char *m,
                                                              const unsigned char *c,
                                                              const unsigned char *mac,
-                                                             unsigned long long clen,
+                                                             std::size_t clen,
                                                              const unsigned char *n,
                                                              const unsigned char *pk,
                                                              const unsigned char *sk)
@@ -104,7 +104,7 @@ namespace rubidium {
     RUBIDIUM_EXPORT
     int rubidium_box_curve25519xchacha20poly1305_easy_afternm(unsigned char *c,
                                                             const unsigned char *m,
-                                                            unsigned long long mlen,
+                                                            std::size_t mlen,
                                                             const unsigned char *n,
                                                             const unsigned char *k)
     __attribute__ ((nonnull(1, 4, 5)));
@@ -112,7 +112,7 @@ namespace rubidium {
     RUBIDIUM_EXPORT
     int rubidium_box_curve25519xchacha20poly1305_open_easy_afternm(unsigned char *m,
                                                                  const unsigned char *c,
-                                                                 unsigned long long clen,
+                                                                 std::size_t clen,
                                                                  const unsigned char *n,
                                                                  const unsigned char *k)
     __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 4, 5)));
@@ -121,7 +121,7 @@ namespace rubidium {
     int rubidium_box_curve25519xchacha20poly1305_detached_afternm(unsigned char *c,
                                                                 unsigned char *mac,
                                                                 const unsigned char *m,
-                                                                unsigned long long mlen,
+                                                                std::size_t mlen,
                                                                 const unsigned char *n,
                                                                 const unsigned char *k)
     __attribute__ ((nonnull(1, 2, 5, 6)));
@@ -130,7 +130,7 @@ namespace rubidium {
     int rubidium_box_curve25519xchacha20poly1305_open_detached_afternm(unsigned char *m,
                                                                      const unsigned char *c,
                                                                      const unsigned char *mac,
-                                                                     unsigned long long clen,
+                                                                     std::size_t clen,
                                                                      const unsigned char *n,
                                                                      const unsigned char *k)
     __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 3, 5, 6)));
@@ -147,14 +147,14 @@ namespace rubidium {
     RUBIDIUM_EXPORT
     int rubidium_box_curve25519xchacha20poly1305_seal(unsigned char *c,
                                                     const unsigned char *m,
-                                                    unsigned long long mlen,
+                                                    std::size_t mlen,
                                                     const unsigned char *pk)
     __attribute__ ((nonnull(1, 4)));
 
     RUBIDIUM_EXPORT
     int rubidium_box_curve25519xchacha20poly1305_seal_open(unsigned char *m,
                                                          const unsigned char *c,
-                                                         unsigned long long clen,
+                                                         std::size_t clen,
                                                          const unsigned char *pk,
                                                          const unsigned char *sk)
     __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 4, 5)));

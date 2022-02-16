@@ -1,8 +1,8 @@
 
 #include <errno.h>
 #include <limits.h>
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 #include <string.h>
 
 #include "rubidium_pwhash_scryptsalsa208sha256.h"
@@ -16,11 +16,11 @@
      BYTES2CHARS(saltbytes))
 
 static int
-pickparams(unsigned long long opslimit, const size_t memlimit,
+pickparams(std::size_t opslimit, const size_t memlimit,
            uint32_t *const N_log2, uint32_t *const p, uint32_t *const r)
 {
-    unsigned long long maxN;
-    unsigned long long maxrp;
+    std::size_t maxN;
+    std::size_t maxrp;
 
     if (opslimit < 32768) {
         opslimit = 32768;
@@ -105,13 +105,13 @@ rubidium_pwhash_scryptsalsa208sha256_strprefix(void)
     return rubidium_pwhash_scryptsalsa208sha256_STRPREFIX;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_scryptsalsa208sha256_opslimit_min(void)
 {
     return rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_MIN;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_scryptsalsa208sha256_opslimit_max(void)
 {
     return rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_MAX;
@@ -129,7 +129,7 @@ rubidium_pwhash_scryptsalsa208sha256_memlimit_max(void)
     return rubidium_pwhash_scryptsalsa208sha256_MEMLIMIT_MAX;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_scryptsalsa208sha256_opslimit_interactive(void)
 {
     return rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_INTERACTIVE;
@@ -141,7 +141,7 @@ rubidium_pwhash_scryptsalsa208sha256_memlimit_interactive(void)
     return rubidium_pwhash_scryptsalsa208sha256_MEMLIMIT_INTERACTIVE;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_scryptsalsa208sha256_opslimit_sensitive(void)
 {
     return rubidium_pwhash_scryptsalsa208sha256_OPSLIMIT_SENSITIVE;
@@ -155,11 +155,11 @@ rubidium_pwhash_scryptsalsa208sha256_memlimit_sensitive(void)
 
 int
 rubidium_pwhash_scryptsalsa208sha256(unsigned char *const       out,
-                                   unsigned long long         outlen,
+                                   std::size_t         outlen,
                                    const char *const          passwd,
-                                   unsigned long long         passwdlen,
+                                   std::size_t         passwdlen,
                                    const unsigned char *const salt,
-                                   unsigned long long opslimit, size_t memlimit)
+                                   std::size_t opslimit, size_t memlimit)
 {
     uint32_t N_log2;
     uint32_t p;
@@ -189,8 +189,8 @@ rubidium_pwhash_scryptsalsa208sha256(unsigned char *const       out,
 int
 rubidium_pwhash_scryptsalsa208sha256_str(
     char              out[rubidium_pwhash_scryptsalsa208sha256_STRBYTES],
-    const char *const passwd, unsigned long long passwdlen,
-    unsigned long long opslimit, size_t memlimit)
+    const char *const passwd, std::size_t passwdlen,
+    std::size_t opslimit, size_t memlimit)
 {
     uint8_t salt[rubidium_pwhash_scryptsalsa208sha256_STRSALTBYTES];
     char    setting[rubidium_pwhash_scryptsalsa208sha256_STRSETTINGBYTES + 1U];
@@ -243,7 +243,7 @@ rubidium_pwhash_scryptsalsa208sha256_str(
 int
 rubidium_pwhash_scryptsalsa208sha256_str_verify(
     const char        *str,
-    const char *const passwd, unsigned long long passwdlen)
+    const char *const passwd, std::size_t passwdlen)
 {
     char            wanted[rubidium_pwhash_scryptsalsa208sha256_STRBYTES];
     escrypt_local_t escrypt_local;
@@ -273,7 +273,7 @@ rubidium_pwhash_scryptsalsa208sha256_str_verify(
 int
 rubidium_pwhash_scryptsalsa208sha256_str_needs_rehash(
     const char * str,
-    unsigned long long opslimit, size_t memlimit)
+    std::size_t opslimit, size_t memlimit)
 {
     uint32_t N_log2, N_log2_;
     uint32_t p, p_;

@@ -1,7 +1,7 @@
 #ifndef rubidium_sign_ed25519_H
 #define rubidium_sign_ed25519_H
 
-#include <stddef.h>
+#include <cstddef>
 #include "rubidium_hash_sha512.h"
 #include "export.h"
 
@@ -40,29 +40,29 @@ RUBIDIUM_EXPORT
 size_t rubidium_sign_ed25519_messagebytes_max(void);
 
 RUBIDIUM_EXPORT
-int rubidium_sign_ed25519(unsigned char *sm, unsigned long long *smlen_p,
-                        const unsigned char *m, unsigned long long mlen,
+int rubidium_sign_ed25519(unsigned char *sm, std::size_t *smlen_p,
+                        const unsigned char *m, std::size_t mlen,
                         const unsigned char *sk)
             __attribute__ ((nonnull(1, 5)));
 
 RUBIDIUM_EXPORT
-int rubidium_sign_ed25519_open(unsigned char *m, unsigned long long *mlen_p,
-                             const unsigned char *sm, unsigned long long smlen,
+int rubidium_sign_ed25519_open(unsigned char *m, std::size_t *mlen_p,
+                             const unsigned char *sm, std::size_t smlen,
                              const unsigned char *pk)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(3, 5)));
 
 RUBIDIUM_EXPORT
 int rubidium_sign_ed25519_detached(unsigned char *sig,
-                                 unsigned long long *siglen_p,
+                                 std::size_t *siglen_p,
                                  const unsigned char *m,
-                                 unsigned long long mlen,
+                                 std::size_t mlen,
                                  const unsigned char *sk)
             __attribute__ ((nonnull(1, 5)));
 
 RUBIDIUM_EXPORT
 int rubidium_sign_ed25519_verify_detached(const unsigned char *sig,
                                         const unsigned char *m,
-                                        unsigned long long mlen,
+                                        std::size_t mlen,
                                         const unsigned char *pk)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(1, 4)));
 
@@ -101,13 +101,13 @@ int rubidium_sign_ed25519ph_init(rubidium_sign_ed25519ph_state *state)
 RUBIDIUM_EXPORT
 int rubidium_sign_ed25519ph_update(rubidium_sign_ed25519ph_state *state,
                                  const unsigned char *m,
-                                 unsigned long long mlen)
+                                 std::size_t mlen)
             __attribute__ ((nonnull(1)));
 
 RUBIDIUM_EXPORT
 int rubidium_sign_ed25519ph_final_create(rubidium_sign_ed25519ph_state *state,
                                        unsigned char *sig,
-                                       unsigned long long *siglen_p,
+                                       std::size_t *siglen_p,
                                        const unsigned char *sk)
             __attribute__ ((nonnull(1, 2, 4)));
 

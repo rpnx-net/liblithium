@@ -25,7 +25,7 @@ randombytes_buf(void * buf, const size_t size)
 
 
 void
-randombytes(unsigned char * const buf, const unsigned long long buf_len)
+randombytes(unsigned char * const buf, const std::size_t buf_len)
 {
     randombytes_buf(buf, (size_t) buf_len);
 }

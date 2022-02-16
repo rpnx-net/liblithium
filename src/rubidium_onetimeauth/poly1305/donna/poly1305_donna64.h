@@ -8,8 +8,8 @@
 #define MUL(out, x, y) out = ((uint128_t) x * y)
 #define ADD(out, in) out += in
 #define ADDLO(out, in) out += in
-#define SHR(in, shift) (unsigned long long) (in >> (shift))
-#define LO(in) (unsigned long long) (in)
+#define SHR(in, shift) (std::size_t) (in >> (shift))
+#define LO(in) (std::size_t) (in)
 
 #if defined(_MSC_VER)
 # define POLY1305_NOINLINE __declspec(noinline)
@@ -21,12 +21,12 @@
 
 #define poly1305_block_size 16
 
-/* 17 + sizeof(unsigned long long) + 8*sizeof(unsigned long long) */
+/* 17 + sizeof(std::size_t) + 8*sizeof(std::size_t) */
 typedef struct poly1305_state_internal_t {
-    unsigned long long r[3];
-    unsigned long long h[3];
-    unsigned long long pad[2];
-    unsigned long long leftover;
+    std::size_t r[3];
+    std::size_t h[3];
+    std::size_t pad[2];
+    std::size_t leftover;
     unsigned char      buffer[poly1305_block_size];
     unsigned char      final;
 } poly1305_state_internal_t;
@@ -34,7 +34,7 @@ typedef struct poly1305_state_internal_t {
 static void
 poly1305_init(poly1305_state_internal_t *st, const unsigned char key[32])
 {
-    unsigned long long t0, t1;
+    std::size_t t0, t1;
 
     /* r &= 0xffffffc0ffffffc0ffffffc0fffffff */
     t0 = LOAD64_LE(&key[0]);
@@ -60,14 +60,14 @@ poly1305_init(poly1305_state_internal_t *st, const unsigned char key[32])
 
 static void
 poly1305_blocks(poly1305_state_internal_t *st, const unsigned char *m,
-                unsigned long long bytes)
+                std::size_t bytes)
 {
-    const unsigned long long hibit =
+    const std::size_t hibit =
         (st->final) ? 0ULL : (1ULL << 40); /* 1 << 128 */
-    unsigned long long r0, r1, r2;
-    unsigned long long s1, s2;
-    unsigned long long h0, h1, h2;
-    unsigned long long c;
+    std::size_t r0, r1, r2;
+    std::size_t s1, s2;
+    std::size_t h0, h1, h2;
+    std::size_t c;
     uint128_t          d0, d1, d2, d;
 
     r0 = st->r[0];
@@ -82,7 +82,7 @@ poly1305_blocks(poly1305_state_internal_t *st, const unsigned char *m,
     s2 = r2 * (5 << 2);
 
     while (bytes >= poly1305_block_size) {
-        unsigned long long t0, t1;
+        std::size_t t0, t1;
 
         /* h += m[i] */
         t0 = LOAD64_LE(&m[0]);
@@ -135,14 +135,14 @@ poly1305_blocks(poly1305_state_internal_t *st, const unsigned char *m,
 static POLY1305_NOINLINE void
 poly1305_finish(poly1305_state_internal_t *st, unsigned char mac[16])
 {
-    unsigned long long h0, h1, h2, c;
-    unsigned long long g0, g1, g2;
-    unsigned long long t0, t1;
-    unsigned long long mask;
+    std::size_t h0, h1, h2, c;
+    std::size_t g0, g1, g2;
+    std::size_t t0, t1;
+    std::size_t mask;
 
     /* process the remaining block */
     if (st->leftover) {
-        unsigned long long i = st->leftover;
+        std::size_t i = st->leftover;
 
         st->buffer[i] = 1;
 
@@ -187,7 +187,7 @@ poly1305_finish(poly1305_state_internal_t *st, unsigned char mac[16])
     g2 = h2 + c - (1ULL << 42);
 
     /* select h if h < p, or h + -p if h >= p */
-    mask = (g2 >> ((sizeof(unsigned long long) * 8) - 1)) - 1;
+    mask = (g2 >> ((sizeof(std::size_t) * 8) - 1)) - 1;
     g0   &= mask;
     g1   &= mask;
     g2   &= mask;

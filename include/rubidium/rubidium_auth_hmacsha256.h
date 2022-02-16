@@ -1,7 +1,7 @@
 #ifndef rubidium_auth_hmacsha256_H
 #define rubidium_auth_hmacsha256_H
 
-#include <stddef.h>
+#include <cstddef>
 #include "rubidium_hash_sha256.h"
 #include "export.h"
 
@@ -23,13 +23,13 @@ size_t rubidium_auth_hmacsha256_keybytes(void);
 RUBIDIUM_EXPORT
 int rubidium_auth_hmacsha256(unsigned char *out,
                            const unsigned char *in,
-                           unsigned long long inlen,
+                           std::size_t inlen,
                            const unsigned char *k) __attribute__ ((nonnull(1, 4)));
 
 RUBIDIUM_EXPORT
 int rubidium_auth_hmacsha256_verify(const unsigned char *h,
                                   const unsigned char *in,
-                                  unsigned long long inlen,
+                                  std::size_t inlen,
                                   const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(1, 4)));
 
@@ -51,7 +51,7 @@ int rubidium_auth_hmacsha256_init(rubidium_auth_hmacsha256_state *state,
 RUBIDIUM_EXPORT
 int rubidium_auth_hmacsha256_update(rubidium_auth_hmacsha256_state *state,
                                   const unsigned char *in,
-                                  unsigned long long inlen)
+                                  std::size_t inlen)
             __attribute__ ((nonnull(1)));
 
 RUBIDIUM_EXPORT

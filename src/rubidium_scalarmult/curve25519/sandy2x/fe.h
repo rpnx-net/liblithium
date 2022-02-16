@@ -6,7 +6,7 @@
 #ifndef fe_H
 #define fe_H
 
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 
 typedef uint64_t fe[10];

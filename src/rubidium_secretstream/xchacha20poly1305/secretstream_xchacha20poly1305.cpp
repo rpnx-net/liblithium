@@ -1,4 +1,4 @@
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
@@ -111,9 +111,9 @@ rubidium_secretstream_xchacha20poly1305_rekey
 int
 rubidium_secretstream_xchacha20poly1305_push
    (rubidium_secretstream_xchacha20poly1305_state *state,
-    unsigned char *out, unsigned long long *outlen_p,
-    const unsigned char *m, unsigned long long mlen,
-    const unsigned char *ad, unsigned long long adlen, unsigned char tag)
+    unsigned char *out, std::size_t *outlen_p,
+    const unsigned char *m, std::size_t mlen,
+    const unsigned char *ad, std::size_t adlen, unsigned char tag)
 {
     rubidium_onetimeauth_poly1305_state poly1305_state;
     unsigned char                     block[64U];
@@ -179,9 +179,9 @@ rubidium_secretstream_xchacha20poly1305_push
 int
 rubidium_secretstream_xchacha20poly1305_pull
    (rubidium_secretstream_xchacha20poly1305_state *state,
-    unsigned char *m, unsigned long long *mlen_p, unsigned char *tag_p,
-    const unsigned char *in, unsigned long long inlen,
-    const unsigned char *ad, unsigned long long adlen)
+    unsigned char *m, std::size_t *mlen_p, unsigned char *tag_p,
+    const unsigned char *in, std::size_t inlen,
+    const unsigned char *ad, std::size_t adlen)
 {
     rubidium_onetimeauth_poly1305_state poly1305_state;
     unsigned char                     block[64U];
@@ -189,7 +189,7 @@ rubidium_secretstream_xchacha20poly1305_pull
     unsigned char                     mac[rubidium_onetimeauth_poly1305_BYTES];
     const unsigned char              *c;
     const unsigned char              *stored_mac;
-    unsigned long long                mlen;
+    std::size_t                mlen;
     unsigned char                     tag;
 
     if (mlen_p != NULL) {

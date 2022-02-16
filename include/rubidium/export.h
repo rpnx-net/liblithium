@@ -2,8 +2,8 @@
 #ifndef rubidium_export_H
 #define rubidium_export_H
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 #include <limits.h>
 
 #if !defined(__clang__) && !defined(__GNUC__)

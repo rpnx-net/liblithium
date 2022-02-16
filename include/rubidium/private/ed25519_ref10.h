@@ -1,8 +1,8 @@
 #ifndef ed25519_ref10_H
 #define ed25519_ref10_H
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 
 /*

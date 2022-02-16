@@ -28,7 +28,7 @@
 #ifndef pbkdf2_sha256_H
 #define pbkdf2_sha256_H
 
-#include <stdint.h>
+#include <cstdint>
 
 #include <sys/types.h>
 

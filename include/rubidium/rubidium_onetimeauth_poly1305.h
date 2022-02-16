@@ -1,14 +1,9 @@
 #ifndef rubidium_onetimeauth_poly1305_H
 #define rubidium_onetimeauth_poly1305_H
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
 
-#include <stdint.h>
+
+#include <cstdint>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -34,14 +29,14 @@ size_t rubidium_onetimeauth_poly1305_keybytes(void);
 RUBIDIUM_EXPORT
 int rubidium_onetimeauth_poly1305(unsigned char *out,
                                 const unsigned char *in,
-                                unsigned long long inlen,
+                                std::size_t inlen,
                                 const unsigned char *k)
             __attribute__ ((nonnull(1, 4)));
 
 RUBIDIUM_EXPORT
 int rubidium_onetimeauth_poly1305_verify(const unsigned char *h,
                                        const unsigned char *in,
-                                       unsigned long long inlen,
+                                       std::size_t inlen,
                                        const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(1, 4)));
 
@@ -53,7 +48,7 @@ int rubidium_onetimeauth_poly1305_init(rubidium_onetimeauth_poly1305_state *stat
 RUBIDIUM_EXPORT
 int rubidium_onetimeauth_poly1305_update(rubidium_onetimeauth_poly1305_state *state,
                                        const unsigned char *in,
-                                       unsigned long long inlen)
+                                       std::size_t inlen)
             __attribute__ ((nonnull(1)));
 
 RUBIDIUM_EXPORT
@@ -65,8 +60,6 @@ RUBIDIUM_EXPORT
 void rubidium_onetimeauth_poly1305_keygen(unsigned char k[RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES])
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

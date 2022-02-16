@@ -1,7 +1,7 @@
 #ifndef rubidium_shorthash_H
 #define rubidium_shorthash_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "rubidium_shorthash_siphash24.h"
 #include "export.h"
@@ -27,7 +27,7 @@ const char *rubidium_shorthash_primitive(void);
 
 RUBIDIUM_EXPORT
 int rubidium_shorthash(unsigned char *out, const unsigned char *in,
-                     unsigned long long inlen, const unsigned char *k)
+                     std::size_t inlen, const unsigned char *k)
             __attribute__ ((nonnull(1, 4)));
 
 RUBIDIUM_EXPORT

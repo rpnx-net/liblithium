@@ -4,7 +4,7 @@ D. J. Bernstein
 Public domain.
 */
 
-#include <stdint.h>
+#include <cstdint>
 #include <stdlib.h>
 
 #include "rubidium_core_hsalsa20.h"

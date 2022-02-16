@@ -1,7 +1,7 @@
 #ifndef rubidium_kx_H
 #define rubidium_kx_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "export.h"
 

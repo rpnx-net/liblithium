@@ -1,9 +1,10 @@
 #ifndef RUBIDIUM_GENERICHASH_BLAKE2B_H
 #define RUBIDIUM_GENERICHASH_BLAKE2B_H
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 #include <stdlib.h>
+#include <cstdint>
 
 #include "export.h"
 
@@ -52,14 +53,14 @@ size_t rubidium_generichash_blake2b_statebytes(void);
 RUBIDIUM_EXPORT
 int rubidium_generichash_blake2b(unsigned char *out, size_t outlen,
                                const unsigned char *in,
-                               unsigned long long inlen,
+                               std::size_t inlen,
                                const unsigned char *key, size_t keylen)
             __attribute__ ((nonnull(1)));
 
 RUBIDIUM_EXPORT
 int rubidium_generichash_blake2b_salt_personal(unsigned char *out, size_t outlen,
                                              const unsigned char *in,
-                                             unsigned long long inlen,
+                                             std::size_t inlen,
                                              const unsigned char *key,
                                              size_t keylen,
                                              const unsigned char *salt,
@@ -83,7 +84,7 @@ int rubidium_generichash_blake2b_init_salt_personal(rubidium_generichash_blake2b
 RUBIDIUM_EXPORT
 int rubidium_generichash_blake2b_update(rubidium_generichash_blake2b_state *state,
                                       const unsigned char *in,
-                                      unsigned long long inlen)
+                                      std::size_t inlen)
             __attribute__ ((nonnull(1)));
 
 RUBIDIUM_EXPORT

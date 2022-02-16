@@ -9,7 +9,7 @@ rubidium_hash_bytes(void)
 
 int
 rubidium_hash(unsigned char *out, const unsigned char *in,
-            unsigned long long inlen)
+            std::size_t inlen)
 {
     return rubidium_hash_sha512(out, in, inlen);
 }

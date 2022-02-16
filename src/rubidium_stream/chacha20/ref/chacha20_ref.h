@@ -1,5 +1,5 @@
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "../stream_chacha20.h"
 #include "rubidium_stream_chacha20.h"

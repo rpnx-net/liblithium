@@ -1,7 +1,7 @@
 #ifndef poly1305_donna_H
 #define poly1305_donna_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "../onetimeauth_poly1305.h"
 #include "rubidium_onetimeauth_poly1305.h"

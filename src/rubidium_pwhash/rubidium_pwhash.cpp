@@ -65,13 +65,13 @@ rubidium_pwhash_strprefix(void)
     return rubidium_pwhash_STRPREFIX;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_opslimit_min(void)
 {
     return rubidium_pwhash_OPSLIMIT_MIN;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_opslimit_max(void)
 {
     return rubidium_pwhash_OPSLIMIT_MAX;
@@ -89,7 +89,7 @@ rubidium_pwhash_memlimit_max(void)
     return rubidium_pwhash_MEMLIMIT_MAX;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_opslimit_interactive(void)
 {
     return rubidium_pwhash_OPSLIMIT_INTERACTIVE;
@@ -101,7 +101,7 @@ rubidium_pwhash_memlimit_interactive(void)
     return rubidium_pwhash_MEMLIMIT_INTERACTIVE;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_opslimit_moderate(void)
 {
     return rubidium_pwhash_OPSLIMIT_MODERATE;
@@ -113,7 +113,7 @@ rubidium_pwhash_memlimit_moderate(void)
     return rubidium_pwhash_MEMLIMIT_MODERATE;
 }
 
-unsigned long long
+std::size_t
 rubidium_pwhash_opslimit_sensitive(void)
 {
     return rubidium_pwhash_OPSLIMIT_SENSITIVE;
@@ -126,10 +126,10 @@ rubidium_pwhash_memlimit_sensitive(void)
 }
 
 int
-rubidium_pwhash(unsigned char * const out, unsigned long long outlen,
-              const char * const passwd, unsigned long long passwdlen,
+rubidium_pwhash(unsigned char * const out, std::size_t outlen,
+              const char * const passwd, std::size_t passwdlen,
               const unsigned char * const salt,
-              unsigned long long opslimit, size_t memlimit, int alg)
+              std::size_t opslimit, size_t memlimit, int alg)
 {
     switch (alg) {
     case rubidium_pwhash_ALG_ARGON2I13:
@@ -146,8 +146,8 @@ rubidium_pwhash(unsigned char * const out, unsigned long long outlen,
 
 int
 rubidium_pwhash_str(char out[rubidium_pwhash_STRBYTES],
-                  const char * const passwd, unsigned long long passwdlen,
-                  unsigned long long opslimit, size_t memlimit)
+                  const char * const passwd, std::size_t passwdlen,
+                  std::size_t opslimit, size_t memlimit)
 {
     return rubidium_pwhash_argon2id_str(out, passwd, passwdlen,
                                       opslimit, memlimit);
@@ -155,8 +155,8 @@ rubidium_pwhash_str(char out[rubidium_pwhash_STRBYTES],
 
 int
 rubidium_pwhash_str_alg(char out[rubidium_pwhash_STRBYTES],
-                      const char * const passwd, unsigned long long passwdlen,
-                      unsigned long long opslimit, size_t memlimit, int alg)
+                      const char * const passwd, std::size_t passwdlen,
+                      std::size_t opslimit, size_t memlimit, int alg)
 {
     switch (alg) {
     case rubidium_pwhash_ALG_ARGON2I13:
@@ -172,7 +172,7 @@ rubidium_pwhash_str_alg(char out[rubidium_pwhash_STRBYTES],
 int
 rubidium_pwhash_str_verify(const char * str,
                          const char * const passwd,
-                         unsigned long long passwdlen)
+                         std::size_t passwdlen)
 {
     if (strncmp(str, rubidium_pwhash_argon2id_STRPREFIX,
                 sizeof rubidium_pwhash_argon2id_STRPREFIX - 1) == 0) {
@@ -189,7 +189,7 @@ rubidium_pwhash_str_verify(const char * str,
 
 int
 rubidium_pwhash_str_needs_rehash(const char * str,
-                               unsigned long long opslimit, size_t memlimit)
+                               std::size_t opslimit, size_t memlimit)
 {
     if (strncmp(str, rubidium_pwhash_argon2id_STRPREFIX,
                 sizeof rubidium_pwhash_argon2id_STRPREFIX - 1) == 0) {

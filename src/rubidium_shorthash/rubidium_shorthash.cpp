@@ -22,7 +22,7 @@ rubidium_shorthash_primitive(void)
 
 int
 rubidium_shorthash(unsigned char *out, const unsigned char *in,
-                 unsigned long long inlen, const unsigned char *k)
+                 std::size_t inlen, const unsigned char *k)
 {
     return rubidium_shorthash_siphash24(out, in, inlen, k);
 }

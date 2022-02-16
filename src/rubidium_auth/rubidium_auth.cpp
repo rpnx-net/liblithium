@@ -22,14 +22,14 @@ rubidium_auth_primitive(void)
 
 int
 rubidium_auth(unsigned char *out, const unsigned char *in,
-            unsigned long long inlen, const unsigned char *k)
+            std::size_t inlen, const unsigned char *k)
 {
     return rubidium_auth_hmacsha512256(out, in, inlen, k);
 }
 
 int
 rubidium_auth_verify(const unsigned char *h, const unsigned char *in,
-                   unsigned long long inlen,const unsigned char *k)
+                   std::size_t inlen,const unsigned char *k)
 {
     return rubidium_auth_hmacsha512256_verify(h, in, inlen, k);
 }

@@ -1,5 +1,5 @@
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 #ifdef HAVE_ANDROID_GETCPUFEATURES
 # include <cpu-features.h>
 #endif

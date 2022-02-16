@@ -1,7 +1,7 @@
 #ifndef rubidium_shorthash_siphash24_H
 #define rubidium_shorthash_siphash24_H
 
-#include <stddef.h>
+#include <cstddef>
 #include "export.h"
 
 #ifdef __cplusplus
@@ -23,7 +23,7 @@ size_t rubidium_shorthash_siphash24_keybytes(void);
 
 RUBIDIUM_EXPORT
 int rubidium_shorthash_siphash24(unsigned char *out, const unsigned char *in,
-                               unsigned long long inlen, const unsigned char *k)
+                               std::size_t inlen, const unsigned char *k)
             __attribute__ ((nonnull(1, 4)));
 
 #ifndef RUBIDIUM_LIBRARY_MINIMAL
@@ -39,7 +39,7 @@ size_t rubidium_shorthash_siphashx24_keybytes(void);
 
 RUBIDIUM_EXPORT
 int rubidium_shorthash_siphashx24(unsigned char *out, const unsigned char *in,
-                                unsigned long long inlen, const unsigned char *k)
+                                std::size_t inlen, const unsigned char *k)
             __attribute__ ((nonnull(1, 4)));
 #endif
 

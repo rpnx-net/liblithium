@@ -1,7 +1,7 @@
 #ifndef rubidium_scalarmult_H
 #define rubidium_scalarmult_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "rubidium_scalarmult_curve25519.h"
 #include "export.h"

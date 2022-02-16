@@ -2,7 +2,7 @@
 #ifndef stream_salsa20_H
 #define stream_salsa20_H
 
-#include <stdint.h>
+#include <cstdint>
 
 
 

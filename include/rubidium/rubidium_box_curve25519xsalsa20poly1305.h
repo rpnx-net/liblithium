@@ -1,7 +1,7 @@
 #ifndef rubidium_box_curve25519xsalsa20poly1305_H
 #define rubidium_box_curve25519xsalsa20poly1305_H
 
-#include <stddef.h>
+#include <cstddef>
 #include "rubidium_stream_xsalsa20.h"
 #include "export.h"
 
@@ -75,7 +75,7 @@ size_t rubidium_box_curve25519xsalsa20poly1305_zerobytes(void)
 RUBIDIUM_EXPORT
 int rubidium_box_curve25519xsalsa20poly1305(unsigned char *c,
                                           const unsigned char *m,
-                                          unsigned long long mlen,
+                                          std::size_t mlen,
                                           const unsigned char *n,
                                           const unsigned char *pk,
                                           const unsigned char *sk)
@@ -84,7 +84,7 @@ int rubidium_box_curve25519xsalsa20poly1305(unsigned char *c,
 RUBIDIUM_EXPORT
 int rubidium_box_curve25519xsalsa20poly1305_open(unsigned char *m,
                                                const unsigned char *c,
-                                               unsigned long long clen,
+                                               std::size_t clen,
                                                const unsigned char *n,
                                                const unsigned char *pk,
                                                const unsigned char *sk)
@@ -93,7 +93,7 @@ int rubidium_box_curve25519xsalsa20poly1305_open(unsigned char *m,
 RUBIDIUM_EXPORT
 int rubidium_box_curve25519xsalsa20poly1305_afternm(unsigned char *c,
                                                   const unsigned char *m,
-                                                  unsigned long long mlen,
+                                                  std::size_t mlen,
                                                   const unsigned char *n,
                                                   const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((nonnull(1, 4, 5)));
@@ -101,7 +101,7 @@ int rubidium_box_curve25519xsalsa20poly1305_afternm(unsigned char *c,
 RUBIDIUM_EXPORT
 int rubidium_box_curve25519xsalsa20poly1305_open_afternm(unsigned char *m,
                                                        const unsigned char *c,
-                                                       unsigned long long clen,
+                                                       std::size_t clen,
                                                        const unsigned char *n,
                                                        const unsigned char *k)
             __attribute__ ((deprecated)) __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 4, 5)));

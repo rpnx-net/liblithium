@@ -1,8 +1,8 @@
 #ifndef rubidium_kdf_hkdf_sha512_H
 #define rubidium_kdf_hkdf_sha512_H
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 #include <stdlib.h>
 
 #include "rubidium_kdf.h"

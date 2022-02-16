@@ -20,8 +20,8 @@
 #ifndef RUBIDIUM_BLAKE2_H
 #define RUBIDIUM_BLAKE2_H
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 #include "rubidium_generichash_blake2b.h"
 #include "export.h"

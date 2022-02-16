@@ -2,7 +2,7 @@
 #ifndef rubidium_scalarmult_ristretto255_H
 #define rubidium_scalarmult_ristretto255_H
 
-#include <stddef.h>
+#include <cstddef>
 
 #include "export.h"
 

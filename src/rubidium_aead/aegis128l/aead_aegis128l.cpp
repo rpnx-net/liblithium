@@ -45,18 +45,18 @@ namespace rubidium {
 
     int
     rubidium_aead_aegis128l_encrypt_detached(unsigned char *c, unsigned char *mac,
-                                           unsigned long long *maclen_p, const unsigned char *m,
-                                           unsigned long long mlen, const unsigned char *ad,
-                                           unsigned long long adlen, const unsigned char *nsec,
+                                           std::size_t *maclen_p, const unsigned char *m,
+                                           std::size_t mlen, const unsigned char *ad,
+                                           std::size_t adlen, const unsigned char *nsec,
                                            const unsigned char *npub, const unsigned char *k) {
         errno = ENOSYS;
         return -1;
     }
 
     int
-    rubidium_aead_aegis128l_encrypt(unsigned char *c, unsigned long long *clen_p, const unsigned char *m,
-                                  unsigned long long mlen, const unsigned char *ad,
-                                  unsigned long long adlen, const unsigned char *nsec,
+    rubidium_aead_aegis128l_encrypt(unsigned char *c, std::size_t *clen_p, const unsigned char *m,
+                                  std::size_t mlen, const unsigned char *ad,
+                                  std::size_t adlen, const unsigned char *nsec,
                                   const unsigned char *npub, const unsigned char *k) {
         errno = ENOSYS;
         return -1;
@@ -64,17 +64,17 @@ namespace rubidium {
 
     int
     rubidium_aead_aegis128l_decrypt_detached(unsigned char *m, unsigned char *nsec, const unsigned char *c,
-                                           unsigned long long clen, const unsigned char *mac,
-                                           const unsigned char *ad, unsigned long long adlen,
+                                           std::size_t clen, const unsigned char *mac,
+                                           const unsigned char *ad, std::size_t adlen,
                                            const unsigned char *npub, const unsigned char *k) {
         errno = ENOSYS;
         return -1;
     }
 
     int
-    rubidium_aead_aegis128l_decrypt(unsigned char *m, unsigned long long *mlen_p, unsigned char *nsec,
-                                  const unsigned char *c, unsigned long long clen,
-                                  const unsigned char *ad, unsigned long long adlen,
+    rubidium_aead_aegis128l_decrypt(unsigned char *m, std::size_t *mlen_p, unsigned char *nsec,
+                                  const unsigned char *c, std::size_t clen,
+                                  const unsigned char *ad, std::size_t adlen,
                                   const unsigned char *npub, const unsigned char *k) {
         errno = ENOSYS;
         return -1;
