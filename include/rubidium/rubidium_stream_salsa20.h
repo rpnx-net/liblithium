@@ -13,12 +13,7 @@
 #include <cstdint>
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_stream_salsa20_KEYBYTES 32U
 
@@ -54,8 +49,6 @@ int rubidium_stream_salsa20_xor_ic(unsigned char *c, const unsigned char *m,
 void rubidium_stream_salsa20_keygen(unsigned char k[rubidium_stream_salsa20_KEYBYTES])
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

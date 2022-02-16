@@ -6,9 +6,6 @@
 
 #include "export.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define rubidium_scalarmult_ristretto255_BYTES 32U
 
@@ -36,8 +33,5 @@ int rubidium_scalarmult_ristretto255_base(unsigned char *q,
                                         const unsigned char *n)
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif

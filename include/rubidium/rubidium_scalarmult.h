@@ -6,9 +6,7 @@
 #include "rubidium_scalarmult_curve25519.h"
 #include "export.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+
 
 #define rubidium_scalarmult_BYTES rubidium_scalarmult_curve25519_BYTES
 
@@ -39,8 +37,6 @@ int rubidium_scalarmult(unsigned char *q, const unsigned char *n,
                       const unsigned char *p)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

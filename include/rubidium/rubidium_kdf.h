@@ -7,12 +7,7 @@
 #include "rubidium_kdf_blake2b.h"
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_kdf_BYTES_MIN rubidium_kdf_blake2b_BYTES_MIN
 
@@ -46,8 +41,6 @@ int rubidium_kdf_derive_from_key(unsigned char *subkey, size_t subkey_len,
 void rubidium_kdf_keygen(unsigned char k[rubidium_kdf_KEYBYTES])
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

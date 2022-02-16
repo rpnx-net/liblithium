@@ -4,12 +4,7 @@
 #include <cstddef>
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 
 int rubidium_aead_aegis256_is_available(void);
@@ -89,8 +84,5 @@ int rubidium_aead_aegis256_decrypt_detached(unsigned char *m,
 void rubidium_aead_aegis256_keygen(unsigned char k[rubidium_aead_aegis256_KEYBYTES])
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif

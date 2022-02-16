@@ -14,12 +14,7 @@
 #include "rubidium_stream_xsalsa20.h"
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_stream_KEYBYTES rubidium_stream_xsalsa20_KEYBYTES
 
@@ -52,8 +47,6 @@ int rubidium_stream_xor(unsigned char *c, const unsigned char *m,
 void rubidium_stream_keygen(unsigned char k[rubidium_stream_KEYBYTES])
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

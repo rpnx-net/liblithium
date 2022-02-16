@@ -24,9 +24,6 @@
 #include <cstddef>
 #include "export.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 
 int rubidium_aead_aes256gcm_is_available(void);
@@ -169,8 +166,6 @@ int rubidium_aead_aes256gcm_decrypt_detached_afternm(unsigned char *m,
 void rubidium_aead_aes256gcm_keygen(unsigned char k[rubidium_aead_aes256gcm_KEYBYTES])
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

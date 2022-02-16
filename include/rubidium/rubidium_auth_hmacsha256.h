@@ -5,12 +5,7 @@
 #include "rubidium_hash_sha256.h"
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_auth_hmacsha256_BYTES 32U
 
@@ -63,8 +58,6 @@ int rubidium_auth_hmacsha256_final(rubidium_auth_hmacsha256_state *state,
 void rubidium_auth_hmacsha256_keygen(unsigned char k[rubidium_auth_hmacsha256_KEYBYTES])
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

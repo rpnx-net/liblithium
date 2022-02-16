@@ -5,12 +5,7 @@
 #include "rubidium_stream_xchacha20.h"
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define RUBIDIUM_SECRETBOX_XCHACHA20POLY1305_KEYBYTES 32U
 
@@ -63,8 +58,6 @@ int rubidium_secretbox_xchacha20poly1305_open_detached(unsigned char *m,
                                                      const unsigned char *k)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull(2, 3, 5, 6)));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

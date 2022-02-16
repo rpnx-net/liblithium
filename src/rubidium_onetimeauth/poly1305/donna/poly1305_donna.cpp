@@ -112,13 +112,13 @@ rubidium_onetimeauth_poly1305_donna_verify(const unsigned char *h,
     return rubidium_verify_16(h, correct);
 }
 
-struct rubidium_onetimeauth_poly1305_implementation
+rubidium_onetimeauth_poly1305_implementation
     rubidium_onetimeauth_poly1305_donna_implementation = {
-        RUBIDIUM_C99(.onetimeauth =) rubidium_onetimeauth_poly1305_donna,
-        RUBIDIUM_C99(.onetimeauth_verify =)
-            rubidium_onetimeauth_poly1305_donna_verify,
-        RUBIDIUM_C99(.onetimeauth_init =) rubidium_onetimeauth_poly1305_donna_init,
-        RUBIDIUM_C99(.onetimeauth_update =)
-            rubidium_onetimeauth_poly1305_donna_update,
-        RUBIDIUM_C99(.onetimeauth_final =) rubidium_onetimeauth_poly1305_donna_final
+    rubidium_onetimeauth_poly1305_donna,
+
+    rubidium_onetimeauth_poly1305_donna_verify,
+    rubidium_onetimeauth_poly1305_donna_init,
+
+    rubidium_onetimeauth_poly1305_donna_update,
+    rubidium_onetimeauth_poly1305_donna_final
     };

@@ -1,6 +1,4 @@
-#ifndef __STDC_WANT_LIB_EXT1__
-# define __STDC_WANT_LIB_EXT1__ 1
-#endif
+
 #include <cstdint>
 #include <assert.h>
 #include <errno.h>
@@ -9,7 +7,7 @@
 #include <cstdint>
 #include <stdlib.h>
 #include <string.h>
-
+#include <stdexcept>
 
 
 
@@ -21,51 +19,11 @@
 #include "private/common.h"
 #include "utils.h"
 
-#ifndef ENOSYS
-# define ENOSYS ENXIO
-#endif
-
-#if defined(_WIN32) && \
-    (!defined(WINAPI_FAMILY) || WINAPI_FAMILY == WINAPI_FAMILY_DESKTOP_APP)
-# define WINAPI_DESKTOP
-#endif
-
-#define CANARY_SIZE 16U
-#define GARBAGE_VALUE 0xdb
-
-#ifndef MAP_NOCORE
-# ifdef MAP_CONCEAL
-#  define MAP_NOCORE MAP_CONCEAL
-# else
-#  define MAP_NOCORE 0
-# endif
-#endif
-#if !defined(MAP_ANON) && defined(MAP_ANONYMOUS)
-# define MAP_ANON MAP_ANONYMOUS
-#endif
-#if defined(WINAPI_DESKTOP) || (defined(MAP_ANON) && defined(HAVE_MMAP)) || \
-    defined(HAVE_POSIX_MEMALIGN)
-# define HAVE_ALIGNED_MALLOC
-#endif
-#if defined(HAVE_MPROTECT) && \
-    !(defined(PROT_NONE) && defined(PROT_READ) && defined(PROT_WRITE))
-# undef HAVE_MPROTECT
-#endif
-#if defined(HAVE_ALIGNED_MALLOC) && \
-    (defined(WINAPI_DESKTOP) || defined(HAVE_MPROTECT))
-# define HAVE_PAGE_PROTECTION
-#endif
-#if !defined(MADV_DODUMP) && defined(MADV_CORE)
-# define MADV_DODUMP   MADV_CORE
-# define MADV_DONTDUMP MADV_NOCORE
-#endif
 
 
 
-static unsigned char canary[CANARY_SIZE];
 
-void
-rubidium_memzero(void * const pnt, const std::size_t len)
+void rubidium_memzero(void *  pnt,  std::size_t len)
 {
     volatile unsigned char *volatile pnt_ =
         (volatile unsigned char *volatile) pnt;
@@ -76,8 +34,7 @@ rubidium_memzero(void * const pnt, const std::size_t len)
     }
 }
 
-int
-rubidium_memcmp(const void *const b1_, const void *const b2_, std::size_t len)
+int rubidium_memcmp(const void *const b1_, const void *const b2_, std::size_t len)
 {
 #ifdef HAVE_WEAK_SYMBOLS
     const unsigned char *b1 = (const unsigned char *) b1_;
@@ -262,31 +219,6 @@ rubidium_sub(unsigned char *a, const unsigned char *b, const std::size_t len)
         a[i] = (unsigned char) c;
         c = (c >> 8) & 1U;
     }
-}
-
-int
-_rubidium_alloc_init(void)
-{
-#ifdef HAVE_ALIGNED_MALLOC
-# if defined(_SC_PAGESIZE) && defined(HAVE_SYSCONF)
-    long page_size_ = sysconf(_SC_PAGESIZE);
-    if (page_size_ > 0L) {
-        page_size = (std::size_t) page_size_;
-    }
-# elif defined(WINAPI_DESKTOP)
-    SYSTEM_INFO si;
-    GetSystemInfo(&si);
-    page_size = (std::size_t) si.dwPageSize;
-# elif !defined(PAGE_SIZE)
-#  warning Unknown page size
-# endif
-    if (page_size < CANARY_SIZE || page_size < sizeof(std::size_t)) {
-        throw std::invalid_argument(""); /* LCOV_EXCL_LINE */
-    }
-#endif
-    randombytes_buf(canary, CANARY_SIZE);
-
-    return 0;
 }
 
 int
@@ -492,28 +424,7 @@ _rubidium_malloc(const std::size_t size)
 }
 #endif /* !HAVE_ALIGNED_MALLOC */
 
-__attribute__((malloc)) void *
-rubidium_malloc(const std::size_t size)
-{
-    void *ptr;
 
-    if ((ptr = _rubidium_malloc(size)) == NULL) {
-        return NULL;
-    }
-    memset(ptr, (int) GARBAGE_VALUE, size);
-
-    return ptr;
-}
-
-__attribute__((malloc)) void *
-rubidium_allocarray(std::size_t count, std::size_t size)
-{
-    if (count > (std::size_t) 0U && size >= (std::size_t) SIZE_MAX / count) {
-        errno = ENOMEM;
-        return NULL;
-    }
-    return rubidium_malloc(count * size);
-}
 
 #ifndef HAVE_ALIGNED_MALLOC
 void
@@ -554,48 +465,6 @@ rubidium_free(void *ptr)
 }
 #endif /* HAVE_ALIGNED_MALLOC */
 
-#ifndef HAVE_PAGE_PROTECTION
-static int
-_rubidium_mprotect(void *ptr, int (*cb)(void *ptr, std::size_t size))
-{
-    (void) ptr;
-    (void) cb;
-    errno = ENOSYS;
-    return -1;
-}
-#else
-static int
-_rubidium_mprotect(void *ptr, int (*cb)(void *ptr, std::size_t size))
-{
-    unsigned char *base_ptr;
-    unsigned char *unprotected_ptr;
-    std::size_t         unprotected_size;
-
-    unprotected_ptr = _unprotected_ptr_from_user_ptr(ptr);
-    base_ptr        = unprotected_ptr - page_size * 2U;
-    memcpy(&unprotected_size, base_ptr, sizeof unprotected_size);
-
-    return cb(unprotected_ptr, unprotected_size);
-}
-#endif
-
-int
-rubidium_mprotect_noaccess(void *ptr)
-{
-    return _rubidium_mprotect(ptr, _mprotect_noaccess);
-}
-
-int
-rubidium_mprotect_readonly(void *ptr)
-{
-    return _rubidium_mprotect(ptr, _mprotect_readonly);
-}
-
-int
-rubidium_mprotect_readwrite(void *ptr)
-{
-    return _rubidium_mprotect(ptr, _mprotect_readwrite);
-}
 
 int
 rubidium_pad(std::size_t *padded_buflen_p, unsigned char *buf,

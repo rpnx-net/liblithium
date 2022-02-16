@@ -14,12 +14,7 @@
 
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 typedef struct rubidium_hash_sha512_state {
     uint64_t state[8];
@@ -53,8 +48,6 @@ int rubidium_hash_sha512_final(rubidium_hash_sha512_state *state,
                              unsigned char *out)
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

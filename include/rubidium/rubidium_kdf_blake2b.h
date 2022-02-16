@@ -7,12 +7,7 @@
 
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_kdf_blake2b_BYTES_MIN 16
 
@@ -37,8 +32,6 @@ int rubidium_kdf_blake2b_derive_from_key(unsigned char *subkey, size_t subkey_le
                                        const unsigned char key[rubidium_kdf_blake2b_KEYBYTES])
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

@@ -7,12 +7,7 @@
 
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_pwhash_scryptsalsa208sha256_BYTES_MIN 16U
 
@@ -113,8 +108,6 @@ int rubidium_pwhash_scryptsalsa208sha256_str_needs_rehash(const char * str,
                                                         size_t memlimit)
             __attribute__ ((warn_unused_result))  __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

@@ -4,9 +4,7 @@
 
 #include "export.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+
 
 
 int rubidium_runtime_has_neon(void);
@@ -48,8 +46,6 @@ int rubidium_runtime_has_rdrand(void);
 
 int _rubidium_runtime_get_cpu_features(void);
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

@@ -4,9 +4,7 @@
 #include <cstddef>
 #include "export.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+
 
 #define rubidium_core_ed25519_BYTES 32
 
@@ -108,8 +106,6 @@ void rubidium_core_ed25519_scalar_reduce(unsigned char *r, const unsigned char *
 int rubidium_core_ed25519_scalar_is_canonical(const unsigned char *s)
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

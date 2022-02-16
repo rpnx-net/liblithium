@@ -7,12 +7,7 @@
 #include "rubidium_stream_chacha20.h"
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_secretstream_xchacha20poly1305_ABYTES \
     (1U + rubidium_aead_xchacha20poly1305_ietf_ABYTES)
@@ -101,8 +96,6 @@ int rubidium_secretstream_xchacha20poly1305_pull
 void rubidium_secretstream_xchacha20poly1305_rekey
     (rubidium_secretstream_xchacha20poly1305_state *state);
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

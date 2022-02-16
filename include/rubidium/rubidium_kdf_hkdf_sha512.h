@@ -9,12 +9,7 @@
 #include "rubidium_auth_hmacsha512.h"
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_kdf_hkdf_sha512_KEYBYTES rubidium_auth_hmacsha512_BYTES
 
@@ -44,8 +39,6 @@ int rubidium_kdf_hkdf_sha512_expand(unsigned char *out, size_t out_len,
                                   const unsigned char prk[rubidium_kdf_hkdf_sha512_KEYBYTES])
             __attribute__ ((nonnull(1)));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

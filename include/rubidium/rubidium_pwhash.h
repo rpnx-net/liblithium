@@ -7,12 +7,7 @@
 #include "rubidium_pwhash_argon2id.h"
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_pwhash_ALG_ARGON2I13 rubidium_pwhash_argon2i_ALG_ARGON2I13
 
@@ -140,8 +135,6 @@ int rubidium_pwhash_str_needs_rehash(const char *str,
 const char *rubidium_pwhash_primitive(void)
             __attribute__ ((warn_unused_result));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

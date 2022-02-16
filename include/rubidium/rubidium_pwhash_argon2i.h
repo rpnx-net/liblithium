@@ -7,12 +7,7 @@
 
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_pwhash_argon2i_ALG_ARGON2I13 1
 
@@ -115,8 +110,6 @@ int rubidium_pwhash_argon2i_str_needs_rehash(const char * str,
                                            std::size_t opslimit, size_t memlimit)
             __attribute__ ((warn_unused_result))  __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

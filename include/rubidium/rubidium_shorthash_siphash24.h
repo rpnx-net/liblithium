@@ -4,12 +4,7 @@
 #include <cstddef>
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 /* -- 64-bit output -- */
 
@@ -43,8 +38,6 @@ int rubidium_shorthash_siphashx24(unsigned char *out, const unsigned char *in,
             __attribute__ ((nonnull(1, 4)));
 #endif
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

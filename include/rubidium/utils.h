@@ -6,9 +6,7 @@
 
 #include "export.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+
 
 #ifndef RUBIDIUM_C99
 # if defined(__cplusplus) || !defined(__STDC_VERSION__) || __STDC_VERSION__ < 199901L
@@ -19,7 +17,7 @@ extern "C" {
 #endif
 
 
-void rubidium_memzero(void * const pnt, const size_t len);
+void rubidium_memzero(void *  pnt,  std::size_t len);
 
 /*
  * WARNING: rubidium_memcmp() must be used to verify if two secret keys
@@ -165,12 +163,5 @@ int rubidium_unpad(size_t *unpadded_buflen_p, const unsigned char *buf,
                  size_t padded_buflen, size_t blocksize)
             __attribute__ ((nonnull(2)));
 
-/* -------- */
-
-int _rubidium_alloc_init(void);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

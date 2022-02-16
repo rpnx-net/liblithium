@@ -6,12 +6,7 @@
 #include "rubidium_onetimeauth_poly1305.h"
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 typedef rubidium_onetimeauth_poly1305_state rubidium_onetimeauth_state;
 
@@ -58,8 +53,6 @@ int rubidium_onetimeauth_final(rubidium_onetimeauth_state *state,
 void rubidium_onetimeauth_keygen(unsigned char k[rubidium_onetimeauth_KEYBYTES])
             __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

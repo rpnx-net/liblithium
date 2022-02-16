@@ -4,12 +4,7 @@
 #include <cstddef>
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 /* -- IETF ChaCha20-Poly1305 construction with a 96-bit nonce and a 32-bit internal counter -- */
 
@@ -173,8 +168,6 @@ void rubidium_aead_chacha20poly1305_keygen(unsigned char k[rubidium_aead_chacha2
 #define rubidium_aead_chacha20poly1305_IETF_ABYTES           rubidium_aead_chacha20poly1305_ietf_ABYTES
 #define rubidium_aead_chacha20poly1305_IETF_MESSAGEBYTES_MAX rubidium_aead_chacha20poly1305_ietf_MESSAGEBYTES_MAX
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

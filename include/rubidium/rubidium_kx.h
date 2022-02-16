@@ -5,12 +5,7 @@
 
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_kx_PUBLICKEYBYTES 32
 
@@ -59,8 +54,6 @@ int rubidium_kx_server_session_keys(unsigned char rx[rubidium_kx_SESSIONKEYBYTES
                                   const unsigned char client_pk[rubidium_kx_PUBLICKEYBYTES])
             __attribute__ ((warn_unused_result))  __attribute__ ((nonnull(3, 4, 5)));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

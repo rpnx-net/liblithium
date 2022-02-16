@@ -13,12 +13,7 @@
 #include "rubidium_sign_ed25519.h"
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 typedef rubidium_sign_ed25519ph_state rubidium_sign_state;
 
@@ -100,8 +95,6 @@ int rubidium_sign_final_verify(rubidium_sign_state *state, const unsigned char *
                              const unsigned char *pk)
             __attribute__ ((warn_unused_result)) __attribute__ ((nonnull));
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

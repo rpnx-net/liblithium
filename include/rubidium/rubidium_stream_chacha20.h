@@ -13,12 +13,7 @@
 #include <cstdint>
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define RUBIDIUM_STREAM_CHACHA20_KEYBYTES 32U
 
@@ -99,8 +94,6 @@ void rubidium_stream_chacha20_ietf_keygen(unsigned char k[rubidium_stream_chacha
 #define rubidium_stream_chacha20_IETF_NONCEBYTES rubidium_stream_chacha20_ietf_NONCEBYTES
 #define rubidium_stream_chacha20_IETF_MESSAGEBYTES_MAX rubidium_stream_chacha20_ietf_MESSAGEBYTES_MAX
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

@@ -4,12 +4,7 @@
 #include <cstddef>
 #include "export.h"
 
-#ifdef __cplusplus
-# ifdef __GNUC__
-#  pragma GCC diagnostic ignored "-Wlong-long"
-# endif
-extern "C" {
-#endif
+
 
 #define rubidium_aead_xchacha20poly1305_ietf_KEYBYTES 32U
 
@@ -93,8 +88,6 @@ void rubidium_aead_xchacha20poly1305_ietf_keygen(unsigned char k[rubidium_aead_x
 #define rubidium_aead_xchacha20poly1305_IETF_ABYTES           rubidium_aead_xchacha20poly1305_ietf_ABYTES
 #define rubidium_aead_xchacha20poly1305_IETF_MESSAGEBYTES_MAX rubidium_aead_xchacha20poly1305_ietf_MESSAGEBYTES_MAX
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif
