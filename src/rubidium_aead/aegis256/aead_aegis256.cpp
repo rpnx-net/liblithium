@@ -43,7 +43,7 @@ rubidium_aead_aegis256_keygen(unsigned char k[rubidium_aead_aegis256_KEYBYTES])
 }
 
 #if !((defined(HAVE_TMMINTRIN_H) && defined(HAVE_WMMINTRIN_H)) || \
-      defined(HAVE_ARMRUBIDIUM))
+      defined(RUBIDIUM_HAVE_ARMNEON))
 
 #ifndef ENOSYS
 # define ENOSYS ENXIO

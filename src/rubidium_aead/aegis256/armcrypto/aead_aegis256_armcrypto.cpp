@@ -12,7 +12,7 @@
 
 #include "private/common.h"
 
-#ifdef HAVE_ARMRUBIDIUM
+#ifdef RUBIDIUM_HAVE_ARMNEON
 
 # include <arm_neon.h>
 

@@ -37,7 +37,7 @@ namespace rubidium {
     }
 
 #if !((defined(HAVE_TMMINTRIN_H) && defined(HAVE_WMMINTRIN_H)) || \
-      defined(HAVE_ARMRUBIDIUM))
+      defined(RUBIDIUM_HAVE_ARMNEON))
 
 #ifndef ENOSYS
 # define ENOSYS ENXIO
