@@ -45,5 +45,5 @@ rubidium_kdf_derive_from_key(unsigned char *subkey, size_t subkey_len,
 void
 rubidium_kdf_keygen(unsigned char k[rubidium_kdf_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_kdf_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_kdf_KEYBYTES);
 }

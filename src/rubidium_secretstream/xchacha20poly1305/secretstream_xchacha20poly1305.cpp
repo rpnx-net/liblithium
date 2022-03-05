@@ -37,7 +37,7 @@ void
 rubidium_secretstream_xchacha20poly1305_keygen
    (unsigned char k[rubidium_secretstream_xchacha20poly1305_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_secretstream_xchacha20poly1305_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_secretstream_xchacha20poly1305_KEYBYTES);
 }
 
 int
@@ -55,7 +55,7 @@ rubidium_secretstream_xchacha20poly1305_init_push
                     rubidium_secretstream_xchacha20poly1305_INONCEBYTES +
                     rubidium_secretstream_xchacha20poly1305_COUNTERBYTES);
 
-    randombytes_buf(out, rubidium_secretstream_xchacha20poly1305_HEADERBYTES);
+    rubidium::randombytes_fill(out, rubidium_secretstream_xchacha20poly1305_HEADERBYTES);
     rubidium_core_hchacha20(state->k, out, k, NULL);
     _rubidium_secretstream_xchacha20poly1305_counter_reset(state);
     memcpy(STATE_INONCE(state), out + rubidium_core_hchacha20_INPUTBYTES,

@@ -360,7 +360,7 @@ rubidium_aead_chacha20poly1305_ietf_messagebytes_max(void)
 void
 rubidium_aead_chacha20poly1305_ietf_keygen(unsigned char k[rubidium_aead_chacha20poly1305_ietf_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_aead_chacha20poly1305_ietf_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_aead_chacha20poly1305_ietf_KEYBYTES);
 }
 
 size_t
@@ -396,5 +396,5 @@ rubidium_aead_chacha20poly1305_messagebytes_max(void)
 void
 rubidium_aead_chacha20poly1305_keygen(unsigned char k[rubidium_aead_chacha20poly1305_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_aead_chacha20poly1305_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_aead_chacha20poly1305_KEYBYTES);
 }

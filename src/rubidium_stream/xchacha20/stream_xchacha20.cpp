@@ -65,5 +65,5 @@ void
 rubidium_stream_xchacha20_keygen(
     unsigned char k[rubidium_stream_xchacha20_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_stream_xchacha20_KEYBYTES);
+    rubidium::randombytes_fill((std::byte*)k, rubidium_stream_xchacha20_KEYBYTES);
 }

@@ -22,5 +22,5 @@ rubidium_stream_salsa2012_messagebytes_max(void)
 void
 rubidium_stream_salsa2012_keygen(unsigned char k[rubidium_stream_salsa2012_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_stream_salsa2012_KEYBYTES);
+    rubidium::randombytes_fill(reinterpret_cast<std::byte*>(k), rubidium_stream_salsa2012_KEYBYTES);
 }

@@ -74,7 +74,7 @@ void
 rubidium_onetimeauth_poly1305_keygen(
     unsigned char k[RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES])
 {
-    randombytes_buf(k, RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES);
+    rubidium::randombytes_fill(k, RUBIDIUM_ONETIMEAUTH_POLY1305_KEYBYTES);
 }
 
 int

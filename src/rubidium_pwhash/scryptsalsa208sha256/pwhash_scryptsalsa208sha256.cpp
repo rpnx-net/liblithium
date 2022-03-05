@@ -209,7 +209,7 @@ rubidium_pwhash_scryptsalsa208sha256_str(
         errno = EINVAL; /* LCOV_EXCL_LINE */
         return -1;      /* LCOV_EXCL_LINE */
     }
-    randombytes_buf(salt, sizeof salt);
+    rubidium::randombytes_fill(salt, sizeof salt);
     if (_rubidium_escrypt_gensalt_r(N_log2, r, p, salt, sizeof salt, (uint8_t *) setting,
                           sizeof setting) == NULL) {
         errno = EINVAL; /* LCOV_EXCL_LINE */

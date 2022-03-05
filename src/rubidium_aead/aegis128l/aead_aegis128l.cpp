@@ -33,7 +33,7 @@ namespace rubidium {
 
     void
     rubidium_aead_aegis128l_keygen(unsigned char k[rubidium_aead_aegis128l_KEYBYTES]) {
-        randombytes_buf(k, rubidium_aead_aegis128l_KEYBYTES);
+        rubidium::randombytes_fill(k, rubidium_aead_aegis128l_KEYBYTES);
     }
 
 #if !((defined(HAVE_TMMINTRIN_H) && defined(HAVE_WMMINTRIN_H)) || \

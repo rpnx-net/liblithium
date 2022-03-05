@@ -199,7 +199,7 @@ rubidium_pwhash_argon2id_str(char out[rubidium_pwhash_argon2id_STRBYTES],
         errno = EINVAL;
         return -1;
     }
-    randombytes_buf(salt, sizeof salt);
+    rubidium::randombytes_fill(salt, sizeof salt);
     if (_rubidium_argon2id_hash_encoded((uint32_t) opslimit, (uint32_t) (memlimit / 1024U),
                               (uint32_t) 1U, passwd, (size_t) passwdlen, salt,
                               sizeof salt, STR_HASHBYTES, out,

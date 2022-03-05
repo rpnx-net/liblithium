@@ -26,7 +26,7 @@ rubidium_kdf_hkdf_sha256_extract(
 void
 rubidium_kdf_hkdf_sha256_keygen(unsigned char prk[rubidium_kdf_hkdf_sha256_KEYBYTES])
 {
-    randombytes_buf(prk, rubidium_kdf_hkdf_sha256_KEYBYTES);
+    rubidium::randombytes_fill(prk, rubidium_kdf_hkdf_sha256_KEYBYTES);
 }
 
 int

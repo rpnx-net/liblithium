@@ -128,7 +128,7 @@ rubidium_core_ed25519_random(unsigned char *p)
 {
     unsigned char h[rubidium_core_ed25519_UNIFORMBYTES];
 
-    randombytes_buf(h, sizeof h);
+    rubidium::randombytes_fill(h, sizeof h);
     (void) rubidium_core_ed25519_from_uniform(p, h);
 }
 
@@ -136,7 +136,7 @@ void
 rubidium_core_ed25519_scalar_random(unsigned char *r)
 {
     do {
-        randombytes_buf(r, rubidium_core_ed25519_SCALARBYTES);
+        rubidium::randombytes_fill(r, rubidium_core_ed25519_SCALARBYTES);
         r[rubidium_core_ed25519_SCALARBYTES - 1] &= 0x1f;
     } while (_rubidium_sc25519_is_canonical(r) == 0 ||
              rubidium_is_zero(r, rubidium_core_ed25519_SCALARBYTES));

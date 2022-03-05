@@ -37,5 +37,5 @@ rubidium_auth_verify(const unsigned char *h, const unsigned char *in,
 void
 rubidium_auth_keygen(unsigned char k[rubidium_auth_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_auth_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_auth_KEYBYTES);
 }

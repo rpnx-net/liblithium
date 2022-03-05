@@ -62,5 +62,5 @@ rubidium_stream_xsalsa20_messagebytes_max(void)
 void
 rubidium_stream_xsalsa20_keygen(unsigned char k[rubidium_stream_xsalsa20_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_stream_xsalsa20_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_stream_xsalsa20_KEYBYTES);
 }

@@ -155,13 +155,13 @@ rubidium_stream_chacha20_ietf_xor(unsigned char *c, const unsigned char *m,
 void
 rubidium_stream_chacha20_ietf_keygen(unsigned char k[rubidium_stream_chacha20_ietf_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_stream_chacha20_ietf_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_stream_chacha20_ietf_KEYBYTES);
 }
 
 void
 rubidium_stream_chacha20_keygen(unsigned char k[RUBIDIUM_STREAM_CHACHA20_KEYBYTES])
 {
-    randombytes_buf(k, RUBIDIUM_STREAM_CHACHA20_KEYBYTES);
+    rubidium::randombytes_fill(k, RUBIDIUM_STREAM_CHACHA20_KEYBYTES);
 }
 
 int

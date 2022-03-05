@@ -71,7 +71,7 @@ rubidium_stream_salsa20_xor(unsigned char *c, const unsigned char *m,
 void
 rubidium_stream_salsa20_keygen(unsigned char k[rubidium_stream_salsa20_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_stream_salsa20_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_stream_salsa20_KEYBYTES);
 }
 
 int

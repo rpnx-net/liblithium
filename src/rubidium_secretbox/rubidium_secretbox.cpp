@@ -63,5 +63,5 @@ rubidium_secretbox_open(unsigned char *m, const unsigned char *c,
 void
 rubidium_secretbox_keygen(unsigned char k[rubidium_secretbox_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_secretbox_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_secretbox_KEYBYTES);
 }

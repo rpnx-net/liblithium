@@ -26,7 +26,7 @@ int
 rubidium_box_curve25519xsalsa20poly1305_keypair(unsigned char *pk,
                                               unsigned char *sk)
 {
-    randombytes_buf(sk, 32);
+    rubidium::randombytes_fill(reinterpret_cast<std::byte*>(sk), 32);
 
     return rubidium_scalarmult_curve25519_base(pk, sk);
 }

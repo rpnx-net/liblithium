@@ -26,7 +26,7 @@ rubidium_kdf_hkdf_sha512_extract(
 void
 rubidium_kdf_hkdf_sha512_keygen(unsigned char prk[rubidium_kdf_hkdf_sha512_KEYBYTES])
 {
-    randombytes_buf(prk, rubidium_kdf_hkdf_sha512_KEYBYTES);
+    rubidium::randombytes_fill(prk, rubidium_kdf_hkdf_sha512_KEYBYTES);
 }
 
 int

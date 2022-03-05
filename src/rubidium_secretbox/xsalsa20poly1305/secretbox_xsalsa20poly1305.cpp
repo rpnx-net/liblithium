@@ -85,5 +85,5 @@ rubidium_secretbox_xsalsa20poly1305_messagebytes_max(void)
 void
 rubidium_secretbox_xsalsa20poly1305_keygen(unsigned char k[rubidium_secretbox_xsalsa20poly1305_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_secretbox_xsalsa20poly1305_KEYBYTES);
+    rubidium::randombytes_fill((std::byte*) (char*)k, rubidium_secretbox_xsalsa20poly1305_KEYBYTES);
 }

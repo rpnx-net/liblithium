@@ -108,7 +108,7 @@ rubidium_core_ristretto255_random(unsigned char *p)
 {
     unsigned char h[rubidium_core_ristretto255_HASHBYTES];
 
-    randombytes_buf(h, sizeof h);
+    rubidium::randombytes_fill(h, sizeof h);
     (void) rubidium_core_ristretto255_from_hash(p, h);
 }
 

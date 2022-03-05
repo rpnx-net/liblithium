@@ -1,43 +1,23 @@
-
-#ifndef randombytes_H
-#define randombytes_H
+#ifndef RUBIDIUM_RANDOMBYTES_HPP
+#define RUBIDIUM_RANDOMBYTES_HPP
 
 #include <cstddef>
 #include <cstdint>
+#include <utility>
 
+namespace rubidium
+{
+    void randombytes_fill(std::byte * buff, std::size_t count);
+    inline void randombytes_fill(signed char * buff, std::size_t count)
+    {
+        randombytes_fill((std::byte*) buff, count);
+    }
+    inline void randombytes_fill(unsigned char * buff, std::size_t count)
+    {
+        randombytes_fill((std::byte*) buff, count);
+    }
 
-#include "export.h"
-
-
-#define randombytes_SEEDBYTES 32U
-
-size_t randombytes_seedbytes(void);
-
-
-void randombytes_buf(void * const buf, const size_t size)
-            __attribute__ ((nonnull));
-
-
-
-
-
-uint32_t randombytes_uniform(const uint32_t upper_bound);
-
-
-void randombytes_stir(void);
-
-
-int randombytes_close(void);
-
-
-
-
-/* -- NaCl compatibility interface -- */
-
-
-void randombytes(unsigned char * const buf, const std::size_t buf_len)
-            __attribute__ ((nonnull));
-
-
+    std::uint32_t randombytes_uniform(std::uint32_t upper_bound);
+}
 
 #endif

@@ -34,7 +34,7 @@ int
 rubidium_box_curve25519xchacha20poly1305_keypair(unsigned char *pk,
                                                unsigned char *sk)
 {
-    randombytes_buf(sk, 32);
+    rubidium::randombytes_fill(sk, 32);
 
     return rubidium_scalarmult_curve25519_base(pk, sk);
 }

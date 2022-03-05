@@ -30,7 +30,7 @@ rubidium_auth_hmacsha512_statebytes(void)
 void
 rubidium_auth_hmacsha512_keygen(unsigned char k[rubidium_auth_hmacsha512_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_auth_hmacsha512_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_auth_hmacsha512_KEYBYTES);
 }
 
 int

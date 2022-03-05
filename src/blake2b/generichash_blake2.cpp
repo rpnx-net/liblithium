@@ -51,5 +51,5 @@ rubidium_generichash_blake2b_statebytes(void)
 void
 rubidium_generichash_blake2b_keygen(unsigned char k[rubidium_generichash_blake2b_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_generichash_blake2b_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_generichash_blake2b_KEYBYTES);
 }

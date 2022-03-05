@@ -50,7 +50,7 @@ _rubidium_sign_ed25519_synthetic_r_hv(rubidium_hash_sha512_state *hs,
 
     rubidium_hash_sha512_update(hs, B, 32);
     rubidium_hash_sha512_update(hs, empty_labelset, 3);
-    randombytes_buf(Z, 32);
+    rubidium::randombytes_fill(Z, 32);
     rubidium_hash_sha512_update(hs, Z, 32);
     rubidium_hash_sha512_update(hs, zeros, 128 - (32 + 3 + 32) % 128);
     rubidium_hash_sha512_update(hs, sk, 32);

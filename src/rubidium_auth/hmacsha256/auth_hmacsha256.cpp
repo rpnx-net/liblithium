@@ -30,7 +30,7 @@ rubidium_auth_hmacsha256_statebytes(void)
 void
 rubidium_auth_hmacsha256_keygen(unsigned char k[rubidium_auth_hmacsha256_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_auth_hmacsha256_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_auth_hmacsha256_KEYBYTES);
 }
 
 int

@@ -67,5 +67,5 @@ rubidium_onetimeauth_primitive(void)
 
 void rubidium_onetimeauth_keygen(unsigned char k[rubidium_onetimeauth_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_onetimeauth_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_onetimeauth_KEYBYTES);
 }

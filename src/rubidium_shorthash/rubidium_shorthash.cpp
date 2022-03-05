@@ -30,5 +30,5 @@ rubidium_shorthash(unsigned char *out, const unsigned char *in,
 void
 rubidium_shorthash_keygen(unsigned char k[rubidium_shorthash_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_shorthash_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_shorthash_KEYBYTES);
 }

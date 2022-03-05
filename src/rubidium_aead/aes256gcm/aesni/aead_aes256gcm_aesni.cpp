@@ -1103,5 +1103,5 @@ rubidium_aead_aes256gcm_messagebytes_max(void)
 void
 rubidium_aead_aes256gcm_keygen(unsigned char k[rubidium_aead_aes256gcm_KEYBYTES])
 {
-    randombytes_buf(k, rubidium_aead_aes256gcm_KEYBYTES);
+    rubidium::randombytes_fill(k, rubidium_aead_aes256gcm_KEYBYTES);
 }
