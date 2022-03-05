@@ -174,7 +174,6 @@ target_sources(rubidium
         src/rubidium_aead/aegis128l/aesni/aead_aegis128l_aesni.cpp
         src/rubidium_aead/aegis128l/armcrypto/aead_aegis128l_armcrypto.cpp
         src/rubidium_aead/aegis256/aead_aegis256.cpp
-        src/rubidium_aead/aegis256/aesni/aead_aegis256_aesni.cpp
         src/rubidium_aead/aegis256/armcrypto/aead_aegis256_armcrypto.cpp
         src/rubidium_aead/aes256gcm/aesni/aead_aes256gcm_aesni.cpp
         src/rubidium_secretstream/xchacha20poly1305/secretstream_xchacha20poly1305.cpp
